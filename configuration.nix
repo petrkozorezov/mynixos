@@ -112,7 +112,8 @@ in
 
   environment.systemPackages = with pkgs; [
     # shell
-    #zsh
+    zsh
+    fasd
     elvish
     kitty
     rxvt_unicode
@@ -156,7 +157,7 @@ in
     gdb
     killall
     bc
-    htop python37Packages.glances
+    htop unstable.python37Packages.glances
     curl wget
     mc ranger
     neofetch
@@ -262,7 +263,7 @@ in
       enable  = true;
       ohMyZsh = {
         enable  = true;
-        plugins = [ "git" ];
+        plugins = [ "git" "fasd" "docker" "python" "zsh-autosuggestions" "zsh-completions" ];
         theme   = "amuse";
       };
     };
