@@ -1,13 +1,13 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
+# TODO: cleanup /usr/local/share/Geolite-city/GeoLite2-City.mmdb
 
-{ config, pkgs, ... }:
+{ config, pkgs, options, ... }:
 
 let
+  # 17 Nov 2019
   unstableTarball =
     fetchTarball
-      https://github.com/NixOS/nixpkgs-channels/archive/nixos-unstable.tar.gz;
+      https://github.com/NixOS/nixpkgs-channels/archive/cb895499a77711c121aa978efb0588c28e68f9e4.tar.gz;
+  overlays = /etc/nixos/overlay;
 in
 {
   imports =
@@ -15,13 +15,21 @@ in
       /etc/nixos/hardware-configuration.nix
     ];
 
-  nixpkgs.config = {
-    packageOverrides = pkgs: {
-      unstable = import unstableTarball {
-        config = config.nixpkgs.config;
+  nix.nixPath =
+    options.nix.nixPath.default ++
+    [ "nixpkgs-overlays=${overlays}" ];
+
+  nixpkgs = {
+    config = {
+      packageOverrides = pkgs: {
+        unstable = import unstableTarball {
+          config = config.nixpkgs.config;
+        };
       };
     };
+    overlays = [ (import overlays) ];
   };
+
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database
@@ -29,7 +37,6 @@ in
   # should.
   system.stateVersion = "19.09"; # Did you read the comment?
 
-  
   # Use the systemd-boot EFI boot loader.
   boot = {
     kernelParams = [ ];
@@ -48,17 +55,11 @@ in
       enable = false;
       extraFlags = [ "-d" ];
     };
-    #wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
 
     # The global useDHCP flag is deprecated, therefore explicitly set to false here.
     # Per-interface useDHCP will be mandatory in the future, so this generated config
     # replicates the default behaviour.
     useDHCP = false;
-
-    # Configure network proxy if necessary
-    # proxy.default = "http://user:password@proxy:port/";
-    # proxy.noProxy = "127.0.0.1,localhost,internal.domain";
   };
 
   services.tlp.enable = true;
@@ -69,6 +70,8 @@ in
     pulseaudio = {
       enable = true;
       support32Bit = true;
+      extraModules = [ pkgs.pulseaudio-modules-bt ];
+      package = pkgs.pulseaudioFull;
     };
     opengl = {
       enable = true;
@@ -78,8 +81,8 @@ in
     cpu.intel.updateMicrocode = true;
   };
   powerManagement.enable = true;
-  sound.enable = true; 
-  
+  sound.enable = true;
+
   # Select internationalisation properties.
   i18n = {
     consoleFont = "iso01-12x22";
@@ -116,7 +119,7 @@ in
     fasd
     elvish
     kitty
-    rxvt_unicode
+    alacritty # image preview is not working now
 
     # browser, mail, ...
     firefox-wayland
@@ -130,6 +133,8 @@ in
     calibre
     libreoffice
     nixnote2
+    mellowplayer
+    playerctl
 
     # sway
     networkmanager_dmenu
@@ -144,17 +149,14 @@ in
 
     # editors
     vim
+    emacs emacs-all-the-icons-fonts ripgrep coreutils fd
     sublime3
-    atom
 
     # langs
-    erlangR22
-    ghc stack
-    idris
+    erlang
 
     # tools
     git gitAndTools.hub
-    gdb
     killall
     bc
     htop unstable.python37Packages.glances
@@ -173,11 +175,10 @@ in
     dropbox-cli
     keepassxc
     #keepass-keefox # TODO try it
- 
-    #cmst
+    gucharmap
+
     networkmanager_vpnc
     networkmanager_l2tp
-    #networkmanagerapplet
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -197,10 +198,21 @@ in
   # networking.firewall.enable = false;
 
   # Enable CUPS to print documents.
-  # services.printing.enable = true;
+  services.printing.enable = true;
+
+  services.blueman.enable = true;
+
   programs.sway = {
     enable = true;
-    extraPackages = with pkgs; [ swaylock swayidle xwayland dmenu i3status-rust];
+    extraPackages = with pkgs; [
+      swaylock
+      swayidle
+      xwayland
+      dmenu
+      unstable.waybar
+      networkmanagerapplet
+      pavucontrol
+    ];
     extraSessionCommands =
       ''
         export SDL_VIDEODRIVER=wayland
@@ -214,7 +226,6 @@ in
   };
   programs.light.enable = true; # backlight control
   programs.vim.defaultEditor = true;
-  
 
   services.xserver = {
     enable = true;
@@ -230,10 +241,10 @@ in
     libinput = {
       #enable = true;
       naturalScrolling = true;
-      additionalOptions = 
-	''
+      additionalOptions =
+	      ''
           Option "Tapping" "true"
-          Option "TappingDrag" "true" 
+          Option "TappingDrag" "true"
         '';
     };
 
@@ -263,7 +274,7 @@ in
       enable  = true;
       ohMyZsh = {
         enable  = true;
-        plugins = [ "git" "fasd" "docker" "python" "zsh-autosuggestions" "zsh-completions" ];
+        plugins = [ "git" "fasd" "docker" "python" ];
         theme   = "amuse";
       };
     };
