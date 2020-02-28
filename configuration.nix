@@ -43,18 +43,14 @@ in
     cleanTmpDir = true;
     loader = {
       systemd-boot.enable = true;
-      timeout = 2;
+      timeout = 1;
       efi.canTouchEfiVariables = true;
     };
   };
 
   networking = {
-    hostName = "petrkozorezov-macbook"; # Define your hostname.
+    hostName = "petrkozorezov-macbook";
     networkmanager.enable = true;
-    connman = {
-      enable = false;
-      extraFlags = [ "-d" ];
-    };
 
     # The global useDHCP flag is deprecated, therefore explicitly set to false here.
     # Per-interface useDHCP will be mandatory in the future, so this generated config
@@ -85,7 +81,7 @@ in
 
   # Select internationalisation properties.
   i18n = {
-    consoleFont = "iso01-12x22";
+    consoleFont   = "iso01-12x22";
     consoleKeyMap = "us";
     defaultLocale = "en_US.UTF-8";
   };
@@ -115,26 +111,7 @@ in
 
   environment.systemPackages = with pkgs; [
     # shell
-    zsh
-    fasd
-    elvish
-    kitty
-    alacritty # image preview is not working now
 
-    # browser, mail, ...
-    firefox-wayland
-    chromium
-    qutebrowser
-    # surf
-    #thunderbird
-    gnome3.geary
-    tdesktop
-    slack
-    calibre
-    libreoffice
-    nixnote2
-    mellowplayer
-    playerctl
 
     # sway
     networkmanager_dmenu
@@ -146,39 +123,14 @@ in
     rofi                # unstable.wofi # launcher (wofi has a shit-like fuzzy search)
     unstable.wob        # volume control overlay
     wev                 # W events debugging tool
-
-    # editors
-    vim
-    emacs emacs-all-the-icons-fonts ripgrep coreutils fd
-    sublime3
-
-    # langs
-    erlang
-
-    # tools
-    git gitAndTools.hub
-    killall
-    bc
-    htop unstable.python37Packages.glances
-    curl wget
-    mc ranger
-    neofetch
-    docker-compose
-    sloccount
-    jq
-    qcachegrind
-    graphviz
-    pulsemixer pamixer
-    nix-index
-
-    veracrypt
-    dropbox-cli
-    keepassxc
-    #keepass-keefox # TODO try it
-    gucharmap
-
     networkmanager_vpnc
     networkmanager_l2tp
+
+    # tools
+    unstable.python37Packages.glances
+
+    pmount
+    nix-index
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -202,82 +154,48 @@ in
 
   services.blueman.enable = true;
 
-  programs.sway = {
-    enable = true;
-    extraPackages = with pkgs; [
-      swaylock
-      swayidle
-      xwayland
-      dmenu
-      unstable.waybar
-      networkmanagerapplet
-      pavucontrol
-    ];
-    extraSessionCommands =
-      ''
-        export SDL_VIDEODRIVER=wayland
-        # needs qt5.qtwayland in systemPackages
-        export QT_QPA_PLATFORM=wayland
-        export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
-        # Fix for some Java AWT applications (e.g. Android Studio),
-        # use this if they aren't displayed properly:
-        export _JAVA_AWT_WM_NONREPARENTING=1
-      '';
-  };
-  programs.light.enable = true; # backlight control
-  programs.vim.defaultEditor = true;
-
-  services.xserver = {
-    enable = true;
-
-    #videoDrivers = [ "nv" ];
-    layout = "us";
-    autorun = false;
-
-    autoRepeatDelay = 200;
-    autoRepeatInterval = 40;
-
-    # Enable touchpad support.
-    libinput = {
-      #enable = true;
-      naturalScrolling = true;
-      additionalOptions =
-	      ''
-          Option "Tapping" "true"
-          Option "TappingDrag" "true"
+  programs = {
+    sway = {
+      enable = true;
+      extraPackages = with pkgs; [
+        swaylock
+        swayidle
+        xwayland
+        dmenu
+        unstable.waybar
+        networkmanagerapplet
+        pavucontrol
+        wallutils # TODO use it
+      ];
+      extraSessionCommands =
+        ''
+          export SDL_VIDEODRIVER=wayland
+          # needs qt5.qtwayland in systemPackages
+          export QT_QPA_PLATFORM=wayland
+          export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
+          # Fix for some Java AWT applications (e.g. Android Studio),
+          # use this if they aren't displayed properly:
+          export _JAVA_AWT_WM_NONREPARENTING=1
         '';
     };
-
-    displayManager = {
-      sddm.enable = true;
-    };
-
-    desktopManager = {
-      gnome3.enable = true;
-    };
-
-    windowManager = {
-      i3.enable = true;
-    };
+    light.enable = true; # backlight control
+    vim.defaultEditor = true;
+    ssh.startAgent = true;
   };
 
-  #users.defaultShell = "zsh"
+  services = {
+    ntp.enable = true;
+    logind.extraConfig =
+      ''
+        IdleAction=ingore # TODO suspend
+        HandlePowerKey=ignore
+      '';
+  };
+
   users.users.petrkozorezov = {
     isNormalUser = true;
     extraGroups = [ "wheel" "docker" "audio" "video" "networkmanager" ]; # Enable ‘sudo’ for the user.
     shell = pkgs.zsh;
-  };
-
-  programs = {
-    ssh.startAgent = true;
-    zsh = {
-      enable  = true;
-      ohMyZsh = {
-        enable  = true;
-        plugins = [ "git" "fasd" "docker" "python" ];
-        theme   = "amuse";
-      };
-    };
   };
 
   #system.autoUpgrade.enable = true;
@@ -285,4 +203,3 @@ in
   # dev
   virtualisation.docker.enable = true;
 }
-
