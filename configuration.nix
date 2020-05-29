@@ -3,10 +3,6 @@
 { config, pkgs, options, ... }:
 
 let
-  # 17 Nov 2019
-  unstableTarball =
-    fetchTarball
-      https://github.com/NixOS/nixpkgs-channels/archive/cb895499a77711c121aa978efb0588c28e68f9e4.tar.gz;
   overlays = /etc/nixos/overlay;
 in
 {
@@ -21,31 +17,28 @@ in
 
   nixpkgs = {
     config = {
-      packageOverrides = pkgs: {
-        unstable = import unstableTarball {
-          config = config.nixpkgs.config;
-        };
-      };
+      allowUnfree = true;
+      pulseaudio  = true;
     };
     overlays = [ (import overlays) ];
   };
 
+  system.stateVersion = "20.03";
 
-  # This value determines the NixOS release with which your system is to be
-  # compatible, in order to avoid breaking some software such as database
-  # servers. You should change this only after NixOS release notes say you
-  # should.
-  system.stateVersion = "19.09"; # Did you read the comment?
-
-  # Use the systemd-boot EFI boot loader.
   boot = {
     kernelParams = [ ];
+    kernelModules = [ "iwlwifi" ];
+    #blacklistedKernelModules = [ "nouveau" ];
+    initrd.availableKernelModules = [ "battery" ];
+    initrd.kernelModules = [ "battery" ];
     cleanTmpDir = true;
     loader = {
       systemd-boot.enable = true;
       timeout = 1;
       efi.canTouchEfiVariables = true;
+      #systemd-boot.consoleMode = "max";
     };
+    extraModulePackages = [ config.boot.kernelPackages.exfat-nofuse ];
   };
 
   networking = {
@@ -58,10 +51,8 @@ in
     useDHCP = false;
   };
 
-  services.tlp.enable = true;
-  services.upower.enable = true;
-
   hardware = {
+    enableRedistributableFirmware = true;
     bluetooth.enable = true;
     pulseaudio = {
       enable = true;
@@ -77,24 +68,23 @@ in
     cpu.intel.updateMicrocode = true;
   };
   powerManagement.enable = true;
-  sound.enable = true;
+  sound.enable  = true;
 
   # Select internationalisation properties.
   i18n = {
-    consoleFont   = "iso01-12x22";
-    consoleKeyMap = "us";
     defaultLocale = "en_US.UTF-8";
   };
 
-  #console = {
-  #  font = "iso01-12x22";
-  #  keyMap = "us";
-  #};
-
+  console = {
+   font = "iso01-12x22";
+   keyMap = "dvp";
+   earlySetup = true;
+  };
 
   # Set your time zone.
   time.timeZone = "Europe/Moscow";
 
+  # TODO move to home-manager
   fonts.fonts = with pkgs; [
     powerline-fonts
     font-awesome
@@ -102,71 +92,19 @@ in
     hack-font
   ];
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  nixpkgs.config = {
-    allowUnfree = true;
-    pulseaudio = true;
-  };
-
   environment.systemPackages = with pkgs; [
-    # shell
-
-
-    # sway
-    networkmanager_dmenu
-    grim slurp          # screenshoter
-    mako notify-desktop # notifications
-    unstable.clipman wl-clipboard # clipboard (wl-copy wl-paste)
-    unstable.ydotool    # gui automation tool
-    waypipe             # wayland over ssh
-    rofi                # unstable.wofi # launcher (wofi has a shit-like fuzzy search)
-    unstable.wob        # volume control overlay
-    wev                 # W events debugging tool
-    networkmanager_vpnc
-    networkmanager_l2tp
-
-    # tools
-    unstable.python37Packages.glances
-
-    pmount
+    undervolt
+    lm_sensors
+    pmount # (?)
     nix-index
+    #nixops
+    hey
   ];
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = { enable = true; enableSSHSupport = true; };
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  #services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-
-  services.blueman.enable = true;
 
   programs = {
     sway = {
       enable = true;
-      extraPackages = with pkgs; [
-        swaylock
-        swayidle
-        xwayland
-        dmenu
-        unstable.waybar
-        networkmanagerapplet
-        pavucontrol
-        wallutils # TODO use it
-      ];
+      extraPackages = with pkgs; [];
       extraSessionCommands =
         ''
           export SDL_VIDEODRIVER=wayland
@@ -178,28 +116,58 @@ in
           export _JAVA_AWT_WM_NONREPARENTING=1
         '';
     };
-    light.enable = true; # backlight control
+    light.enable      = true; # backlight control
     vim.defaultEditor = true;
-    ssh.startAgent = true;
+    ssh.startAgent    = true;
+    wireshark = {
+      enable  = true;
+      package = pkgs.wireshark;
+    };
   };
 
   services = {
-    ntp.enable = true;
+    #openssh.enable     = true;
+    ntp.enable         = true;
+    printing.enable    = true;
+    blueman.enable     = true;
+    tlp.enable         = true;
+    upower.enable      = true;
+    #fwupd.enable       = true;
+    throttled.enable   = true;
+    undervolt = {
+      enable         = true;
+      coreOffset     = "-150";
+      gpuOffset      = "-150";
+      uncoreOffset   = "-150";
+      analogioOffset = "-100";
+    };
     logind.extraConfig =
       ''
         IdleAction=ingore # TODO suspend
         HandlePowerKey=ignore
       '';
+
+    xserver = {
+      enable  = true;
+      autorun = false;
+      displayManager.sddm.enable   = true;
+      desktopManager.gnome3.enable = true;
+    };
   };
 
   users.users.petrkozorezov = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "docker" "audio" "video" "networkmanager" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "docker" "audio" "video" "networkmanager" "vboxusers" "wireshark" ];
     shell = pkgs.zsh;
   };
 
-  #system.autoUpgrade.enable = true;
+  system.autoUpgrade.enable = true;
 
   # dev
-  virtualisation.docker.enable = true;
+  virtualisation = {
+    docker.enable = true;
+    virtualbox.host.enable = true;
+  };
+
+  # services.syncthing = import /etc/nixos/syncthing.nix;
 }

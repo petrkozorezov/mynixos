@@ -1,11 +1,18 @@
+#
+# TODO:
+#  - grapherl
+#
 self: super:
 {
   mellowplayer = super.libsForQt5.callPackage pkgs/mellowplayer.nix { };
 
-  sublime3 = super.sublime3.overrideAttrs ({propagatedBuildInputs ? [], ...}: {
+  sublime3-dev = super.sublime3.overrideAttrs ({propagatedBuildInputs ? [], ...}: {
     propagatedBuildInputs =
       propagatedBuildInputs ++ [ super.git ];
   });
+
+  nixops = super.callPackage pkgs/nixops.nix { };
+  hey = super.callPackage pkgs/hey.nix { };
 
   #swayidle = super.swayidle.overrideAttrs ({src, ...}: {
   #  src = super.fetchFromGitHub {

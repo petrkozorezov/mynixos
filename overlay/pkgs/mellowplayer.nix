@@ -2,7 +2,7 @@
 
 stdenv.mkDerivation rec {
   pname   = "mellowplayer";
-  version = "3.5.10";
+  version = "3.5.10"; # TODO 3.6.0
 
   src = fetchFromGitLab {
     owner  = "ColinDuquesnoy";
