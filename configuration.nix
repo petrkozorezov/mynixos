@@ -11,38 +11,35 @@ in
       /etc/nixos/hardware-configuration.nix
     ];
 
-  nix.nixPath =
-    options.nix.nixPath.default ++
-    [ "nixpkgs-overlays=${overlays}" ];
-
   nixpkgs = {
     config = {
       allowUnfree = true;
       pulseaudio  = true;
     };
-    overlays = [ (import overlays) ];
   };
 
   system.stateVersion = "20.03";
 
   boot = {
-    kernelParams = [ ];
-    kernelModules = [ "iwlwifi" ];
-    #blacklistedKernelModules = [ "nouveau" ];
+    #kernelPackages                = pkgs.linuxPackages_5_6;
+    kernelParams                  = [ ];
+    kernelModules                 = [ "iwlwifi" ];
+    ##blacklistedKernelModules      = [ "nouveau" ];
     initrd.availableKernelModules = [ "battery" ];
-    initrd.kernelModules = [ "battery" ];
-    cleanTmpDir = true;
+    initrd.kernelModules          = [ "battery" ];
+    cleanTmpDir                   = true;
     loader = {
-      systemd-boot.enable = true;
-      timeout = 1;
+      systemd-boot.enable      = true;
+      timeout                  = 1;
       efi.canTouchEfiVariables = true;
       #systemd-boot.consoleMode = "max";
     };
-    extraModulePackages = [ config.boot.kernelPackages.exfat-nofuse ];
+    kernel.sysctl."fs.inotify.max_user_watches" = 524288;
+    #extraModulePackages = [ config.boot.kernelPackages.exfat-nofuse ];
   };
 
   networking = {
-    hostName = "petrkozorezov-macbook";
+    hostName = "petrkozorezov-notebook";
     networkmanager.enable = true;
 
     # The global useDHCP flag is deprecated, therefore explicitly set to false here.
@@ -52,23 +49,23 @@ in
   };
 
   hardware = {
-    enableRedistributableFirmware = true;
-    bluetooth.enable = true;
+    enableAllFirmware = true;
+    bluetooth.enable  = true;
     pulseaudio = {
-      enable = true;
+      enable       = true;
       support32Bit = true;
       extraModules = [ pkgs.pulseaudio-modules-bt ];
-      package = pkgs.pulseaudioFull;
+      package      = pkgs.pulseaudioFull;
     };
     opengl = {
-      enable = true;
+      enable          = true;
       driSupport32Bit = true;
       extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
     };
     cpu.intel.updateMicrocode = true;
   };
   powerManagement.enable = true;
-  sound.enable  = true;
+  sound.enable           = true;
 
   # Select internationalisation properties.
   i18n = {
@@ -76,9 +73,10 @@ in
   };
 
   console = {
-   font = "iso01-12x22";
-   keyMap = "dvp";
+   font       = "iso01-12x22";
+   keyMap     = "dvp";
    earlySetup = true;
+   #useXkbConfig
   };
 
   # Set your time zone.
@@ -97,25 +95,9 @@ in
     lm_sensors
     pmount # (?)
     nix-index
-    #nixops
-    hey
   ];
 
   programs = {
-    sway = {
-      enable = true;
-      extraPackages = with pkgs; [];
-      extraSessionCommands =
-        ''
-          export SDL_VIDEODRIVER=wayland
-          # needs qt5.qtwayland in systemPackages
-          export QT_QPA_PLATFORM=wayland
-          export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
-          # Fix for some Java AWT applications (e.g. Android Studio),
-          # use this if they aren't displayed properly:
-          export _JAVA_AWT_WM_NONREPARENTING=1
-        '';
-    };
     light.enable      = true; # backlight control
     vim.defaultEditor = true;
     ssh.startAgent    = true;
@@ -136,36 +118,110 @@ in
     throttled.enable   = true;
     undervolt = {
       enable         = true;
-      coreOffset     = "-150";
-      gpuOffset      = "-150";
-      uncoreOffset   = "-150";
-      analogioOffset = "-100";
+      coreOffset     = -150;
+      gpuOffset      = -150;
+      uncoreOffset   = -150;
+      analogioOffset = -100;
     };
-    logind.extraConfig =
-      ''
-        IdleAction=ingore # TODO suspend
-        HandlePowerKey=ignore
-      '';
+    logind = {
+      extraConfig =
+        ''
+          IdleAction=ingore # TODO suspend
+          #HandlePowerKey=ignore
+        '';
+       lidSwitch              = "suspend";
+       lidSwitchExternalPower = "suspend";
+       lidSwitchDocked        = "suspend";
+    };
+    flatpak.enable = true;
 
-    xserver = {
-      enable  = true;
-      autorun = false;
-      displayManager.sddm.enable   = true;
-      desktopManager.gnome3.enable = true;
-    };
+  #  xserver = {
+  #     videoDrivers = [ "nvidia" ];
+  #     #videoDrivers = [ "intel" "modesetting" ];
+  #     enable              = false;
+  #     exportConfiguration = true;
+  #     autorun             = true;
+  #     useGlamor           = false;
+  #     xrandrHeads = [
+  #       {
+  #         output = "eDP-1-1";
+  #         primary = true;
+  #       }
+  #       {
+  #         monitorConfig =
+  #           ''
+  #             Option "RightOf" "eDP-1-1"
+  #             Option "PreferredMode" "3440x1440_100"
+  #           '';
+  #         output = "HDMI-0";
+  #       }
+  #     ];
+
+  #     displayManager = {
+  #       sddm.enable   = true;
+  #     };
+  #    desktopManager = {
+  #      gnome3.enable = true;
+  #       session = [
+  #         {
+  #           name = "home-manager";
+  #           start = ''
+  #             ${pkgs.runtimeShell} $HOME/.hm-xsession &
+  #             waitPID=$!
+  #           '';
+  #         }
+  #      ];
+  #    };
+
+  #     layout              = "us,ru";
+  #     xkbOptions          = "grp:shifts_toggle";
+  #     xkbVariant          = "dvp,mac";
+
+  #     autoRepeatDelay     = 200;
+  #     autoRepeatInterval  = 25;
+  #  };
+
+  #   compton = {
+  #    enable          = true;
+  #    shadow          = true;
+  #    #inactiveOpacity = 1.0;
+  #   };
+
+    # for UHK
+    # udev = {
+    #     extraRules = ''
+    #       SUBSYSTEM=="input", ATTRS{idVendor}=="1d50", ATTRS{idProduct}=="612[0-7]", GROUP="input", MODE="0660"
+    #       SUBSYSTEMS=="usb", ATTRS{idVendor}=="1d50", ATTRS{idProduct}=="612[0-7]", TAG+="uaccess"
+    #       KERNEL=="hidraw*", ATTRS{idVendor}=="1d50", ATTRS{idProduct}=="612[0-7]", TAG+="uaccess"
+    #     '';
+    # };
   };
+
+  #
+  #hardware.nvidia.optimus_prime = {
+  #  enable      = true;
+  #  nvidiaBusId = "PCI:1:0:0";
+  #  intelBusId  = "PCI:0:2:0";
+  #};
+
+  # for UHK
+  xdg.portal.enable = true;
+  security.polkit.enable = true;
+
+  # for swaylock
+  security.pam.services.swaylock = {};
 
   users.users.petrkozorezov = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "docker" "audio" "video" "networkmanager" "vboxusers" "wireshark" ];
-    shell = pkgs.zsh;
+    extraGroups  = [ "wheel" "docker" "audio" "video" "networkmanager" "vboxusers" "wireshark" ];
+    shell        = pkgs.zsh;
   };
 
   system.autoUpgrade.enable = true;
 
   # dev
   virtualisation = {
-    docker.enable = true;
+    docker.enable          = true;
     virtualbox.host.enable = true;
   };
 
