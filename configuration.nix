@@ -18,13 +18,13 @@ in
     };
   };
 
-  system.stateVersion = "20.03";
+  #system.stateVersion = "20.03";
 
   boot = {
-    #kernelPackages                = pkgs.linuxPackages_5_6;
+    kernelPackages                = pkgs.linuxPackages_5_8;
     kernelParams                  = [ ];
     kernelModules                 = [ "iwlwifi" ];
-    ##blacklistedKernelModules      = [ "nouveau" ];
+    #blacklistedKernelModules      = [ "nouveau" ];
     initrd.availableKernelModules = [ "battery" ];
     initrd.kernelModules          = [ "battery" ];
     cleanTmpDir                   = true;
@@ -91,25 +91,30 @@ in
   ];
 
   environment.systemPackages = with pkgs; [
-    undervolt
+    #undervolt
     lm_sensors
     pmount # (?)
     nix-index
+
+    # pipewire_0_2
+    # xdg-desktop-portal
+    # xdg-desktop-portal-wlr
   ];
 
   programs = {
     light.enable      = true; # backlight control
     vim.defaultEditor = true;
     ssh.startAgent    = true;
-    wireshark = {
-      enable  = true;
-      package = pkgs.wireshark;
-    };
+    #wireshark = {
+    #  enable  = true;
+    #  package = pkgs.wireshark;
+    #};
   };
 
   services = {
     #openssh.enable     = true;
-    ntp.enable         = true;
+    timesyncd.enable   = true;
+    ntp.enable         = false;
     printing.enable    = true;
     blueman.enable     = true;
     tlp.enable         = true;
@@ -133,11 +138,37 @@ in
        lidSwitchExternalPower = "suspend";
        lidSwitchDocked        = "suspend";
     };
-    flatpak.enable = true;
+    # flatpak.enable  = true;
+    # pipewire.enable = true;
+    # for UHK
+    # udev = {
+    #   extraRules = ''
+    #     SUBSYSTEM=="input", ATTRS{idVendor}=="1d50", ATTRS{idProduct}=="612[0-7]", GROUP="input", MODE="0660"
+    #     SUBSYSTEMS=="usb", ATTRS{idVendor}=="1d50", ATTRS{idProduct}=="612[0-7]", TAG+="uaccess"
+    #     KERNEL=="hidraw*", ATTRS{idVendor}=="1d50", ATTRS{idProduct}=="612[0-7]", TAG+="uaccess"
+    #   '';
+    # };
+    udev = {
+      extraRules = ''
+        # Rule for all ZSA keyboards
+        SUBSYSTEM=="usb", ATTR{idVendor}=="3297", GROUP="plugdev"
+        # Rule for the Moonlander
+        SUBSYSTEM=="usb", ATTR{idVendor}=="3297", ATTR{idProduct}=="1969", GROUP="plugdev"
+        # Rule for the Ergodox EZ
+        SUBSYSTEM=="usb", ATTR{idVendor}=="feed", ATTR{idProduct}=="1307", GROUP="plugdev"
+        # Rule for the Planck EZ
+        SUBSYSTEM=="usb", ATTR{idVendor}=="feed", ATTR{idProduct}=="6060", GROUP="plugdev"      '';
+    };
+  };
 
+  # xdg.portal = {
+  #   enable = true;
+  #   gtkUsePortal = true;
+  #   extraPortals = with pkgs; [
+  #     xdg-desktop-portal-wlr
+  #   ];
+  # };
 
-  # for UHK
-  xdg.portal.enable = true;
   security.polkit.enable = true;
 
   # for swaylock
@@ -145,11 +176,15 @@ in
 
   users.users.petrkozorezov = {
     isNormalUser = true;
-    extraGroups  = [ "wheel" "docker" "audio" "video" "networkmanager" "vboxusers" "wireshark" ];
+    extraGroups  = [ "wheel" "docker" "audio" "video" "networkmanager" "vboxusers" "wireshark" "plugdev" ];
     shell        = pkgs.zsh;
   };
 
-  system.autoUpgrade.enable = true;
+  users.groups = {
+    plugdev = {};
+  };
+
+  #system.autoUpgrade.enable = true;
 
   # dev
   virtualisation = {
