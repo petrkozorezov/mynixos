@@ -1,5 +1,3 @@
-# TODO: cleanup /usr/local/share/Geolite-city/GeoLite2-City.mmdb
-
 { config, pkgs, options, ... }:
 
 let
@@ -7,16 +5,23 @@ let
 in
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
       /etc/nixos/hardware-configuration.nix
     ];
+
+
+  #nix.nixPath =
+  #  options.nix.nixPath.default ++
+  #  [ "nixpkgs-overlays=${overlays}" ];
 
   nixpkgs = {
     config = {
       allowUnfree = true;
       pulseaudio  = true;
     };
+    #overlays = [ (import overlays) ];
   };
+
 
   #system.stateVersion = "20.03";
 
@@ -52,6 +57,7 @@ in
     enableAllFirmware = true;
     bluetooth.enable  = true;
     pulseaudio = {
+      # enable       = false;
       enable       = true;
       support32Bit = true;
       extraModules = [ pkgs.pulseaudio-modules-bt ];
@@ -59,8 +65,9 @@ in
     };
     opengl = {
       enable          = true;
-      driSupport32Bit = true;
-      extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
+      # for Steam
+      #driSupport32Bit = true;
+      #extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
     };
     cpu.intel.updateMicrocode = true;
   };
@@ -95,10 +102,6 @@ in
     lm_sensors
     pmount # (?)
     nix-index
-
-    # pipewire_0_2
-    # xdg-desktop-portal
-    # xdg-desktop-portal-wlr
   ];
 
   programs = {
@@ -138,8 +141,8 @@ in
        lidSwitchExternalPower = "suspend";
        lidSwitchDocked        = "suspend";
     };
-    # flatpak.enable  = true;
-    # pipewire.enable = true;
+    flatpak.enable  = false;
+    pipewire.enable = true;
     # for UHK
     # udev = {
     #   extraRules = ''
@@ -161,13 +164,15 @@ in
     };
   };
 
-  # xdg.portal = {
-  #   enable = true;
-  #   gtkUsePortal = true;
-  #   extraPortals = with pkgs; [
-  #     xdg-desktop-portal-wlr
-  #   ];
-  # };
+  # for pipewire
+  xdg.portal = {
+    enable       = true;
+    gtkUsePortal = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-gtk
+      xdg-desktop-portal-wlr
+    ];
+  };
 
   security.polkit.enable = true;
 
