@@ -33,13 +33,12 @@ in {
     qt5.qtwayland
     grim
     slurp                # screenshoter
-    mako notify-desktop  # notifications
+    notify-desktop  # notifications
     clipman wl-clipboard # clipboard (wl-copy wl-paste)
     ydotool              # gui automation tool
     waypipe              # wayland over ssh
     wob                  # volume control overlay
     wev                  # W events debugging tool
-    waybar
     swaylock
     swayidle
     xwayland

@@ -1,11 +1,12 @@
 #
 # TODO:
-#  - store to git
 #  - rofi
 #  - zathura
 #  - fonts
 #  - refactor imports
 #  - secrets
+#  - https://nix-community.github.io/home-manager/#sec-install-nixos-module
+#  - services.dropbox
 #
 args@{ config, pkgs, ... }:
 let
@@ -56,8 +57,10 @@ in
     alacritty = importFile ./home/alacritty.nix;
     firefox   = importFile ./home/firefox.nix  ;
     waybar    = importFile ./home/waybar.nix   ;
+    mako      = importFile ./home/mako.nix     ;
     zathura.enable = true;
   };
+
 
   services = {
     gpg-agent.enable = true;
