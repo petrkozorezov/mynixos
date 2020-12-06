@@ -1,7 +1,6 @@
 #
 # TODO:
 #  - store to git
-#  - waybar
 #  - rofi
 #  - zathura
 #  - fonts
@@ -56,6 +55,7 @@ in
     htop      = importFile ./home/htop.nix     ;
     alacritty = importFile ./home/alacritty.nix;
     firefox   = importFile ./home/firefox.nix  ;
+    waybar    = importFile ./home/waybar.nix   ;
     zathura.enable = true;
   };
 
