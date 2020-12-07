@@ -36,6 +36,10 @@ in
       packageOverrides = pkgs: {
         nur = import (nur_repo) { inherit pkgs; };
       };
+      permittedInsecurePackages = [
+        "openssl-1.0.2u"
+        "python2.7-cryptography-2.9.2"
+      ];
     };
   };
 
@@ -58,7 +62,7 @@ in
     firefox   = importFile ./home/firefox.nix  ;
     waybar    = importFile ./home/waybar.nix   ;
     mako      = importFile ./home/mako.nix     ;
-    zathura.enable = true;
+    zathura   = importFile ./home/zathura.nix  ;
   };
 
 
