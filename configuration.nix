@@ -6,24 +6,10 @@ in
 {
   imports =
     [
-      /etc/nixos/hardware-configuration.nix
+      /etc/nixos/hardware/thinkpad-x1-extreme-gen2.nix
     ];
 
-
-  #nix.nixPath =
-  #  options.nix.nixPath.default ++
-  #  [ "nixpkgs-overlays=${overlays}" ];
-
-  nixpkgs = {
-    config = {
-      allowUnfree = true;
-      pulseaudio  = true;
-    };
-    #overlays = [ (import overlays) ];
-  };
-
-
-  #system.stateVersion = "20.03";
+  nixpkgs = (import ./nixpkgs.nix);
 
   boot = {
     kernelPackages                = pkgs.linuxPackages_5_8;
@@ -46,10 +32,6 @@ in
   networking = {
     hostName = "petrkozorezov-notebook";
     networkmanager.enable = true;
-
-    # The global useDHCP flag is deprecated, therefore explicitly set to false here.
-    # Per-interface useDHCP will be mandatory in the future, so this generated config
-    # replicates the default behaviour.
     useDHCP = false;
   };
 

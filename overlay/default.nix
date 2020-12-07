@@ -2,9 +2,9 @@ self: super:
 {
   mellowplayer = super.libsForQt5.callPackage pkgs/mellowplayer.nix { };
 
-  sublime3-dev = super.sublime3.overrideAttrs ({propagatedBuildInputs ? [], ...}: {
-    propagatedBuildInputs =
-      propagatedBuildInputs ++ [ super.git ];
+  sublime3 = super.sublime3.overrideAttrs ({propagatedBuildInputs ? [], nativeBuildInputs ? [], ...}: {
+    # propagatedBuildInputs =
+    #   propagatedBuildInputs ++ [ super.git ];
   });
 
   hey = super.callPackage pkgs/hey.nix { };

@@ -1,8 +1,7 @@
 {pkgs, ...}:
 {
   enable = false;
-  package = pkgs.firefox;
-  # package = pkgs.firefox-wayland;
+  package = pkgs.firefox-wayland;
   # enableAdobeFlash = true;
   extensions = with pkgs.nur.repos.rycee.firefox-addons; [
     # ublock-origin

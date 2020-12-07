@@ -37,8 +37,10 @@ with pkgs;
   pciutils
   unzip
 
+  # TODO unmask
+  # dropbox-cli
+
   veracrypt
-  dropbox-cli
   keepassxc
   #keepass-keefox # TODO try it
   #gucharmap
@@ -49,10 +51,11 @@ with pkgs;
   chromium
   #qutebrowser
   # surf
-  thunderbird
+  # thunderbird
   tdesktop
   slack
-  calibre
+
+  # calibre
   libreoffice
   mellowplayer
   playerctl
@@ -65,7 +68,7 @@ with pkgs;
   #appimage-run
 
   # hey # FIXME
-  nixops
+  # nixops
   grapherl
 
   #uhk-agent
