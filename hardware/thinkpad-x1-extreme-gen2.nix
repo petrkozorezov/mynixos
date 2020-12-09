@@ -65,4 +65,9 @@
 
   # backlight control
   programs.light.enable = true;
+
+  hardware.bluetooth.enable        = true;
+  # TODO move to an ather place with if
+  hardware.pulseaudio.extraModules = [ pkgs.pulseaudio-modules-bt ];
+  services.blueman.enable          = true;
 }
