@@ -2,6 +2,7 @@
 {
   imports =
     [
+      ./nix.nix
       ./hardware/default.nix
       ./system/default.nix
     ];

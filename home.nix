@@ -1,13 +1,8 @@
-#
-# TODO:
-#  - rofi
-#  - secrets
-#  - https://nix-community.github.io/home-manager/#sec-install-nixos-module
-#
 { ... }:
 {
 
   imports = [
+    ./nix.nix
     ./home/default.nix
   ];
 
@@ -19,7 +14,6 @@
     TERMINAL = "alacritty";
   };
   programs.home-manager.enable = true; # Let Home Manager install and manage itself.
-
 
   # user = rec {
   #   login     = "petr.kozorezov";
