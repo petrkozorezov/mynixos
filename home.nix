@@ -2,18 +2,15 @@
 {
 
   imports = [
-    ./nix.nix
-    ./home/default.nix
+    ./home
   ];
-
-  nixpkgs = (import ./config.nix);
 
   home.sessionVariables = {
     EDITOR   = "vim";
     BROWSER  = "firefox";
     TERMINAL = "alacritty";
   };
-  programs.home-manager.enable = true; # Let Home Manager install and manage itself.
+  programs.home-manager.enable = true;
 
   # user = rec {
   #   login     = "petr.kozorezov";

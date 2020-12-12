@@ -64,7 +64,7 @@
 
       # hey # FIXME
       # nixops
-      grapherl
+      # grapherl
 
       #uhk-agent
 

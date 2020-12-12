@@ -1,10 +1,6 @@
 { config, lib, pkgs, ... }:
 
 {
-  imports =
-    [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
-    ];
-
   boot = {
     initrd = {
       availableKernelModules = [ "xhci_pci" "nvme" "sdhci_pci" "battery" ];
@@ -17,18 +13,23 @@
 
   fileSystems = {
     "/" =
-      { device = "/dev/disk/by-uuid/e919fa4c-439e-455c-9529-f284a30434c0";
+      {
+        device = "/dev/disk/by-uuid/e919fa4c-439e-455c-9529-f284a30434c0";
         fsType = "ext4";
       };
 
     "/boot" =
-      { device = "/dev/disk/by-uuid/2F08-52CD";
+      {
+        device = "/dev/disk/by-uuid/2F08-52CD";
         fsType = "vfat";
       };
   };
 
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/66be6355-c124-4035-928a-ce2e904893f5"; }
+    [
+      {
+        device = "/dev/disk/by-uuid/66be6355-c124-4035-928a-ce2e904893f5";
+      }
     ];
 
   hardware = {
@@ -65,6 +66,8 @@
 
   # backlight control
   programs.light.enable = true;
+
+  hardware.enableRedistributableFirmware = true;
 
   hardware.bluetooth.enable        = true;
   # TODO move to an ather place with if
