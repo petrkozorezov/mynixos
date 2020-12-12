@@ -3,8 +3,8 @@
   imports =
     [
       ./nix.nix
-      ./hardware/default.nix
-      ./system/default.nix
+      ./hardware
+      ./system
     ];
 
   nixpkgs = (import ./config.nix);

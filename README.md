@@ -16,21 +16,20 @@
 
 ## Misc
 
-user build is in .nix-profile
+user build is in /etc/profiles/per-user/[user]
 
-system build is in ??
+system build is in /run/current-system/
 
 ## TODO
 
  - global:
-  - flakes
-  - secrets
+  - repair overlay
   - nur
   - tests
   - remove copy/paste (eg font Hack)
+  - sign and rewrite commits
  - system:
   - split to modules
   - use hardware modules only as a system capabilites
  - hm:
   - add rofi module
-  - https://nix-community.github.io/home-manager/#sec-install-nixos-module (??)

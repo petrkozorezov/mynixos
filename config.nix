@@ -5,11 +5,6 @@ let
   };
 in {
   config = {
-    # packageOverrides = pkgs: {
-    #   unstable = import unstableTarball {
-    #     config = config.nixpkgs.config;
-    #   };
-    # };
     allowUnfree = true;
     packageOverrides = pkgs: {
       nur = import (nur_repo) { inherit pkgs; };
