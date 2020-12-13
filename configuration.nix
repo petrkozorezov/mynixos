@@ -36,6 +36,8 @@
     hack-font
   ];
 
+  environment.systemPackages = [ pkgs.overlay-sys-test ];
+
   programs = {
     vim.defaultEditor = true;
     ssh.startAgent    = true;

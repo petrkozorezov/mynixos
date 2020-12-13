@@ -7,6 +7,7 @@
   };
 
   outputs = { home-manager, nixpkgs, ... }: {
+    aoverlay = (import ./overlay);
     nixosConfigurations.petrkozorezov-notebook = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [

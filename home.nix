@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 {
 
   imports = [
@@ -12,6 +12,8 @@
   };
   programs.home-manager.enable = true;
 
+
+  home.packages = [ pkgs.overlay-hm-test ];
   # user = rec {
   #   login     = "petr.kozorezov";
   #   email     = "${login}@gmail.com";

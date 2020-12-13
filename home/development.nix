@@ -7,7 +7,7 @@
       cloc
       gtypist
       sublime3
-      # grapherl
+      grapherl
 
       # TODO ops
       # nixops

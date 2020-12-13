@@ -30,5 +30,6 @@ appimageTools.wrapType2 rec {
     #license = licenses.agpl3Plus;
     maintainers = with maintainers; [ ];
     platforms = [ "x86_64-linux" ];
+    broken = true;
   };
 }
