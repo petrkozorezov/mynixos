@@ -2,13 +2,15 @@
 {
   imports = [
     ./alacritty.nix
+    ./base.nix
+    ./desktop.nix
+    ./development.nix
     ./dropbox.nix
     ./firefox.nix
     ./git.nix
     ./gpg-agent.nix
     ./htop.nix
     ./mako.nix
-    ./packages.nix
     ./ssh.nix
     ./sway.nix
     ./waybar.nix

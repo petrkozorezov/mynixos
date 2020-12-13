@@ -24,6 +24,7 @@ system build is in /run/current-system/
 
  - global:
   - repair overlay
+  - sublime +plugins
   - nur
   - tests
   - remove copy/paste (eg font Hack)

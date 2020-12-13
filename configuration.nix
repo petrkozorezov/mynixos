@@ -36,12 +36,6 @@
     hack-font
   ];
 
-  environment.systemPackages = with pkgs; [
-    lm_sensors
-    pmount # (?)
-    nix-index
-  ];
-
   programs = {
     vim.defaultEditor = true;
     ssh.startAgent    = true;

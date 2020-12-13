@@ -16,6 +16,9 @@
 
   home.packages = with pkgs;
     [
+      gitAndTools.hub
+      gitAndTools.gh
+      glow
       git-crypt
       gitAndTools.git-filter-repo
     ];
