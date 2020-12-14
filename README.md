@@ -23,8 +23,6 @@ system build is in /run/current-system/
 ## TODO
 
  - global:
-  - repair overlay
-  - sublime +plugins
   - nur
   - tests
   - remove copy/paste (eg font Hack)
@@ -33,4 +31,5 @@ system build is in /run/current-system/
   - split to modules
   - use hardware modules only as a system capabilites
  - hm:
+  - sublime plugins
   - add rofi module

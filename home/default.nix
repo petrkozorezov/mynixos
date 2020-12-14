@@ -12,6 +12,7 @@
     ./htop.nix
     ./mako.nix
     ./ssh.nix
+    ./subl.nix
     ./sway.nix
     ./waybar.nix
     ./zathura.nix
