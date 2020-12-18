@@ -20,6 +20,16 @@
             sway -V 2> sway.log && \
           exit;
         '';
+      autocd = true;
+      history = {
+        expireDuplicatesFirst = true;
+        extended              = true;
+      };
+      shellAliases = {
+        ".."  = "cd ..";
+        "..."  = "cd ../..";
+        "cat" = "bat";
+      };
       oh-my-zsh =
         {
           enable  = true;
