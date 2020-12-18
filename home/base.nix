@@ -3,7 +3,6 @@
   home.packages = with pkgs; [
     bc
     killall
-    bc
     glances
     curl wget
     ranger
@@ -11,8 +10,8 @@
     gnupg
     pciutils
     unzip
-    fasd
     vim
+    tree
 
     pmount # (?)
     lm_sensors
