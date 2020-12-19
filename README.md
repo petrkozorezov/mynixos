@@ -2,10 +2,8 @@
 
 ### Building
 
- - `make nixos-build` for nixos build
- - `sudo make nixos-switch` for nixos switch
- - `make nixos-build` for home-manager build
- - `make hm-switch` for home-manager switch
+ - `make build` for nixos and home-manager build
+ - `sudo make switch` for nixos and home-manager switch
 
 ### Base files
 

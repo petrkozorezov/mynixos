@@ -1,19 +1,24 @@
-.PHONY = nixos-% hm-% clean
+.PHONY = build switch clean
 REPO_PATH = `pwd`/$(dir $(lastword $(MAKEFILE_LIST)))
+NRB=nixos-rebuild -v
+DIRS=/etc/nixos ~/.config/nixpkgs # FIXME better name
 
-/etc/nixos ~/.config/nixpkgs:
+$(DIRS):
 	ln -sf $(REPO_PATH) $@
 
-nixos-%: /etc/nixos
-	nixos-rebuild $*
+build: $(DIRS)
+	$(NRB) build --flake '.#'
 
-hm-%: ~/.config/nixpkgs
-	home-manager $*
+switch: $(DIRS)
+	$(NRB) switch --flake '.#'
 
 clean:
 	rm -rf result
 
-build: hm-build nixos-build
-
 show-repo-path:
 	@echo $(REPO_PATH)
+
+update-%:
+	nix flake update --update-input $*
+
+update: update-nixpkgs update-home-manager
