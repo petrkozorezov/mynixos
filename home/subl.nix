@@ -49,7 +49,7 @@ let
       "Elixir"
       "GitGutter"
       "Nix"
-      "Package Control"
+      "EditorConfig"
       "Pretty JSON"
       "Protocol Buffer Syntax"
       "SideBarEnhancements"
