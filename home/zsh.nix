@@ -25,6 +25,7 @@
         expireDuplicatesFirst = true;
         extended              = true;
       };
+      enableCompletion = true;
       shellAliases = {
         ".."  = "cd ..";
         "..."  = "cd ../..";
@@ -33,7 +34,7 @@
       oh-my-zsh =
         {
           enable  = true;
-          plugins = [ "git" "fasd" ];
+          plugins = [ "git" "fasd" "sudo" ];
         };
       plugins =
         [
