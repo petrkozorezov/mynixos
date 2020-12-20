@@ -60,34 +60,33 @@ let
       "LSP"
     ];
   };
-  # lsp = {
-  #   clients =
-  #     {
-  #       erlang-ls =
-  #         {
-  #           command    = [ "/home/petrkozorezov/workspace/mine/erlang_ls/_build/default/bin/erlang_ls" "--transport" "stdio" ];
-  #           enabled    = true;
-  #           languageId = "erlang";
-  #           scopes     = [ "source.erlang" ];
-  #           syntaxes   = [ "Packages/Erlang/Erlang.sublime-syntax" ];
-  #         };
-  #     };
-  #   initialize_timeout = 30;
-  #   log_debug    = false;
-  #   log_server   = false;
-  #   log_stderr   = false;
-  #   log_payloads = false;
-  # };
+  lsp = {
+    clients =
+      {
+        erlang-ls =
+          {
+            command    = [ "${pkgs.erlang_ls}/bin/erlang_ls" "--transport" "stdio" ];
+            enabled    = true;
+            languageId = "erlang";
+            scopes     = [ "source.erlang" ];
+            syntaxes   = [ "Packages/Erlang/Erlang.sublime-syntax" ];
+          };
+      };
+    initialize_timeout = 30;
+    log_debug    = false;
+    log_server   = false;
+    log_stderr   = false;
+    log_payloads = false;
+  };
 in
 {
-  # home.packages = [ pkgs.erlang_ls ];
   xdg.configFile = {
     "${userPath}/Preferences.sublime-settings".text =
       builtins.toJSON sublSetting;
     "${userPath}/Default (Linux).sublime-keymap".text =
       builtins.toJSON sublKeymap;
-    # "${userPath}/LSP.sublime-settings".text =
-    #   builtins.toJSON lsp;
+    "${userPath}/LSP.sublime-settings".text =
+      builtins.toJSON lsp;
     "${userPath}/Package Control.sublime-settings".text =
       builtins.toJSON packages;
     # TODO pass by config

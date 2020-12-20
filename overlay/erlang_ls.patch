@@ -1,0 +1,17 @@
+diff --git a/rebar.config b/rebar.config
+index 83c4ff9..e83395c 100644
+--- a/rebar.config
++++ b/rebar.config
+@@ -26,12 +26,6 @@
+
+ {shell, [ {apps, [erlang_ls]} ]}.
+
+-{plugins, [ rebar3_proper
+-          , coveralls
+-          , {rebar3_lint, {git, "https://github.com/project-fifo/rebar3_lint.git", {tag, "0.1.11"}}}
+-          ]
+-}.
+-
+ {minimum_otp_vsn, "21.0"}.
+
+ {escript_emu_args, "%%! -connect_all false\n" }.

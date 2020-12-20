@@ -1,8 +1,9 @@
 { beam, graphviz, fetchFromGitHub, lib }:
 
-beam.packages.erlang.buildRebar3 rec {
-  name = "grapherl";
-  version = "master";
+beam.packages.erlang.rebar3Relx rec {
+  name        = "grapherl";
+  version     = "master";
+  releaseType = "escript";
 
   src = fetchFromGitHub {
     owner  = "eproxus";
@@ -10,15 +11,6 @@ beam.packages.erlang.buildRebar3 rec {
     rev    = version;
     sha256 = "0n1ah23daj255ldlzgjaq15bf9lh2jzqya8541f952jps3gdyk3g";
   };
-
-  buildPhase = ''
-    HOME=. rebar3 escriptize
-  '';
-
-  installPhase = ''
-    mkdir -p $out/bin/
-    cp -r _build/default/bin/${name} "$out/bin/"
-  '';
 
   meta = with lib; {
     description = "Create graphs of Erlang systems and programs";

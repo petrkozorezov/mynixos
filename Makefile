@@ -8,6 +8,7 @@ $(DIRS):
 
 build: $(DIRS)
 	$(NRB) build --flake '.#'
+	$(MAKE) clean
 
 switch: $(DIRS)
 	$(NRB) switch --flake '.#'
