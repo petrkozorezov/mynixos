@@ -95,6 +95,7 @@ in {
         "Alt+Shift+22"    = "exec loginctl lock-sessionx";
         "${mod}+40"       = "exec rofi -show combi";
         "${mod}+Shift+40" = "exec rofi -show ssh";
+        "${mod}+39"       = "exec clipman pick --tool=rofi";
         "${mod}+36"       = "exec ${terminal}";
 
         "${mod}+Shift+26" = "exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'";
@@ -149,6 +150,7 @@ in {
             "keepassxc"
             "mkfifo ${ob_file} && tail -f ${ob_file} | ${ob}"
             "mako"
+            "wl-paste --watch clipman store"
          ]
          (cmd: { command = cmd; })
       ;
