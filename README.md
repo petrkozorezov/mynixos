@@ -25,9 +25,17 @@ system build is in /run/current-system/
   - tests
   - remove copy/paste (eg font Hack)
   - sign and rewrite commits
+  - add router configuration
  - system:
   - split to modules
   - use hardware modules only as a system capabilites
  - hm:
+  - rofi
+   - add configuration module
+   - https://github.com/davatorium/rofi/wiki/User-scripts
+  - keepassxc-cli
+  - add after switching to radeon:
+   - imv
+   - mpv
+   - oguri | Wallutils | smth else
   - sublime plugins
-  - add rofi module
