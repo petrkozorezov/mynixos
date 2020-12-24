@@ -2,6 +2,7 @@
 {
   home.packages = with pkgs;
     [
+      gcc
       erlang
       rebar3
       gnumake
