@@ -58,6 +58,7 @@ let
       "TOML"
       "WordHighlight"
       "LSP"
+      "Dockerfile Syntax Highlighting"
     ];
   };
   lsp = {
