@@ -10,6 +10,7 @@
       gtypist
       sublime3
       grapherl
+      pandoc
 
       # TODO ops
       # nixops

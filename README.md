@@ -31,11 +31,10 @@ system build is in /run/current-system/
   - use hardware modules only as a system capabilites
  - hm:
   - rofi
-   - add configuration module
    - https://github.com/davatorium/rofi/wiki/User-scripts
-  - keepassxc-cli
+  - migrate to pass form keepassx
   - add after switching to radeon:
    - imv
    - mpv
    - oguri | Wallutils | smth else
-  - sublime plugins
+  - install sublime plugins by nix

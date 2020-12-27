@@ -93,21 +93,23 @@ in {
         arrows     "Shift+Control+${mod}" "move workspace output" //
       {
         "Alt+Shift+22"    = "exec loginctl lock-sessionx";
-        "${mod}+40"       = "exec rofi -show combi";
-        "${mod}+Shift+40" = "exec rofi -show ssh";
+        "${mod}+41"       = "exec rofi -show run";
+        "${mod}+Shift+41" = "exec rofi -show drun";
+        "${mod}+40"       = "exec rofi -show ssh";
         "${mod}+39"       = "exec clipman pick --tool=rofi";
+        # "${mod}+38"       = "exec rofi -show ssh"; # pass
         "${mod}+36"       = "exec ${terminal}";
 
         "${mod}+Shift+26" = "exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'";
         "${mod}+Shift+24" = "kill";
         "${mod}+Shift+25" = "restart";
-        "${mod}+Shift+38" = "reload";
+        # "${mod}+Shift+38" = "reload"; # FIXME move to other key
 
         "${mod}+25" = "layout tabbed";
         "${mod}+26" = "layout toggle split";
         "${mod}+27" = "layout stacking";
 
-        "${mod}+41" = "fullscreen toggle";
+        "${mod}+42" = "fullscreen toggle";
 
         "${mod}+24" = "split h";
         "${mod}+38" = "split v";

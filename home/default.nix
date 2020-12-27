@@ -11,6 +11,7 @@
     ./gpg-agent.nix
     ./htop.nix
     ./mako.nix
+    ./rofi.nix
     ./ssh.nix
     ./subl.nix
     ./sway.nix

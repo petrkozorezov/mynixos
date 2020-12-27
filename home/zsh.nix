@@ -80,7 +80,9 @@
       # enable                     = true; # TODO
       enableNixDirenvIntegration = true;
     };
+
+    bat.enable = true;
   };
 
-  home.packages = with pkgs; [ fasd fd bat ];
+  home.packages = with pkgs; [ fasd fd ];
 }
