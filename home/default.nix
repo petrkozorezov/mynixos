@@ -8,10 +8,10 @@
     ./dropbox.nix
     ./firefox.nix
     ./git.nix
-    ./gpg-agent.nix
     ./htop.nix
     ./mako.nix
     ./rofi.nix
+    ./security.nix
     ./ssh.nix
     ./subl.nix
     ./sway.nix

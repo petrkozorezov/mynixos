@@ -6,6 +6,7 @@
     ./loader.nix
     ./network.nix
     ./pipewire.nix
+    ./security.nix
     ./steam.nix
     ./sway.nix
     ./uhk.nix
