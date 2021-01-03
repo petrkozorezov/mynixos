@@ -7,16 +7,17 @@
   };
 
   outputs = { self, home-manager, nixpkgs, ... }: {
-    petrkozorezov-notebook = self.nixosConfigurations.petrkozorezov-notebook.config.system.build.toplevel;
+    petrkozorezov-x1-extreme-gen2 =
+      self.nixosConfigurations.petrkozorezov-x1-extreme-gen2.config.system.build.toplevel;
 
     nixosConfigurations = {
-      petrkozorezov-notebook =
+      petrkozorezov-x1-extreme-gen2 =
         nixpkgs.lib.nixosSystem {
           system  = "x86_64-linux";
           modules =
             [
               ./hardware
-              ./configuration.nix
+              ./petrkozorezov.profile.nix
               home-manager.nixosModules.home-manager {
                 home-manager = {
                   useGlobalPkgs       = true;

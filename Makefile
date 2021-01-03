@@ -7,11 +7,11 @@ $(DIRS):
 	ln -sf $(REPO_PATH) $@
 
 build: $(DIRS)
-	$(NRB) build --flake '.#'
+	$(NRB) build --flake '.#petrkozorezov-x1-extreme-gen2'
 	$(MAKE) clean
 
 switch: $(DIRS)
-	$(NRB) switch --flake '.#'
+	$(NRB) switch --flake '.#petrkozorezov-x1-extreme-gen2'
 
 clean:
 	rm -rf result
