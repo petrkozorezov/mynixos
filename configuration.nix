@@ -3,7 +3,6 @@
   imports =
     [
       ./nix.nix
-      ./hardware
       ./system
     ];
 
@@ -14,6 +13,8 @@
     cleanTmpDir    = true;
     kernel.sysctl."fs.inotify.max_user_watches" = 524288;
   };
+
+  hardware.opengl.enable = true;
 
   i18n = {
     defaultLocale = "en_US.UTF-8";

@@ -6,20 +6,26 @@
     home-manager.url = "github:rycee/home-manager";
   };
 
-  outputs = { home-manager, nixpkgs, ... }: {
-    nixosConfigurations.petrkozorezov-notebook = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [
-        ./configuration.nix
-        home-manager.nixosModules.home-manager
-        {
-          home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
-            users.petrkozorezov = import ./home.nix;
-          };
-        }
-      ];
+  outputs = { self, home-manager, nixpkgs, ... }: {
+    petrkozorezov-notebook = self.nixosConfigurations.petrkozorezov-notebook.config.system.build.toplevel;
+
+    nixosConfigurations = {
+      petrkozorezov-notebook =
+        nixpkgs.lib.nixosSystem {
+          system  = "x86_64-linux";
+          modules =
+            [
+              ./hardware
+              ./configuration.nix
+              home-manager.nixosModules.home-manager {
+                home-manager = {
+                  useGlobalPkgs       = true;
+                  useUserPackages     = true;
+                  users.petrkozorezov = import ./home.nix;
+                };
+              }
+            ];
+        };
     };
   };
 }
