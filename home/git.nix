@@ -6,8 +6,9 @@
       userEmail = "petr.kozorezov@gmail.com";
       userName  = "Petr Kozorezov";
       extraConfig = {
-        push.default = "current";
-        pull.ff      = "only";
+        push.default   = "current";
+        pull.ff        = "only";
+        core.quotePath = false;
       };
     };
     gh = {
