@@ -61,6 +61,17 @@
                 sha256 = "1qvakkgjyrsz5jwyy7x7w5agbj0rrw5i1fb2rzhja5nqlkgjahk7";
               };
           }
+
+          {
+            name = "pass-zsh-completion";
+            src = pkgs.fetchFromGitHub
+              {
+                owner  = "ninrod";
+                repo   = "pass-zsh-completion";
+                rev    = "e4d8d2c27d8999307e8f34bf81b2e15df4b76177";
+                sha256 = "sha256-KfZJ9XxZ8cBePcJPOAPQZ+f5kVUgLExDw/5QSduDA/0=";
+              };
+          }
         ];
     };
 

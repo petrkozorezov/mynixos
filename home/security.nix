@@ -40,22 +40,15 @@ in {
     signByDefault = true;
   };
 
-  # programs.password-store = {
-  #   enable   = true;
-  #   package  = pkgs.pass-wayland.withExtensions (
-  #     exts: with exts; [
-  #       pass-audit
-  #       pass-update
-  #       # (pkgs.callPackage ../overlay/pass-import.3.1.nix { })
-  #     ]
-  #   );
-  #   # package  = pkgs.callPackage <nixpkgs>/tools/security/pass {
-  #   #   waylandSupport = true;
-  #   #   # pass           = pkgs.pass-wayland;
-  #   #   x11Support     = false;
-  #   #   wl-clipboard   = pkgs.wl-clipboard;
-  #   # };
-  # };
+  programs.password-store = {
+    enable   = true;
+    package  = pkgs.pass-wayland.withExtensions (
+      exts: with exts; [
+        pass-audit
+        pass-update
+      ]
+    );
+  };
 
   home.file.".gnupg/scdaemon.conf".text = "reader-port Yubico Yubi";
 }
