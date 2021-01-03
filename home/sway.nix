@@ -1,3 +1,4 @@
+# TODO kanshi
 { config, lib, pkgs, ... }:
 
 let
@@ -47,7 +48,18 @@ in {
 
     capitaine-cursors
     hicolor-icon-theme
+
+    # gtk themes
+    gtk-engine-murrine
+    gtk_engines
+    gsettings-desktop-schemas
+    lxappearance
+
+    # qt themes
+    qt5ct
   ];
+
+  home.sessionVariables.QT_QPA_PLATFORMTHEME = "qt5ct";
 
   wayland.windowManager.sway = {
     enable = true;
