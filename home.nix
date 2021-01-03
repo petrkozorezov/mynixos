@@ -20,7 +20,7 @@
   #   firstname = "Petr";
   #   lastname  = "Kozorezov";
   #   fullname  = "${firstname} ${lastname}";
-  #   gpgKey    = "EF2A246DDE509B0C";
+  #   gpgKey    = email;
   #   font      = "Hack";
   #   defaultPrograms = {
   #     editor   = "vim";
