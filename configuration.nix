@@ -39,10 +39,7 @@
   environment.systemPackages = [ pkgs.overlay-sys-test ];
   environment.pathsToLink = [ "/share/zsh" ]; # for programs.zsh.enableCompletion
 
-  programs = {
-    vim.defaultEditor = true;
-    ssh.startAgent    = true;
-  };
+  programs.vim.defaultEditor = true;
 
   services = {
     #openssh.enable     = true;
