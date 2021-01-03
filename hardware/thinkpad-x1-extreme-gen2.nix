@@ -1,5 +1,4 @@
 { config, lib, pkgs, ... }:
-
 {
   boot = {
     initrd = {
@@ -9,6 +8,12 @@
     kernelModules = [ "kvm-intel" "iwlwifi" ];
     extraModulePackages = [ ];
     #blacklistedKernelModules      = [ "nouveau" ];
+    loader = {
+      systemd-boot.enable      = true;
+      timeout                  = 1;
+      efi.canTouchEfiVariables = true;
+      #systemd-boot.consoleMode = "max";
+    };
   };
 
   fileSystems = {
@@ -33,7 +38,7 @@
     ];
 
   hardware = {
-    enableAllFirmware = true;
+    enableAllFirmware         = true;
     cpu.intel.updateMicrocode = true;
   };
 
