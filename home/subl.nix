@@ -59,6 +59,7 @@ let
       "WordHighlight"
       "LSP"
       "Dockerfile Syntax Highlighting"
+      "Markdown Preview"
     ];
   };
   lsp = {
