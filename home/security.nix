@@ -1,14 +1,4 @@
 # useful links:
-#   - https://github.com/drduh/YubiKey-Guide (also see GPGYubikey.md)
-#   - https://www.passwordstore.org
-#
-# TODO:
-#   - generate .gnupg directory
-#   - generate .ssh directory
-#   - programs.rofi.pass.enable = true; https://github.com/carnager/rofi-pass/
-#   - https://github.com/maximbaz/yubikey-touch-detector
-#   - https://github.com/palortoff/pass-extension-tail#readme
-#
 { pkgs, ... }:
 let
   gpgKey = "petr.kozorezov@gmail.com";
@@ -48,6 +38,9 @@ in {
         pass-update
       ]
     );
+    settings = {
+      PASSWORD_STORE_DIR = "~/.password-store";
+    };
   };
 
   home.file.".gnupg/scdaemon.conf".text = "reader-port Yubico Yubi";
