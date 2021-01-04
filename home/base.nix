@@ -9,6 +9,7 @@
     jq
     gnupg
     pciutils
+    usbutils
     unzip
     vim
     tree
