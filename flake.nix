@@ -35,6 +35,7 @@
               base
               ./nix.nix
               ./hardware/thinkpad-x1-extreme-gen2.nix
+              ./secrets/users.nix
               ./system
               home-manager.nixosModules.home-manager
               home
@@ -51,6 +52,7 @@
               "${nixpkgs}/nixos/modules/installer/cd-dvd/iso-image.nix"
               "${nixpkgs}/nixos/modules/profiles/all-hardware.nix"
               ./image.nix
+              ./secrets/users.nix
               ./system
               home-manager.nixosModules.home-manager
               home
