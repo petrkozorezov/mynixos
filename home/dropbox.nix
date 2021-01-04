@@ -1,7 +1,7 @@
 { config, ... }:
 {
   services.dropbox = {
-    enable = true;
+    enable = false;
     path   = "${config.home.homeDirectory}/Dropbox";
   };
 }
