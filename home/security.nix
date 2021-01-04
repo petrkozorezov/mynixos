@@ -1,5 +1,5 @@
 # useful links:
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 let
   gpgKey = "petr.kozorezov@gmail.com";
 in {
@@ -15,8 +15,12 @@ in {
       #pinentry-curses
       pinentry-gtk2
       paperkey
+
+      # for pass copy alias (pc)
+      wl-clipboard
     ];
 
+  # gpg
   services.gpg-agent = {
     enable           = true;
     enableSshSupport = true;
@@ -25,6 +29,8 @@ in {
     maxCacheTtl      = 120;
     pinentryFlavor   = "gtk2";
   };
+  home.file.".gnupg/scdaemon.conf".text = "reader-port Yubico Yubi";
+
   programs.git.signing = {
     key           = gpgKey;
     signByDefault = true;
@@ -39,9 +45,13 @@ in {
       ]
     );
     settings = {
-      PASSWORD_STORE_DIR = "~/.password-store";
+      PASSWORD_STORE_DIR = "${config.home.homeDirectory}/.password-store/";
     };
   };
-
-  home.file.".gnupg/scdaemon.conf".text = "reader-port Yubico Yubi";
+  programs.zsh.initExtra =
+    ''
+      pc() {
+        pass show $1 | head -n 1 | tr -d '\n' | wl-copy
+      }
+    '';
 }
