@@ -12,7 +12,7 @@
  - configuration.nix — base NixOS configuration file
  - home.nix — base home-manager configuration file
  - overlay — overlay base file
- - image.iso.nix — base
+ - image.nix — iso image of this configuration
 
 
 ## TODO
@@ -21,7 +21,6 @@
     - nur
     - tests
     - remove copy/paste (eg font Hack)
-    - sign and rewrite commits
     - add router configuration
   - system:
     - split to modules
@@ -35,7 +34,6 @@
   - hm:
     - rofi
       - https://github.com/davatorium/rofi/wiki/User-scripts
-    - migrate to pass form keepassx
     - add after switching to radeon:
       - imv
       - mpv

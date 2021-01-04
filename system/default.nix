@@ -62,6 +62,7 @@
 
   users.users.petrkozorezov = {
     isNormalUser = true;
+    description  = "Petr Kozorezov";
     extraGroups  = [ "wheel" "audio" "video" "plugdev" ];
     shell        = pkgs.zsh;
   };
