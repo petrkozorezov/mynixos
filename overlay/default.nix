@@ -1,5 +1,5 @@
 self: super:
-{
+rec {
   # just to ensure overlay works
   overlay-sys-test = super.hello;
   overlay-hm-test  = super.hello;
@@ -21,4 +21,19 @@ self: super:
   wl-clipboard-x11 = super.callPackage ./wl-clipboard-x11.nix { };
   xsel  = self.wl-clipboard-x11;
   xclip = self.wl-clipboard-x11;
+
+  # DRM support in MellowPlayer
+  libwidevinecdm = super.callPackage ./libwidevinecdm.nix { };
+  mellowplayer =
+    super.mellowplayer.overrideAttrs (oldAttrs: {
+      buildInputs           = oldAttrs.buildInputs or [] ++ [ super.makeWrapper ];
+      propagatedBuildInputs = oldAttrs.propagatedBuildInputs or [] ++ [ libwidevinecdm ];
+      postInstall =
+        ''
+          ${oldAttrs.postInstall or ""}
+          wrapProgram $out/bin/MellowPlayer \
+            --set "QTWEBENGINE_CHROMIUM_FLAGS" \
+              "--widevine-path=${libwidevinecdm}/lib/libwidevinecdm.so --no-sandbox"
+        '';
+    });
 }
