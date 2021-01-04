@@ -1,4 +1,3 @@
-# TODO kanshi
 { config, lib, pkgs, ... }:
 
 let
@@ -17,12 +16,6 @@ let
   ob       = "wob";
   ob_file  = "\$${sock}.${ob}";
   wallpaper = "~/.config/sway/wallpaper-big-1.jpg";
-  # k = {
-  #   "c" = ;
-  #   "t" = ;
-  #   "h" = ;
-  #   "n" = ;
-  # };
 in {
   home.packages = with pkgs; [
     rofi
@@ -34,8 +27,8 @@ in {
     qt5.qtwayland
     grim
     slurp                # screenshoter
-    notify-desktop  # notifications
-    clipman wl-clipboard # clipboard (wl-copy wl-paste)
+    notify-desktop       # notifications
+    wl-clipboard         # clipboard (wl-copy wl-paste)
     ydotool              # gui automation tool
     waypipe              # wayland over ssh
     wob                  # volume control overlay
@@ -65,36 +58,28 @@ in {
     enable = true;
     systemdIntegration = false;
     config = rec {
-      modifier = mod;
-      fonts = ["Hack 10"];
-
-      keybindings = {};
-
-      # bars = [
-      #   {
-      #     position = "bottom";
-      #     statusCommand = "${pkgs.i3status-rust}/bin/i3status-rs ${./i3status-rust.toml}";
-      #   }
-      # ];
-
-      # 16 29 43 57 65
-      keycodebindings = let
+      modifier        = mod;
+      fonts           = ["Hack 10"];
+      #keybindings     = {};
+      keycodebindings = {};
+      bindkeysToCode  = true;
+      keybindings = let
         workspaces = mod_: action: {
-          "${mod_}+43" = "${action} workspace ${w_term_0}";
-          "${mod_}+29" = "${action} workspace ${w_term_1}";
-          "${mod_}+57" = "${action} workspace ${w_term_2}";
-          "${mod_}+58" = "${action} workspace ${w_term_3}";
-          "${mod_}+30" = "${action} workspace ${w_web}"   ;
-          "${mod_}+32" = "${action} workspace ${w_dev}"   ;
-          "${mod_}+33" = "${action} workspace ${w_msg}"   ;
-          "${mod_}+34" = "${action} workspace ${w_mon}"   ;
-          "${mod_}+35" = "${action} workspace ${w_pass}"  ;
+          "${mod_}+d" = "${action} workspace ${w_term_0}";
+          "${mod_}+f" = "${action} workspace ${w_term_1}";
+          "${mod_}+b" = "${action} workspace ${w_term_2}";
+          "${mod_}+m" = "${action} workspace ${w_term_3}";
+          "${mod_}+g" = "${action} workspace ${w_web}"   ;
+          "${mod_}+r" = "${action} workspace ${w_dev}"   ;
+          "${mod_}+l" = "${action} workspace ${w_msg}"   ;
+          "${mod_}+slash" = "${action} workspace ${w_mon}"   ;
+          "${mod_}+at" = "${action} workspace ${w_pass}"  ;
         };
         arrows = mod_: action: {
-          "${mod_}+44" = "${action}  left";
-          "${mod_}+45" = "${action}  down";
-          "${mod_}+31" = "${action}    up";
-          "${mod_}+46" = "${action} right";
+          "${mod_}+c" = "${action}    up";
+          "${mod_}+t" = "${action}  down";
+          "${mod_}+h" = "${action}  left";
+          "${mod_}+n" = "${action} right";
         };
       in
         workspaces               "${mod}" ""                      //
@@ -104,67 +89,63 @@ in {
         arrows           "Control+${mod}" "focus output"          //
         arrows     "Shift+Control+${mod}" "move workspace output" //
       {
-        "Alt+Shift+22"    = "exec loginctl lock-sessionx";
-        "${mod}+41"       = "exec rofi -show run";
-        "${mod}+Shift+41" = "exec rofi -show drun";
-        "${mod}+40"       = "exec rofi -show ssh";
-        "${mod}+39"       = "exec clipman pick --tool=rofi";
-        # "${mod}+38"       = "exec rofi -show ssh"; # pass
-        "${mod}+36"       = "exec ${terminal}";
+        #"Alt+Shift+22"          = "exec loginctl lock-sessionx";
+        "${mod}+u"               = "exec rofi -show run";
+        "${mod}+Shift+u"         = "exec rofi -show drun";
+        "${mod}+e"               = "exec rofi -show ssh";
+        #"${mod}+a"              = "exec rofi -show ssh"; # pass
+        "${mod}+return"          = "exec ${terminal}";
 
-        "${mod}+Shift+26" = "exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'";
-        "${mod}+Shift+24" = "kill";
-        "${mod}+Shift+25" = "restart";
-        # "${mod}+Shift+38" = "reload"; # FIXME move to other key
+        "${mod}+Shift+y"         = "reload"; # FIXME move to other key
+        "${mod}+Shift+p"         = "restart";
+        "${mod}+Shift+period"    = "exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'";
+        "${mod}+Shift+semicolon" = "kill";
 
-        "${mod}+25" = "layout tabbed";
-        "${mod}+26" = "layout toggle split";
-        "${mod}+27" = "layout stacking";
+        "${mod}+apostrophe"      = "layout toggle split";
+        "${mod}+q"               = "layout tabbed";
+        "${mod}+j"               = "layout stacking";
 
-        "${mod}+42" = "fullscreen toggle";
+        "${mod}+i"               = "fullscreen toggle";
 
-        "${mod}+24" = "split h";
-        "${mod}+38" = "split v";
+        "${mod}+x"               = "split h";
+        "${mod}+k"               = "split v";
 
-        "${mod}+47" = "exec grim -t jpeg -g \"$(slurp)\" \"$HOME/Dropbox/Screenshots/$(date +%Y-%m-%d_%H-%m-%S).jpg\"";
+        "${mod}+minus"           = "exec grim -t jpeg -g \"$(slurp)\" \"$HOME/Dropbox/Screenshots/$(date +%Y-%m-%d_%H-%m-%S).jpg\"";
 
-        #"${mod}+r" = "mode resize";
-        #"${mod}+Shift+space" = "floating toggle";
-        #"${mod}+space" = "focus mode_toggle";
+        #"${mod}+r"              = "mode resize";
+        "${mod}+Shift+space"     = "floating toggle";
+        "${mod}+space"           = "focus mode_toggle";
 
-        "122" = "exec pamixer -ud 2 && pamixer --get-volume > ${ob_file}";
-        "123" = "exec pamixer -ui 2 && pamixer --get-volume > ${ob_file}";
-        # "" = "exec pamixer --toggle-mute && ( pamixer --get-mute && echo 0 > ${ob_file} ) || pamixer --get-volume > ${ob_file}";
-        "171" = "exec playerctl next";
-        "172" = "exec playerctl play-pause";
-        "173" = "exec playerctl previous";
-
+        "XF86AudioRaiseVolume"   = "exec pamixer -ui 2 && pamixer --get-volume > ${ob_file}";
+        "XF86AudioLowerVolume"   = "exec pamixer -ud 2 && pamixer --get-volume > ${ob_file}";
+        "XF86AudioMute"          = "exec pamixer --toggle-mute && ( pamixer --get-mute && echo 0 > ${ob_file} ) || pamixer --get-volume > ${ob_file}";
+        "XF86AudioNext"          = "exec playerctl next";
+        "XF86AudioPlay"          = "exec playerctl play-pause";
+        "XF86AudioPrev"          = "exec playerctl previous";
 
         # set $kbd_light light -s sysfs/leds/smc::kbd_backlight
         # set $mon_light light
 
-        # bindsym --to-code XF86MonBrightnessUp   exec $mon_light -A 5 && $mon_light -G | cut -d'.' -f1 > $SWAYSOCK.wob
-        # bindsym --to-code XF86MonBrightnessDown exec $mon_light -U 5 && $mon_light -G | cut -d'.' -f1 > $SWAYSOCK.wob
+        # "XF86MonBrightnessUp"   = "exec $mon_light -A 5 && $mon_light -G | cut -d'.' -f1 > ${ob_file}";
+        # "XF86MonBrightnessDown" = "exec $mon_light -U 5 && $mon_light -G | cut -d'.' -f1 > ${ob_file}";
 
-        # bindsym --to-code XF86KbdBrightnessUp   exec $kbd_light -A 5 && $kbd_light -G | cut -d'.' -f1 > $SWAYSOCK.wob
-        # bindsym --to-code XF86KbdBrightnessDown exec $kbd_light -U 5 && $kbd_light -G | cut -d'.' -f1 > $SWAYSOCK.wob
+        # "XF86KbdBrightnessUp"   = "exec $kbd_light -A 5 && $kbd_light -G | cut -d'.' -f1 > ${ob_file}";
+        # "XF86KbdBrightnessDown" = "exec $kbd_light -U 5 && $kbd_light -G | cut -d'.' -f1 > ${ob_file}";
 
       };
 
       startup =
         lib.lists.forEach
           [
-            "dropbox start"
             "nm-applet --indicator"
             "blueman-applet"
             "firefox"
             "sublime_text"
             "telegram-desktop"
             "slack"
-            "keepassxc"
             "mkfifo ${ob_file} && tail -f ${ob_file} | ${ob}"
             "mako"
-            "wl-paste --watch clipman store"
+            "MellowPlayer" # TODO put it to appropriate workspace
          ]
          (cmd: { command = cmd; })
       ;
@@ -174,7 +155,6 @@ in {
           "${w_web}"  = [{ app_id = "firefox"        ; } { class ="Chromium-browser"; }];
           "${w_dev}"  = [{ app_id = "sublime_text"   ; }                               ];
           "${w_msg}"  = [{ app_id = "telegramdesktop"; } { class ="Slack"           ; }];
-          "${w_pass}" = [{ title  = ".*KeePassXC$"   ; }                               ];
         };
 
       gaps = {
@@ -217,20 +197,13 @@ in {
       };
 
       output = {
+        # TODO move to kanshi
         "eDP-1" = {
-          pos  = "0 0";
-        };
-        "DP-1" = {
-          mode = "3440x1440@100Hz";
-          # pos  = "-760 1080";
-        };
-        "DP-2" = {
-          mode = "3440x1440@100Hz";
-          # pos  = "-760 1080";
+          pos   = "3440 0";
         };
         "DP-3" = {
           mode = "3440x1440@100Hz";
-          # pos  = "-760 1080";
+          pos  = "0 0";
         };
 
         "*" = {
@@ -240,8 +213,8 @@ in {
 
     };
     extraConfig = ''
-      bindswitch --reload lid:on  output eDP-1 disable
-      bindswitch --reload lid:off output eDP-1 enable
+      #bindswitch --reload lid:on  output eDP-1 disable
+      #bindswitch --reload lid:off output eDP-1 enable
 
       set $red #801a00
       set $red1 #cc2900
@@ -269,8 +242,8 @@ in {
       mouse_warping container
 
       seat seat0 {
-        fallback true
-        hide_cursor 5000
+        fallback      true
+        hide_cursor   5000
         xcursor_theme capitaine-cursors-white
       }
 
@@ -287,23 +260,17 @@ in {
         export XDG_CURRENT_DESKTOP=sway
       '';
   };
+
+  programs.zsh.initExtra =
+    ''
+      test -z $DISPLAY && \
+      test 1 -eq $XDG_VTNR && \
+        WLR_DRM_DEVICES=`readlink -f /dev/dri/by-path/pci-0000:2f:00.0-card`:`readlink -f /dev/dri/by-path/pci-0000:00:02.0-card` \
+        sway -V 2> sway.log && \
+      exit;
+    '';
+
+  # TODO
+  # programs.kanshi = {
+  # };
 }
-
-# seat seat0 {
-#   fallback true
-# }
-# seat seat1 {
-#   attach "1133:49284:Logitech_G102_Prodigy_Gaming_Mouse_System_Control"
-#   attach "1133:49284:Logitech_G102_Prodigy_Gaming_Mouse_Consumer_Control"
-#   attach "1133:49284:Logitech_G102_Prodigy_Gaming_Mouse_Consumer_Control"
-#   attach "1133:49284:Logitech_G102_Prodigy_Gaming_Mouse_Keyboard"
-#   attach "1133:49284:Logitech_G102_Prodigy_Gaming_Mouse"
-#   attach "7504:24866:Ultimate_Gadget_Laboratories_Ultimate_Hacking_Keyboard"
-# }
-
-
-# Gdk-Message: 22:39:24.984: Unable to load hand2 from the cursor theme
-# Gdk-Message: 22:39:25.010: Unable to load hand2 from the cursor theme
-# Gdk-Message: 22:39:27.917: Unable to load sb_h_double_arrow from the cursor theme
-# Gdk-Message: 22:39:27.917: Unable to load sb_h_double_arrow from the cursor theme
-# Gdk-Message: 22:39:28.022: Unable to load hand2 from the cursor theme

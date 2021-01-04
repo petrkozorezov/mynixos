@@ -2,23 +2,15 @@
 {
   programs = {
     zsh = {
-      enable  = true;
-      dotDir  = ".config/zsh"; # FIXME remove hardcode
-      #WLR_DRM_DEVICES=`readlink -f /dev/dri/by-path/pci-0000:09:00.0-card`:`readlink -f /dev/dri/by-path/pci-0000:00:02.0-card` \
+      enable = true;
+      dotDir = ".config/zsh"; # FIXME remove hardcode
       initExtra =
         ''
           # pure
           autoload -U promptinit; promptinit
           PURE_GIT_PULL=0
           prompt pure
-
           path+="$HOME/bin"
-          # TODO move it to a more appropriate place
-          test -z $DISPLAY && \
-          test 1 -eq $XDG_VTNR && \
-          WLR_DRM_DEVICES=`readlink -f /dev/dri/by-path/pci-0000:2f:00.0-card` \
-            sway -V 2> sway.log && \
-          exit;
         '';
       autocd = true;
       history = {
@@ -26,10 +18,13 @@
         extended              = true;
       };
       enableCompletion = true;
+      # TODO move to specific modules (bat, nix, ...)
       shellAliases = {
         ".."  = "cd ..";
-        "..."  = "cd ../..";
+        "..." = "cd ../..";
         "cat" = "bat";
+        "ns"  = "nix search nixpkgs";
+        "nb"  = "nix build";
       };
       oh-my-zsh =
         {
@@ -95,5 +90,9 @@
     bat.enable = true;
   };
 
-  home.packages = with pkgs; [ fasd fd ];
+  home.packages =
+    with pkgs; [
+      fasd
+      fd
+    ];
 }
