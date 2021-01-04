@@ -31,6 +31,14 @@ in {
   };
   home.file.".gnupg/scdaemon.conf".text = "reader-port Yubico Yubi";
 
+  # add card auto-insertion before commit
+  # TODO add programs.git.hooks
+  programs.git.extraConfig.core.hooksPath = "${config.xdg.configHome}/git/hooks";
+  home.file."${config.xdg.configHome}/git/hooks/pre-commit" = {
+    executable = true;
+    text       = "gpg --card-status";
+  };
+
   programs.git.signing = {
     key           = gpgKey;
     signByDefault = true;
