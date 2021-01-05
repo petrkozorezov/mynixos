@@ -1,4 +1,4 @@
-.PHONY = build switch clean
+.PHONY = build switch dry-activate clean show-repo-path update-% update thinkpad-x1-extreme-gen2 image
 REPO_PATH = `pwd`/$(dir $(lastword $(MAKEFILE_LIST)))
 NB=nix build -v
 DIRS=/etc/nixos ~/.config/nixpkgs # FIXME better name
@@ -6,8 +6,8 @@ DIRS=/etc/nixos ~/.config/nixpkgs # FIXME better name
 $(DIRS):
 	ln -sf $(REPO_PATH) $@
 
-switch: thinkpad-x1-extreme-gen2
-	./result/bin/switch-to-configuration switch
+switch: build-thinkpad-x1-extreme-gen2
+	nixos-rebuild -v switch --flake '.#thinkpad-x1-extreme-gen2'
 
 clean:
 	rm -rf result
@@ -20,8 +20,5 @@ update-%:
 
 update: update-nixpkgs update-home-manager
 
-thinkpad-x1-extreme-gen2: $(DIRS)
-	$(NB) '.#thinkpad-x1-extreme-gen2'
-
-image:
-	$(NB) ".#image"
+build-%:
+	$(NB) ".#$*"
