@@ -13,6 +13,7 @@
     unzip
     vim
     tree
+    bind.dnsutils
 
     pmount # (?)
     lm_sensors
