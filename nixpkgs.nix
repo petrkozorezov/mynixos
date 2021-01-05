@@ -1,1 +1,4 @@
-(import ./config.nix)
+{
+  config   = (import ./config.nix);
+  overlays = [ (import ./overlay) ];
+}

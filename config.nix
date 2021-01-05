@@ -4,15 +4,12 @@ let
     sha256 = "1r32qv3kfq4c3gc5cnrbscghxp891sdn6i042kd4msx133iawp5q";
   };
 in {
-  config = {
-    allowUnfree = true;
-    packageOverrides = pkgs: {
-      nur = import (nur_repo) { inherit pkgs; };
-    };
-    permittedInsecurePackages = [
-      "openssl-1.0.2u"
-      "python2.7-cryptography-2.9.2"
-    ];
+  allowUnfree = true;
+  packageOverrides = pkgs: {
+    nur = import (nur_repo) { inherit pkgs; };
   };
-  overlays = [ (import ./overlay) ];
+  permittedInsecurePackages = [
+    "openssl-1.0.2u"
+    "python2.7-cryptography-2.9.2"
+  ];
 }
