@@ -21,7 +21,7 @@
   ];
 
   home.sessionVariables = {
-    EDITOR   = "vim";
+    EDITOR   = "vim"; # subl --wait
     BROWSER  = "firefox";
     TERMINAL = "alacritty";
   };

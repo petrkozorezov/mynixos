@@ -20,6 +20,8 @@ let
       url    = "https://wallpapercave.com/wp/wp2231140.jpg";
       sha256 = "0iqjiigd1bhj511cc89w625r8dsxapbv6fd1dklyzfl0v1pdj133";
     };
+    # http://getwallpapers.com/wallpaper/full/c/6/c/52323.jpg
+    # http://getwallpapers.com/wallpaper/full/c/7/4/271955.jpg
 in {
   home.packages = with pkgs; [
     rofi

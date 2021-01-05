@@ -78,4 +78,13 @@
   # TODO move to an ather place with if
   hardware.pulseaudio.extraModules = [ pkgs.pulseaudio-modules-bt ];
   services.blueman.enable          = true;
+
+  # TODO
+  # hardware.opengl.enable = true;
+  # hardware.opengl.extraPackages = with pkgs; [
+  #   intel-media-driver
+  #   vaapiIntel
+  #   vaapiVdpau
+  #   libvdpau-va-gl
+  # ];
 }

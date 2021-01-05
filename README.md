@@ -37,7 +37,21 @@
       - mpv
       - oguri | Wallutils | smth else
     - install sublime plugins by nix (subl plugins do not work on livecd without an internet)
+  - router
+    - installer
+    - deploy nixos
+    - add dnsmasq
+    - add nat
+    - add wifi access point
+    - Ddns
+    - VPN server+client
+    - Homeassist server
+    - Syncthing
 
+## NixOPS
+
+ - https://github.com/wagdav/homelab
+ - https://lukebentleyfox.net/posts/building-this-blog/
 
 ## Misc
 
