@@ -15,7 +15,11 @@ let
   sock     = "SWAYSOCK";
   ob       = "wob";
   ob_file  = "\$${sock}.${ob}";
-  wallpaper = "~/.config/sway/wallpaper-big-1.jpg";
+  wallpaper =
+    builtins.fetchurl {
+      url    = "https://wallpapercave.com/wp/wp2231140.jpg";
+      sha256 = "0iqjiigd1bhj511cc89w625r8dsxapbv6fd1dklyzfl0v1pdj133";
+    };
 in {
   home.packages = with pkgs; [
     rofi
