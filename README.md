@@ -26,8 +26,6 @@
     - split to modules
     - use hardware modules only as a system capabilites
   - security:
-    - generate .gnupg directory (imported pub keys)
-    - generate .ssh/id_rsa_ybk1.pub
     - programs.rofi.pass.enable = true; https://github.com/carnager/rofi-pass/
     - https://github.com/maximbaz/yubikey-touch-detector
     - https://github.com/palortoff/pass-extension-tail#readme
@@ -38,7 +36,7 @@
       - imv
       - mpv
       - oguri | Wallutils | smth else
-    - install sublime plugins by nix
+    - install sublime plugins by nix (subl plugins do not work on livecd without an internet)
 
 
 ## Misc

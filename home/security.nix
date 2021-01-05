@@ -29,7 +29,9 @@ in {
     maxCacheTtl      = 120;
     pinentryFlavor   = "gtk2";
   };
-  home.file.".gnupg/scdaemon.conf".text = "reader-port Yubico Yubi";
+  home.file.".gnupg/pubring.kbx".source   = ../secrets/gnupg.pubring.kbx;
+  home.file.".gnupg/scdaemon.conf".text   = "reader-port Yubico Yubi";
+  home.file.".ssh/id_rsa_ybk1.pub".source = ../secrets/ssh.key.pub;
 
   # add card auto-insertion before commit
   # TODO add programs.git.hooks
@@ -62,4 +64,5 @@ in {
         pass show $1 | head -n 1 | tr -d '\n' | wl-copy
       }
     '';
+
 }
