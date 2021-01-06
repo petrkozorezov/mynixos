@@ -57,16 +57,6 @@
       uncoreOffset   = -150;
       analogioOffset = -100;
     };
-    logind = {
-      extraConfig =
-        ''
-          IdleAction=ingore # TODO suspend
-          #HandlePowerKey=ignore
-        '';
-       lidSwitch              = "suspend";
-       lidSwitchExternalPower = "suspend";
-       lidSwitchDocked        = "suspend";
-    };
   };
 
   # backlight control

@@ -6,8 +6,8 @@ DIRS=/etc/nixos ~/.config/nixpkgs # FIXME better name
 $(DIRS):
 	ln -sf $(REPO_PATH) $@
 
-switch: build-thinkpad-x1-extreme-gen2
-	nixos-rebuild -v switch --flake '.#thinkpad-x1-extreme-gen2'
+switch: build-mbp13
+ nixos-rebuild -v switch --flake '.#mbp13'
 
 clean:
 	rm -rf result

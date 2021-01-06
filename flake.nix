@@ -14,6 +14,7 @@
     {
       thinkpad-x1-extreme-gen2 =
         self.nixosConfigurations.thinkpad-x1-extreme-gen2.config.system.build.toplevel;
+      mbp13 = self.nixosConfigurations.mbp13.config.system.build.toplevel;
       installer = self.nixosConfigurations.installer.config.system.build.isoImage;
       image =
         self.nixosConfigurations.image.config.system.build.isoImage;
@@ -43,6 +44,22 @@
                 base
                 ./nix.nix
                 ./hardware/thinkpad-x1-extreme-gen2.nix
+                ./secrets/users.nix
+                ./system
+                home-manager.nixosModules.home-manager
+                home
+              ];
+          };
+
+        mbp13 =
+          nixpkgs.lib.nixosSystem {
+            system  = "x86_64-linux";
+            modules =
+              [
+                revision
+                base
+                ./nix.nix
+                ./hardware/mbp13.nix
                 ./secrets/users.nix
                 ./system
                 home-manager.nixosModules.home-manager

@@ -14,12 +14,22 @@
       ./zsa-keyboards.nix
     ];
 
-  nixpkgs = (import ../config.nix);
+  nixpkgs = (import ../nixpkgs.nix);
 
   boot = {
     kernelPackages = pkgs.linuxPackages_5_8;
     cleanTmpDir    = true;
     kernel.sysctl."fs.inotify.max_user_watches" = 524288;
+    # logind = {
+    #   extraConfig =
+    #     ''
+    #       IdleAction=ingore # TODO suspend
+    #       #HandlePowerKey=ignore
+    #     '';
+    #    lidSwitch              = "suspend";
+    #    lidSwitchExternalPower = "suspend";
+    #    lidSwitchDocked        = "suspend";
+    # };
   };
 
   hardware.opengl.enable = true;
