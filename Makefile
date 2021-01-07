@@ -7,7 +7,7 @@ $(DIRS):
 	ln -sf $(REPO_PATH) $@
 
 switch: build-mbp13
- nixos-rebuild -v switch --flake '.#mbp13'
+	nixos-rebuild -v switch --flake '.#mbp13'
 
 clean:
 	rm -rf result
@@ -22,3 +22,6 @@ update: update-nixpkgs update-home-manager
 
 build-%:
 	$(NB) ".#$*"
+
+deploy-%:
+	nix shell -c nixops deploy -d router --include $*

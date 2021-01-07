@@ -100,9 +100,10 @@
       nixopsConfigurations = {
         default = {
           inherit nixpkgs;
-        } // import ./router // revision;
+        } // import ./router;
       };
 
+      # FIXME
       # for 'nix shell -c nixops create --name router --flake .'
       defaultPackage.x86_64-linux = nixops.defaultPackage.x86_64-linux;
   };

@@ -8,12 +8,17 @@
     ranger
     jq
     gnupg
-    pciutils
-    usbutils
     unzip
     vim
     tree
+
+    # hardware
+    pciutils
+    usbutils
+
+    # admin
     bind.dnsutils
+    ldns
 
     pmount # (?)
     lm_sensors
