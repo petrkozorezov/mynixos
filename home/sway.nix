@@ -45,17 +45,10 @@ in {
     wallutils # TODO use it
     xorg.xhost
 
+    dconf
+
     capitaine-cursors
     hicolor-icon-theme
-
-    # gtk themes
-    gtk-engine-murrine
-    gtk_engines
-    gsettings-desktop-schemas
-    lxappearance
-
-    # qt themes
-    qt5ct
   ];
 
   home.sessionVariables.QT_QPA_PLATFORMTHEME = "qt5ct";
@@ -63,9 +56,10 @@ in {
   wayland.windowManager.sway = {
     enable = true;
     systemdIntegration = false;
+    wrapperFeatures.gtk = true;
     config = rec {
       modifier        = mod;
-      fonts           = ["Hack 10"];
+      fonts           = [ "Hack 10" ];
       #keybindings     = {};
       keycodebindings = {};
       bindkeysToCode  = true;
@@ -278,6 +272,19 @@ in {
         sway -V 2> sway.log && \
       exit;
     '';
+
+  gtk = {
+    enable         = true;
+    font.name      = "DejaVu Sans 10";
+    iconTheme.name = "hicolor"; # TODO set smth better
+    theme = {
+      package = pkgs.gnome3.gnome_themes_standard;
+      name    = "Adwaita";
+    };
+    gtk3.extraConfig = {
+      gtk-cursor-theme-name = "Capitaine Cursors - White";
+    };
+  };
 
   # TODO
   # programs.kanshi = {
