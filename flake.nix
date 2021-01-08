@@ -100,7 +100,7 @@
       nixopsConfigurations = {
         default = {
           inherit nixpkgs;
-        } // import ./router;
+        } // import ./servers;
       };
 
       # FIXME

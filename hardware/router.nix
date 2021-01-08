@@ -2,13 +2,22 @@
 
 {
   imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
+    [
+      (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "usbhid" "usb_storage" "sd_mod" ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ config.boot.kernelPackages.rtl8192eu ];
+  boot = {
+    initrd = {
+      availableKernelModules = [ "ahci" "xhci_pci" "usbhid" "usb_storage" "sd_mod" ];
+      kernelModules = [ ];
+    };
+    kernelModules = [ "kvm-intel" ];
+    extraModulePackages = [ config.boot.kernelPackages.rtl8192eu ];
+    loader = {
+      systemd-boot.enable      = true;
+      efi.canTouchEfiVariables = false;
+    };
+  };
 
   fileSystems."/" =
     {
@@ -23,6 +32,4 @@
     };
 
   swapDevices = [ ];
-
-  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 }
