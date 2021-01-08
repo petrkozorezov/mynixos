@@ -27,7 +27,7 @@
       # multimedia
       mellowplayer
       playerctl
-      mplayer
+      mpv
 
       # others
       # gucharmap
