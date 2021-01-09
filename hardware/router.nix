@@ -11,8 +11,9 @@
       availableKernelModules = [ "ahci" "xhci_pci" "usbhid" "usb_storage" "sd_mod" ];
       kernelModules = [ ];
     };
-    kernelModules = [ "kvm-intel" ];
-    extraModulePackages = [ config.boot.kernelPackages.rtl8192eu ];
+    kernelModules = [ "kvm-intel" "88x2bu" ];
+    blacklistedKernelModules = [ "b43" "brcmsmac" ]; # old wifi card
+    extraModulePackages = [ config.boot.kernelPackages.rtl88x2bu ];
     loader = {
       systemd-boot.enable      = true;
       efi.canTouchEfiVariables = false;

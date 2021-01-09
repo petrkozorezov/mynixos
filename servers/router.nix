@@ -19,10 +19,18 @@
     };
 
     local = {
-      interface = "enp4s0";
-      net       = "192.168.2";
+      net        = "192.168.2";
+      ethernet.interface = "enp4s0";
+      wireless = {
+        interface  = "wlp0s20u4u4";
+        channel    = 1;
+        ssid       = "Petrovi4New";
+        passphrase = "testpassword";
+      };
       hosts = {
         mbp = {
+          # TODO more than one
+          # 80:e6:50:06:55:ea
           mac = "ac:87:a3:0c:83:96";
           ip  = "50";
         };

@@ -36,7 +36,7 @@ in {
         #
         # DHCP
         #
-        interface=${cfg.local.interface}
+        interface=${cfg.local.bridge.interface}
         bind-interfaces
         dhcp-range=${cfg.local.net}.100,${cfg.local.net}.200,3h # TODO configure
 

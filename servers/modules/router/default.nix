@@ -23,15 +23,45 @@ with lib;
         interface = mkOption {
           type        = types.str;
           example     = "enp3s0";
-          description = "Network interface used for uplink communication.";
+          description = "Uplink Network interface.";
         };
       };
 
       local = {
-        interface = mkOption {
+        ethernet.interface = mkOption {
           type        = types.str;
           example     = "enp4s0";
-          description = "Network interface used for uplink communication.";
+          description = "Ethernet network interface.";
+        };
+
+        wireless = {
+          interface = mkOption {
+            type        = types.str;
+            example     = "wlp0s20u4u4";
+            description = "Wifi network interface.";
+          };
+          ssid = mkOption {
+            type        = types.str;
+            default     = "zoo wifi";
+            description = "SSID of wifi network.";
+          };
+          channel = mkOption {
+            type        = types.ints.positive;
+            default     = 1;
+            description = "Wifi network channel number.";
+          };
+          passphrase = mkOption {
+            type        = types.str;
+            default     = "defaultpassword";
+            description = "WPA-PSK (pre-shared-key) passphrase.";
+          };
+        };
+
+        bridge.interface = mkOption {
+          type        = types.str;
+          default     = "br0";
+          example     = "br1";
+          description = "Bridge interface used to connect wifi and ethernet.";
         };
 
         net = mkOption {
@@ -64,7 +94,6 @@ with lib;
                 type        = types.str;
                 description = "MAC address of the host.";
               };
-
               ip = mkOption {
                 example     = "1";
                 type        = types.str;
@@ -93,19 +122,26 @@ with lib;
 
   config =
     let
-      cfg = config.zoo.router;
+      cfg    = config.zoo.router;
+      bridge = cfg.local.bridge.interface;
     in mkIf cfg.enable {
 
       networking = {
-        # TODO wlan-eth bridge
         hostName = cfg.hostname;
         useDHCP  = false;
+
+        bridges."${bridge}" = {
+          interfaces = [
+            cfg.local.ethernet.interface
+            cfg.local.wireless.interface
+          ];
+        };
 
         interfaces = {
           "${cfg.uplink.interface}" = {
             useDHCP = true;
           };
-          "${cfg.local.interface}" = {
+          "${bridge}" = {
             useDHCP = false;
             ipv4.addresses =
               [ {
@@ -116,29 +152,31 @@ with lib;
         };
 
         nat = {
-          enable            = true;
+          enable             = true;
           # enableIPv6 = true;
           externalInterface  = cfg.uplink.interface;
-          internalInterfaces = [ cfg.local.interface ];
+          internalInterfaces = [ bridge ];
         };
       };
 
-      # TODO
-
-      # services.hostapd = {
-      #   enable        = true;
-      #   wpaPassphrase = "testpassword";
-      #   interface     = "wlp2s0b1";
-      #   ssid          = "Petrovi4New";
-      #   channel       = 1;
-      #   # countryCode   = "RU";
-      #   extraConfig   =
-      #     ''
-      #       ieee80211n=1
-      #       wpa_key_mgmt=WPA-PSK
-      #       rsn_pairwise=CCMP
-      #     '';
-      # };
+      services.hostapd =
+        let
+          wifiCfg = cfg.local.wireless;
+        in {
+          enable        = true;
+          wpaPassphrase = wifiCfg.passphrase;
+          interface     = wifiCfg.interface;
+          ssid          = wifiCfg.ssid;
+          channel       = wifiCfg.channel;
+          hwMode        = "g";
+          extraConfig   =
+            ''
+              #ieee80211ac=1
+              ieee80211n=1
+              wpa_key_mgmt=WPA-PSK
+              rsn_pairwise=CCMP
+            '';
+        };
 
       # nixos networking https://nixos.wiki/wiki/Networking
       # wifi setup https://habr.com/ru/post/315960/
