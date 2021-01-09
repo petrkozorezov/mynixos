@@ -6,8 +6,11 @@
       availableKernelModules = [ "xhci_pci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
       kernelModules = [ ];
     };
-    kernelModules = [ "kvm-intel" "wl" ];
-    extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
+    kernelModules = [ "kvm-intel" "wl" "88x2bu" ];
+    extraModulePackages = [
+      config.boot.kernelPackages.broadcom_sta
+      config.boot.kernelPackages.rtl88x2bu
+    ];
 
     loader = {
       systemd-boot.enable      = true;
