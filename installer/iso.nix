@@ -1,10 +1,10 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
   systemd.services.sshd.wantedBy = pkgs.lib.mkForce [ "multi-user.target" ];
 
   users = {
     mutableUsers = false;
-    users.root.openssh.authorizedKeys.keys = [ (builtins.readFile ../secrets/ssh.key.pub) ];
+    users.root.openssh.authorizedKeys.keys = [ config.zoo.secrets.users.petrkozorezov.authPublicKey ];
   };
 
   environment.etc = {

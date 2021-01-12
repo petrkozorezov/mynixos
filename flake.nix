@@ -33,56 +33,35 @@
           # TODO refactor overlays logic
           # nixpkgs.overlays = [ nix.overlay ];
         };
+        baseModules = [
+          revision
+          base
+          ./nix.nix
+          ./secrets
+          ./system
+          home-manager.nixosModules.home-manager
+          home
+        ];
       in {
         thinkpad-x1-extreme-gen2 =
           nixpkgs.lib.nixosSystem {
             system  = "x86_64-linux";
-
-            modules =
-              [
-                revision
-                base
-                ./nix.nix
-                ./hardware/thinkpad-x1-extreme-gen2.nix
-                ./secrets/users.nix
-                ./system
-                home-manager.nixosModules.home-manager
-                home
-              ];
+            modules = [ ./hardware/thinkpad-x1-extreme-gen2.nix ] ++ baseModules;
           };
 
         mbp13 =
           nixpkgs.lib.nixosSystem {
             system  = "x86_64-linux";
-            modules =
-              [
-                revision
-                base
-                ./nix.nix
-                ./hardware/mbp13.nix
-                ./secrets/users.nix
-                ./system
-                home-manager.nixosModules.home-manager
-                home
-              ];
+            modules = [ ./hardware/mbp13.nix ] ++ baseModules;
           };
 
         image =
           nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
-            modules =
-              [
-                revision
-                base
-                # TODO move to image.nix somehow
-                "${nixpkgs}/nixos/modules/installer/cd-dvd/iso-image.nix"
-                "${nixpkgs}/nixos/modules/profiles/all-hardware.nix"
-                ./image.nix
-                ./secrets/users.nix
-                ./system
-                home-manager.nixosModules.home-manager
-                home
-              ];
+            modules = [
+              "${nixpkgs}/nixos/modules/profiles/all-hardware.nix"
+              "${nixpkgs}/nixos/modules/installer/cd-dvd/iso-image.nix" # TODO move to image.nix
+            ] ++ baseModules;
           };
         installer =
           nixpkgs.lib.nixosSystem {
@@ -91,8 +70,7 @@
               [
                 revision
                 # TODO dvorak :)
-                # TODO move to installer/iso.nix somehow
-                "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+                "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix" # TODO move to installer/iso.nix
                 ./installer/iso.nix
               ];
           };

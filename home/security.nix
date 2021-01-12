@@ -29,9 +29,9 @@ in {
     maxCacheTtl      = 120;
     pinentryFlavor   = "gtk2";
   };
-  home.file.".gnupg/pubring.kbx".source   = ../secrets/gnupg.pubring.kbx;
-  home.file.".gnupg/scdaemon.conf".text   = "reader-port Yubico Yubi";
-  home.file.".ssh/id_rsa_ybk1.pub".source = ../secrets/ssh.key.pub;
+  home.file.".gnupg/pubring.kbx".source = ../secrets/gnupg.pubring.kbx;
+  home.file.".gnupg/scdaemon.conf".text = "reader-port Yubico Yubi";
+  home.file.".ssh/id_rsa_ybk1.pub".text = config.zoo.secrets.users.petrkozorezov.authPublicKey;
 
   # add card auto-insertion before commit
   # TODO add programs.git.hooks

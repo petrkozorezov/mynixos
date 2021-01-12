@@ -1,6 +1,9 @@
 { pkgs, ... }:
 {
   imports = [
+    ../modules
+    ../secrets
+
     ./alacritty.nix
     ./base.nix
     ./desktop.nix

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
   imports =
     [
@@ -70,10 +70,17 @@
     upower.enable      = true;
   };
 
-  users.users.petrkozorezov = {
-    isNormalUser = true;
-    description  = "Petr Kozorezov";
-    extraGroups  = [ "wheel" "audio" "video" "plugdev" ];
-    shell        = pkgs.zsh;
+  users = {
+    mutableUsers        = false;
+    users.petrkozorezov = let
+      userCfg = config.zoo.secrets.users.petrkozorezov;
+    in {
+      isNormalUser                = true;
+      description                 = "Petr Kozorezov";
+      extraGroups                 = [ "wheel" "audio" "video" "plugdev" ];
+      shell                       = pkgs.zsh;
+      hashedPassword              = userCfg.hashedPassword;
+      openssh.authorizedKeys.keys = [ userCfg.authPublicKey ];
+    };
   };
 }

@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, config, lib, ... }:
 {
   imports =
     [
@@ -12,23 +12,25 @@
   zoo.router = {
     enable     = true;
     hostname   = "router-new"; # TODO rename
-    domain     = "zoo";
+    domain     = "zoo"; # TODO "home.kozorezov.su"
 
     uplink = {
       interface = "enp3s0";
     };
 
     local = {
-      net        = "192.168.2";
+      net                = "192.168.2";
       ethernet.interface = "enp4s0";
-      wireless = {
+      wireless = let
+        ssid = "Petrovi4Home";
+      in {
         interface  = "wlp0s20u4u4";
         channel    = 1;
-        ssid       = "Petrovi4New";
-        passphrase = "testpassword";
+        ssid       = ssid;
+        passphrase = config.zoo.secrets.wifi."${ssid}".passphrase; # TODO require
       };
       hosts = {
-        mbp = {
+        mbp13 = {
           # TODO more than one
           # 80:e6:50:06:55:ea
           mac = "ac:87:a3:0c:83:96";

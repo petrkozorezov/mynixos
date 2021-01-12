@@ -1,15 +1,17 @@
+# https://sandervanderburg.blogspot.com/2015/03/on-nixops-disnix-service-deployment-and.html
 {
   network = {
     description    = "zoo main network";
     enableRollback = true;
   };
 
-  defaults = {
+  defaults = { config, ... }: {
     imports = [
+      ../secrets
       ./modules
     ];
     services.openssh.enable = true;
-    users.users.root.openssh.authorizedKeys.keys = [ (builtins.readFile ../secrets/ssh.key.pub) ];
+    users.users.root.openssh.authorizedKeys.keys = [ config.zoo.secrets.users.petrkozorezov.authPublicKey ]; # FIXME default user
     deployment.provisionSSHKey = false; # TODO check it
   };
 
