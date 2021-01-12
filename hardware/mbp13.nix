@@ -49,6 +49,7 @@
     enableAllFirmware             = true;
     cpu.intel.updateMicrocode     = true;
     enableRedistributableFirmware = true;
+    facetimehd.enable             = true;
     bluetooth.enable              = true;
     pulseaudio.extraModules       = [ pkgs.pulseaudio-modules-bt ];
   };
