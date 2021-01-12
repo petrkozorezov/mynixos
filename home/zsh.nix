@@ -9,6 +9,7 @@
           # pure
           autoload -U promptinit; promptinit
           PURE_GIT_PULL=0
+          PURE_PROMPT_SYMBOL=λ
           prompt pure
           path+="$HOME/bin"
         '';
