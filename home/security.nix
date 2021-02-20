@@ -61,6 +61,7 @@ in {
   programs.zsh.initExtra =
     ''
       pc() {
+        gpg --card-status > /dev/null
         pass show $1 | head -n 1 | tr -d '\n' | wl-copy
       }
     '';
