@@ -21,6 +21,7 @@ let
     vintage_start_in_command_mode     = true;
     copy_with_empty_selection         = true;
     highlight_line                    = true;
+    folder_exclude_patterns           = [ "_build" ".git" ".cache" ];
     binary_file_patterns =
       [
         "*.jpg" "*.jpeg" "*.png" "*.gif" "*.ttf" "*.tga" "*.dds" "*.ico" "*.eot" "*.pdf" "*.swf" "*.jar" "*.zip" "*.beam"
