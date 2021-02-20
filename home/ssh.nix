@@ -21,8 +21,8 @@
       in {
         "github.com" = matchBlock {};
         "*.prod.kubient.net" = matchBlock {
-          user = "ubuntu";
-          identityFile = sshConfigHome + "id_rsa";
+          user = "petr.kozorezov";
+          identityFile = sshConfigHome + "id_rsa_ybk1.pub";
         };
         # "router" = {
         #   user = "root";
