@@ -2,7 +2,7 @@
 let
   cfg     = config.zoo.router;
   localIp = "${cfg.local.net}.${cfg.local.ip}"; # TODO remove copy/paste
-in {
+in lib.mkIf cfg.enable {
   networking = {
     firewall = {
       allowedTCPPorts = [ 53 ];
