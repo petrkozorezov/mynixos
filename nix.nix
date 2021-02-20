@@ -6,7 +6,7 @@
     '';
     gc = {
       automatic = true;
-      dates     = "daily";
+      dates     = "monthly";
       options   = "--delete-older-than 30d";
     };
     autoOptimiseStore  = true;
