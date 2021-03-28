@@ -55,7 +55,7 @@ in {
 
   wayland.windowManager.sway = {
     enable = true;
-    systemdIntegration = false;
+    systemdIntegration  = true;
     wrapperFeatures.gtk = true;
     config = rec {
       modifier        = mod;
@@ -268,8 +268,7 @@ in {
     ''
       test -z $DISPLAY && \
       test 1 -eq $XDG_VTNR && \
-        WLR_DRM_DEVICES=`readlink -f /dev/dri/by-path/pci-0000:2f:00.0-card`:`readlink -f /dev/dri/by-path/pci-0000:00:02.0-card` \
-        sway -V 2> sway.log && \
+      sway -V 2> sway.log && \
       exit;
     '';
 

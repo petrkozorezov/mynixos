@@ -1,13 +1,23 @@
 { pkgs, ... }:
 {
-  services.pipewire.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa   = {
+      enable       = true;
+      support32Bit = true;
+    };
+    # pulse.enable = true;
+  };
 
-  xdg.portal = {
-    enable       = true;
-    gtkUsePortal = true;
-    extraPortals = with pkgs; [
-      xdg-desktop-portal-gtk
-      xdg-desktop-portal-wlr
-    ];
+  xdg = {
+    autostart.enable = true;
+    portal = {
+      enable       = true;
+      extraPortals = with pkgs; [
+        xdg-desktop-portal-gtk
+        xdg-desktop-portal-wlr
+      ];
+      gtkUsePortal = true;
+    };
   };
 }
