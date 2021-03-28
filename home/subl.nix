@@ -60,7 +60,10 @@ let
       "WordHighlight"
       "LSP"
       "Dockerfile Syntax Highlighting"
-      "Markdown Preview"
+      "Coq"
+      # doesn't work
+      #"Markdown Preview"
+      #"TabNine"
     ];
   };
   lsp = {
