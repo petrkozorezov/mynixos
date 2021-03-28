@@ -79,7 +79,6 @@
       fileWidgetOptions      = [ "--preview bat" ];
       changeDirWidgetCommand = "${defaultCommand} --type d";
       changeDirWidgetOptions = [ "--preview 'tree -C {} | head -200'" ];
-      historyWidgetCommand   = null;
       historyWidgetOptions   = [];
     };
 

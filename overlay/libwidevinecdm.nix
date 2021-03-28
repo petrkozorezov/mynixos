@@ -1,4 +1,4 @@
-{ stdenv, fetchzip, ... }:
+{ stdenv, fetchzip, lib, ... }:
 stdenv.mkDerivation rec {
   pname   = "libwidevinecdm";
   version = "4.10.1582.2";
@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
       install -vD "${pname}.so" $out/lib/${pname}.so
     '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Widevine cdm library";
     homepage    = "https://www.widevine.com";
     license     = licenses.unfree;

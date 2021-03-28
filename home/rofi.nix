@@ -6,11 +6,11 @@
     terminal    = "alacritty";
     theme       = "theme";
     extraConfig =
-      ''
-        matching: "fuzzy";
-        ssh-client: "ssh_term";
-        ssh-command: "{terminal} -e {ssh-client} {host}";
-      '';
+      {
+        matching    = "fuzzy";
+        ssh-client  = "ssh_term";
+        ssh-command = "{terminal} -e {ssh-client} {host}";
+      };
   };
   xdg.configFile = {
     "rofi/theme.rasi".text =

@@ -17,7 +17,7 @@
         cachix
 
         # coq
-        coq
+        coq_8_13
         coqPackages.mathcomp-ssreflect
         coqPackages.mathcomp-solvable
         coqPackages.mathcomp-real-closed

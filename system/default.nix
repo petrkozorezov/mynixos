@@ -17,7 +17,7 @@
   nixpkgs = (import ../nixpkgs.nix);
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_5_8;
+    kernelPackages = pkgs.linuxPackages;
     cleanTmpDir    = true;
     kernel.sysctl."fs.inotify.max_user_watches" = 524288;
     # logind = {

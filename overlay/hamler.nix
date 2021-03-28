@@ -29,7 +29,7 @@ stdenv.mkDerivation rec {
   '';
   # --set-rpath "${rpath}" \
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Haskell-style functional programming language running on Erlang VM. ";
     homepage = "https://www.hamler-lang.org/";
     license = licenses.bsd3;
