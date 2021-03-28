@@ -4,7 +4,7 @@
     [
       # secrets
       veracrypt
-      keepassxc
+      # keepassxc
       #keepass-keefox # TODO try it
 
       # browsers
@@ -28,6 +28,7 @@
       mellowplayer
       playerctl
       mpv
+      nomacs
 
       # others
       # gucharmap

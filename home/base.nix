@@ -5,7 +5,7 @@
     killall
     glances
     curl wget
-    ranger
+    ranger mc
     jq
     gnupg
     unzip
@@ -25,6 +25,5 @@
     nix-index
 
     pulsemixer pamixer
-
   ];
 }
