@@ -64,3 +64,4 @@ system build is in /run/current-system/
 
   - [LEXUGE/nixos](https://github.com/LEXUGE/nixos)
   - [YubiKey-Guide](https://github.com/drduh/YubiKey-Guide)
+  - https://github.com/srid/nix-config
