@@ -18,17 +18,17 @@
 
         # coq
         coq_8_13
-        coqPackages.mathcomp-ssreflect
-        coqPackages.mathcomp-solvable
-        coqPackages.mathcomp-real-closed
-        coqPackages.mathcomp-finmap
-        coqPackages.mathcomp-fingroup
-        coqPackages.mathcomp-field
-        coqPackages.mathcomp-character
-        coqPackages.mathcomp-bigenough
-        coqPackages.mathcomp-analysis
-        coqPackages.mathcomp-algebra
-        coqPackages.mathcomp
+        coqPackages_8_13.mathcomp-ssreflect
+        coqPackages_8_13.mathcomp-solvable
+        coqPackages_8_13.mathcomp-real-closed
+        coqPackages_8_13.mathcomp-finmap
+        coqPackages_8_13.mathcomp-fingroup
+        coqPackages_8_13.mathcomp-field
+        coqPackages_8_13.mathcomp-character
+        coqPackages_8_13.mathcomp-bigenough
+        coqPackages_8_13.mathcomp-analysis
+        coqPackages_8_13.mathcomp-algebra
+        # coqPackages_8_13.mathcomp
 
         # misc
         cloc
@@ -37,6 +37,6 @@
         pandoc
       ];
 
-    sessionVariables.COQPATH = "/etc/profiles/per-user/petrkozorezov/lib/coq/8.11/user-contrib"; # FIXME
+    sessionVariables.COQPATH = "/etc/profiles/per-user/petrkozorezov/lib/coq/8.13/user-contrib"; # FIXME
   };
 }
