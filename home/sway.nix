@@ -59,7 +59,7 @@ in {
     wrapperFeatures.gtk = true;
     config = rec {
       modifier        = mod;
-      fonts           = [ "Hack 10" ];
+      fonts           = [ "JetBrains Mono 10" ];
       #keybindings     = {};
       keycodebindings = {};
       bindkeysToCode  = true;
@@ -146,6 +146,7 @@ in {
             "mkfifo ${ob_file} && tail -f ${ob_file} | ${ob}"
             "mako"
             "MellowPlayer" # TODO put it to appropriate workspace
+            "dropbox start"
          ]
          (cmd: { command = cmd; })
       ;
@@ -268,7 +269,7 @@ in {
     ''
       test -z $DISPLAY && \
       test 1 -eq $XDG_VTNR && \
-      sway -V 2> sway.log && \
+      sway && \
       exit;
     '';
 

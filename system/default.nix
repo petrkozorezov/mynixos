@@ -53,6 +53,7 @@
     font-awesome
     nerdfonts
     hack-font
+    jetbrains-mono
   ];
 
   environment.systemPackages = [ pkgs.overlay-sys-test ];

@@ -21,7 +21,7 @@
            white : #E8E8E8;
 
            transparency: "real";
-           font: "Hack 14";
+           font: "JetBrains Mono 14";
            background-color: #00000000;
         }
 

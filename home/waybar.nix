@@ -89,7 +89,7 @@
       * {
         border: none;
         border-radius: 0;
-        font-family: "Hack";
+        font-family: "JetBrains Mono";
         font-size: 13px;
         min-height: 0;
       }
@@ -101,7 +101,7 @@
 
       #window {
         font-weight: bold;
-        font-family: "Hack";
+        font-family: "JetBrains Mono";
       }
       /*
       #workspaces {

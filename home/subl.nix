@@ -9,7 +9,7 @@ let
     auto_complete                     = false;
     auto_match_enabled                = false;
     color_scheme                      = "Packages/MonokaiFree/MonokaiFree.tmTheme";
-    font_face                         = "Hack";
+    font_face                         = "JetBrains Mono";
     font_size                         = 14;
     ignored_packages                  = [];
     tab_size                          = 2;

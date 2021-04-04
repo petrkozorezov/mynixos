@@ -11,7 +11,7 @@
           };
         font =
           {
-            normal.family = "Hack";
+            normal.family = "JetBrains Mono";
             size = 13.0;
           };
         background_opacity = 0.99;
@@ -41,6 +41,14 @@
             white   = "0xffffff";
           };
         };
+        env = {
+          TERM = "xterm-256color";
+        };
+        # key_bindings = {
+          # TODO how to use it?
+          #- { key: Paste,                                action: Paste          }
+          #- { key: Copy,                                 action: Copy           }
+        # };
       };
   };
 }

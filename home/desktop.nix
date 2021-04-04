@@ -4,8 +4,6 @@
     [
       # secrets
       veracrypt
-      # keepassxc
-      #keepass-keefox # TODO try it
 
       # browsers
       firefox-wayland
@@ -25,7 +23,7 @@
       libreoffice
 
       # multimedia
-      mellowplayer
+      #mellowplayer
       playerctl
       mpv
       nomacs
