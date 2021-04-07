@@ -23,7 +23,7 @@
       libreoffice
 
       # multimedia
-      #mellowplayer
+      mellowplayer
       playerctl
       mpv
       nomacs

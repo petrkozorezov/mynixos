@@ -17,6 +17,7 @@
   nixpkgs = (import ../nixpkgs.nix);
 
   boot = {
+    # kernelPackages = pkgs.linuxPackages_5_4;
     kernelPackages = pkgs.linuxPackages;
     cleanTmpDir    = true;
     kernel.sysctl."fs.inotify.max_user_watches" = 524288;
@@ -51,8 +52,8 @@
   fonts.fonts = with pkgs; [
     powerline-fonts
     font-awesome
-    nerdfonts
-    hack-font
+#    nerdfonts
+#    hack-font
     jetbrains-mono
   ];
 
