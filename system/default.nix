@@ -53,7 +53,7 @@
     powerline-fonts
     font-awesome
 #    nerdfonts
-#    hack-font
+    hack-font
     jetbrains-mono
   ];
 

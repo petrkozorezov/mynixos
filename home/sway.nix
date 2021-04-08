@@ -3,15 +3,15 @@
 let
   mod      = "Mod4";
   terminal = "alacritty";
-  w_term_0 = "0:";
-  w_term_1 = "1:";
-  w_term_2 = "2:";
-  w_term_3 = "3:";
-  w_web    = "6:";
-  w_dev    = "7:λ";
-  w_msg    = "8:Msg";
-  w_mon    = "9:";
-  w_pass   = "10:";
+  w_term_0 = "00";
+  w_term_1 = "01";
+  w_term_2 = "02";
+  w_calls  = "05";
+  w_web    = "06";
+  w_dev    = "07";
+  w_msg    = "08";
+  w_mon    = "09";
+  w_music  = "10";
   sock     = "SWAYSOCK";
   ob       = "wob";
   ob_file  = "\$${sock}.${ob}";
@@ -59,21 +59,21 @@ in {
     wrapperFeatures.gtk = true;
     config = rec {
       modifier        = mod;
-      fonts           = [ "JetBrains Mono 10" ];
+      fonts           = [ "Hack 10" ];
       #keybindings     = {};
       keycodebindings = {};
       bindkeysToCode  = true;
       keybindings = let
         workspaces = mod_: action: {
-          "${mod_}+d" = "${action} workspace ${w_term_0}";
-          "${mod_}+f" = "${action} workspace ${w_term_1}";
-          "${mod_}+b" = "${action} workspace ${w_term_2}";
-          "${mod_}+m" = "${action} workspace ${w_term_3}";
-          "${mod_}+g" = "${action} workspace ${w_web}"   ;
-          "${mod_}+r" = "${action} workspace ${w_dev}"   ;
-          "${mod_}+l" = "${action} workspace ${w_msg}"   ;
+          "${mod_}+d"     = "${action} workspace ${w_term_0}";
+          "${mod_}+f"     = "${action} workspace ${w_term_1}";
+          "${mod_}+b"     = "${action} workspace ${w_term_2}";
+          "${mod_}+m"     = "${action} workspace ${w_calls}" ;
+          "${mod_}+g"     = "${action} workspace ${w_web}"   ;
+          "${mod_}+r"     = "${action} workspace ${w_dev}"   ;
+          "${mod_}+l"     = "${action} workspace ${w_msg}"   ;
           "${mod_}+slash" = "${action} workspace ${w_mon}"   ;
-          "${mod_}+at" = "${action} workspace ${w_pass}"  ;
+          "${mod_}+s"     = "${action} workspace ${w_music}" ;
         };
         arrows = mod_: action: {
           "${mod_}+c" = "${action}    up";
@@ -145,7 +145,7 @@ in {
             "slack"
             "mkfifo ${ob_file} && tail -f ${ob_file} | ${ob}"
             "mako"
-            "MellowPlayer" # TODO put it to appropriate workspace
+            "MellowPlayer"
             "dropbox start"
          ]
          (cmd: { command = cmd; })
@@ -153,9 +153,11 @@ in {
 
       assigns =
         {
-          "${w_web}"  = [{ app_id = "firefox"        ; } { class ="Chromium-browser"; }];
-          "${w_dev}"  = [{ app_id = "sublime_text"   ; }                               ];
-          "${w_msg}"  = [{ app_id = "telegramdesktop"; } { class ="Slack"           ; }];
+          "${w_web}"   = [{ app_id = "firefox"; }];
+          "${w_dev}"   = [{ app_id = "sublime_text"; }];
+          "${w_msg}"   = [{ app_id = "telegramdesktop"; } { class ="Slack"; }];
+          "${w_music}" = [{ app_id = "ColinDuquesnoy.gitlab.com."; }];
+          "${w_calls}" = [{ class  = "Chromium-browser"; }];
         };
 
       gaps = {

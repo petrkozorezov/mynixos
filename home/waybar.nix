@@ -1,3 +1,6 @@
+# [2021-04-08 10:56:41.417] [warning] For a functional tray you must have libappindicator-* installed and export XDG_CURRENT_DESKTOP=Unity
+
+
 { ... }:
 {
   programs.waybar = {
@@ -18,14 +21,15 @@
           all-outputs = false;
           format = "{icon}";
           format-icons = {
-            "0:"     = "";
-            "1:"     = "";
-            "2:"     = "";
-            "6:"     = "";
-            "7:λ"     = "λ";
-            "8:Msg"   = "";
-            "9:"     = "";
-            "10:"    = "";
+            "00"      = "";
+            "01"      = "";
+            "02"      = "";
+            "05"      = "";
+            "06"      = "";
+            "07"      = "λ";
+            "08"      = "";
+            "09"      = "";
+            "10"      = "♫";
             "urgent"  = "";
             "focused" = "";
             "default" = "";
@@ -89,7 +93,7 @@
       * {
         border: none;
         border-radius: 0;
-        font-family: "JetBrains Mono";
+        font-family: Hack;
         font-size: 13px;
         min-height: 0;
       }
@@ -101,13 +105,7 @@
 
       #window {
         font-weight: bold;
-        font-family: "JetBrains Mono";
       }
-      /*
-      #workspaces {
-        padding: 0 5px;
-      }
-      */
 
       #workspaces button {
         padding: 0 5px;
