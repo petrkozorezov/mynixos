@@ -3,7 +3,11 @@ with lib;
 {
   options = {
     zoo.router = {
-      enable = mkEnableOption "Will machine be configured as Zoo router.";
+      enable = mkOption {
+        type        = types.bool;
+        default     = false;
+        description = "Will machine be configured as Zoo router.";
+      };
 
       hostname = mkOption {
         type        = types.str;
@@ -87,7 +91,7 @@ with lib;
               ip  = "50";
             };
           };
-          default     = [];
+          default     = {};
           description = "DHCP/DNS hosts.";
         };
       };
@@ -136,6 +140,90 @@ with lib;
           externalInterface  = cfg.uplink.interface;
           internalInterfaces = [ bridge ];
         };
+
+        firewall.allowedUDPPorts = [ 51820 ];
+
+        # wireguard.interfaces = let
+        #   vpnCfg = config.zoo.secrets.vpn;
+        # in {
+        #   wg0 = {
+        #     # Determines the IP address and subnet of the client's end of the tunnel interface.
+        #     ips = [ "192.168.3.2/24" ];
+        #     listenPort = 51820;
+        #     privateKey = vpnCfg.router.priv;
+
+        #     peers = [
+        #       # For a client configuration, one peer entry for the server will suffice.
+
+        #       {
+        #         # Public key of the server (not a file path).
+        #         publicKey = "{server public key}";
+
+        #         # Forward all the traffic via VPN.
+        #         allowedIPs = [ "0.0.0.0/0" ];
+        #         # Or forward only particular subnets
+        #         #allowedIPs = [ "10.100.0.1" "91.108.12.0/22" ];
+
+        #         # Set this to the server IP and port.
+        #         endpoint = "{server ip}:51820"; # ToDo: route to endpoint not automatically configured https://wiki.archlinux.org/index.php/WireGuard#Loop_routing https://discourse.nixos.org/t/solved-minimal-firewall-setup-for-wireguard-client/7577
+
+        #         # Send keepalives every 25 seconds. Important to keep NAT tables alive.
+        #         persistentKeepalive = 25;
+        #       }
+        #     ];
+        #   };
+
+        # wireguard = {
+        #   enable = true;
+        #   interfaces = {
+        #     wg0 = {
+        #       ips = [
+        #         "192.168.3.4/24"
+        #       ];
+        #       peers = [
+        #         {
+        #           allowedIPs = [
+        #             "192.168.3.1/32"
+        #           ];
+        #           endpoint  = "demo.wireguard.io:12913";
+        #           publicKey = "xTIBA5rboUvnH4htodjb6e697QjLERt1NAB4mZqp8Dg=";
+        #         }
+        #       ];
+        #       privateKey = "yAnz5TF+lXXJte14tji3zlMNq+hd2rYUIgJBgB3fBmk=";
+        #     };
+        #   };
+        # };
+
+      #   wireguard.interfaces = let
+      #     vpnCfg    = config.zoo.secrets.vpn;
+      #     vpnSubnet = "192.168.3";
+      #   in {
+      #     wg0 = {
+      #       ips = [ "${vpnSubnet}.1/24" ];
+      #       listenPort = 51820;
+
+      #       # This allows the wireguard server to route your traffic to the internet and hence be like a VPN
+      #       # For this to work you have to set the dnsserver IP of your router (or dnsserver of choice) in your clients
+      #       postSetup = ''
+      #         ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s ${vpnSubnet}.0/24 -o "${cfg.uplink.interface}" -j MASQUERADE
+      #       '';
+      #       postShutdown = ''
+      #         ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s ${vpnSubnet}.0/24 -o "${cfg.uplink.interface}" -j MASQUERADE
+      #       '';
+
+      #       privateKey = vpnCfg.router.priv;
+
+      #       peers = [
+      #         {
+      #           publicKey = vpnCfg.mbp13.priv;
+      #           # List of IPs assigned to this peer within the tunnel subnet. Used to configure routing.
+      #           allowedIPs = [ "${vpnSubnet}.2/32" ];
+      #         }
+      #       ];
+      #     };
+      #   };
+      #   };
+      # };
       };
 
       services.hostapd = cfg.local.wireless // {enable = true;};
