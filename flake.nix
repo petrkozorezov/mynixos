@@ -2,12 +2,13 @@
   description = "My NixOS configuration";
 
   inputs = {
-         nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    home-manager.url = "github:rycee/home-manager";
-          nixops.url = "github:NixOS/nixops";
+           nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+      home-manager.url = "github:rycee/home-manager"          ;
+    nixops-plugged.url = "github:lukebfox/nixops-plugged"     ;
+             utils.url = "github:numtide/flake-utils"         ;
   };
 
-  outputs = { self, home-manager, nixpkgs, nixops, ... }:
+  outputs = { self, home-manager, nixpkgs, nixops-plugged, utils, ... }:
     let
       revision = { system.configurationRevision = "${self.lastModifiedDate}-${self.shortRev or "dirty"}"; };
     in
@@ -27,15 +28,11 @@
               users.petrkozorezov = import ./home;
             };
           };
-        base = {
-          # pin nixpkgs rev
-          nix.registry.nixpkgs.flake = nixpkgs;
-          # TODO refactor overlays logic
-          # nixpkgs.overlays = [ nix.overlay ];
-        };
         baseModules = [
           revision
-          base
+          # TODO refactor overlays logic
+          # nixpkgs.overlays = [ nix.overlay ];
+          { nix.registry.nixpkgs.flake = nixpkgs; }
           ./nix.nix
           ./secrets
           ./system
@@ -69,6 +66,7 @@
             modules =
               [
                 revision
+                ./secrets
                 # TODO dvorak :)
                 "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix" # TODO move to installer/iso.nix
                 ./installer/iso.nix
@@ -80,9 +78,6 @@
           inherit nixpkgs;
         } // import ./servers;
       };
-
-      # FIXME
-      # for 'nix shell -c nixops create --name router --flake .'
-      defaultPackage.x86_64-linux = nixops.defaultPackage.x86_64-linux;
+      defaultPackage.x86_64-linux = nixops-plugged.packages.x86_64-linux.nixops-hetznercloud;
   };
 }

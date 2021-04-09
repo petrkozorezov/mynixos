@@ -25,9 +25,9 @@
         interface     = "wlp2s0";
         ssid          = "Petrovi4Home";
         wpaPassphrase = config.zoo.secrets.wifi."${ssid}".passphrase;
-        hwMode        = "a";
+        hwMode        = "g";
         countryCode   = "RU";
-        channel       = 36;
+        channel       = 1;
         noScan        = true;
         extraConfig   =
             ''
@@ -40,10 +40,10 @@
               ieee80211n=1
               ht_capab=[LDPC][HT40+][SHORT-GI-20][SHORT-GI-40][TX-STBC][DSSS_CCK-40]
 
-              ieee80211ac=1
-              vht_capab=[TX-STBC-2BY1][MAX-A-MPDU-LEN-EXP3][RX-ANTENNA-PATTERN][TX-ANTENNA-PATTERN]
-              vht_oper_chwidth=1
-              vht_oper_centr_freq_seg0_idx=42
+              #ieee80211ac=1
+              #vht_capab=[TX-STBC-2BY1][MAX-A-MPDU-LEN-EXP3][RX-ANTENNA-PATTERN][TX-ANTENNA-PATTERN]
+              #vht_oper_chwidth=1
+              #vht_oper_centr_freq_seg0_idx=42
 
               beacon_int=100
               #Multiplier of How Many Units of Time Between Beacon Transmissions
