@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ... }:
+{ lib, config, options, pkgs, ... }:
 with lib;
 {
   options = {
@@ -34,28 +34,7 @@ with lib;
           description = "Ethernet network interface.";
         };
 
-        wireless = {
-          interface = mkOption {
-            type        = types.str;
-            example     = "wlp0s20u4u4";
-            description = "Wifi network interface.";
-          };
-          ssid = mkOption {
-            type        = types.str;
-            default     = "zoo wifi";
-            description = "SSID of wifi network.";
-          };
-          channel = mkOption {
-            type        = types.ints.positive;
-            default     = 1;
-            description = "Wifi network channel number.";
-          };
-          passphrase = mkOption {
-            type        = types.str;
-            default     = "defaultpassword";
-            description = "WPA-PSK (pre-shared-key) passphrase.";
-          };
-        };
+        wireless = options.services.hostapd;
 
         bridge.interface = mkOption {
           type        = types.str;
@@ -159,24 +138,7 @@ with lib;
         };
       };
 
-      services.hostapd =
-        let
-          wifiCfg = cfg.local.wireless;
-        in {
-          enable        = true;
-          wpaPassphrase = wifiCfg.passphrase;
-          interface     = wifiCfg.interface;
-          ssid          = wifiCfg.ssid;
-          channel       = wifiCfg.channel;
-          hwMode        = "g";
-          extraConfig   =
-            ''
-              #ieee80211ac=1
-              ieee80211n=1
-              wpa_key_mgmt=WPA-PSK
-              rsn_pairwise=CCMP
-            '';
-        };
+      services.hostapd = cfg.local.wireless // {enable = true;};
 
       # nixos networking https://nixos.wiki/wiki/Networking
       # wifi setup https://habr.com/ru/post/315960/

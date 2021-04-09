@@ -27,7 +27,23 @@
 
   2х диапазонная mimo 4x4, но "толстая", на будущее можно рассматреть
 
-# Пример hostapd конфига для Compex WLE900VX
+# Антенна
+
+## KC10-2400/5000
+
+  Можно либо несколько простых антенн рядом поставить, либо купить сразу сборкой mimo.
+  Видимо проще сразу брать 5GHz и карту и антенну с нормальным усилением, при том, что больших площадей покрытия не требуется этого хватит.
+
+- https://myantenna.ru/antenny-3g-4g-lte/wi-fi-antenny/kc10-2400-5000-dvuhdiapazonnaya-vsenapravlennaya-wifi-antenna-2-4-5-ggts-10-db
+- https://aliexpress.ru/item/1005002079390641.html
+
+
+# Конфиги
+
+ - https://www.ylsoftware.com/news/692
+
+## Пример hostapd конфига для Compex WLE900VX
+
 
 ```
 interface=wlp6s0
