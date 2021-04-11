@@ -21,11 +21,13 @@
       enableCompletion = true;
       # TODO move to specific modules (bat, nix, ...)
       shellAliases = {
-        ".."  = "cd ..";
-        "..." = "cd ../..";
-        "cat" = "bat";
-        "ns"  = "nix search nixpkgs";
-        "nb"  = "nix build";
+        ".."    = "cd ..";
+        "..."   = "cd ../..";
+        "...."  = "cd ../../..";
+        "....." = "cd ../../../..";
+        "cat"   = "bat";
+        "ns"    = "nix search nixpkgs";
+        "nb"    = "nix build";
       };
       oh-my-zsh =
         {
