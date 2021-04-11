@@ -15,6 +15,7 @@
       # messengers
       tdesktop
       slack
+      discord
 
       # books
       # calibre
