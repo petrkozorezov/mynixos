@@ -13,12 +13,11 @@
       revision = { system.configurationRevision = "${self.lastModifiedDate}-${self.shortRev or "dirty"}"; };
     in
     {
-      thinkpad-x1-extreme-gen2 =
-        self.nixosConfigurations.thinkpad-x1-extreme-gen2.config.system.build.toplevel;
-      mbp13 = self.nixosConfigurations.mbp13.config.system.build.toplevel;
-      installer = self.nixosConfigurations.installer.config.system.build.isoImage;
-      image =
-        self.nixosConfigurations.image.config.system.build.isoImage;
+      thinkpad-x1-extreme-gen2 = self.nixosConfigurations.thinkpad-x1-extreme-gen2.config.system.build.toplevel;
+      mbp13                    = self.nixosConfigurations.mbp13                   .config.system.build.toplevel;
+      asrock-x300              = self.nixosConfigurations.asrock-x300             .config.system.build.toplevel;
+      installer                = self.nixosConfigurations.installer               .config.system.build.isoImage;
+      image                    = self.nixosConfigurations.image                   .config.system.build.isoImage;
 
       nixosConfigurations = let
         home = {
@@ -40,6 +39,7 @@
           home
         ];
       in {
+        # TODO remove copy-paste
         thinkpad-x1-extreme-gen2 =
           nixpkgs.lib.nixosSystem {
             system  = "x86_64-linux";
@@ -50,6 +50,12 @@
           nixpkgs.lib.nixosSystem {
             system  = "x86_64-linux";
             modules = [ ./hardware/mbp13.nix ] ++ baseModules;
+          };
+
+        asrock-x300 =
+          nixpkgs.lib.nixosSystem {
+            system  = "x86_64-linux";
+            modules = [ ./hardware/asrock-x300.nix ] ++ baseModules;
           };
 
         image =

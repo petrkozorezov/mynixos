@@ -3,6 +3,7 @@
   imports =
     [
       ./audio.nix
+      ./loader.nix
       ./docker.nix
       ./network.nix
       ./pipewire.nix
