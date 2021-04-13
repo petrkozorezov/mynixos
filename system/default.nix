@@ -54,6 +54,7 @@
     powerline-fonts
     font-awesome
 #    nerdfonts
+#    (nerdfonts.override { fonts = ["Iosevka"]; })
     hack-font
     jetbrains-mono
   ];
