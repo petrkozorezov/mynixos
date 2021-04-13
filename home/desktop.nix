@@ -27,6 +27,7 @@
       mellowplayer
       playerctl
       mpv
+      imv
       nomacs
 
       # others
