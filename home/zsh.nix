@@ -4,7 +4,7 @@
     zsh = {
       enable = true;
       dotDir = ".config/zsh"; # FIXME remove hardcode
-      initExtra =
+      initExtra = # FIXME remove path manipulation
         ''
           # pure
           autoload -U promptinit; promptinit
@@ -19,12 +19,16 @@
         extended              = true;
       };
       enableCompletion = true;
-      # TODO move to specific modules (bat, nix, ...)
-      shellAliases = {
-        ".."    = "cd ..";
-        "..."   = "cd ../..";
-        "...."  = "cd ../../..";
-        "....." = "cd ../../../..";
+      shellAliases = rec {
+        ".."    = "..";
+        "..."   = "../..";
+        "...."  = "../../..";
+        "....." = "../../../..";
+        "l"     = "exa --group-directories-first";
+        "ll"    = "${"l"} -l -b --git --icons --octal-permissions --no-permissions";
+        "lll"   = "${"l"} -l -g";
+        "ls"    = "${"l"}";
+        "tree"  = "${"l"} -T";
         "cat"   = "bat";
         "ns"    = "nix search nixpkgs";
         "nb"    = "nix build";
@@ -96,5 +100,6 @@
     with pkgs; [
       fasd
       fd
+      exa
     ];
 }

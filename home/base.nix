@@ -10,7 +10,6 @@
     gnupg
     unzip
     vim
-    tree
 
     # hardware
     pciutils
@@ -19,6 +18,7 @@
     # admin
     bind.dnsutils
     ldns
+    lsof
 
     pmount # (?)
     lm_sensors
