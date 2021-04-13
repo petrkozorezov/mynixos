@@ -201,17 +201,16 @@ in {
 
       output = {
         # TODO move to kanshi
-        "eDP-1" = {
-          pos   = "3440 0";
+        "DP-1" = {
+          mode            = "3440x1440@144Hz";
+          # pos             = "0 0";
+          # disabled due to flickering
+          # https://github.com/swaywm/sway/pull/5063
+          # https://github.com/swaywm/sway/issues/5076
+          # adaptive_sync   = "true";
+          # max_render_time = "1";
+          subpixel        = "rgb";
         };
-        "HDMI-A-2" = {
-          pos = "0 0";
-        };
-        "DP-3" = {
-          mode = "3440x1440@100Hz";
-          pos  = "0 0";
-        };
-
         "*" = {
           bg = "${wallpaper} fill";
         };
