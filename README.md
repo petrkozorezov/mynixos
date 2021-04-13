@@ -9,9 +9,9 @@
 ## Base files
 
  - nixpkgs.nix — nix package manager config file (for tools like nix-shell …)
- - configuration.nix — base NixOS configuration file
- - home.nix — base home-manager configuration file
- - overlay — overlay base file
+ - system/ — NixOS configuration files
+ - home/ — home-manager configuration file
+ - overlay/ — nixpkgs overlay
  - image.nix — iso image of this configuration
 
 
@@ -21,9 +21,8 @@
     - nur
     - tests
     - remove copy/paste (eg font Hack)
-    - add router configuration
+    - switch to deploy-rs + terraform (???)
   - system:
-    - split to modules
     - use hardware modules only as a system capabilites
   - security:
     - programs.rofi.pass.enable = true; https://github.com/carnager/rofi-pass/
@@ -32,21 +31,14 @@
   - hm:
     - rofi
       - https://github.com/davatorium/rofi/wiki/User-scripts
-    - add after switching to radeon:
-      - imv
-      - mpv
-      - oguri | Wallutils | smth else
+    - oguri | Wallutils | smth else
     - install sublime plugins by nix (subl plugins do not work on livecd without an internet)
-  - router
-    - installer
-    - deploy nixos
-    - add dnsmasq
-    - add nat
-    - add wifi access point
-    - Ddns
+  - infrastructure
+    - DDNS
     - VPN server+client
     - Homeassist server
     - Syncthing
+    - [monitoring](https://github.com/hacklschorsch/nixos-cluster-monitoring-sandbox)
 
 ## NixOPS
 
