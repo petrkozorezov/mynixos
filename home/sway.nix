@@ -58,11 +58,13 @@ in {
     systemdIntegration  = true;
     wrapperFeatures.gtk = true;
     config = rec {
-      modifier        = mod;
-      fonts           = [ "Hack 10" ];
-      #keybindings     = {};
-      keycodebindings = {};
-      bindkeysToCode  = true;
+      modifier = mod;
+      fonts =
+        {
+          names = [ "Hack" ];
+          size = 10.0;
+        };
+      bindkeysToCode = true;
       keybindings = let
         workspaces = mod_: action: {
           "${mod_}+d"     = "${action} workspace ${w_term_0}";
@@ -289,7 +291,7 @@ in {
         };
       in
       {
-        "Home" = { outputs = [ xiaomiMiDisplay ]; };
+        "Main" = { outputs = [ xiaomiMiDisplay ]; };
       };
   };
 }
