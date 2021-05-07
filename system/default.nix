@@ -87,4 +87,6 @@
       openssh.authorizedKeys.keys = [ userCfg.authPublicKey ];
     };
   };
+
+  system.stateVersion = "21.05";
 }
