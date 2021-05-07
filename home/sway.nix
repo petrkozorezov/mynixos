@@ -200,17 +200,6 @@ in {
       };
 
       output = {
-        # TODO move to kanshi
-        "DP-1" = {
-          mode            = "3440x1440@144Hz";
-          # pos             = "0 0";
-          # disabled due to flickering
-          # https://github.com/swaywm/sway/pull/5063
-          # https://github.com/swaywm/sway/issues/5076
-          # adaptive_sync   = "true";
-          # max_render_time = "1";
-          subpixel        = "rgb";
-        };
         "*" = {
           bg = "${wallpaper} fill";
         };
@@ -287,7 +276,20 @@ in {
     };
   };
 
-  # TODO
-  # programs.kanshi = {
-  # };
+  services.kanshi = {
+    enable   = true;
+    profiles =
+      let
+        xiaomiMiDisplay = {
+          status   = "enable";
+          criteria = "Unknown Mi Monitor 0x00000000";
+          mode     = "3440x1440@144.000Hz";
+          position = "0,0";
+          scale    = 1.0;
+        };
+      in
+      {
+        "Home" = { outputs = [ xiaomiMiDisplay ]; };
+      };
+  };
 }
