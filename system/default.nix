@@ -19,7 +19,7 @@
 
   boot = {
     # kernelPackages = pkgs.linuxPackages_5_4;
-    kernelPackages = pkgs.linuxPackages;
+    kernelPackages = pkgs.linuxPackages_5_11;
     cleanTmpDir    = true;
     kernel.sysctl."fs.inotify.max_user_watches" = 524288;
     # logind = {
