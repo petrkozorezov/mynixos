@@ -12,7 +12,7 @@
       kernelModules = [ ];
     };
     kernelModules = [ "kvm-intel" ];
-    blacklistedKernelModules = [ ]; # old wifi card
+    blacklistedKernelModules = [ ];
     extraModulePackages = [ ];
     loader = {
       systemd-boot.enable      = true;
