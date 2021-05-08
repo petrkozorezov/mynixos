@@ -1,5 +1,10 @@
 { pkgs, config, lib, ... }:
-{
+let
+  net      = "192.168.2";
+  hostname = "router";
+  domain   = "zoo";
+  address  = "${net}.1";
+in {
   imports =
     [
       ../hardware/router.nix
@@ -7,19 +12,27 @@
 
   nixpkgs = (import ../nixpkgs.nix);
 
-  deployment.targetHost = "192.168.1.200";
+  boot = {
+    # kernelPackages = pkgs.linuxPackages_5_11;
+    cleanTmpDir    = true;
+  };
 
+  deployment.targetHost = address;
+
+  #
+  # router
+  #
   zoo.router = {
     enable     = true;
-    hostname   = "router-new"; # TODO rename
-    domain     = "zoo"; # TODO "home.kozorezov.su"
+    hostname   = hostname;
+    domain     = domain;
 
     uplink = {
       interface = "enp3s0";
     };
 
     local = {
-      net                = "192.168.2";
+      net                = net;
       ethernet.interface = "enp4s0";
       wireless           = rec {
         interface     = "wlp2s0";
@@ -90,6 +103,10 @@
           # 80:e6:50:06:55:ea
           mac = "ac:87:a3:0c:83:96";
           ip  = "50";
+        };
+        asrock-x300 = {
+          mac = "a8:a1:59:57:7b:58";
+          ip  = "51";
         };
       };
     };
