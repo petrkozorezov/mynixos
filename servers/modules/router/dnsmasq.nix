@@ -58,7 +58,7 @@ in lib.mkIf cfg.enable {
       +
       (let
         hostToString = { name, mac, ip }:
-          "dhcp-host=${mac},${name},${cfg.local.net}.${ip}";
+          "dhcp-host=${mac},${name},${cfg.local.net}.${ip}\n";
       in
         lib.strings.concatStrings (map hostToString (lib.attrValues cfg.local.hosts))
       );
