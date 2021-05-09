@@ -117,9 +117,9 @@ with lib;
         };
 
         interfaces = {
-          "${cfg.uplink.interface}" = {
-            useDHCP = true;
-          };
+          "${cfg.uplink.interface}".useDHCP = true;
+          "${cfg.local.ethernet.interface}".useDHCP = false;
+          "${cfg.local.wireless.interface}".useDHCP = false;
           "${bridge}" = {
             useDHCP = false;
             ipv4.addresses =
@@ -132,7 +132,7 @@ with lib;
 
         nat = {
           enable             = true;
-          # enableIPv6 = true;
+          # enableIPv6         = true;
           externalInterface  = cfg.uplink.interface;
           internalInterfaces = [ bridge ];
         };

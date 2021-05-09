@@ -1,13 +1,9 @@
-.PHONY = build switch dry-activate clean show-repo-path update-% update thinkpad-x1-extreme-gen2 image
+.PHONY = clean show-repo-path update build\:% build\:deploy installer image
 REPO_PATH = `pwd`/$(dir $(lastword $(MAKEFILE_LIST)))
-NB=nix build -v
 DIRS=/etc/nixos ~/.config/nixpkgs # FIXME better name
 
 $(DIRS):
 	ln -sf $(REPO_PATH) $@
-
-switch: build-mbp13
-	nixos-rebuild -v switch --flake '.#mbp13'
 
 clean:
 	rm -rf result
@@ -15,13 +11,19 @@ clean:
 show-repo-path:
 	@echo $(REPO_PATH)
 
-update-%:
-	nix flake update --update-input $*
+#TODO update\:%
 
-update: update-nixpkgs update-home-manager
+update:
+	nix flake update
 
-build-%:
-	$(NB) ".#$*"
+build\:%:
+	nix build -v ".#$*"
 
-deploy-%:
-	nix shell -c nixops deploy -d router --include $*
+deploy\:%:
+	deploy -s --debug-logs ".#$*"
+
+build\:nixos\:%:
+	$(MAKE) build:nixosConfigurations.$*.config.system.build.toplevel
+
+build\:image\:%:
+	$(MAKE) build:nixosConfigurations.$*.config.system.build.isoImage

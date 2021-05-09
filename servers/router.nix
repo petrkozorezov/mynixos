@@ -5,19 +5,14 @@ let
   domain   = "zoo";
   address  = "${net}.1";
 in {
-  imports =
-    [
-      ../hardware/router.nix
-    ];
-
-  nixpkgs = (import ../nixpkgs.nix);
+  services.openssh.enable = true;
+  users.users.root.openssh.authorizedKeys.keys =
+    [ config.zoo.secrets.users.petrkozorezov.authPublicKey ]; # FIXME default user
 
   boot = {
     # kernelPackages = pkgs.linuxPackages_5_11;
     cleanTmpDir    = true;
   };
-
-  deployment.targetHost = address;
 
   #
   # router
@@ -27,9 +22,7 @@ in {
     hostname   = hostname;
     domain     = domain;
 
-    uplink = {
-      interface = "enp3s0";
-    };
+    uplink.interface = "enp3s0";
 
     local = {
       net                = net;

@@ -2,17 +2,9 @@
 
 ## Building
 
- - `make build` for nixos and home-manager build
- - `sudo make switch` for nixos and home-manager switch
-
-
-## Base files
-
- - nixpkgs.nix — nix package manager config file (for tools like nix-shell …)
- - system/ — NixOS configuration files
- - home/ — home-manager configuration file
- - overlay/ — nixpkgs overlay
- - image.nix — iso image of this configuration
+ - `make build:image:installer` to make installer image
+ - `make deploy:asrock-x300.system` to deploy system profile to asrock-x300 host
+ - `make deploy:asrock-x300.petrkozorezov` to deploy petrkozorezov (home-manager) profile to asrock-x300 host
 
 
 ## TODO
@@ -21,7 +13,6 @@
     - nur
     - tests
     - remove copy/paste (eg font Hack)
-    - switch to deploy-rs + terraform (???)
   - system:
     - use hardware modules only as a system capabilites
   - security:
@@ -40,17 +31,15 @@
     - Syncthing
     - [monitoring](https://github.com/hacklschorsch/nixos-cluster-monitoring-sandbox)
 
-## NixOPS
-
- - https://github.com/wagdav/homelab
- - https://lukebentleyfox.net/posts/building-this-blog/
-
 ## Misc
 
-user build is in /etc/profiles/per-user/[user]
+user profile is in .nix-profile
 
-system build is in /run/current-system/
+current system profile is in /run/current-system/
 
+all system profiles in /nix/var/nix/profiles/system/
+
+switch to profile '${profile}/bin/switch-to-configuration switch'
 
 ## Useful links
 

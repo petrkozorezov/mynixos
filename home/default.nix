@@ -23,6 +23,8 @@
     ./zsh.nix
   ];
 
+  nixpkgs = (import ../nixpkgs.nix);
+
   home.sessionVariables = {
     EDITOR   = "vim"; # subl --wait
     BROWSER  = "firefox";
