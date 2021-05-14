@@ -82,6 +82,12 @@ with lib;
         description = "Security settings for the wifi networks.";
       };
 
+      others = mkOption {
+        type        = types.attrs;
+        default     = {};
+        description = "Not strictly specified secrets.";
+      };
+
     };
   };
 }

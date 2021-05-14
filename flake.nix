@@ -36,9 +36,21 @@
           deploy-rs.lib.${system}.activate.custom (configuration).activationPackage "$PROFILE/activate";
     in
     rec {
-      # for nix shell
-      # TODO migrate to mkShell
-      defaultPackage.${system} = deploy-rs.packages.${system}.deploy-rs;
+      defaultPackage.${system} =
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+          terraform =
+            pkgs.terraform_0_15.withPlugins (tp: [
+              tp.hcloud
+            ]);
+        in pkgs.buildEnv {
+          name  = "zoo-shell";
+          paths = [
+            deploy-rs.packages.${system}.deploy-rs
+            terraform
+            pkgs.terranix
+          ];
+        };
 
       nixosConfigurations = {
         thinkpad-x1-extreme-gen2 = myNixOSSystem [ ./hardware/thinkpad-x1-extreme-gen2.nix ];

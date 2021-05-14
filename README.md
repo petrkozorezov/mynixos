@@ -2,6 +2,7 @@
 
 ## Building
 
+ - `make shell` to start shell with the all required software
  - `make build:image:installer` to make installer image
  - `make deploy:asrock-x300.system` to deploy system profile to asrock-x300 host
  - `make deploy:asrock-x300.petrkozorezov` to deploy petrkozorezov (home-manager) profile to asrock-x300 host

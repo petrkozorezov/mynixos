@@ -20,10 +20,16 @@ build\:%:
 	nix build -v ".#$*"
 
 deploy\:%:
-	deploy -s --debug-logs ".#$*"
+	deploy -s ".#$*"
+
+shell:
+	nix shell
 
 build\:nixos\:%:
 	$(MAKE) build:nixosConfigurations.$*.config.system.build.toplevel
 
 build\:image\:%:
 	$(MAKE) build:nixosConfigurations.$*.config.system.build.isoImage
+
+config.tf.json: cloud/*.nix
+	terranix cloud/default.nix | jq . > $@
