@@ -24,5 +24,6 @@
       glow
       git-crypt
       gitAndTools.git-filter-repo
+      lazygit
     ];
 }
