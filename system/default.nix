@@ -61,6 +61,10 @@
     upower.enable      = true;
   };
 
+  programs = {
+    uhk-agent.enable = true;
+  };
+
   users = {
     mutableUsers        = false;
     users = let

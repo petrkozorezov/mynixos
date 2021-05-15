@@ -24,6 +24,7 @@
               # nixpkgs.overlays = [ nix.overlay ];
               { nix.registry.nixpkgs.flake = nixpkgs; nixpkgs = (import ./nixpkgs.nix); }
               ./nix.nix
+              ./modules
               ./secrets
               ./system
             ] ++ modules;
