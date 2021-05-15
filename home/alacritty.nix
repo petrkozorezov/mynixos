@@ -44,11 +44,18 @@
         env = {
           TERM = "xterm-256color";
         };
-        # key_bindings = {
-          # TODO how to use it?
-          #- { key: Paste,                                action: Paste          }
-          #- { key: Copy,                                 action: Copy           }
-        # };
+        key_bindings = [
+          { key = "Escape"; mode="~Search"; chars = "\\x07"; } # Ctrl-G
+          # { key = "F21"   ; mode="~Search"; chars = "\\x07"; } # Ctrl-R
+          # { key = "F22"   ; mode="~Search"; chars = "\\x07"; } # Ctrl-Z
+          # { key = "F23"   ; mode="~Search"; chars = "\\x07"; } # Ctrl-C
+          # { key = "F24"   ; mode="~Search"; chars = "\\x07"; } # Ctrl-D
+        ];
+        bell = {
+          color    = "#aaaaaa";
+          duration = 100;
+        };
+        cursor.style.shape = "beam";
       };
   };
 }
