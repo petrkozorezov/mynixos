@@ -22,6 +22,14 @@ let
     };
     # http://getwallpapers.com/wallpaper/full/c/6/c/52323.jpg
     # http://getwallpapers.com/wallpaper/full/c/7/4/271955.jpg
+  cursorsTheme    = "capitaine-cursors-white";
+  gsettings       = "${pkgs.glib}/bin/gsettings";
+  gnomeSchema     = "org.gnome.desktop.interface";
+  importGsettings = pkgs.writeShellScript "import_gsettings.sh" ''
+    ${gsettings} set ${gnomeSchema} gtk-theme ${config.gtk.theme.name}
+    ${gsettings} set ${gnomeSchema} icon-theme ${config.gtk.iconTheme.name}
+    ${gsettings} set ${gnomeSchema} cursor-theme ${config.gtk.gtk3.extraConfig.gtk-cursor-theme-name}
+  '';
 in {
   home.packages = with pkgs; [
     rofi
@@ -55,6 +63,7 @@ in {
 
   wayland.windowManager.sway = {
     enable = true;
+    # xwayland = false;
     systemdIntegration  = true;
     wrapperFeatures.gtk = true;
     config = rec {
@@ -139,6 +148,7 @@ in {
       startup =
         lib.lists.forEach
           [
+            "${importGsettings}"
             "nm-applet --indicator"
             "blueman-applet"
             "firefox"
@@ -240,9 +250,11 @@ in {
       seat seat0 {
         fallback      true
         hide_cursor   5000
-        xcursor_theme capitaine-cursors-white
+        xcursor_theme ${cursorsTheme}
       }
 
+      # TODO moveto nix
+      for_window [shell="xwayland"] title_format "%title [XWayland]"
     '';
     extraSessionCommands =
       ''
@@ -273,8 +285,13 @@ in {
       package = pkgs.gnome3.gnome_themes_standard;
       name    = "Adwaita";
     };
+    gtk2.extraConfig = ''
+      gtk-cursor-theme-size = 16
+      gtk-cursor-theme-name = "${cursorsTheme}"
+    '';
     gtk3.extraConfig = {
-      gtk-cursor-theme-name = "Capitaine Cursors - White";
+      gtk-cursor-theme-size = 16;
+      gtk-cursor-theme-name = "${cursorsTheme}";
     };
   };
 
@@ -294,4 +311,9 @@ in {
         "Main" = { outputs = [ xiaomiMiDisplay ]; };
       };
   };
+
+  home.file."chromium-flags.conf".text = ''
+    --enable-features=UseOzonePlatform
+    --ozone-platform=wayland
+  '';
 }
