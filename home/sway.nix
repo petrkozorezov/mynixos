@@ -315,5 +315,12 @@ in {
   home.file."chromium-flags.conf".text = ''
     --enable-features=UseOzonePlatform
     --ozone-platform=wayland
+    --use-vulkan
+    --enable-features=Vulkan
   '';
+
+  home.sessionVariables = {
+    ENABLE_VULKAN = "true";
+  };
+
 }
