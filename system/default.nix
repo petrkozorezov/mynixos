@@ -37,14 +37,14 @@
 
   time.timeZone = "Europe/Moscow";
 
-  fonts.fonts = with pkgs; [
-    powerline-fonts
-    font-awesome
-#    nerdfonts
-#    (nerdfonts.override { fonts = ["Iosevka"]; })
-    hack-font
-    jetbrains-mono
-  ];
+#   fonts.fonts = with pkgs; [
+#     powerline-fonts
+#     font-awesome
+# #    nerdfonts
+# #    (nerdfonts.override { fonts = ["Iosevka"]; })
+#     hack-font
+#     jetbrains-mono
+#   ];
 
   environment.systemPackages = [ pkgs.overlay-sys-test ];
   environment.pathsToLink    = [ "/share/zsh" ]; # for programs.zsh.enableCompletion
@@ -73,7 +73,7 @@
       petrkozorezov = {
         isNormalUser                = true;
         description                 = "Petr Kozorezov";
-        extraGroups                 = [ "wheel" "audio" "video" "plugdev" ];
+        extraGroups                 = [ "wheel" "audio" "video" "plugdev" "input" ];
         shell                       = pkgs.zsh;
         hashedPassword              = userCfg.hashedPassword;
         openssh.authorizedKeys.keys = [ userCfg.authPublicKey ];

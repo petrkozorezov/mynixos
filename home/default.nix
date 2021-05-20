@@ -9,6 +9,7 @@
     ./development.nix
     ./dropbox.nix
     ./firefox.nix
+    ./fonts.nix
     ./git.nix
     ./htop.nix
     ./mako.nix
