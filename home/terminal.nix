@@ -1,5 +1,6 @@
 { ... }:
 {
+  home.sessionVariables.TERMINAL = "alacritty";
   programs.alacritty = {
     enable = true;
     settings =
@@ -45,7 +46,8 @@
           TERM = "xterm-256color";
         };
         key_bindings = [
-          { key = "Escape"; mode="~Search"; chars = "\\x07"; } # Ctrl-G
+          { key = "Escape";                   mode="~Search"; chars = "\\x07";                         } # Ctrl-G
+          { key = "G"     ; mods = "Control"; mode="~Search";                  action = "ReceiveChar"; } # Ctrl-G
           # { key = "F21"   ; mode="~Search"; chars = "\\x07"; } # Ctrl-R
           # { key = "F22"   ; mode="~Search"; chars = "\\x07"; } # Ctrl-Z
           # { key = "F23"   ; mode="~Search"; chars = "\\x07"; } # Ctrl-C

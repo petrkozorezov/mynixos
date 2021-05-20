@@ -9,7 +9,6 @@
       ./pipewire.nix
       ./security.nix
       ./steam.nix
-      ./uhk.nix
       ./vbox.nix
       ./wireshark.nix
       ./zsa-keyboards.nix
@@ -34,17 +33,7 @@
    #useXkbConfig (??)
   };
 
-
   time.timeZone = "Europe/Moscow";
-
-#   fonts.fonts = with pkgs; [
-#     powerline-fonts
-#     font-awesome
-# #    nerdfonts
-# #    (nerdfonts.override { fonts = ["Iosevka"]; })
-#     hack-font
-#     jetbrains-mono
-#   ];
 
   environment.systemPackages = [ pkgs.overlay-sys-test ];
   environment.pathsToLink    = [ "/share/zsh" ]; # for programs.zsh.enableCompletion
@@ -61,9 +50,7 @@
     upower.enable      = true;
   };
 
-  programs = {
-    uhk-agent.enable = true;
-  };
+  services.udev.packages = [ pkgs.uhk-agent ];
 
   users = {
     mutableUsers        = false;

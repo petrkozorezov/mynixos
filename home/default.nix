@@ -3,51 +3,33 @@
   imports = [
     ../secrets
 
-    ./alacritty.nix
     ./base.nix
     ./desktop.nix
     ./development.nix
     ./dropbox.nix
-    ./firefox.nix
+    ./editor.nix
     ./fonts.nix
     ./git.nix
     ./htop.nix
     ./mako.nix
     ./rofi.nix
     ./security.nix
+    ./shell.nix
     ./ssh.nix
     ./subl.nix
     ./sway.nix
+    ./terminal.nix
     ./waybar.nix
     ./zathura.nix
-    ./zsh.nix
   ];
 
   nixpkgs = (import ../nixpkgs.nix);
-
-  home.sessionVariables = {
-    EDITOR   = "vim"; # subl --wait
-    BROWSER  = "firefox";
-    TERMINAL = "alacritty";
-  };
   programs.home-manager.enable = true;
-
-
-  home.packages = [ pkgs.overlay-hm-test ];
-  # user = rec {
-  #   login     = "petr.kozorezov";
-  #   email     = "${login}@gmail.com";
-  #   firstname = "Petr";
-  #   lastname  = "Kozorezov";
-  #   fullname  = "${firstname} ${lastname}";
-  #   gpgKey    = email;
-  #   font      = "Hack";
-  #   defaultPrograms = {
-  #     editor   = "vim";
-  #     browser  = "firefox";
-  #     terminal = "alacritty";
-  #     shell    = "zsh";
-  #   };
-  # };
-
+  home = {
+    packages     = [ pkgs.overlay-hm-test ];
+    # error: The option `home.stateVersion' has conflicting definition values:
+    #        - In `/nix/store/bv3awswkczn0611y70pdjbqxmn8q6lmd-source/home': "20.03"
+    #        - In `<unknown-file>': "20.09"
+    #stateVersion = "20.03";
+  };
 }

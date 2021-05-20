@@ -46,4 +46,5 @@ switch to profile '${profile}/bin/switch-to-configuration switch'
 
   - [LEXUGE/nixos](https://github.com/LEXUGE/nixos)
   - [YubiKey-Guide](https://github.com/drduh/YubiKey-Guide)
-  - https://github.com/srid/nix-config
+  - https://github.com/srid/nixos-config
+  - https://github.com/maxhbr/myconfig

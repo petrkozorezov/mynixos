@@ -19,8 +19,6 @@ rec {
 
   # wl-clipboard as a drop-in replacement to X11 clipboard tools
   wl-clipboard-x11 = super.callPackage ./wl-clipboard-x11.nix { };
-  xsel  = self.wl-clipboard-x11;
-  xclip = self.wl-clipboard-x11;
 
   # DRM support in MellowPlayer
   libwidevinecdm = super.callPackage ./libwidevinecdm.nix { };

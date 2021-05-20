@@ -5,12 +5,8 @@
       # secrets
       veracrypt
 
-      # browsers
-      firefox-wayland
-      chromium
-
       # mail clients
-      thunderbird
+      # TODO
 
       # messengers
       tdesktop
@@ -32,5 +28,6 @@
 
       # others
       # gucharmap
+      uhk-agent
     ];
 }

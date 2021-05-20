@@ -319,8 +319,6 @@ in {
     --enable-features=Vulkan
   '';
 
-  home.sessionVariables = {
-    ENABLE_VULKAN = "true";
-  };
+  home.sessionVariables.ENABLE_VULKAN = "true";
 
 }

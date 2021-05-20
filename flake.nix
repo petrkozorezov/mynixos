@@ -6,9 +6,10 @@
       home-manager.url = "github:rycee/home-manager"          ;
        flake-utils.url = "github:numtide/flake-utils"         ;
          deploy-rs.url = "github:serokell/deploy-rs"          ;
+    nix-doom-emacs.url = "github:vlaci/nix-doom-emacs"        ;
   };
 
-  outputs = { self, home-manager, nixpkgs, deploy-rs, flake-utils, ... }:
+  outputs = { self, nixpkgs, home-manager, flake-utils, deploy-rs, nix-doom-emacs, ... }:
     # TODO flake-utils.lib.eachDefaultSystem (system:
     let
       revision = { system.configurationRevision = "${self.lastModifiedDate}-${self.shortRev or "dirty"}"; };
@@ -97,9 +98,10 @@
       petrkozorezov =
         home-manager.lib.homeManagerConfiguration {
           inherit pkgs system;
-          homeDirectory = "/home/petrkozorezov";
-          username      = "petrkozorezov";
-          configuration = ./home;
+          homeDirectory    = "/home/petrkozorezov";
+          username         = "petrkozorezov";
+          configuration    = ./home;
+          extraSpecialArgs = { inherit nix-doom-emacs; };
         };
     };
 

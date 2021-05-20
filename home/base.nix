@@ -9,6 +9,7 @@
     procs
     curl wget
     ranger mc
+    # nnn
     jq
     gnupg
     unzip
