@@ -12,6 +12,9 @@
           PURE_PROMPT_SYMBOL=λ
           prompt pure
           path+="$HOME/bin"
+          nsh() {
+            nix shell "nixpkgs#$1"
+          }
         '';
       autocd = true;
       history = {
@@ -94,6 +97,7 @@
     };
 
     bat.enable = true;
+    command-not-found.enable = true;
   };
 
   home.packages =
