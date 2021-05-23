@@ -4,6 +4,7 @@
     ../secrets
 
     ./base.nix
+    ./browser.nix
     ./desktop.nix
     ./development.nix
     ./dropbox.nix
