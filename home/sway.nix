@@ -17,8 +17,8 @@ let
   ob_file  = "\$${sock}.${ob}";
   wallpaper =
     builtins.fetchurl {
-      url    = "https://wallpapercave.com/wp/wp2231140.jpg";
-      sha256 = "0iqjiigd1bhj511cc89w625r8dsxapbv6fd1dklyzfl0v1pdj133";
+      url    = "https://i.imgur.com/OHkR2vt.png";
+      sha256 = "13cbs5kgf8nyz8laasc60kpxhb3jrkb72dr3gr4lx98r5y3xdg4c";
     };
     # http://getwallpapers.com/wallpaper/full/c/6/c/52323.jpg
     # http://getwallpapers.com/wallpaper/full/c/7/4/271955.jpg
@@ -279,21 +279,41 @@ in {
 
   gtk = {
     enable         = true;
-    font.name      = "DejaVu Sans 10";
+    font.name      = "Hack 10";
     iconTheme.name = "hicolor"; # TODO set smth better
+    # TODO https://github.com/mitch-kyle/monokai-gtk
     theme = {
       package = pkgs.gnome3.gnome_themes_standard;
-      name    = "Adwaita";
+      name    = "Adwaita-dark";
     };
     gtk2.extraConfig = ''
       gtk-cursor-theme-size = 16
       gtk-cursor-theme-name = "${cursorsTheme}"
+      gtk-color-scheme = "base_color: #404552"
+      gtk-color-scheme = "text_color: #ffffff"
+      gtk-color-scheme = "bg_color: #383c4a"
+      gtk-color-scheme = "fg_color: #ffffff"
+      gtk-color-scheme = "tooltip_bg_color: #4B5162"
+      gtk-color-scheme = "tooltip_fg_color: #ffffff"
+      gtk-color-scheme = "selected_bg_color: #5294e2"
+      gtk-color-scheme = "selected_fg_color: #ffffff"
+      gtk-color-scheme = "insensitive_bg_color: #3e4350"
+      gtk-color-scheme = "insensitive_fg_color: #7c818c"
+      gtk-color-scheme = "notebook_bg: #404552"
+      gtk-color-scheme = "dark_sidebar_bg: #353945"
+      gtk-color-scheme = "link_color: #5294e2"
+      gtk-color-scheme = "menu_bg: #2e2f29"
     '';
-    gtk3.extraConfig = {
-      gtk-cursor-theme-size = 16;
-      gtk-cursor-theme-name = "${cursorsTheme}";
+    gtk3 = {
+      extraConfig = {
+        gtk-cursor-theme-size = 16;
+        gtk-cursor-theme-name = "${cursorsTheme}";
+      };
     };
   };
+
+
+#
 
   services.kanshi = {
     enable   = true;

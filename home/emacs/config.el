@@ -3,6 +3,8 @@
 (setq user-full-name "Petr Kozorezov"
       user-mail-address "petr.kozorezov@gmail.com")
 
+(setq doom-theme 'doom-monokai-classic)
+
 (map!
   "C-<prior>"  'centaur-tabs-backward
   "C-<next>"   'centaur-tabs-forward

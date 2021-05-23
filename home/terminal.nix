@@ -1,6 +1,5 @@
 { ... }:
 {
-  home.sessionVariables.TERMINAL = "alacritty";
   programs.alacritty = {
     enable = true;
     settings =
@@ -13,33 +12,37 @@
         font =
           {
             normal.family = "JetBrains Mono";
-            size = 13.0;
+            size = 14.0;
           };
-        background_opacity = 0.99;
+        background_opacity = 0.95;
         colors = {
           primary = {
-            background = "0x262626";
-            foreground = "0xeaeaea";
+            background = "#272822";
+            foreground = "#f8f8f2";
+          };
+          cursor = {
+            text       = "#272822";
+            cursor     = "#f8f8f2";
           };
           normal = {
-            black   = "0x000000";
-            red     = "0xcc0403";
-            green   = "0x19cb00";
-            yellow  = "0xcecb00";
-            blue    = "0x0d73cc";
-            magenta = "0xcb1ed1";
-            cyan    = "0x0dcdcd";
-            white   = "0xdddddd";
+            black      = "#272822";
+            red        = "#f92672";
+            green      = "#a6e22e";
+            yellow     = "#f4bf75";
+            blue       = "#66d9ef";
+            magenta    = "#ae81ff";
+            cyan       = "#a1efe4";
+            white      = "#f8f8f2";
           };
           bright = {
-            black   = "0x767676";
-            red     = "0xf2201f";
-            green   = "0x23fd00";
-            yellow  = "0xfffd00";
-            blue    = "0x1a8fff";
-            magenta = "0xfd28ff";
-            cyan    = "0x14ffff";
-            white   = "0xffffff";
+            black      = "#75715e";
+            red        = "#f92672";
+            green      = "#a6e22e";
+            yellow     = "#f4bf75";
+            blue       = "#66d9ef";
+            magenta    = "#ae81ff";
+            cyan       = "#a1efe4";
+            white      = "#f9f8f5";
           };
         };
         env = {
