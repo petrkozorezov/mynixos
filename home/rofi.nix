@@ -8,8 +8,6 @@
     extraConfig =
       {
         matching    = "fuzzy";
-        ssh-client  = "ssh_term";
-        ssh-command = "{terminal} -e {ssh-client} {host}";
       };
   };
   xdg.configFile = {
