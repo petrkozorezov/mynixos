@@ -198,16 +198,12 @@ in {
           pointer_accel = "0.35";
         };
 
-        "1:1:AT_Translated_Set_2_keyboard" = {
-          xkb_options = "grp:shifts_toggle,altwin:swap_alt_win";
-        };
-
         "*" = {
           repeat_delay = "200";
           repeat_rate  = "70";
           xkb_layout   = "us,ru";
           xkb_variant  = "dvp,mac";
-          xkb_options  = "grp:shifts_toggle,grp_led:num";
+          xkb_options  = "grp:lctrl_lwin_rctrl_menu";
         };
       };
 
