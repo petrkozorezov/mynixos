@@ -1,6 +1,3 @@
-# [2021-04-08 10:56:41.417] [warning] For a functional tray you must have libappindicator-* installed and export XDG_CURRENT_DESKTOP=Unity
-
-
 { ... }:
 {
   programs.waybar = {
@@ -11,7 +8,7 @@
       height   = 24;
 
       # output = [];
-      modules-left   = ["sway/workspaces" "sway/mode"];
+      modules-left   = ["sway/language" "sway/workspaces" "sway/mode"];
       modules-center = ["sway/window"];
       modules-right  = ["pulseaudio" "network" "cpu" "memory" "battery" "tray" "clock"];
 
@@ -36,7 +33,12 @@
           };
         };
         "sway/mode" = {
-          format = "<span style=\"italic\">{}</span>";
+          format     =  " {}";
+          max-length = 50;
+        };
+        "sway/language" = {
+            format     = "{}";
+            max-length = 50;
         };
         "tray" = {
           # icon-size = 21;
@@ -46,10 +48,10 @@
           format-alt = "{:%Y-%m-%d}";
         };
         "cpu" = {
-          format = "{usage}% ";
+          format = "{usage}%";
         };
         "memory" = {
-          format = "{}% ";
+          format = "{}%";
         };
         "battery" = {
           bat = "BAT0";
@@ -64,10 +66,9 @@
           format-icons = ["" "" "" "" ""];
         };
         "network" = {
-          # interface = "wlp2s0"; # (Optional) To force the use of this interface
           format-wifi         = "{essid} ({signalStrength}%) ";
-          format-ethernet     = "{ifname}: {ipaddr}/{cidr} ";
-          format-disconnected = "Disconnected ⚠";
+          format-ethernet     = "{ifname} ";
+          format-disconnected = "nolink ⚠";
         };
         "pulseaudio" = {
           # scroll-step = 1;
