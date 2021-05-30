@@ -1,5 +1,7 @@
-{ pkgs, ... }:
-{
+{ pkgs, nur, ... }:
+let
+  nixpkgs = (import ../nixpkgs.nix);
+in {
   imports = [
     ../secrets
 
@@ -24,7 +26,7 @@
     ./zathura.nix
   ];
 
-  nixpkgs = (import ../nixpkgs.nix);
+  nixpkgs = nixpkgs // { overlays = nixpkgs.overlays ++ [ nur.overlay ]; };
   programs.home-manager.enable = true;
   home = {
     packages     = [ pkgs.overlay-hm-test ];

@@ -4,12 +4,13 @@
   inputs = {
            nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
       home-manager.url = "github:rycee/home-manager"          ;
+               nur.url = "github:nix-community/NUR"           ;
        flake-utils.url = "github:numtide/flake-utils"         ;
          deploy-rs.url = "github:serokell/deploy-rs"          ;
     nix-doom-emacs.url = "github:vlaci/nix-doom-emacs"        ;
   };
 
-  outputs = { self, nixpkgs, home-manager, flake-utils, deploy-rs, nix-doom-emacs, ... }:
+  outputs = { self, nixpkgs, home-manager, flake-utils, deploy-rs, nix-doom-emacs, nur, ... }:
     # TODO flake-utils.lib.eachDefaultSystem (system:
     let
       revision = { system.configurationRevision = "${self.lastModifiedDate}-${self.shortRev or "dirty"}"; };
@@ -21,8 +22,6 @@
             system  = system;
             modules = [
               revision
-              # TODO refactor overlays logic
-              # nixpkgs.overlays = [ nix.overlay ];
               { nix.registry.nixpkgs.flake = nixpkgs; nixpkgs = (import ./nixpkgs.nix); }
               ./nix.nix
               ./modules
@@ -101,7 +100,7 @@
           homeDirectory    = "/home/petrkozorezov";
           username         = "petrkozorezov";
           configuration    = ./home;
-          extraSpecialArgs = { inherit nix-doom-emacs; };
+          extraSpecialArgs = { inherit nix-doom-emacs nur; };
         };
     };
 
