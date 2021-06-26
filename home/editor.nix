@@ -1,21 +1,23 @@
 { config, pkgs, nix-doom-emacs, ... }:
-{
+let
+  term = "TERM=xterm-24bit";
+in {
   imports = [
     nix-doom-emacs.hmModule
   ];
 
-  home.sessionVariables.EDITOR = "emacsclient";
+  home.sessionVariables.EDITOR = "${term} emacsclient";
   programs.doom-emacs = {
-    enable         = true;
-    doomPrivateDir = ./emacs;
-    emacsPackage   = pkgs.emacs-nox;
+    enable               = true;
+    doomPrivateDir       = ./emacs;
+    emacsPackage         = pkgs.emacs-nox;
     emacsPackagesOverlay = self: super: {
-       xclip = super.xclip.overrideAttrs (esuper: {
-         buildInputs = esuper.buildInputs ++ [ pkgs.wl-clipboard-x11 ];
-       });
-       lsp-mode = super.lsp-mode.overrideAttrs (esuper: {
-         buildInputs = esuper.buildInputs ++ [ pkgs.erlang_ls ];
-       });
+      xclip = super.xclip.overrideAttrs (esuper: {
+        buildInputs = esuper.buildInputs ++ [ pkgs.wl-clipboard-x11 ];
+      });
+      lsp-mode = super.lsp-mode.overrideAttrs (esuper: {
+        buildInputs = esuper.buildInputs ++ [ pkgs.erlang_ls ];
+      });
     };
   };
 
@@ -26,6 +28,7 @@
     fd
     coreutils
     # clang
+    xterm-24bit
   ];
 
   services.emacs = {
@@ -33,4 +36,6 @@
     socketActivation.enable = true;
     package                 = config.programs.emacs.package;
   };
+
+  programs.zsh.shellAliases = { "emacs" = "${term} emacs"; "emacsclient" = "${term} emacsclient"; };
 }

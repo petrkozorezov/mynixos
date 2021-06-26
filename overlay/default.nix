@@ -5,7 +5,6 @@ rec {
   overlay-hm-test  = super.hello;
 
   # erlang related packages
-  # erlang_ls = super.callPackage ./erlang_ls.nix { };
   grapherl  = super.callPackage ./grapherl.nix  { };
   hamler    = super.callPackage ./hamler.nix    { };
   beam      = super.beam // {
@@ -34,4 +33,6 @@ rec {
               "--widevine-path=${libwidevinecdm}/lib/libwidevinecdm.so --no-sandbox"
         '';
     });
+
+  xterm-24bit = super.callPackage ./xterm-24bit.nix { };
 }
