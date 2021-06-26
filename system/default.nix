@@ -15,7 +15,7 @@
     ];
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_5_11;
+    kernelPackages = pkgs.linuxPackages_5_12;
     cleanTmpDir    = true;
     kernel.sysctl."fs.inotify.max_user_watches" = 524288;
   };
@@ -28,7 +28,8 @@
 
   console = {
    font       = "iso01-12x22";
-   keyMap     = "dvp";
+   # keyMap     = "dvp";
+   keyMap     = "dvorak-programmer";
    earlySetup = true;
    #useXkbConfig (??)
   };

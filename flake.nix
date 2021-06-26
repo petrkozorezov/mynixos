@@ -2,12 +2,12 @@
   description = "My NixOS configuration";
 
   inputs = {
-           nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-      home-manager.url = "github:rycee/home-manager"          ;
-               nur.url = "github:nix-community/NUR"           ;
-       flake-utils.url = "github:numtide/flake-utils"         ;
-         deploy-rs.url = "github:serokell/deploy-rs"          ;
-    nix-doom-emacs.url = "github:vlaci/nix-doom-emacs"        ;
+           nixpkgs.url = "github:NixOS/nixpkgs/nixos-21.05"       ;
+      home-manager.url = "github:rycee/home-manager/release-21.05";
+               nur.url = "github:nix-community/NUR"               ;
+       flake-utils.url = "github:numtide/flake-utils"             ;
+         deploy-rs.url = "github:serokell/deploy-rs"              ;
+    nix-doom-emacs.url = "github:vlaci/nix-doom-emacs"            ;
   };
 
   outputs = { self, nixpkgs, home-manager, flake-utils, deploy-rs, nix-doom-emacs, nur, ... }:
