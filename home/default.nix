@@ -12,6 +12,7 @@ in {
     ./dropbox.nix
     ./editor.nix
     ./fonts.nix
+    ./games.nix
     ./git.nix
     ./htop.nix
     ./mako.nix
