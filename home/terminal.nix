@@ -35,7 +35,7 @@
             white      = "#f8f8f2";
           };
           bright = {
-            black      = "#75715e";
+            black      = "#75715e"; # FIXME not readable (see echo '{"a":null}' | jq .)
             red        = "#f92672";
             green      = "#a6e22e";
             yellow     = "#f4bf75";

@@ -2,7 +2,11 @@
   nix = {
     package = pkgs.nixFlakes;
     extraOptions = ''
+      # for flakes
       experimental-features = nix-command flakes ca-references
+      # for direnv
+      #keep-outputs = true
+      #keep-derivations = true
     '';
     gc = {
       automatic = true;
