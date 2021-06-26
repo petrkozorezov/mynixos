@@ -5,15 +5,15 @@ rec {
   overlay-hm-test  = super.hello;
 
   # erlang related packages
-  erlang_ls = super.callPackage ./erlang_ls.nix { };
+  # erlang_ls = super.callPackage ./erlang_ls.nix { };
   grapherl  = super.callPackage ./grapherl.nix  { };
   hamler    = super.callPackage ./hamler.nix    { };
   beam      = super.beam // {
     packages = super.beam.packages // {
-      erlang = super.beam.packages.erlangR23;
+      erlang = super.beam.packages.erlangR24;
     };
   };
-  erlang = super.erlangR23;
+  erlang = super.erlangR24;
 
   uhk-agent = super.callPackage ./uhk-agent.nix { };
 

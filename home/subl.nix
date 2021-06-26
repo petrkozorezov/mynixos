@@ -71,8 +71,8 @@ let
       {
         erlang-ls =
           {
-            command    = [ "${pkgs.erlang_ls}/bin/erlang_ls" "--transport" "stdio" "" ];
-            enabled    = false;
+            command    = [ "${pkgs.erlang-ls}/bin/erlang_ls" "--transport" "stdio" "" ];
+            enabled    = true;
             languageId = "erlang";
             scopes     = [ "source.erlang" ];
             syntaxes   = [ "Packages/Erlang/Erlang.sublime-syntax" ];
