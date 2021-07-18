@@ -16,7 +16,7 @@ in {
         buildInputs = esuper.buildInputs ++ [ pkgs.wl-clipboard-x11 ];
       });
       lsp-mode = super.lsp-mode.overrideAttrs (esuper: {
-        buildInputs = esuper.buildInputs ++ [ pkgs.erlang_ls ];
+        buildInputs = esuper.buildInputs ++ [ pkgs.erlang-ls ];
       });
     };
   };
