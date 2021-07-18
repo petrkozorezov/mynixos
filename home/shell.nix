@@ -91,10 +91,11 @@
       historyWidgetOptions   = [];
     };
 
-    direnv = {
-      # enable                     = true; # TODO
-      enableNixDirenvIntegration = true;
-    };
+    # direnv = {
+    #   enable                     = true;
+    #   enableZshIntegration       = true;
+    #   enableNixDirenvIntegration = true;
+    # };
 
     bat.enable = true;
     command-not-found.enable = true;

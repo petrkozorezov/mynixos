@@ -205,6 +205,7 @@ in {
           xkb_layout   = "us,ru";
           xkb_variant  = "dvp,mac";
           xkb_options  = "grp:lctrl_lwin_rctrl_menu";
+          #xkb_options  = "grp:rwin_switch";
         };
       };
 

@@ -28,10 +28,8 @@
 
   console = {
    font       = "iso01-12x22";
-   # keyMap     = "dvp";
    keyMap     = "dvorak-programmer";
    earlySetup = true;
-   #useXkbConfig (??)
   };
 
   time.timeZone = "Europe/Moscow";
