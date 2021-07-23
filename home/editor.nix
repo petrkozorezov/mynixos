@@ -34,7 +34,6 @@ in {
   services.emacs = {
     enable                  = true;
     socketActivation.enable = true;
-    package                 = config.programs.emacs.package;
   };
 
   programs.zsh.shellAliases = { "emacs" = "${term} emacs"; "emacsclient" = "${term} emacsclient"; };
