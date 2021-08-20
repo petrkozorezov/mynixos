@@ -7,7 +7,17 @@
                nur.url = "github:nix-community/NUR"               ;
        flake-utils.url = "github:numtide/flake-utils"             ;
          deploy-rs.url = "github:serokell/deploy-rs"              ;
-    nix-doom-emacs.url = "github:vlaci/nix-doom-emacs"            ;
+    nix-doom-emacs = {
+      url = "github:vlaci/nix-doom-emacs";
+      inputs = {
+        # sometimes version of emacs-overlay in nix-doom-emacs lock file is outdate
+        # and some packages are not building
+        emacs-overlay = {
+          url = "github:nix-community/emacs-overlay";
+          flake = false;
+        };
+      };
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, flake-utils, deploy-rs, nix-doom-emacs, nur, ... }:
