@@ -1,7 +1,7 @@
 { ... }:
 {
   networking = {
-    hostName = "asrock-x300"; # FIXME
+    #hostName = "hostname";
     networkmanager.enable = true;
     useDHCP = false;
   };

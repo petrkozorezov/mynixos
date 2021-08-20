@@ -64,6 +64,7 @@
   home.packages = with pkgs; [
     pkgs.firefox-wayland
     chromium
+    # torbrowser
     # nyxt
   ];
 }

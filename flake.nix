@@ -17,7 +17,7 @@
       system   = "x86_64-linux";
       pkgs     = nixpkgs.outputs.legacyPackages.${system};
       myNixOSSystem =
-        modules:
+        name: modules:
           nixpkgs.lib.nixosSystem {
             system  = system;
             modules = [
@@ -27,6 +27,7 @@
               ./modules
               ./secrets
               ./system
+              { networking.hostName = name; }
             ] ++ modules;
           };
       activateNixOS =
@@ -54,9 +55,10 @@
         };
 
       nixosConfigurations = {
-        thinkpad-x1-extreme-gen2 = myNixOSSystem [ ./hardware/thinkpad-x1-extreme-gen2.nix ];
-        mbp13                    = myNixOSSystem [ ./hardware/mbp13.nix ];
-        asrock-x300              = myNixOSSystem [ ./hardware/asrock-x300.nix ];
+        thinkpad-x1-extreme-gen2 = myNixOSSystem "thinkpad-x1" [ ./hardware/thinkpad-x1-extreme-gen2.nix ];
+        mbp13                    = myNixOSSystem "mbp13"       [ ./hardware/mbp13.nix ];
+        asrock-x300              = myNixOSSystem "asrock-x300" [ ./hardware/asrock-x300.nix ];
+        minis-x400               = myNixOSSystem "minis-x400"  [ ./hardware/minis-x400.nix ];
 
         # FIXME add home-manager profile
         # image = myNixOSSystem [
@@ -113,6 +115,19 @@
             system = {
               user = "root";
               path = activateNixOS self.nixosConfigurations.asrock-x300;
+            };
+            petrkozorezov = {
+              user = "petrkozorezov";
+              path = activateHomeManager self.homeManagerConfigurations.petrkozorezov;
+            };
+          };
+        };
+        minis-x400 = {
+          hostname = "minis-x400";
+          profiles = {
+            system = {
+              user = "root";
+              path = activateNixOS self.nixosConfigurations.minis-x400;
             };
             petrkozorezov = {
               user = "petrkozorezov";
