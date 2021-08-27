@@ -35,4 +35,15 @@ rec {
     });
 
   xterm-24bit = super.callPackage ./xterm-24bit.nix { };
+
+  torbrowser =
+    super.torbrowser.overrideAttrs (oldAttrs: rec {
+      version = "10.5.5";
+      src =
+        super.fetchurl {
+          url    = "https://dist.torproject.org/torbrowser/${version}/tor-browser-linux64-${version}_en-US.tar.xz";
+          sha256 = "0847lib2z21fgb7x5szwvprc77fhdpmp4z5d6n1sk6d40dd34spn";
+        };
+    });
+
 }
