@@ -20,6 +20,7 @@
     # ripgrep
     # ruplacer
     pandoc
+    qrencode
 
     # hardware
     pciutils
