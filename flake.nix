@@ -102,6 +102,19 @@
               ./hardware/router.nix
             ];
           };
+
+        helsinki1 =
+          nixpkgs.lib.nixosSystem {
+            system = system;
+            modules = [
+              revision
+              { nix.registry.nixpkgs.flake = nixpkgs; nixpkgs = (import ./nixpkgs.nix); }
+              ./nix.nix
+              ./modules
+              ./secrets
+              ./servers/helsinki1.nix
+            ];
+          };
       };
 
     # FIXME remove copy/paste
@@ -151,6 +164,15 @@
             system = {
               user = "root";
               path = activateNixOS self.nixosConfigurations.router;
+            };
+          };
+        };
+        helsinki1 = {
+          hostname = "helsinki1";
+          profiles = {
+            system = {
+              user = "root";
+              path = activateNixOS self.nixosConfigurations.helsinki1;
             };
           };
         };
