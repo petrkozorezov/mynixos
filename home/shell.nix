@@ -22,19 +22,27 @@
         extended              = true;
       };
       enableCompletion = true;
+      # https://zaiste.net/posts/shell-commands-rust/
       shellAliases = rec {
         ".."    = "..";
         "..."   = "../..";
         "...."  = "../../..";
         "....." = "../../../..";
-        "l"     = "exa --group-directories-first";
+        "l"     = "${pkgs.exa}/bin/exa --group-directories-first";
         "ll"    = "${"l"} -l -b --git --icons --octal-permissions --no-permissions";
         "lll"   = "${"l"} -l -g";
         "ls"    = "${"l"}";
         "tree"  = "${"l"} -T";
-        "cat"   = "bat";
+        "cat"   = "${pkgs.bat}/bin/bat";
         "ns"    = "nix search nixpkgs";
         "nb"    = "nix build";
+        "cloc"  = "${pkgs.tokei}/bin/tokei";
+        "grep"  = "${pkgs.ripgrep}/bin/rg";
+        "find"  = "${pkgs.fd}/bin/fd";
+        "ps"    = "${pkgs.procs}/bin/procs";
+        "top"   = "${pkgs.zenith}/bin/zenith";
+        "du"    = "${pkgs.du-dust}/bin/dust";
+        "jq"    = "${pkgs.jql}/bin/jql";
       };
       oh-my-zsh =
         {
@@ -81,9 +89,9 @@
     };
 
     fzf = rec {
-       # TODO preview doesn't work
+      # FIXMO preview doesn't work
       enable                 = true;
-      defaultCommand         = "fd";
+      defaultCommand         = "${pkgs.fd}/bin/fd";
       fileWidgetCommand      = "${defaultCommand} --type f";
       fileWidgetOptions      = [ "--preview bat" ];
       changeDirWidgetCommand = "${defaultCommand} --type d";
@@ -101,10 +109,13 @@
     command-not-found.enable = true;
   };
 
+  # TODO
+  #  - zoxide
+  #  - broot
+  #  -
   home.packages =
     with pkgs; [
       fasd
-      fd
-      exa
+      bandwhich
     ];
 }
