@@ -31,10 +31,10 @@
         # coqPackages_8_13.mathcomp
 
         # misc
-        cloc
         gtypist
         grapherl
         pandoc
+        zinc
       ];
 
     sessionVariables.COQPATH = "/etc/profiles/per-user/petrkozorezov/lib/coq/8.13/user-contrib"; # FIXME

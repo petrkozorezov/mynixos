@@ -14,6 +14,8 @@ rec {
   };
   erlang = super.erlangR24;
 
+  zinc = super.callPackage ./zinc.nix  { };
+
   uhk-agent = super.callPackage ./uhk-agent.nix { };
 
   # wl-clipboard as a drop-in replacement to X11 clipboard tools
