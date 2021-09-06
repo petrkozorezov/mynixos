@@ -4,20 +4,14 @@
     # utils
     bc
     killall
-    glances
-    bandwhich
-    procs
     curl wget
     ranger mc
     # nnn
-    jq
     gnupg
     unzip
     vim
-    neofetch
     # rlwrap
     # asciinema
-    # ripgrep
     # ruplacer
     pandoc
     qrencode

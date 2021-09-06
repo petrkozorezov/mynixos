@@ -104,4 +104,5 @@ in
         sha256 = "0ffi4qn0ndhqphnggy02mhzrqvv5n8c57f23rn44rj1l9ha3fyc1";
       };
   };
+  home.packages = [ pkgs.sublime3 ];
 }
