@@ -53,6 +53,10 @@ with lib;
               type        = types.str;
               description = "Public key.";
             };
+            addr = mkOption {
+              type        = types.str;
+              description = "VPN network address postfix";
+            };
 
           };
         }));

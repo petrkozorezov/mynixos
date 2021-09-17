@@ -1,21 +1,4 @@
 ## https://nixos.wiki/wiki/WireGuard
-
-# [Interface]
-# PrivateKey = <privkey-client>
-# Address = <peer-ip>
-
-# [Peer]
-# PublicKey = <pubkey-server>
-# Endpoint = <server-ip:port>
-# AllowedIPs = 0.0.0.0/0 # change it to route only part of traffic
-# PersistentKeepAlive = 25
-
-## How to add to phone
-# $ qrencode -t ansiutf8 < wg.conf
-
-## How to add to network manager
-# $ nmcli connection import type wireguard file wg.conf
-
 { modulesPath, pkgs, config, lib, ... }:
 {
   imports = [
@@ -67,25 +50,17 @@
               ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s ${subnet "0"} -o ${extIf} -j MASQUERADE
             '';
 
-            privateKey = keys."${hostName}".priv;
-
+            privateKey = (builtins.getAttr hostName keys).priv;
             peers =
-              # TODO generate from config.zoo.secrets.vpn
-              let peerIps = ip: [ "${subnet_addr}.${ip}/32" ]; in
-              [
-                {
-                  publicKey = keys.galaxy-s20u.pub;
-                  allowedIPs = peerIps "2";
-                }
-                {
-                  publicKey = keys.router.pub;
-                  allowedIPs = peerIps "3";
-                }
-                {
-                  publicKey = keys.asrock-x300.pub;
-                  allowedIPs = peerIps "4";
-                }
-              ];
+              let
+                peersKeys = builtins.attrValues (builtins.removeAttrs keys [ hostName ]);
+                peer = pub: addr:
+                  {
+                    publicKey  = pub;
+                    allowedIPs = [ "${subnet_addr}.${addr}/32" ];
+                  };
+              in
+                builtins.map (el: peer el.pub el.addr) peersKeys;
           };
         };
     };
