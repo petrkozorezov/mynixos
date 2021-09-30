@@ -15,26 +15,25 @@ rec {
   erlang = super.erlangR24;
 
   zinc = super.callPackage ./zinc.nix  { };
-
   uhk-agent = super.callPackage ./uhk-agent.nix { };
 
   # wl-clipboard as a drop-in replacement to X11 clipboard tools
   wl-clipboard-x11 = super.callPackage ./wl-clipboard-x11.nix { };
 
   # DRM support in MellowPlayer
-  libwidevinecdm = super.callPackage ./libwidevinecdm.nix { };
-  mellowplayer =
-    super.mellowplayer.overrideAttrs (oldAttrs: {
-      buildInputs           = oldAttrs.buildInputs or [] ++ [ super.makeWrapper ];
-      propagatedBuildInputs = oldAttrs.propagatedBuildInputs or [] ++ [ libwidevinecdm ];
-      postInstall =
-        ''
-          ${oldAttrs.postInstall or ""}
-          wrapProgram $out/bin/MellowPlayer \
-            --set "QTWEBENGINE_CHROMIUM_FLAGS" \
-              "--widevine-path=${libwidevinecdm}/lib/libwidevinecdm.so --no-sandbox"
-        '';
-    });
+  # libwidevinecdm = super.callPackage ./libwidevinecdm.nix { };
+  # mellowplayer =
+  #   super.mellowplayer.overrideAttrs (oldAttrs: {
+  #     buildInputs           = oldAttrs.buildInputs or [] ++ [ super.makeWrapper ];
+  #     propagatedBuildInputs = oldAttrs.propagatedBuildInputs or [] ++ [ libwidevinecdm ];
+  #     postInstall =
+  #       ''
+  #         ${oldAttrs.postInstall or ""}
+  #         wrapProgram $out/bin/MellowPlayer \
+  #           --set "QTWEBENGINE_CHROMIUM_FLAGS" \
+  #             "--widevine-path=${libwidevinecdm}/lib/libwidevinecdm.so --no-sandbox"
+  #       '';
+  #   });
 
   xterm-24bit = super.callPackage ./xterm-24bit.nix { };
 
