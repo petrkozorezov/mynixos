@@ -6,7 +6,7 @@ let
   localPath         = "${sublPath}/Local";
   installedPkgsPath = "${sublPath}/Installed Packages";
   sublSetting       = {
-    auto_complete                     = false;
+    auto_complete                     = true;
     auto_match_enabled                = false;
     color_scheme                      = "Packages/MonokaiFree/MonokaiFree.tmTheme";
     font_face                         = "JetBrains Mono";
@@ -61,6 +61,7 @@ let
       "LSP"
       "Dockerfile Syntax Highlighting"
       "Coq"
+      "TypeScript"
       # doesn't work
       #"Markdown Preview"
       #"TabNine"
@@ -71,11 +72,15 @@ let
       {
         erlang-ls =
           {
-            command    = [ "${pkgs.erlang-ls}/bin/erlang_ls" "--transport" "stdio" "" ];
-            enabled    = true;
-            languageId = "erlang";
-            scopes     = [ "source.erlang" ];
-            syntaxes   = [ "Packages/Erlang/Erlang.sublime-syntax" ];
+            enabled  = true;
+            command  = [ "${pkgs.erlang-ls}/bin/erlang_ls" "--transport" "stdio" "" ];
+            selector = "source.erlang";
+          };
+        rust-analyzer =
+          {
+            enabled  = true;
+            command  = [ "${pkgs.rust-analyzer}/bin/rust-analyzer" ];
+            selector = "source.rust";
           };
       };
     initialize_timeout = 30;
@@ -84,6 +89,10 @@ let
     log_stderr   = false;
     log_payloads = false;
   };
+  # rustFmt = {
+  #   format_on_save = true;
+  #   executable     = ["${pkgs.rustfmt}/bin/rustfmt"];
+  # };
 in
 {
   xdg.configFile = {
@@ -95,6 +104,8 @@ in
       builtins.toJSON lsp;
     "${userPath}/Package Control.sublime-settings".text =
       builtins.toJSON packages;
+    # "${userPath}/RustFmt.sublime-settings".text =
+    #   builtins.toJSON rustFmt;
     # TODO pass by config
     "${localPath}/License.sublime_license".source = ../secrets/sublime.license;
     "${installedPkgsPath}/Package Control.sublime-package".source =
