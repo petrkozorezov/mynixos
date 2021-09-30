@@ -1,9 +1,12 @@
 { pkgs, ... }:
 {
+
   home.packages = with pkgs;
     [
-      # secrets
+      # privacy
       veracrypt
+      # opensnitch
+      # opensnitch-ui
 
       # mail clients
       # TODO
@@ -11,10 +14,10 @@
       # messengers
       tdesktop
       slack
-      discord
+      #discord
 
       # books
-      # calibre
+      calibre
 
       # office
       libreoffice
