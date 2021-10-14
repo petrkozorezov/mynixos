@@ -106,7 +106,7 @@ with lib;
     in mkIf cfg.enable {
 
       networking = {
-        hostName = cfg.hostname;
+        # hostName = cfg.hostname;
         useDHCP  = false;
 
         bridges."${bridge}" = {

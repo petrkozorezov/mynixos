@@ -3,19 +3,11 @@
 ## Building
 
  - `make shell` to start shell with the all required software
- - `make build:image:installer` to make installer image
- - `make deploy:asrock-x300.system` to deploy system profile to asrock-x300 host
- - `make deploy:asrock-x300.petrkozorezov` to deploy petrkozorezov (home-manager) profile to asrock-x300 host
-
 
 ## TODO
 
   - global:
-    - nur
     - tests
-    - remove copy/paste (eg font Hack)
-  - system:
-    - use hardware modules only as a system capabilites
   - security:
     - programs.rofi.pass.enable = true; https://github.com/carnager/rofi-pass/
     - https://github.com/maximbaz/yubikey-touch-detector
@@ -27,7 +19,6 @@
     - install sublime plugins by nix (subl plugins do not work on livecd without an internet)
   - infrastructure
     - DDNS
-    - VPN server+client
     - Homeassist server
     - Syncthing
     - [monitoring](https://github.com/hacklschorsch/nixos-cluster-monitoring-sandbox)

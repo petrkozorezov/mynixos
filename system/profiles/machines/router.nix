@@ -1,25 +1,16 @@
-{ pkgs, config, lib, ... }:
+{ config, pkgs, ... }:
 let
   net      = "192.168.2";
-  hostname = "router";
   domain   = "zoo";
   address  = "${net}.1";
 in {
-  services.openssh.enable = true;
-  users.users.root.openssh.authorizedKeys.keys =
-    [ config.zoo.secrets.users.petrkozorezov.authPublicKey ]; # FIXME default user
-
-  boot = {
-    # kernelPackages = pkgs.linuxPackages_5_11;
-    cleanTmpDir    = true;
-  };
 
   #
   # router
   #
   zoo.router = {
     enable     = true;
-    hostname   = hostname;
+    hostname   = config.networking.hostName;
     domain     = domain;
 
     uplink.interface = "enp3s0";

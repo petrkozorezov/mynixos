@@ -1,28 +1,14 @@
 ## https://nixos.wiki/wiki/WireGuard
-{ modulesPath, pkgs, config, lib, ... }:
+{ pkgs, config, ... }:
 {
-  imports = [
-    (modulesPath + "/profiles/qemu-guest.nix")
-    #../terraform.state.nix
-  ];
-  # TODO move to hardware conf
-  boot.loader.grub.device = "/dev/sda";
-  boot.initrd.kernelModules = [ "nvme" ];
-  fileSystems."/" = { device = "/dev/sda3"; fsType = "ext4"; };
-
-  services.openssh.enable = true;
-  users.users.root.openssh.authorizedKeys.keys =
-    [ config.zoo.secrets.users.petrkozorezov.authPublicKey ]; # FIXME default user
-
   networking =
     let
-      hostName = "helsinki1";
-      localIf  = "ens10";
+      hostName = config.networking.hostName;
+      # localIf  = "ens10";
       extIf    = "ens3";
       vpnIf    = "wg0";
       vpnPort  = 51822;
     in {
-      hostName = hostName;
       nat = {
         enable             = true;
         externalInterface  = extIf;

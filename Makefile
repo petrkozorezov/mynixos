@@ -1,4 +1,4 @@
-.PHONY = clean show-repo-path update build\:% build\:deploy installer image
+.PHONY = clean show-repo-path update build\:% build\:deploy installer image shell
 REPO_PATH = `pwd`/$(dir $(lastword $(MAKEFILE_LIST)))
 DIRS=/etc/nixos ~/.config/nixpkgs # FIXME better name
 
@@ -16,6 +16,19 @@ show-repo-path:
 update:
 	nix flake update
 
+# make build:system:mbp13
+build\:system\:%:
+	# or `build:deploy.nodes.$*.profiles.system.path`
+	$(MAKE) build:configs.$*.system.config.system.build.toplevel
+
+# make build:user:mbp13.petrkozorezov
+build\:user\:%:
+	$(MAKE) build:configs.$*.activationPackage
+
+# make build:image:installer
+# build\:image\:%:
+# 	$(MAKE) build:configs.$*.config.system.build.isoImage
+
 build\:%:
 	nix build -v ".#$*"
 
@@ -24,12 +37,6 @@ deploy\:%:
 
 shell:
 	nix shell
-
-build\:nixos\:%:
-	$(MAKE) build:nixosConfigurations.$*.config.system.build.toplevel
-
-build\:image\:%:
-	$(MAKE) build:nixosConfigurations.$*.config.system.build.isoImage
 
 config.tf.json: cloud/*.nix
 	terranix cloud/default.nix | jq . > $@

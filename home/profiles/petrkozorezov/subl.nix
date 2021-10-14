@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 let
   sublPath          = "sublime-text-3";
   packagesPath      = "${sublPath}/Packages";
@@ -107,7 +107,7 @@ in
     # "${userPath}/RustFmt.sublime-settings".text =
     #   builtins.toJSON rustFmt;
     # TODO pass by config
-    "${localPath}/License.sublime_license".source = ../secrets/sublime.license;
+    "${localPath}/License.sublime_license".source = config.zoo.secrets.filesPath + "/sublime.license";
     "${installedPkgsPath}/Package Control.sublime-package".source =
       builtins.fetchurl {
         name   = "sublime-package-control";

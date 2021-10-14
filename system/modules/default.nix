@@ -1,6 +1,5 @@
 {
   imports = [
     ./router
-    ./secrets.nix
   ];
 }
