@@ -9,24 +9,26 @@
     nix-doom-emacs.url = "github:vlaci/nix-doom-emacs"            ;
     # sometimes version of emacs-overlay in nix-doom-emacs lock file is outdated
     # and some packages are not building
-    nix-doom-emacs.inputs.emacs-overlay = {
-      url   = "github:nix-community/emacs-overlay";
-      flake = false;
-    };
+    nix-doom-emacs.inputs.emacs-overlay.url = "github:nix-community/emacs-overlay";
   };
 
   outputs = { self, nixpkgs, home-manager, deploy-rs, nix-doom-emacs, nur, ... }:
     let
       # high level system description
-      system = "x86_64-linux";
+      system   = "x86_64-linux";
+      packages = nixpkgs.legacyPackages;
       nodes =
         let
-          petrkozorezov = { petrkozorezov = [ "petrkozorezov" ]; };
+          relativePaths = basePath: map (path: ./. + ("/" + basePath + ("/" + path)));
+          hmPaths       = relativePaths "home/profiles";
+          sysPaths      = relativePaths "system/profiles";
+          users         = { petrkozorezov = hmPaths [ "petrkozorezov" ]; };
         in {
-          mbp13       = { system = [ "hardware/mbp13.nix"         "base.nix" "petrkozorezov.nix" "workstation.nix" "machines/mbp13.nix"       ]; } // petrkozorezov;
-          asrock-x300 = { system = [ "hardware/asrock-x300.nix"   "base.nix" "petrkozorezov.nix" "workstation.nix" "machines/asrock-x300.nix" ]; } // petrkozorezov;
-          router      = { system = [ "hardware/router.nix"        "base.nix" "machines/router.nix"    ]; };
-          helsinki1   = { system = [ "hardware/hetzner-cloud.nix" "base.nix" "machines/helsinki1.nix" ]; };
+          mbp13       = { system = sysPaths [ "hardware/mbp13.nix"         "base.nix" "petrkozorezov.nix" "workstation.nix" "machines/mbp13.nix"       ]; } // users;
+          asrock-x300 = { system = sysPaths [ "hardware/asrock-x300.nix"   "base.nix" "petrkozorezov.nix" "workstation.nix" "machines/asrock-x300.nix" ]; } // users;
+          router      = { system = sysPaths [ "hardware/router.nix"        "base.nix" "machines/router.nix"    ]; };
+          helsinki1   = { system = sysPaths [ "hardware/hetzner-cloud.nix" "base.nix" "machines/helsinki1.nix" ]; };
+          test-vm     = { system = sysPaths [ "base.nix" "petrkozorezov.nix" "workstation.nix" ] ++ [(nixpkgs + /nixos/modules/profiles/qemu-guest.nix)]; } // users;
         };
 
       mapProfiles =
@@ -38,8 +40,72 @@
               else
                 userMapF profileName
           );
+
+      baseSystemModule =
+        hostName:
+          { config, ... }: {
+            system.configurationRevision = "${self.lastModifiedDate}-${self.shortRev or "dirty"}";
+            networking.hostName = hostName;
+            nix.registry.nixpkgs.flake = nixpkgs;
+            services.openssh = {
+              enable                 = true;
+              passwordAuthentication = false;
+              # ports                  = [ 42 ];
+            };
+            users.users.root.openssh.authorizedKeys.keys = [ config.zoo.secrets.deployment.authPublicKey ];
+          };
+      nixpkgsConfigModule =
+        {
+          nixpkgs =
+            let
+              nixpkgsConfig = (import ./nixpkgs.nix);
+            in
+              (nixpkgsConfig // { overlays = nixpkgsConfig.overlays ++ [ nur.overlay ]; });
+        };
+      systemConfig =
+        hostName: modules:
+          nixpkgs.lib.nixosSystem {
+            system  = system;
+            modules = [
+              (baseSystemModule hostName)
+              nixpkgsConfigModule
+              ./system/modules
+              ./nix.nix
+              ./secrets
+              # (modulesPath + "/profiles/hardened.nix")
+            ] ++ modules;
+          };
+
+      sharedHMModules =
+        [
+          ./home/modules
+          ./secrets
+        ];
+      extraHMSpecialArgs = { inherit nix-doom-emacs nur; };
+      userConfig =
+        userName: modules:
+          home-manager.lib.homeManagerConfiguration {
+            pkgs             = packages.${system};
+            system           = system;
+            homeDirectory    = "/home/" + userName;
+            username         = userName;
+            configuration    = { imports = [ nixpkgsConfigModule ] ++ sharedHMModules ++ modules; };
+            extraSpecialArgs = extraHMSpecialArgs;
+          };
+
+      hmInitModule =
+        userName: modules:
+          {
+            home-manager = {
+              useGlobalPkgs     = true;
+              useUserPackages   = true;
+              users.${userName} = { imports = modules; };
+              sharedModules     = sharedHMModules;
+              extraSpecialArgs  = extraHMSpecialArgs;
+            };
+          };
     in rec {
-      packages = nixpkgs.legacyPackages;
+      inherit packages;
 
       #
       # development & deployment shell
@@ -65,48 +131,7 @@
       # construct `{ hostname = { profile = configuration } }`
       #
       configs =
-        let
-          relativePaths = basePath: map (path: ./. + ("/" + basePath + ("/" + path))); # Am I do smth wrong with paths?
-          nixpkgsConfig = (import ./nixpkgs.nix);
-          nixpkgsConfigMod = { nixpkgs = (nixpkgsConfig // { overlays = nixpkgsConfig.overlays ++ [ nur.overlay ]; }); };
-          systemConfig =
-            hostName: modules:
-              nixpkgs.lib.nixosSystem {
-                system  = system;
-                modules = [
-                  {
-                    system.configurationRevision = "${self.lastModifiedDate}-${self.shortRev or "dirty"}";
-                    networking.hostName = hostName;
-                    nix.registry.nixpkgs.flake = nixpkgs;
-                  }
-                  nixpkgsConfigMod
-                  ./system/modules
-                  ./nix.nix
-                  ./secrets
-                  # (modulesPath + "/profiles/hardened.nix")
-                  ({ config, ... }: {
-                    services.openssh.enable = true;
-                    users.users.root.openssh.authorizedKeys.keys = [ config.zoo.secrets.deployment.authPublicKey ];
-                  })
-                ] ++ relativePaths "system/profiles" modules;
-              };
-          userConfig =
-            userName: modules:
-              home-manager.lib.homeManagerConfiguration {
-                pkgs             = packages.${system};
-                system           = system;
-                homeDirectory    = "/home/" + userName;
-                username         = userName;
-                configuration    = {};
-                extraSpecialArgs = { inherit nix-doom-emacs nur; }; # TODO find out more general way to import
-                extraModules     = [
-                  nixpkgsConfigMod
-                  ./home/modules
-                  ./secrets
-                ] ++ relativePaths "home/profiles" modules;
-              };
-        in
-          builtins.mapAttrs (mapProfiles systemConfig userConfig) nodes;
+        builtins.mapAttrs (mapProfiles systemConfig userConfig) nodes;
 
       #
       # system configuration for `nixos-rebuild`
@@ -114,7 +139,17 @@
       # λ nixos-rebuild --flake .#<hostname> build
       #
       nixosConfigurations =
-        builtins.mapAttrs (_: profiles: profiles.system) configs;
+        builtins.mapAttrs
+          (
+            hostName: profiles:
+              let
+                systemProfile  = profiles.system;
+                usersProfiles  = removeAttrs profiles [ "system" ];
+                usersHMModules = builtins.attrValues (builtins.mapAttrs hmInitModule usersProfiles);
+              in
+                systemConfig hostName (systemProfile ++ [ home-manager.nixosModules.home-manager ] ++ usersHMModules)
+          )
+          nodes;
 
       #
       # deploy-rs specs
@@ -148,7 +183,8 @@
       in
         {
           sshUser = "root";
-          nodes = builtins.mapAttrs host configs;
+          # sshOpts = [ "-p" "42" ];
+          nodes   = builtins.mapAttrs host configs;
         };
 
       checks = deploy-rs.lib.${system}.deployChecks self.deploy;

@@ -47,7 +47,7 @@
         };
       # baseOpts = ;
     in {
-      "/"        = { fsType = "tmpfs"; device = "none"; options = [ "defaults" "size=2G" "mode=755" ]; };
+      "/"        = { fsType = "tmpfs"; device = "none"; options = [ "defaults" "size=1G" "mode=755" ]; };
       "/boot"    = { fsType = "vfat" ; device = "/dev/disk/by-uuid/F92B-ADC1";  };
       "/home"    = brtfsSubVolume "home";
       "/nix"     = brtfsSubVolume "nix";

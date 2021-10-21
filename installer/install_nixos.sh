@@ -1,6 +1,10 @@
 #!/usr/bin/env -S nix shell -i nixpkgs#coreutils nixpkgs#mount nixpkgs#umount nixpkgs#cryptsetup nixpkgs#btrfs-progs nixpkgs#dosfstools nixpkgs#parted nixpkgs#lvm2_dmeventd nixpkgs#bashInteractive -c bash
-if [[ $# -ne 2 ]]; then
+function usage {
   echo "Usage: $0 [ create | mount | umount ] <disk-device>"
+}
+
+if [[ $# -ne 2 ]]; then
+  usage
   exit 1
 fi
 
@@ -44,10 +48,6 @@ function create-disks {
   btrfs subvolume create "$MNT"/lib
   btrfs subvolume create "$MNT"/log
 
-  # We then take an empty *readonly* snapshot of the root subvolume,
-  # which we'll eventually rollback to on every boot.
-  #btrfs subvolume snapshot -r "$MNT"/root "$MNT"/root-blank
-
   umount "$MNT"
 
   mkfs.vfat -n boot "$DISK"p1
@@ -89,8 +89,8 @@ function umount-disks {
   rm "$MNT" -r
 }
 
-# install
-# nixos-install --root /tmp/mnt --flake .#mbp13 --no-root-passwd
+# nixos-install --root /tmp/mnt --flake .#mbp13 --no-root-passwd --impure
+# sudo ./nixos-install --root /tmp/mnt --flake .#mbp13 --no-root-passwd --impure --no-channel-copy -v
 
 case $STAGE in
   create)
@@ -101,5 +101,9 @@ case $STAGE in
     ;;
   umount)
     umount-disks
+    ;;
+  *)
+    usage
+    exit 1
     ;;
 esac

@@ -62,9 +62,8 @@
   };
   home.sessionVariables.BROWSER = "firefox";
   home.packages = with pkgs; [
-    pkgs.firefox-wayland
     chromium
-    torbrowser
+    # torbrowser
     # nyxt
   ];
 }

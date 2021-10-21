@@ -27,9 +27,6 @@
   programs.home-manager.enable = true;
   home = {
     packages     = [ pkgs.overlay-hm-test ];
-    # error: The option `home.stateVersion' has conflicting definition values:
-    #        - In `/nix/store/bv3awswkczn0611y70pdjbqxmn8q6lmd-source/home': "20.03"
-    #        - In `<unknown-file>': "20.09"
-    #stateVersion = "20.03";
+    stateVersion = "20.03";
   };
 }

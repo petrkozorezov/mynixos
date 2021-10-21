@@ -29,6 +29,7 @@ in {
     maxCacheTtl      = 120;
     pinentryFlavor   = "gtk2";
   };
+  # TODO .gnupg 0700
   home.file.".gnupg/pubring.kbx".source = config.zoo.secrets.filesPath + "/gnupg.pubring.kbx";
   home.file.".gnupg/scdaemon.conf".text = "reader-port Yubico Yubi";
   home.file.".ssh/id_rsa_ybk1.pub".text = config.zoo.secrets.users.petrkozorezov.authPublicKey;

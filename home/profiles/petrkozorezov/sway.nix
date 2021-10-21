@@ -122,7 +122,11 @@ in {
         "${mod}+k"               = "split v";
 
         "${mod}+minus"           = "exec grim -t jpeg -g \"$(slurp)\" \"$HOME/Dropbox/Screenshots/$(date +%Y-%m-%d_%H-%m-%S).jpg\"";
-
+        # window
+        # grim ~/Dropbox/Screenshots/${NAME} && notify-desktop "fullscreen screenshot taken $NAME"
+        # region
+        # GEOMETRY=`swaymsg -t get_tree | jq -r '.. | select(.pid? and .visible?) | .rect | "\(.x),\(.y) \(.width)x\(.height)"' | slurp`
+        #grim -g "${GEOMETRY}" ~/Dropbox/Screenshots/${NAME} && notify-desktop "fullscreen screenshot taken $NAME"
         #"${mod}+r"              = "mode resize";
         "${mod}+Shift+space"     = "floating toggle";
         "${mod}+space"           = "focus mode_toggle";

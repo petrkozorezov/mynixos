@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
 
-  boot.kernelPackages = pkgs.linuxPackages_5_13;
+  boot.kernelPackages = pkgs.linuxPackages_5_14;
 
   system.stateVersion = "21.05";
 }
