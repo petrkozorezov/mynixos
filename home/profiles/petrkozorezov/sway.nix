@@ -156,14 +156,12 @@ in {
             "nm-applet --indicator"
             "blueman-applet"
             "firefox -P personal"
-            "firefox -P kubient"
             "sublime_text"
             "telegram-desktop"
             "slack"
             "mkfifo ${ob_file} && tail -f ${ob_file} | ${ob}"
             "mako"
             "MellowPlayer"
-            "dropbox start"
          ]
          (cmd: { command = cmd; })
       ;

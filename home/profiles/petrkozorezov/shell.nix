@@ -24,6 +24,7 @@
       enableCompletion = true;
       # https://zaiste.net/posts/shell-commands-rust/
       shellAliases = rec {
+        "."     = "${"ll"}";
         ".."    = "..";
         "..."   = "../..";
         "...."  = "../../..";

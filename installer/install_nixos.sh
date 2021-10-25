@@ -1,6 +1,8 @@
-#!/usr/bin/env -S nix shell -i nixpkgs#coreutils nixpkgs#mount nixpkgs#umount nixpkgs#cryptsetup nixpkgs#btrfs-progs nixpkgs#dosfstools nixpkgs#parted nixpkgs#lvm2_dmeventd nixpkgs#bashInteractive -c bash
+#!/usr/bin/env -S nix shell -i nixpkgs#nixos-install-tools nixpkgs#gnugrep nixpkgs#coreutils nixpkgs#util-linux nixpkgs#cryptsetup nixpkgs#btrfs-progs nixpkgs#dosfstools nixpkgs#parted nixpkgs#lvm2_dmeventd nixpkgs#bashInteractive -c bash
+# TODO decide disk name structure (nvme1p1 vs sda1)
+# TODO check correct mount after create
 function usage {
-  echo "Usage: $0 [ create | mount | umount ] <disk-device>"
+  echo "Usage: $0 [ create | mount | umount | show-config | show-hardware-config ] <disk-device>"
 }
 
 if [[ $# -ne 2 ]]; then
@@ -22,13 +24,13 @@ SWAP_DISK="/dev/$LVM_NAME/swap"
 function create-disks {
   mkdir "$MNT"
   parted $DISK -- mklabel gpt
-  parted $DISK -- mkpart ESP fat32 1MiB 512MiB
+  parted $DISK -- mkpart ESP fat32 2048s 980991s # I don't know if these numbers are universal
   parted $DISK -- set 1 boot on
-  parted $DISK -- mkpart Nix 512MiB 100%
+  parted $DISK -- mkpart main 980992s 100%
 
   ## LUKS setup
-  cryptsetup --verify-passphrase -v luksFormat "$DISK"p2
-  cryptsetup open "$DISK"p2 "$LUKS_DISK_NAME"
+  cryptsetup --verify-passphrase -v luksFormat "$DISK"2
+  cryptsetup open "$DISK"2 "$LUKS_DISK_NAME"
 
   ## LVM
   pvcreate "$LUKS_DISK"
@@ -50,9 +52,14 @@ function create-disks {
 
   umount "$MNT"
 
-  mkfs.vfat -n boot "$DISK"p1
-
   mkswap "$SWAP_DISK"
+
+  cryptsetup close "$LVM_NAME"-root
+  cryptsetup close "$LVM_NAME"-swap
+  cryptsetup close "$LUKS_DISK_NAME"
+
+  # mkfs.vfat -n boot "$DISK"1
+  mkfs.fat -F 32 -n boot /dev/sda3
 
   rm "$MNT" -r
 }
@@ -62,8 +69,8 @@ function mount-disks {
   mount -t tmpfs none "$MNT"
   mkdir "$MNT"/{boot,home,nix,var,var/lib/,var/log}
 
-  mount "$DISK"p1 "$MNT"/boot
-  cryptsetup open "$DISK"p2 "$LUKS_DISK_NAME"
+  mount "$DISK"1 "$MNT"/boot
+  cryptsetup open "$DISK"2 "$LUKS_DISK_NAME"
   pvscan && lvscan
 
   #swapon "$SWAP_DISK"
@@ -89,6 +96,24 @@ function umount-disks {
   rm "$MNT" -r
 }
 
+function show-hardware-config {
+  nixos-generate-config --root "$MNT" --show-hardware-config
+}
+
+function show-config {
+  echo \
+"{
+  boot=\"/dev/disk/by-uuid/$(get-uuid ${DISK}1)\";
+  luks=\"/dev/disk/by-uuid/$(get-uuid ${DISK}2)\";
+  main=\"/dev/disk/by-uuid/$(get-uuid ${BTRFS_DISK})\";
+  swap=\"/dev/disk/by-uuid/$(get-uuid ${SWAP_DISK})\";
+}"
+}
+
+function get-uuid {
+  blkid -o export "$1" | grep '^UUID=' | cut -d '=' -f 2
+}
+
 # nixos-install --root /tmp/mnt --flake .#mbp13 --no-root-passwd --impure
 # sudo ./nixos-install --root /tmp/mnt --flake .#mbp13 --no-root-passwd --impure --no-channel-copy -v
 
@@ -101,6 +126,12 @@ case $STAGE in
     ;;
   umount)
     umount-disks
+    ;;
+  show-config)
+    show-config
+    ;;
+  show-hardware-config)
+    show-hardware-config
     ;;
   *)
     usage

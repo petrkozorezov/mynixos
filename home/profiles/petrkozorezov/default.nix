@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   imports = [
     ./base.nix
@@ -27,6 +27,6 @@
   programs.home-manager.enable = true;
   home = {
     packages     = [ pkgs.overlay-hm-test ];
-    stateVersion = "20.03";
+    stateVersion = lib.mkForce "20.09";
   };
 }

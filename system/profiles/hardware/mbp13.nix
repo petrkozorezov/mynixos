@@ -6,11 +6,13 @@
       (modulesPath + "/installer/scan/not-detected.nix")
       ./audio.nix
       ./video.nix
+      ./uhk.nix
     ];
 
   boot = {
     loader = {
-      systemd-boot.enable = true;
+      # when enabled deploy-rs does not wokr
+      #systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
       grub = {
         enable           = true;
@@ -22,10 +24,10 @@
       timeout            = 1;
     };
     initrd = {
-      availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ]; # TODO clarify
+      availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" "uas" ]; # TODO clarify
       kernelModules = [ "dm-snapshot" ];
       luks.devices.root = {
-        device = "/dev/disk/by-uuid/f7c8f555-598b-44f7-b0c3-ade87844c132";
+        device = "/dev/disk/by-uuid/ac46ad51-44d4-4af4-9ffd-d7911b225396";
         preLVM = true;
       };
     };
@@ -41,21 +43,20 @@
     let
       brtfsSubVolume = subvol:
         {
-          device  = "/dev/disk/by-uuid/34b13e2b-81a7-4aba-936a-274916124b23";
+          device  = "/dev/disk/by-uuid/3618fcf6-09bd-4cfe-8090-8dd21ce9a7e4";
           fsType  = "btrfs";
           options = [ ("subvol=" + subvol) "compress=zstd:1" "noatime" ];
         };
-      # baseOpts = ;
     in {
       "/"        = { fsType = "tmpfs"; device = "none"; options = [ "defaults" "size=1G" "mode=755" ]; };
-      "/boot"    = { fsType = "vfat" ; device = "/dev/disk/by-uuid/F92B-ADC1";  };
+      "/boot"    = { fsType = "vfat" ; device = "/dev/disk/by-uuid/C359-1E76";  };
       "/home"    = brtfsSubVolume "home";
       "/nix"     = brtfsSubVolume "nix";
       "/var/lib" = brtfsSubVolume "lib";
       "/var/log" = brtfsSubVolume "log";
     };
 
-  swapDevices = [ { device = "/dev/disk/by-uuid/66be6355-c124-4035-928a-ce2e904893f5"; } ];
+  swapDevices = [ { device = "/dev/disk/by-uuid/669e1030-cb9a-4f4f-9ba8-26324b6b9645"; } ];
 
   # high-resolution display
 

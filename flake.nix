@@ -1,7 +1,7 @@
 {
   description = "My NixOS configuration";
 
-  inputs = {
+  inputs = rec {
            nixpkgs.url = "github:NixOS/nixpkgs/nixos-21.05"       ;
       home-manager.url = "github:rycee/home-manager/release-21.05";
                nur.url = "github:nix-community/NUR"               ;
@@ -9,7 +9,9 @@
     nix-doom-emacs.url = "github:vlaci/nix-doom-emacs"            ;
     # sometimes version of emacs-overlay in nix-doom-emacs lock file is outdated
     # and some packages are not building
-    nix-doom-emacs.inputs.emacs-overlay.url = "github:nix-community/emacs-overlay";
+    # an explicitly input is needed here to prevent emacs-overlay from auto update
+    emacs-overlay.url = "github:nix-community/emacs-overlay";
+    nix-doom-emacs.inputs.emacs-overlay.follows = "emacs-overlay";
   };
 
   outputs = { self, nixpkgs, home-manager, deploy-rs, nix-doom-emacs, nur, ... }:
