@@ -19,6 +19,7 @@
       # high level system description
       system   = "x86_64-linux";
       packages = nixpkgs.legacyPackages;
+      modulesPath = nixpkgs + /nixos/modules;
       nodes =
         let
           relativePaths = basePath: map (path: ./. + ("/" + basePath + ("/" + path)));
@@ -30,7 +31,6 @@
           asrock-x300 = { system = sysPaths [ "hardware/asrock-x300.nix"   "base.nix" "petrkozorezov.nix" "workstation.nix" "machines/asrock-x300.nix" ]; } // users;
           router      = { system = sysPaths [ "hardware/router.nix"        "base.nix" "machines/router.nix"    ]; };
           helsinki1   = { system = sysPaths [ "hardware/hetzner-cloud.nix" "base.nix" "machines/helsinki1.nix" ]; };
-          test-vm     = { system = sysPaths [ "base.nix" "petrkozorezov.nix" "workstation.nix" ] ++ [(nixpkgs + /nixos/modules/profiles/qemu-guest.nix)]; } // users;
         };
 
       mapProfiles =
@@ -45,7 +45,7 @@
 
       baseSystemModule =
         hostName:
-          { config, ... }: {
+          { config, lib, ... }: {
             system.configurationRevision = "${self.lastModifiedDate}-${self.shortRev or "dirty"}";
             networking.hostName = hostName;
             nix.registry.nixpkgs.flake = nixpkgs;
@@ -53,8 +53,23 @@
               enable                 = true;
               passwordAuthentication = false;
               # ports                  = [ 42 ];
+              hostKeys               = [];
             };
+            environment.etc = let
+              key = config.zoo.secrets.keys.${hostName};
+            in {
+              "ssh/ssh_host_key" = {
+                mode   = "600";
+                source = key.priv;
+              };
+              "ssh/ssh_host_key.pub" = {
+                mode   = "0644";
+                source = key.pub;
+              };
+            };
+            environment.defaultPackages = lib.mkForce [];
             users.users.root.openssh.authorizedKeys.keys = [ config.zoo.secrets.deployment.authPublicKey ];
+            security.sudo.extraConfig = ''Defaults lecture = never'';
           };
       nixpkgsConfigModule =
         {

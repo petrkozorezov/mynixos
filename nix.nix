@@ -1,6 +1,24 @@
+# TODO https://github.com/Mic92/doctor-cluster-config/blob/master/configurations.nix#L25
+# nix.nixPath = [
+#   "home-manager=${home-manager}"
+#   "nixpkgs=${nixpkgs}"
+#   "nur=${nur}"
+# ];
+
+# nix.extraOptions = ''
+#   flake-registry = ${flake-registry}/flake-registry.json
+# '';
+
+# nix.registry = {
+#   home-manager.flake = home-manager;
+#   nixpkgs.flake = nixpkgs;
+#   nur.flake = nur;
+# };
+
 { pkgs, ... }: {
   nix = {
     package = pkgs.nixFlakes;
+    allowedUsers = [ "@wheel" ];
     extraOptions = ''
       # for flakes
       experimental-features = nix-command flakes ca-references

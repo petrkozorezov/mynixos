@@ -39,21 +39,24 @@
 
   # https://mt-caret.github.io/blog/posts/2020-06-29-optin-state.html
   # https://elis.nu/blog/2020/05/nixos-tmpfs-as-root/
+  # https://christine.website/blog/paranoid-nixos-2021-07-18
   fileSystems =
     let
       brtfsSubVolume = subvol:
         {
-          device  = "/dev/disk/by-uuid/3618fcf6-09bd-4cfe-8090-8dd21ce9a7e4";
-          fsType  = "btrfs";
-          options = [ ("subvol=" + subvol) "compress=zstd:1" "noatime" ];
+          device        = "/dev/disk/by-uuid/3618fcf6-09bd-4cfe-8090-8dd21ce9a7e4";
+          fsType        = "btrfs";
+          options       = [ ("subvol=" + subvol) "compress=zstd:1" "noatime" ]; # nosuid noexec?
+          neededForBoot = true;
         };
     in {
-      "/"        = { fsType = "tmpfs"; device = "none"; options = [ "defaults" "size=1G" "mode=755" ]; };
+      "/"        = { fsType = "tmpfs"; device = "none"; options = [ "defaults" "size=2G" "mode=755" ]; };
       "/boot"    = { fsType = "vfat" ; device = "/dev/disk/by-uuid/C359-1E76";  };
       "/home"    = brtfsSubVolume "home";
       "/nix"     = brtfsSubVolume "nix";
       "/var/lib" = brtfsSubVolume "lib";
       "/var/log" = brtfsSubVolume "log";
+      "/etc/ssh" = brtfsSubVolume "ssh";
     };
 
   swapDevices = [ { device = "/dev/disk/by-uuid/669e1030-cb9a-4f4f-9ba8-26324b6b9645"; } ];
