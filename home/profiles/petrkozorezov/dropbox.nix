@@ -2,7 +2,7 @@
 {
   # TODO disable or override firefox package
   services.dropbox = {
-    enable = true;
+    enable = false;
     path   = "${config.home.homeDirectory}/Dropbox";
   };
 }
