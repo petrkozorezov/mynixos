@@ -1,56 +1,135 @@
 {
   description = "My NixOS configuration";
 
-  inputs = {
+  inputs = rec {
            nixpkgs.url = "github:NixOS/nixpkgs/nixos-21.05"       ;
       home-manager.url = "github:rycee/home-manager/release-21.05";
                nur.url = "github:nix-community/NUR"               ;
-       flake-utils.url = "github:numtide/flake-utils"             ;
          deploy-rs.url = "github:serokell/deploy-rs"              ;
-    nix-doom-emacs = {
-      url = "github:vlaci/nix-doom-emacs";
-      inputs = {
-        # sometimes version of emacs-overlay in nix-doom-emacs lock file is outdate
-        # and some packages are not building
-        emacs-overlay = {
-          url = "github:nix-community/emacs-overlay";
-          flake = false;
-        };
-      };
-    };
+    nix-doom-emacs.url = "github:vlaci/nix-doom-emacs"            ;
+    # sometimes version of emacs-overlay in nix-doom-emacs lock file is outdated
+    # and some packages are not building
+    # an explicitly input is needed here to prevent emacs-overlay from auto update
+    emacs-overlay.url = "github:nix-community/emacs-overlay";
+    nix-doom-emacs.inputs.emacs-overlay.follows = "emacs-overlay";
   };
 
-  outputs = { self, nixpkgs, home-manager, flake-utils, deploy-rs, nix-doom-emacs, nur, ... }:
-    # TODO flake-utils.lib.eachDefaultSystem (system:
+  outputs = { self, nixpkgs, home-manager, deploy-rs, nix-doom-emacs, nur, ... }:
     let
-      revision = { system.configurationRevision = "${self.lastModifiedDate}-${self.shortRev or "dirty"}"; };
+      # high level system description
       system   = "x86_64-linux";
-      pkgs     = nixpkgs.outputs.legacyPackages.${system};
-      myNixOSSystem =
-        name: modules:
+      packages = nixpkgs.legacyPackages;
+      modulesPath = nixpkgs + /nixos/modules;
+      nodes =
+        let
+          relativePaths = basePath: map (path: ./. + ("/" + basePath + ("/" + path)));
+          hmPaths       = relativePaths "home/profiles";
+          sysPaths      = relativePaths "system/profiles";
+          users         = { petrkozorezov = hmPaths [ "petrkozorezov" ]; };
+        in {
+          mbp13       = { system = sysPaths [ "hardware/mbp13.nix"         "base.nix" "petrkozorezov.nix" "workstation.nix" "machines/mbp13.nix"       ]; } // users;
+          asrock-x300 = { system = sysPaths [ "hardware/asrock-x300.nix"   "base.nix" "petrkozorezov.nix" "workstation.nix" "machines/asrock-x300.nix" ]; } // users;
+          router      = { system = sysPaths [ "hardware/router.nix"        "base.nix" "machines/router.nix"    ]; };
+          helsinki1   = { system = sysPaths [ "hardware/hetzner-cloud.nix" "base.nix" "machines/helsinki1.nix" ]; };
+        };
+
+      mapProfiles =
+        systemMapF: userMapF: hostName:
+          builtins.mapAttrs (
+            profileName:
+              if profileName == "system" then
+                systemMapF hostName
+              else
+                userMapF profileName
+          );
+
+      baseSystemModule =
+        hostName:
+          { config, lib, ... }: {
+            system.configurationRevision = "${self.lastModifiedDate}-${self.shortRev or "dirty"}";
+            networking.hostName = hostName;
+            nix.registry.nixpkgs.flake = nixpkgs;
+            services.openssh = {
+              enable                 = true;
+              passwordAuthentication = false;
+              # ports                  = [ 42 ];
+              hostKeys               = [];
+            };
+            environment.etc = let
+              key = config.zoo.secrets.keys.${hostName};
+            in {
+              "ssh/ssh_host_key" = {
+                mode   = "600";
+                source = key.priv;
+              };
+              "ssh/ssh_host_key.pub" = {
+                mode   = "0644";
+                source = key.pub;
+              };
+            };
+            environment.defaultPackages = lib.mkForce [];
+            users.users.root.openssh.authorizedKeys.keys = [ config.zoo.secrets.deployment.authPublicKey ];
+            security.sudo.extraConfig = ''Defaults lecture = never'';
+          };
+      nixpkgsConfigModule =
+        {
+          nixpkgs =
+            let
+              nixpkgsConfig = (import ./nixpkgs.nix);
+            in
+              (nixpkgsConfig // { overlays = nixpkgsConfig.overlays ++ [ nur.overlay ]; });
+        };
+      systemConfig =
+        hostName: modules:
           nixpkgs.lib.nixosSystem {
             system  = system;
             modules = [
-              revision
-              { nix.registry.nixpkgs.flake = nixpkgs; nixpkgs = (import ./nixpkgs.nix); }
+              (baseSystemModule hostName)
+              nixpkgsConfigModule
+              ./system/modules
               ./nix.nix
-              ./modules
               ./secrets
-              ./system
-              { networking.hostName = name; }
+              # (modulesPath + "/profiles/hardened.nix")
             ] ++ modules;
           };
-      activateNixOS =
-        configuration:
-          deploy-rs.lib.${system}.activate.nixos configuration;
-      activateHomeManager =
-        configuration:
-          deploy-rs.lib.${system}.activate.custom (configuration).activationPackage "$PROFILE/activate";
-    in
-    rec {
+
+      sharedHMModules =
+        [
+          ./home/modules
+          ./secrets
+        ];
+      extraHMSpecialArgs = { inherit nix-doom-emacs nur; };
+      userConfig =
+        userName: modules:
+          home-manager.lib.homeManagerConfiguration {
+            pkgs             = packages.${system};
+            system           = system;
+            homeDirectory    = "/home/" + userName;
+            username         = userName;
+            configuration    = { imports = [ nixpkgsConfigModule ] ++ sharedHMModules ++ modules; };
+            extraSpecialArgs = extraHMSpecialArgs;
+          };
+
+      hmInitModule =
+        userName: modules:
+          {
+            home-manager = {
+              useGlobalPkgs     = true;
+              useUserPackages   = true;
+              users.${userName} = { imports = modules; };
+              sharedModules     = sharedHMModules;
+              extraSpecialArgs  = extraHMSpecialArgs;
+            };
+          };
+    in rec {
+      inherit packages;
+
+      #
+      # development & deployment shell
+      #
       defaultPackage.${system} =
         let
-          pkgs = nixpkgs.legacyPackages.${system};
+          pkgs = packages.${system};
           terraform =
             pkgs.terraform_0_15.withPlugins (tp: [
               tp.hcloud
@@ -64,121 +143,67 @@
           ];
         };
 
-      nixosConfigurations = {
-        thinkpad-x1-extreme-gen2 = myNixOSSystem "thinkpad-x1" [ ./hardware/thinkpad-x1-extreme-gen2.nix ];
-        mbp13                    = myNixOSSystem "mbp13"       [ ./hardware/mbp13.nix ];
-        asrock-x300              = myNixOSSystem "asrock-x300" [ ./hardware/asrock-x300.nix ];
-        minis-x400               = myNixOSSystem "minis-x400"  [ ./hardware/minis-x400.nix ];
+      #
+      # configurations
+      # construct `{ hostname = { profile = configuration } }`
+      #
+      configs =
+        builtins.mapAttrs (mapProfiles systemConfig userConfig) nodes;
 
-        # FIXME add home-manager profile
-        # image = myNixOSSystem [
-        #   "${nixpkgs}/nixos/modules/profiles/all-hardware.nix"
-        #   "${nixpkgs}/nixos/modules/installer/cd-dvd/iso-image.nix" # TODO move to image.nix
-        # ];
+      #
+      # system configuration for `nixos-rebuild`
+      # nixosConfigurations."<hostname>".config.system.build.toplevel must be a derivation
+      # λ nixos-rebuild --flake .#<hostname> build
+      #
+      nixosConfigurations =
+        builtins.mapAttrs
+          (
+            hostName: profiles:
+              let
+                systemProfile  = profiles.system;
+                usersProfiles  = removeAttrs profiles [ "system" ];
+                usersHMModules = builtins.attrValues (builtins.mapAttrs hmInitModule usersProfiles);
+              in
+                systemConfig hostName (systemProfile ++ [ home-manager.nixosModules.home-manager ] ++ usersHMModules)
+          )
+          nodes;
 
-        installer =
-          nixpkgs.lib.nixosSystem {
-            system = system;
-            modules =
-              [
-                revision
-                ./secrets
-                # TODO dvorak :)
-                "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix" # TODO move to installer/iso.nix
-                ./installer/iso.nix
-              ];
+      #
+      # deploy-rs specs
+      # λ deploy ".#configs."<hostname>".system.config.system.build.toplevel"
+      #
+      deploy = let
+        activateHomeManager =
+          configuration:
+            deploy-rs.lib.${system}.activate.custom (configuration).activationPackage "$PROFILE/activate";
+        activateSystem =
+          deploy-rs.lib.${system}.activate.nixos;
+
+        systemProfile =
+          hostName: configuration:
+            {
+              user = "root";
+              path = activateSystem configuration;
+            };
+        userProfile =
+          userName: configuration:
+          {
+            user = userName;
+            path = activateHomeManager configuration;
           };
-
-        router =
-          nixpkgs.lib.nixosSystem {
-            system = system;
-            modules = [
-              revision
-              { nix.registry.nixpkgs.flake = nixpkgs; nixpkgs = (import ./nixpkgs.nix); }
-              ./nix.nix
-              ./modules
-              ./secrets
-              ./servers/router.nix
-              ./hardware/router.nix
-            ];
-          };
-
-        helsinki1 =
-          nixpkgs.lib.nixosSystem {
-            system = system;
-            modules = [
-              revision
-              { nix.registry.nixpkgs.flake = nixpkgs; nixpkgs = (import ./nixpkgs.nix); }
-              ./nix.nix
-              ./modules
-              ./secrets
-              ./servers/helsinki1.nix
-            ];
-          };
-      };
-
-    # FIXME remove copy/paste
-    homeManagerConfigurations = {
-      petrkozorezov =
-        home-manager.lib.homeManagerConfiguration {
-          inherit pkgs system;
-          homeDirectory    = "/home/petrkozorezov";
-          username         = "petrkozorezov";
-          configuration    = ./home;
-          extraSpecialArgs = { inherit nix-doom-emacs nur; };
+        host =
+          hostName: profiles:
+            {
+              hostname = hostName;
+              profiles = mapProfiles systemProfile userProfile hostName profiles;
+            };
+      in
+        {
+          sshUser = "root";
+          # sshOpts = [ "-p" "42" ];
+          nodes   = builtins.mapAttrs host configs;
         };
+
+      checks = deploy-rs.lib.${system}.deployChecks self.deploy;
     };
-
-    deploy = {
-      sshUser = "root";
-      nodes = {
-        asrock-x300 = {
-          hostname = "asrock-x300";
-          profiles = {
-            system = {
-              user = "root";
-              path = activateNixOS self.nixosConfigurations.asrock-x300;
-            };
-            petrkozorezov = {
-              user = "petrkozorezov";
-              path = activateHomeManager self.homeManagerConfigurations.petrkozorezov;
-            };
-          };
-        };
-        minis-x400 = {
-          hostname = "minis-x400";
-          profiles = {
-            system = {
-              user = "root";
-              path = activateNixOS self.nixosConfigurations.minis-x400;
-            };
-            petrkozorezov = {
-              user = "petrkozorezov";
-              path = activateHomeManager self.homeManagerConfigurations.petrkozorezov;
-            };
-          };
-        };
-        router = {
-          hostname = "router";
-          profiles = {
-            system = {
-              user = "root";
-              path = activateNixOS self.nixosConfigurations.router;
-            };
-          };
-        };
-        helsinki1 = {
-          hostname = "helsinki1";
-          profiles = {
-            system = {
-              user = "root";
-              path = activateNixOS self.nixosConfigurations.helsinki1;
-            };
-          };
-        };
-      };
-    };
-
-    checks = deploy-rs.lib.${system}.deployChecks self.deploy;
-  };
 }

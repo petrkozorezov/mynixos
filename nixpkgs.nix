@@ -1,4 +1,4 @@
 {
   config   = (import ./config.nix);
-  overlays = [ (import ./overlay) ];
+  overlays = [ (import ./overlay) ]; # TODO nur.overlay
 }
