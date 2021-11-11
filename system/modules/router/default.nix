@@ -47,14 +47,14 @@ with lib;
           type        = types.str;
           example     = "192.168.2";
           default     = "192.168.1";
-          description = "First octets of the local network.";
+          description = "The first octets of the local network.";
         };
 
         ip = mkOption {
           type        = types.str;
           example     = "1";
           default     = "1";
-          description = "Lost octets of the router ip in the local network.";
+          description = "The last octet(s) of the router ip in the local network.";
         };
 
         hosts = mkOption {
@@ -76,7 +76,7 @@ with lib;
               ip = mkOption {
                 example     = "1";
                 type        = types.str;
-                description = "Last octets of the IP address of the host.";
+                description = "The last octet(s) of the IP address of the host.";
               };
 
             };
@@ -106,9 +106,7 @@ with lib;
     in mkIf cfg.enable {
 
       networking = {
-        # hostName = cfg.hostname;
         useDHCP  = false;
-
         bridges."${bridge}" = {
           interfaces = [
             cfg.local.ethernet.interface
@@ -138,7 +136,7 @@ with lib;
         };
       };
 
-      services.hostapd = cfg.local.wireless // {enable = true;};
+      services.hostapd = cfg.local.wireless // { enable = true; };
 
       # nixos networking https://nixos.wiki/wiki/Networking
       # wifi setup https://habr.com/ru/post/315960/
