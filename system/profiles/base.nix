@@ -13,6 +13,6 @@
 
   services = {
     # timesyncd.enable = true;
-    ntp.enable       = false;
+    # ntp.enable       = false;
   };
 }
