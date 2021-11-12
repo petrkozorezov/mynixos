@@ -1,6 +1,7 @@
 ## https://nixos.wiki/wiki/WireGuard
 { pkgs, config, ... }:
 {
+  imports = [ ../dns.nix ];
   networking =
     let
       hostName = config.networking.hostName;
@@ -18,6 +19,7 @@
         allowedUDPPorts = [ vpnPort ];
       };
 
+      # vpn
       wireguard.interfaces =
         let
           subnet_addr = "192.168.4";
@@ -49,5 +51,5 @@
                 builtins.map (el: peer el.pub el.addr) peersKeys;
           };
         };
-    };
+      };
 }

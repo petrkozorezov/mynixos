@@ -1,19 +1,16 @@
 { config, pkgs, ... }:
 let
   net      = "192.168.2";
-  domain   = "zoo";
+  domain   = "knk.${config.tfattrs.hcloud_rdns.master.dns_ptr}";
   address  = "${net}.1";
+  uplink   = "enp3s0";
 in {
-
-  #
-  # router
-  #
   zoo.router = {
     enable     = true;
     hostname   = config.networking.hostName;
     domain     = domain;
 
-    uplink.interface = "enp3s0";
+    uplink.interface = uplink;
 
     local = {
       net                = net;
@@ -110,6 +107,27 @@ in {
           ip  = "41";
         };
       };
+    };
+  };
+
+  services.bind.ddns = rec {
+    zone    = domain;
+    keyfile = config.zoo.secrets.keys.dnssec.tsig."${zone}";
+    client = {
+      enable  = true;
+      server  = "ns1.${config.tfattrs.hcloud_rdns.master.dns_ptr}"; # FIXME
+      updates = let
+        host = "router.${zone}";
+      in [
+        "delete ${host} A"
+        ''
+          add ${host} 60 A `\
+          ${pkgs.iproute2}/bin/ip -4 -o addr show ${uplink} | \
+          ${pkgs.gawk}/bin/awk '{print $4}' | \
+          cut -d "/" -f 1 \
+          `
+        ''
+      ];
     };
   };
 }

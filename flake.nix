@@ -1,12 +1,14 @@
 {
   description = "My NixOS configuration";
 
-  inputs = rec {
+  inputs = {
            nixpkgs.url = "github:NixOS/nixpkgs/nixos-21.05"       ;
       home-manager.url = "github:rycee/home-manager/release-21.05";
                nur.url = "github:nix-community/NUR"               ;
          deploy-rs.url = "github:serokell/deploy-rs"              ;
+          terranix.url = "github:terranix/terranix"               ;
     nix-doom-emacs.url = "github:vlaci/nix-doom-emacs"            ;
+               dns.url = "github:kirelagin/dns.nix"               ;
     # sometimes version of emacs-overlay in nix-doom-emacs lock file is outdated
     # and some packages are not building
     # an explicitly input is needed here to prevent emacs-overlay from auto update
@@ -14,7 +16,7 @@
     nix-doom-emacs.inputs.emacs-overlay.follows = "emacs-overlay";
   };
 
-  outputs = { self, nixpkgs, home-manager, deploy-rs, nix-doom-emacs, nur, ... }:
+  outputs = { self, nixpkgs, home-manager, deploy-rs, terranix, nix-doom-emacs, nur, dns, ... }:
     let
       # high level system description
       system   = "x86_64-linux";
@@ -56,7 +58,7 @@
               hostKeys               = [];
             };
             environment.etc = let
-              key = config.zoo.secrets.keys.${hostName};
+              key = config.zoo.secrets.keys.sshd.${hostName};
             in {
               "ssh/ssh_host_key" = {
                 mode   = "600";
@@ -91,6 +93,7 @@
               ./secrets
               # (modulesPath + "/profiles/hardened.nix")
             ] ++ modules;
+            extraArgs = { inherit dns nur system; flake = self; };
           };
 
       sharedHMModules =
@@ -98,7 +101,7 @@
           ./home/modules
           ./secrets
         ];
-      extraHMSpecialArgs = { inherit nix-doom-emacs nur; };
+      extraHMSpecialArgs = { inherit nix-doom-emacs nur system; flake = self; };
       userConfig =
         userName: modules:
           home-manager.lib.homeManagerConfiguration {
@@ -139,9 +142,35 @@
           paths = [
             deploy-rs.packages.${system}.deploy-rs
             terraform
-            pkgs.terranix
+            terranix.defaultPackage.${system}
           ];
         };
+
+      # terraform bindings
+      # allows to run only one command (eg `nix run .#tf.plan`)
+      tf = let
+        terraformConfiguration =
+          terranix.lib.terranixConfiguration {
+            inherit system;
+            modules = [ ./cloud ];
+          };
+        tapp = name: code:
+          {
+            type = "app";
+            program = toString (packages.${system}.writers.writeBash name (''
+              set -ex
+              if [[ -e config.tf.json ]]; then rm -f config.tf.json; fi
+              cp ${terraformConfiguration} config.tf.json
+            '' + code));
+          };
+        tfapp = cmd: tapp ("tf" + cmd) ("terraform " + cmd);
+      in {
+        gen     = tapp "tfgen" "";
+        init    = tfapp "init"   ;
+        plan    = tfapp "plan"   ;
+        apply   = tfapp "apply"  ;
+        destroy = tfapp "destroy";
+      };
 
       #
       # configurations

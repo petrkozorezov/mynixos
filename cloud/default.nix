@@ -16,6 +16,12 @@ in {
     user_data   = "#cloud-config\nruncmd:\n- curl https://raw.githubusercontent.com/elitak/nixos-infect/8a7527d7965430fdfb98aee208d1f67bdc0af79d/nixos-infect | PROVIDER=hetznercloud NIX_CHANNEL=nixos-unstable bash 2>&1 | tee /tmp/infect.log\n";
   };
 
+  resource.hcloud_rdns.master = {
+    server_id  = "\${hcloud_server.helsinki1.id}";
+    ip_address = "\${hcloud_server.helsinki1.ipv4_address}";
+    dns_ptr    = "kozorezov.ru"; # FIXME
+  };
+
   resource.hcloud_server_network.helsinki1-network = {
     server_id  = "\${hcloud_server.helsinki1.id}";
     network_id = "\${hcloud_network.network.id}";

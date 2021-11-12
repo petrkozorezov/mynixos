@@ -18,7 +18,8 @@ in lib.mkIf cfg.enable {
         #
         # DNS
         #
-        listen-address=::1,127.0.0.1,${localIp}
+        interface=${cfg.local.bridge.interface}
+        #bind-dynamic
         local=/${cfg.domain}/
         domain=${cfg.domain}
         no-hosts
@@ -36,8 +37,7 @@ in lib.mkIf cfg.enable {
         #
         # DHCP
         #
-        interface=${cfg.local.bridge.interface}
-        bind-interfaces
+        no-dhcp-interface=${cfg.uplink.interface}
         dhcp-range=${cfg.local.net}.100,${cfg.local.net}.200,3h # TODO configure
 
         address=/${cfg.hostname}/${localIp}
