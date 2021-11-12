@@ -44,7 +44,7 @@ with lib; {
               private-key = cfg.${hostName}.priv;
             };
             "wireguard-peer.${cfg.helsinki1.pub}" = {
-              endpoint             = "65.21.49.156:51822";
+              endpoint             = "vpn.kozorezov.ru:51822";
               persistent-keepalive = "25";
               allowed-ips          = "0.0.0.0/0";
             };
