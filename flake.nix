@@ -54,7 +54,6 @@
             services.openssh = {
               enable                 = true;
               passwordAuthentication = false;
-              # ports                  = [ 42 ];
               hostKeys               = [];
             };
             environment.etc = let
@@ -71,7 +70,7 @@
             };
             environment.defaultPackages = lib.mkForce [];
             users.users.root.openssh.authorizedKeys.keys = [ config.zoo.secrets.deployment.authPublicKey ];
-            security.sudo.extraConfig = ''Defaults lecture = never'';
+            security.sudo.extraConfig = "Defaults lecture = never";
           };
       nixpkgsConfigModule =
         {
@@ -229,7 +228,6 @@
       in
         {
           sshUser = "root";
-          # sshOpts = [ "-p" "42" ];
           nodes   = builtins.mapAttrs host configs;
         };
 

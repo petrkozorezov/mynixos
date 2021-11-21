@@ -1,5 +1,6 @@
 #
 # TODO:
+#  - reload bind when zone is changed
 #  - dnssec
 #
 { lib, dns, flake, system, config, ... }:
@@ -18,7 +19,7 @@ with lib; {
           nameServer = "ns1.${domain}.";
           adminEmail = "admin@${domain}";
           serial     = flake.lastModified; # is it ok?
-          ttl        = 60;
+          ttl        = 60 * 60; # 1h
         };
         NS = [
           "ns1.${domain}."
@@ -28,7 +29,7 @@ with lib; {
   in {
     enable = true;
     zones = let
-      zone = baseZone // (with dns.lib.combinators; {
+      zone = recursiveUpdate baseZone (with dns.lib.combinators; {
         A = [ address ];
         subdomains = {
           vpn = host address null;
@@ -49,7 +50,7 @@ with lib; {
       keyfile = config.zoo.secrets.keys.dnssec.tsig."${zone}";
       server = {
         enable       = true;
-        seedZoneFile = dns.util.${system}.writeZone zone baseZone;
+        seedZoneFile = dns.util.${system}.writeZone zone (recursiveUpdate baseZone { SOA.ttl = 60; });
       };
     };
   };
