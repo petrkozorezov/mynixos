@@ -81,6 +81,8 @@ with lib; {
         };
         environment.etc."${etcSeedZoneFile}".source = cfg.server.seedZoneFile;
         systemd.tmpfiles.rules = [ "d /etc/bind/zones 0755 named root -" ];
+        # to avoid "journal out of sync" after seed zone file updates
+        systemd.services.bind.preStart = "rm -f /etc/bind/zones/*.jnl";
       };
   in mkMerge [ clientConfig serverConfig ];
 }
