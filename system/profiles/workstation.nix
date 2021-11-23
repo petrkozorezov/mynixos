@@ -26,7 +26,10 @@
 
   # networking
   networking = {
-    networkmanager.enable = true;
+    networkmanager = {
+      enable = true;
+      wifi.backend = "iwd";
+    };
     firewall.checkReversePath = false; # to allow send all traffic through wg
     useDHCP = false;
   };

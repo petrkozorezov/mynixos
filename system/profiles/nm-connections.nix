@@ -15,9 +15,8 @@ with lib; {
                   type = "wifi";
                 };
                 wifi = {
-                  ssid     = connection.ssid;
-                  mode     = "infrastructure";
-                  security = "wifi-security";
+                  ssid = connection.ssid;
+                  mode = "infrastructure";
                 };
                 wifi-security = {
                   auth-alg = "open";
