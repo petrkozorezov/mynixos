@@ -1,6 +1,5 @@
 { config, lib, pkgs, ... }:
 with lib; {
-  # TODO remove hardcode
   networking.networkmanager.connections =
     let
       wifis =
@@ -30,8 +29,9 @@ with lib; {
     in {
         helsinki1 =
           let
-            cfg      = config.zoo.secrets.vpn;
-            hostName = config.networking.hostName;
+            cfg       = config.zoo.secrets.vpn;
+            self      = cfg.${config.networking.hostName};
+            helsinki1 = cfg.helsinki1;
           in {
             connection = rec {
               id   = "helsinki1";
@@ -40,19 +40,23 @@ with lib; {
               interface-name = id;
             };
             wireguard = {
-              private-key = cfg.${hostName}.priv;
+              private-key = self.priv;
             };
-            "wireguard-peer.${cfg.helsinki1.pub}" = {
-              endpoint             = "vpn.kozorezov.ru:51822";
+            "wireguard-peer.${helsinki1.pub}" = {
+              endpoint             = "${helsinki1.endpoint}:${builtins.toString helsinki1.port}";
               persistent-keepalive = "25";
               allowed-ips          = "0.0.0.0/0";
             };
+            # TODO remove hardcode
             ipv4 = {
               method   = "manual";
-              address1 = "192.168.4.${cfg.${hostName}.addr}/32";
-              dns      = "1.1.1.1;";
+              address1 = "192.168.4.${self.addr}/32";
+              dns      = "1.1.1.1;"; # TODO use 192.168.4.1
             };
             ipv6 = { method = "disabled"; };
           };
       } // wifis;
+
+  # to allow send all traffic through wg
+  networking.firewall.checkReversePath = false;
 }

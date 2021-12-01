@@ -5,6 +5,8 @@ let
   address  = "${net}.1";
   uplink   = "enp3s0";
 in {
+  imports = [ ../vpn.nix ];
+
   zoo.router = {
     enable     = true;
     hostname   = config.networking.hostName;

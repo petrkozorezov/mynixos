@@ -4,5 +4,6 @@
     ./bind-ddns.nix
     ./nm-connections.nix
     ./terraform-state.nix
+    ./vpn.nix
   ];
 }
