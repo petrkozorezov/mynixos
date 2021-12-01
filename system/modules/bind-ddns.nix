@@ -64,6 +64,12 @@ with lib; {
               ${lib.concatMapStrings (update: "update ${update}\n") cfg.client.updates}
               send" | ${pkgs.bind.dnsutils}/bin/nsupdate -k ${cfg.keyfile}
             '';
+          serviceConfig = {
+            Type       = mkForce "simple";
+            Restart    = mkForce "always";
+            RestartSec = mkForce "5";
+          };
+          unitConfig.StartLimitInterval = "0";
         };
       };
     serverConfig =

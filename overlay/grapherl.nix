@@ -1,13 +1,13 @@
 { beam, graphviz, fetchFromGitHub, lib }:
 
 beam.packages.erlang.rebar3Relx rec {
-  name        = "grapherl";
+  pname       = "grapherl";
   version     = "master";
   releaseType = "escript";
 
   src = fetchFromGitHub {
     owner  = "eproxus";
-    repo   = name;
+    repo   = pname;
     rev    = version;
     sha256 = "0n1ah23daj255ldlzgjaq15bf9lh2jzqya8541f952jps3gdyk3g";
   };

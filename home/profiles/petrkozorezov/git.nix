@@ -13,7 +13,7 @@
     };
     gh = {
       enable      = true;
-      gitProtocol = "ssh";
+      settings.gitProtocol = "ssh";
       # TODO
       #aliases = {};
     };

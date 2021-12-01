@@ -2,8 +2,8 @@
   description = "My NixOS configuration";
 
   inputs = {
-           nixpkgs.url = "github:NixOS/nixpkgs/nixos-21.05"       ;
-      home-manager.url = "github:rycee/home-manager/release-21.05";
+           nixpkgs.url = "github:NixOS/nixpkgs/nixos-21.11"       ;
+      home-manager.url = "github:rycee/home-manager/release-21.11";
                nur.url = "github:nix-community/NUR"               ;
          deploy-rs.url = "github:serokell/deploy-rs"              ;
           terranix.url = "github:terranix/terranix"               ;
