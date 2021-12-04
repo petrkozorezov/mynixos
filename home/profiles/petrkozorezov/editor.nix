@@ -1,9 +1,9 @@
-{ config, pkgs, nix-doom-emacs, ... }:
+{ config, pkgs, inputs, ... }:
 let
   term = "TERM=xterm-24bit";
 in {
   imports = [
-    nix-doom-emacs.hmModule
+    inputs.nix-doom-emacs.hmModule
   ];
 
   home.sessionVariables.EDITOR = "${term} emacsclient";

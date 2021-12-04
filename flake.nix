@@ -16,12 +16,12 @@
     nix-doom-emacs.inputs.emacs-overlay.follows = "emacs-overlay";
   };
 
-  outputs = { self, nixpkgs, home-manager, deploy-rs, terranix, nix-doom-emacs, nur, dns, ... }:
+  outputs = { self, nixpkgs, home-manager, deploy-rs, terranix, nur, ... }@inputs:
     let
       # high level system description
       system   = "x86_64-linux";
-      packages = nixpkgs.legacyPackages;
-      modulesPath = nixpkgs + /nixos/modules;
+      overlays = (import ./system/profiles/nixpkgs.nix { inherit inputs; }).nixpkgs.overlays;
+      pkgs     = import nixpkgs { inherit system overlays; };
       nodes =
         let
           relativePaths = basePath: map (path: ./. + ("/" + basePath + ("/" + path)));
@@ -36,63 +36,28 @@
         };
 
       mapProfiles =
-        systemMapF: userMapF: hostName:
+        systemMapF: userMapF: hostname:
           builtins.mapAttrs (
             profileName:
               if profileName == "system" then
-                systemMapF hostName
+                systemMapF hostname
               else
                 userMapF profileName
           );
 
-      baseSystemModule =
-        hostName:
-          { config, lib, ... }: {
-            system.configurationRevision = "${self.lastModifiedDate}-${self.shortRev or "dirty"}";
-            networking.hostName = hostName;
-            nix.registry.nixpkgs.flake = nixpkgs;
-            services.openssh = {
-              enable                 = true;
-              passwordAuthentication = false;
-              hostKeys               = [];
-            };
-            environment.etc = let
-              key = config.zoo.secrets.keys.sshd.${hostName};
-            in {
-              "ssh/ssh_host_key" = {
-                mode   = "600";
-                source = key.priv;
-              };
-              "ssh/ssh_host_key.pub" = {
-                mode   = "0644";
-                source = key.pub;
-              };
-            };
-            environment.defaultPackages = lib.mkForce [];
-            users.users.root.openssh.authorizedKeys.keys = [ config.zoo.secrets.deployment.authPublicKey ];
-            security.sudo.extraConfig = "Defaults lecture = never";
-          };
-      nixpkgsConfigModule =
-        {
-          nixpkgs =
-            let
-              nixpkgsConfig = (import ./nixpkgs.nix);
-            in
-              (nixpkgsConfig // { overlays = nixpkgsConfig.overlays ++ [ nur.overlay ]; });
-        };
+      configExtraAgrs = { inherit system inputs; };
       systemConfig =
-        hostName: modules:
+        hostname: modules:
           nixpkgs.lib.nixosSystem {
-            system  = system;
+            inherit system;
             modules = [
-              (baseSystemModule hostName)
-              nixpkgsConfigModule
+              { networking.hostName = hostname; }
               ./system/modules
-              ./nix.nix
+              ./system/profiles/nix.nix
+              ./system/profiles/nixpkgs.nix
               ./secrets
-              # (modulesPath + "/profiles/hardened.nix")
             ] ++ modules;
-            extraArgs = { inherit dns nur system; flake = self; };
+            extraArgs = configExtraAgrs;
           };
 
       sharedHMModules =
@@ -100,38 +65,35 @@
           ./home/modules
           ./secrets
         ];
-      extraHMSpecialArgs = { inherit nix-doom-emacs nur system; flake = self; };
       userConfig =
-        userName: modules:
+        username: modules:
           home-manager.lib.homeManagerConfiguration {
-            pkgs             = packages.${system};
-            system           = system;
-            homeDirectory    = "/home/" + userName;
-            username         = userName;
-            configuration    = { imports = [ nixpkgsConfigModule ] ++ sharedHMModules ++ modules; };
-            extraSpecialArgs = extraHMSpecialArgs;
+            inherit system pkgs username;
+            homeDirectory    = "/home/" + username;
+            configuration    = { imports = [ ./system/profiles/nixpkgs.nix ] ++ sharedHMModules ++ modules; };
+            extraSpecialArgs = configExtraAgrs;
           };
 
       hmInitModule =
-        userName: modules:
+        username: modules:
           {
             home-manager = {
               useGlobalPkgs     = true;
               useUserPackages   = true;
-              users.${userName} = { imports = modules; };
+              users.${username} = { imports = modules; };
               sharedModules     = sharedHMModules;
-              extraSpecialArgs  = extraHMSpecialArgs;
+              extraSpecialArgs  = configExtraAgrs;
             };
           };
     in rec {
-      inherit packages;
+      legacyPackages."${system}" = pkgs;
+      inherit overlays;
 
       #
       # development & deployment shell
       #
       defaultPackage.${system} =
         let
-          pkgs = packages.${system};
           terraform =
             pkgs.terraform_0_15.withPlugins (tp: [
               tp.hcloud
@@ -156,7 +118,7 @@
         tapp = name: code:
           {
             type = "app";
-            program = toString (packages.${system}.writers.writeBash name (''
+            program = toString (pkgs.writers.writeBash name (''
               set -ex
               if [[ -e config.tf.json ]]; then rm -f config.tf.json; fi
               cp ${terraformConfiguration} config.tf.json
@@ -186,13 +148,13 @@
       nixosConfigurations =
         builtins.mapAttrs
           (
-            hostName: profiles:
+            hostname: profiles:
               let
                 systemProfile  = profiles.system;
                 usersProfiles  = removeAttrs profiles [ "system" ];
                 usersHMModules = builtins.attrValues (builtins.mapAttrs hmInitModule usersProfiles);
               in
-                systemConfig hostName (systemProfile ++ [ home-manager.nixosModules.home-manager ] ++ usersHMModules)
+                systemConfig hostname (systemProfile ++ [ home-manager.nixosModules.home-manager ] ++ usersHMModules)
           )
           nodes;
 
@@ -208,22 +170,22 @@
           deploy-rs.lib.${system}.activate.nixos;
 
         systemProfile =
-          hostName: configuration:
+          hostname: configuration:
             {
               user = "root";
               path = activateSystem configuration;
             };
         userProfile =
-          userName: configuration:
+          username: configuration:
           {
-            user = userName;
+            user = username;
             path = activateHomeManager configuration;
           };
         host =
-          hostName: profiles:
+          hostname: profiles:
             {
-              hostname = hostName;
-              profiles = mapProfiles systemProfile userProfile hostName profiles;
+              hostname = hostname;
+              profiles = mapProfiles systemProfile userProfile hostname profiles;
             };
       in
         {

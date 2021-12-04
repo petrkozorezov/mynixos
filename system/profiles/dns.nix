@@ -3,8 +3,11 @@
 #  - reload bind when zone is changed
 #  - dnssec
 #
-{ lib, dns, flake, system, config, ... }:
-with lib; {
+{ lib, inputs, system, config, ... }:
+with lib;
+let
+  dns = inputs.dns;
+in {
   networking.firewall = {
     allowedUDPPorts = [ 53 ];
     allowedTCPPorts = [ 53 ];
@@ -18,7 +21,7 @@ with lib; {
         SOA = {
           nameServer = "ns1.${domain}.";
           adminEmail = "admin@${domain}";
-          serial     = flake.lastModified; # is it ok?
+          serial     = inputs.self.lastModified; # is it ok?
           ttl        = 60 * 60; # 1h
         };
         NS = [

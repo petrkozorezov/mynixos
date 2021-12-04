@@ -1,8 +1,7 @@
 self: super:
 rec {
   # just to ensure overlay works
-  overlay-sys-test = super.hello;
-  overlay-hm-test  = super.hello;
+  test = super.hello;
 
   # erlang related packages
   grapherl  = super.callPackage ./grapherl.nix  { };

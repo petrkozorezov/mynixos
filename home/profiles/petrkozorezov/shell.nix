@@ -13,7 +13,7 @@
           prompt pure
           path+="$HOME/bin"
           nsh() {
-            nix shell "nixpkgs#$1"
+            nix shell "self#$1"
           }
         '';
       autocd = true;
@@ -35,7 +35,7 @@
         "ls"    = "${"l"}";
         "tree"  = "${"l"} -T";
         "cat"   = "${pkgs.bat}/bin/bat";
-        "ns"    = "nix search nixpkgs";
+        "ns"    = "nix search self";
         "nb"    = "nix build";
         "cloc"  = "${pkgs.tokei}/bin/tokei";
         "grep"  = "${pkgs.ripgrep}/bin/rg";

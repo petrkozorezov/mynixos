@@ -1,4 +1,4 @@
-{ config, lib, pkgs, dns, system, ... }:
+{ config, lib, pkgs, system, ... }:
 with lib; {
   options.services.bind.ddns = {
     zone = mkOption {

@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, config, inputs, ... }:
 {
   boot.kernel.sysctl."fs.inotify.max_user_watches" = 524288;
 
@@ -54,4 +54,9 @@
       gtkUsePortal = true;
     };
   };
+
+  # FIXME
+  nix.nixPath = [ "self=/etc/self" ];
+  nix.registry.self.flake = inputs.self;
+  environment.etc.self.source = inputs.self;
 }

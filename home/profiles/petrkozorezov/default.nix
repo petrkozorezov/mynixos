@@ -26,7 +26,7 @@
 
   programs.home-manager.enable = true;
   home = {
-    packages     = [ pkgs.overlay-hm-test ];
+    packages     = [ pkgs.test ];
     stateVersion = lib.mkForce "20.09";
   };
 }
