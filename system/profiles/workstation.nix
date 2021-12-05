@@ -33,16 +33,7 @@
     useDHCP = false;
   };
 
-  # pipewire
-  services.pipewire = {
-    enable = true;
-    alsa   = {
-      enable       = false;
-      support32Bit = true;
-    };
-    # pulse.enable = true;
-  };
-
+  # for pipewire
   xdg = {
     autostart.enable = true;
     portal = {
