@@ -31,8 +31,8 @@
         in {
           mbp13       = { system = sysPaths [ "hardware/mbp13.nix"         "base.nix" "petrkozorezov.nix" "workstation.nix" "machines/mbp13.nix"       ]; } // users;
           asrock-x300 = { system = sysPaths [ "hardware/asrock-x300.nix"   "base.nix" "petrkozorezov.nix" "workstation.nix" "machines/asrock-x300.nix" ]; } // users;
-          router      = { system = sysPaths [ "hardware/router.nix"        "base.nix" "machines/router.nix"    ]; };
-          helsinki1   = { system = sysPaths [ "hardware/hetzner-cloud.nix" "base.nix" "machines/helsinki1.nix" ]; };
+          router      = { system = sysPaths [ "hardware/router.nix"        "base.nix" "petrkozorezov.nix" "machines/router.nix"    ]; };
+          helsinki1   = { system = sysPaths [ "hardware/hetzner-cloud.nix" "base.nix" "petrkozorezov.nix" "machines/helsinki1.nix" ]; };
         };
 
       mapProfiles =

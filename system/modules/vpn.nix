@@ -99,15 +99,20 @@ with types;
       isNatEnabled = cfg.extIf != null;
     in mkMerge [
       (mkIf cfg.enable {
+        sss.secrets."vpn-privkey-${hostName}" = {
+          text      = self.priv;
+          dependent = [ "wireguard-${cfg.intIf}.service" ];
+        };
+
         networking = {
           firewall.allowedUDPPorts = [ self.port ];
 
           wireguard.interfaces."${cfg.intIf}" = rec {
-            privateKey = self.priv;
-            ips        = [ (fullAddr cfg.subnet self.addr cfg.mask) ];
-            listenPort = self.port;
-            table      = "main";
-            peers      =
+            privateKeyFile = toString config.sss.secrets."vpn-privkey-${hostName}".target;
+            ips            = [ (fullAddr cfg.subnet self.addr cfg.mask) ];
+            listenPort     = self.port;
+            table          = "main";
+            peers          =
               builtins.map
                 (other:
                   {

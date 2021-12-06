@@ -114,7 +114,7 @@ in {
 
   services.bind.ddns = rec {
     zone    = domain;
-    keyfile = config.zoo.secrets.keys.dnssec.tsig."${zone}";
+    keyfile = config.sss.secrets."dnssec-${domain}".target;
     client = {
       enable  = true;
       server  = "ns1.${config.tfattrs.hcloud_rdns.master.dns_ptr}"; # FIXME
@@ -131,5 +131,9 @@ in {
         ''
       ];
     };
+  };
+  sss.secrets."dnssec-${domain}" = {
+    text      = config.zoo.secrets.dnssec.tsig.${domain};
+    dependent = [ "ddns-client-update.timer" ];
   };
 }

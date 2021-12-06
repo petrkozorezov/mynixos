@@ -37,17 +37,16 @@ in {
     };
 
   config = mkIf cfg.enable {
-    environment.etc =
+    sss.secrets =
       lib.mapAttrs'
         (
           uuid: connection:
             let fileName = uuid + ".nmconnection";
-            in lib.nameValuePair
-              "NetworkManager/system-connections/${fileName}"
-              {
-                source = (ini.generate fileName connection);
-                mode   = "600";
-              }
+            in lib.nameValuePair "nm-${fileName}" {
+              source    = ini.generate fileName connection;
+              target    = "/etc/NetworkManager/system-connections/${fileName}";
+              dependent = [ "NetworkManager.service" ];
+            }
         )
         cfg.connections;
   };

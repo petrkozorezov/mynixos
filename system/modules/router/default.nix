@@ -136,6 +136,7 @@ with lib;
         };
       };
 
+      # TODO write my own hostapd module to deploy config using sss to hide wireless config
       services.hostapd = cfg.local.wireless // { enable = true; };
 
       # nixos networking https://nixos.wiki/wiki/Networking

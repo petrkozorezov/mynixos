@@ -44,6 +44,7 @@ with lib; {
   config = let
     cfg = config.services.bind.ddns;
     etcSeedZoneFile = "bind/zones/${cfg.zone}";
+    keyfile = toString cfg.keyfile;
     clientConfig =
       mkIf cfg.client.enable {
         systemd.timers.ddns-client-update = {
@@ -62,7 +63,7 @@ with lib; {
               server ${cfg.client.server}
               zone ${cfg.zone}
               ${lib.concatMapStrings (update: "update ${update}\n") cfg.client.updates}
-              send" | ${pkgs.bind.dnsutils}/bin/nsupdate -k ${cfg.keyfile}
+              send" | ${pkgs.bind.dnsutils}/bin/nsupdate -k ${keyfile}
             '';
           serviceConfig = {
             Type       = mkForce "simple";
@@ -76,7 +77,7 @@ with lib; {
       mkIf cfg.server.enable {
         services.bind = {
           enable = true;
-          extraConfig = "include \"${cfg.keyfile}\";";
+          extraConfig = "include \"${keyfile}\";";
           zones = {
             "${cfg.zone}" = {
               file        = "/etc/${etcSeedZoneFile}";

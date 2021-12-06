@@ -6,7 +6,10 @@
 { lib, inputs, system, config, ... }:
 with lib;
 let
-  dns = inputs.dns;
+  dns     = inputs.dns;
+  address = config.tfattrs.hcloud_server.helsinki1.ipv4_address;
+  domain  = config.tfattrs.hcloud_rdns.master.dns_ptr;
+  ddnsZoneName = "knk.${domain}";
 in {
   networking.firewall = {
     allowedUDPPorts = [ 53 ];
@@ -14,8 +17,6 @@ in {
   };
   networking.resolvconf.useLocalResolver = mkForce false;
   services.bind = let
-    address = config.tfattrs.hcloud_server.helsinki1.ipv4_address;
-    domain  = config.tfattrs.hcloud_rdns.master.dns_ptr;
     baseZone =
       with dns.lib.combinators; {
         SOA = {
@@ -48,13 +49,19 @@ in {
       };
     };
 
-    ddns = rec {
-      zone    = "knk.${domain}";
-      keyfile = config.zoo.secrets.keys.dnssec.tsig."${zone}";
+    ddns = {
+      zone    = ddnsZoneName;
+      keyfile = config.sss.secrets."ddns-${ddnsZoneName}".target;
       server = {
         enable       = true;
-        seedZoneFile = dns.util.${system}.writeZone zone (recursiveUpdate baseZone { SOA.ttl = 60; });
+        seedZoneFile = dns.util.${system}.writeZone ddnsZoneName (recursiveUpdate baseZone { SOA.ttl = 60; });
       };
     };
   };
+  sss.secrets."ddns-${ddnsZoneName}" = {
+    text      = config.zoo.secrets.dnssec.tsig.${ddnsZoneName};
+    user      = "named";
+    dependent = [ "bind.service" ];
+  };
+  users.users.named.extraGroups = [ "keys" ];
 }
