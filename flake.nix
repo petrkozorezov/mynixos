@@ -104,6 +104,8 @@
             deploy-rs.packages.${system}.deploy-rs
             terraform
             terranix.defaultPackage.${system}
+            pkgs.ripgrep
+            pkgs.nur.repos.rycee.firefox-addons-generator
           ];
         };
 

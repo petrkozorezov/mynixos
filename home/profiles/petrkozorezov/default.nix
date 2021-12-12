@@ -1,8 +1,8 @@
 { pkgs, lib, ... }:
 {
   imports = [
+    ./browser
     ./base.nix
-    ./browser.nix
     ./desktop.nix
     ./development.nix
     ./dropbox.nix

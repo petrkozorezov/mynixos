@@ -1,0 +1,98 @@
+{
+  "version": 6,
+  "engines": [
+    {
+      "_name": "DuckDuckGo",
+      "_isAppProvided": true,
+      "_metaData": { "alias": ".d", "order": 1}
+    },
+    {
+      "_name": "OnionDuckDuckGo",
+      "description": "Onion DuckDuckGo",
+      "_urls": [
+        {
+          "params": [
+            {
+              "name": "q",
+              "value": "{searchTerms}"
+            }
+          ],
+          "rels": [],
+          "template": "https://duckduckgogg42xjoc72x3sjasowoarfbgcmvfimaftt6twagswzczad.onion/"
+        }
+      ],
+      "_isAppProvided": false,
+      "queryCharset": "[UTF-8]",
+      "_metaData": { "alias": ".od", "order": 2 }
+    },
+    {
+      "_name": "NixOSOption",
+      "description": "Onion DuckDuckGo",
+      "_urls": [
+        {
+          "params": [
+            {
+              "name": "query",
+              "value": "{searchTerms}"
+            }
+          ],
+          "rels": [],
+          "template": "https://search.nixos.org/options"
+        }
+      ],
+      "_isAppProvided": false,
+      "queryCharset": "[UTF-8]",
+      "_metaData": { "alias": ".nso", "order": 3 }
+    },
+    {
+      "_name": "NixOSPackages",
+      "description": "Onion DuckDuckGo",
+      "_urls": [
+        {
+          "params": [
+            {
+              "name": "query",
+              "value": "{searchTerms}"
+            }
+          ],
+          "rels": [],
+          "template": "https://search.nixos.org/packages"
+        }
+      ],
+      "_isAppProvided": false,
+      "queryCharset": "[UTF-8]",
+      "_metaData": { "alias": ".nsp", "order": 4 }
+    },
+
+    {
+      "_name": "Google",
+      "_isAppProvided": true,
+      "_metaData": { "alias": ".g", "order": 5 }
+    },
+    {
+      "_name": "Wikipedia (en)",
+      "_isAppProvided": true,
+      "_metaData": { "alias": ".w", "order": 6 }
+    },
+
+    {
+      "_name": "Yandex",
+      "_isAppProvided": true,
+      "_metaData": { "hidden": true, "order": 7 }
+    },
+    {
+      "_name": "Amazon.com",
+      "_isAppProvided": true,
+      "_metaData": { "hidden": true, "order": 8 }
+    },
+    {
+      "_name": "Bing",
+      "_isAppProvided": true,
+      "_metaData": { "hidden": true, "order": 9 }
+    }
+  ],
+  "metaData": {
+    "useSavedOrder": true,
+    "current": "DuckDuckGo"
+  }
+}

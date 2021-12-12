@@ -1,0 +1,11 @@
+[
+  { "slug": "ublock-origin"              },
+  { "slug": "tree-style-tab"             },
+  { "slug": "foxyproxy-standard"         },
+  { "slug": "smart-referer"              },
+  { "slug": "skip-redirect"              },
+  { "slug": "behave"                     },
+  { "slug": "plantuml-visualizer"        },
+  { "slug": "detect-cloudflare-plus"     },
+  { "slug": "change-timezone-time-shift" }
+]

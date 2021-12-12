@@ -12,6 +12,13 @@ rec {
     };
   };
   erlang = super.erlangR24;
+  firefox-addons = super.callPackage (
+    { pkgs, fetchurl, lib, stdenv }:
+      import ./generated-firefox-addons.nix {
+        inherit fetchurl lib stdenv;
+        buildFirefoxXpiAddon = pkgs.nur.repos.rycee.firefox-addons.buildFirefoxXpiAddon;
+      }
+  ) { };
 
   zinc = super.callPackage ./zinc.nix  { };
   uhk-agent = super.callPackage ./uhk-agent.nix { };
@@ -38,11 +45,11 @@ rec {
 
   torbrowser =
     super.torbrowser.overrideAttrs (oldAttrs: rec {
-      version = "10.5.5";
+      version = "11.0.2";
       src =
         super.fetchurl {
           url    = "https://dist.torproject.org/torbrowser/${version}/tor-browser-linux64-${version}_en-US.tar.xz";
-          sha256 = "0847lib2z21fgb7x5szwvprc77fhdpmp4z5d6n1sk6d40dd34spn";
+          sha256 = "1bqlb8dlh92dpl9gmfh3yclq5ii09vv333yisa0i5gpwwzajnh5s";
         };
     });
 
