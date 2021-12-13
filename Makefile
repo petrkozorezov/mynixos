@@ -11,8 +11,6 @@ clean:
 show-repo-path:
 	@echo $(REPO_PATH)
 
-#TODO update\:%
-
 update:
 	nix flake update
 	cd home/profiles/petrkozorezov/browser && ./userjs-nix.sh > generated-userjs.nix
@@ -42,3 +40,10 @@ shell:
 
 config.tf.json: cloud/*.nix
 	terranix cloud/default.nix | jq . > $@
+
+# make test:system.sss
+test\:%:
+	nix build -v ".#tests.$*"
+
+test-interactive\:%:
+	nix build -v ".#tests.$*.driverInteractive" && ./result/bin/nixos-test-driver --interactive

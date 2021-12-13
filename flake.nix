@@ -196,5 +196,21 @@
         };
 
       checks = deploy-rs.lib.${system}.deployChecks self.deploy;
+
+      # tests
+      tests = let
+        args =
+            {
+              inherit inputs pkgs;
+              lib      = nixpkgs.lib;
+              testing  = import (nixpkgs + /nixos/lib/testing-python.nix) {
+                inherit pkgs system;
+                specialArgs         = configExtraAgrs;
+                extraConfigurations = [ ./system/modules ];
+              };
+            };
+      in {
+        system = import ./system/tests args;
+      };
     };
 }

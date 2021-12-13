@@ -35,6 +35,12 @@ in {
           secretCfg  = config;
         in {
           options = {
+            name = mkOption {
+              default     = name;
+              description = "Name of the secret";
+              type        = types.str;
+            };
+
             enable = mkOption {
               default     = true;
               description = "The way to quickly disable decryption of the secret.";
@@ -89,7 +95,7 @@ in {
             target = mkOption {
               description = "Full path of unencrypted secret.";
               type        = types.path;
-              default     = cfg.path + "/${name}";
+              default     = cfg.path + "/${config.name}";
             };
 
             tmp = mkOption {
