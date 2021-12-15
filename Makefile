@@ -1,6 +1,8 @@
 .PHONY = clean show-repo-path update build\:% build\:deploy installer image shell
 REPO_PATH = `pwd`/$(dir $(lastword $(MAKEFILE_LIST)))
 DIRS=/etc/nixos ~/.config/nixpkgs # FIXME better name
+NIX_BUILD=nix build ${NIX_BUILD_FLAGS} -v
+
 
 $(DIRS):
 	ln -sf $(REPO_PATH) $@
@@ -30,7 +32,7 @@ build\:user\:%:
 # 	$(MAKE) build:configs.$*.config.system.build.isoImage
 
 build\:%:
-	nix build -v ".#$*"
+	$(NIX_BUILD) ".#$*"
 
 deploy\:%:
 	deploy -s ".#$*"
@@ -41,9 +43,9 @@ shell:
 config.tf.json: cloud/*.nix
 	terranix cloud/default.nix | jq . > $@
 
-# make test:system.sss
-test\:%:
-	nix build -v ".#tests.$*"
+# NIX_BUILD_FLAGS='--rebuild' make tests:system.sss
+tests\:%:
+	$(NIX_BUILD) ".#tests.$*"
 
-test-interactive\:%:
-	nix build -v ".#tests.$*.driverInteractive" && ./result/bin/nixos-test-driver --interactive
+tests-interactive\:%:
+	$(NIX_BUILD) ".#tests.$*.driverInteractive" && ./result/bin/nixos-test-driver --interactive

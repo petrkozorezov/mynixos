@@ -95,18 +95,24 @@ with types;
       hostName     = config.networking.hostName;
       self         = builtins.getAttr hostName cfg.peers;
       others       = builtins.attrValues (builtins.removeAttrs cfg.peers [ hostName ]);
-      # isNatEnabled = builtins.hasAttr "extIf" cfg;
       isNatEnabled = cfg.extIf != null;
     in mkMerge [
       (mkIf cfg.enable {
-        sss.secrets."vpn-privkey-${hostName}" = {
-          text      = self.priv;
-          dependent = [ "wireguard-${cfg.intIf}.service" ];
+        assertions = [
+          {
+            assertion = config.sss.enable;
+            message   = "vpn uses SSS secrets system, please enable and setup it";
+          }
+        ];
+
+        sss = {
+          secrets."vpn-privkey-${hostName}" = {
+            text      = self.priv;
+            dependent = [ "wireguard-${cfg.intIf}.service" ];
+          };
         };
 
         networking = {
-          firewall.allowedUDPPorts = [ self.port ];
-
           wireguard.interfaces."${cfg.intIf}" = rec {
             privateKeyFile = toString config.sss.secrets."vpn-privkey-${hostName}".target;
             ips            = [ (fullAddr cfg.subnet self.addr cfg.mask) ];
@@ -122,6 +128,26 @@ with types;
                   }
                 )
                 others;
+          };
+
+          firewall = {
+            allowedUDPPorts = [ self.port ];
+            # disable traffic from non vpn hosts
+            extraCommands = ''
+              iptables -I nixos-fw          -d ${fullAddr cfg.subnet self.addr cfg.mask} -j nixos-fw-refuse
+              iptables -I nixos-fw -i "wg0" -d ${fullAddr cfg.subnet self.addr cfg.mask} -j nixos-fw-accept
+              iptables -I nixos-fw -i "lo"  -d ${fullAddr cfg.subnet self.addr cfg.mask} -j nixos-fw-accept
+            '';
+          };
+
+          forwarding = {
+            enable = true;
+            firewall = {
+              allow = [
+                { from = { interface = cfg.intIf; }; }
+                { to   = { interface = cfg.intIf; }; match = { states = [ "ESTABLISHED" "RELATED" ]; }; }
+              ];
+            };
           };
         };
 

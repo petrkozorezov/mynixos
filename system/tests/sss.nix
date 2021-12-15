@@ -10,7 +10,8 @@ in {
   name = "sss";
 
   machine =
-    { config, pkgs, ... }: {
+    { pkgs, ... }: {
+      virtualisation.memorySize = 192;
       sss = {
         enable = true;
         inherit path;

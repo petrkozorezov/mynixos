@@ -45,7 +45,12 @@
                 userMapF profileName
           );
 
-      configExtraAgrs = { inherit system inputs; };
+      configExtraAgrs = rec {
+        inherit system inputs;
+        # self lib
+        # TODO find a better way
+        slib = import ./lib { inherit slib; inherit (nixpkgs) lib; };
+      };
       systemConfig =
         hostname: modules:
           nixpkgs.lib.nixosSystem {
@@ -209,8 +214,9 @@
                 extraConfigurations = [ ./system/modules ];
               };
             };
-      in {
+      in pkgs.testing.addTestAll {
         system = import ./system/tests args;
       };
+
     };
 }
