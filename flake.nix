@@ -45,12 +45,10 @@
                 userMapF profileName
           );
 
-      configExtraAgrs = rec {
-        inherit system inputs;
-        # self lib
-        # TODO find a better way
-        slib = import ./lib { inherit slib; inherit (nixpkgs) lib; };
-      };
+      # self lib
+      # TODO find a better way
+      slib = import ./lib { inherit slib; inherit (nixpkgs) lib; };
+      configExtraAgrs = { inherit system inputs slib; };
       systemConfig =
         hostname: modules:
           nixpkgs.lib.nixosSystem {
@@ -92,7 +90,7 @@
           };
     in rec {
       legacyPackages."${system}" = pkgs;
-      inherit overlays;
+      # inherit overlays;
 
       #
       # development & deployment shell
@@ -200,7 +198,11 @@
           nodes   = builtins.mapAttrs host configs;
         };
 
-      checks = deploy-rs.lib.${system}.deployChecks self.deploy;
+      # FIXME
+      # checks = deploy-rs.lib.${system}.deployChecks self.deploy;
+
+      # lib
+      lib = slib;
 
       # tests
       tests = let

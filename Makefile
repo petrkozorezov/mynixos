@@ -1,7 +1,8 @@
 .PHONY = clean show-repo-path update build\:% build\:deploy installer image shell
 REPO_PATH = `pwd`/$(dir $(lastword $(MAKEFILE_LIST)))
 DIRS=/etc/nixos ~/.config/nixpkgs # FIXME better name
-NIX_BUILD=nix build ${NIX_BUILD_FLAGS} -v
+NIX_BUILD=nix build ${NIX_FLAGS} -v
+NIX_EVAL=nix eval ${NIX_FLAGS} -v
 
 
 $(DIRS):
@@ -43,9 +44,17 @@ shell:
 config.tf.json: cloud/*.nix
 	terranix cloud/default.nix | jq . > $@
 
-# NIX_BUILD_FLAGS='--rebuild' make tests:system.sss
-tests\:%:
+# make -s lib-tests:firewall | jq .command
+lib-tests\:%:
+	${NIX_EVAL} --json .#lib.tests.$* | jq .
+
+# make intgr-tests:system.sss # mb with "NIX_FLAGS='--rebuild'"
+intgr-tests\:%:
 	$(NIX_BUILD) ".#tests.$*"
 
-tests-interactive\:%:
+intgr-tests-interactive\:%:
 	$(NIX_BUILD) ".#tests.$*.driverInteractive" && ./result/bin/nixos-test-driver --interactive
+
+tests-all:
+	$(MAKE) lib-tests:all
+	$(MAKE) intgr-tests:all

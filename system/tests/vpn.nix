@@ -11,8 +11,8 @@
       { vpn = "${rootNetPrefix}.4"; };
   hostsPostfixes = {
     external = {
-      external = "1";
-      vpn      = "1";
+      external =  "1";
+      vpn      =  "1";
     };
     router1 = {
       external =  "2";
@@ -27,7 +27,7 @@
     };
     workstation2 = {
       router2 =  "2";
-      vpn     = "22";
+      # vpn     = "22";
     };
   };
 
@@ -74,7 +74,7 @@
     };
   };
   baseConfig = {
-    # console.keyMap = "dvorak-programmer";
+    console.keyMap = "dvorak-programmer";
     virtualisation.memorySize = 192;
     networking.useDHCP        = false;
     networking.enableIPv6     = false;
@@ -138,18 +138,18 @@ in {
         return "timeout 0.2 ping -c 1 -w 1 {} >&2".format(to)
 
       def traffic_to_vpn(subj):
-        subj.succeed(ping("${ip "vpn" "external"    }"))
-        subj.succeed(ping("${ip "vpn" "router1"     }"))
-        subj.succeed(ping("${ip "vpn" "router2"     }"))
+        subj.succeed(ping("${ip "vpn" "external"}"))
+        subj.succeed(ping("${ip "vpn" "router1" }"))
+        subj.succeed(ping("${ip "vpn" "router2" }"))
 
       def traffic_to_local(subj):
         subj.succeed(ping("${ip "router1" "workstation1"}"))
         subj.succeed(ping("${ip "router2" "workstation2"}"))
 
       def no_traffic_to_vpn(subj):
-        subj.fail(ping("${ip "vpn" "external"     }"))
-        subj.fail(ping("${ip "vpn" "router1"      }"))
-        subj.fail(ping("${ip "vpn" "router2"      }"))
+        subj.fail(ping("${ip "vpn" "external"}"))
+        subj.fail(ping("${ip "vpn" "router1" }"))
+        subj.fail(ping("${ip "vpn" "router2" }"))
 
       start_all()
 
@@ -172,6 +172,5 @@ in {
 
       no_traffic_to_vpn(workstation2)
       workstation2.fail(ping("${ip "router1" "workstation1"}"))
-
     '';
 })

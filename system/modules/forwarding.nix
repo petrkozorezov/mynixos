@@ -1,5 +1,6 @@
 { config, options, lib, pkgs, modulesPath, slib, ... }:
 with lib;
+with builtins;
 let
   helpers = import (modulesPath + "/services/networking/helpers.nix") { inherit config lib; };
   cfg     = config.networking.forwarding;
@@ -12,38 +13,72 @@ in {
         default      = true;
         description  = "refuse any forwarding packets by default";
       };
-      allow = mkOption { type = types.listOf slib.firewall.types.filter; default = [ ]; };
+      allow = mkOption { type = types.listOf slib.firewall.types.spec; default = [ ]; };
       # TODO deny/reject/refuse
     };
   };
 
-  config =
+  config = let
+    fwdChain    = "nixos-fw-fwd";
+    refuseChain = "DROP";
+    acceptChain = "ACCEPT";
+    fwCmd       = name: cmd: "ip46tables ${slib.firewall.command name cmd}";
+    ignoreResult = "2> /dev/null || true";
+  in
     (mkIf cfg.enable (mkMerge [
       {
-        boot.kernel.sysctl = {
-          "net.ipv4.conf.all.forwarding"     = true;
-          "net.ipv4.conf.default.forwarding" = true;
+        boot.kernel.sysctl = mkForce {
+          "net.ipv4.conf.all.forwarding"     = mkOverride 99 true;
+          "net.ipv4.conf.default.forwarding" = mkOverride 99 true;
         };
       }
-      (mkIf cfg.firewall.enable {
+      (mkIf cfg.firewall.enable (mkMerge [{
         networking.firewall = let
-            formatFilter  = filter: (slib.firewall.treeToString (slib.firewall.format.filter filter));
-            addAllowRule  = filter: "ip46tables -A nixos-fw-fwd ${formatFilter filter} -j nixos-fw-accept"; # TODO ipv6 support
-            addAllowRules = builtins.concatStringsSep "\n" (map addAllowRule cfg.firewall.allow);
+            addAllowRule = spec:
+              fwCmd "insert-rule" { chain = fwdChain; spec = spec; target = acceptChain; }; # TODO ipv6 support
+            addAllowRules = concatStringsSep "\n" (map addAllowRule cfg.firewall.allow);
+            cleanup = ''
+              # cleanup
+              ${fwCmd "delete-rules"  { chain  =   "FORWARD" ; target = fwdChain; }} ${ignoreResult}
+              ${fwCmd "flush-chain"   { chain  =   fwdChain  ;                    }} ${ignoreResult}
+              ${fwCmd "delete-chains" { chains = [ fwdChain ];                    }} ${ignoreResult}
+            '';
           in {
           # TODO reload
           extraCommands = ''
-            ${helpers}
-            ip46tables -N nixos-fw-fwd
+            # networking.forwarding.firewall
+            ${cleanup}
+
+            # setup
+            ${fwCmd "new-chain"   { chain = fwdChain ; }}
+            ${fwCmd "append-rule" { chain = fwdChain ; target = refuseChain; }} # refuse by default
             ${addAllowRules}
-            ip46tables -A nixos-fw-fwd -j nixos-fw-refuse
-            ip46tables -A FORWARD -j nixos-fw-fwd
+
+            # enable
+            ${fwCmd "append-rule" { chain = "FORWARD"; target = fwdChain; }}
           '';
+
           extraStopCommands =  ''
-            ${helpers}
-            ip46tables -D FORWARD -j nixos-fw-fwd 2>/dev/null || true
+            # networking.forwarding.firewall
+            ${cleanup}
           '';
         };
-      })
+      }
+      (mkIf config.networking.nat.enable {
+        networking.firewall = let
+          natCfg = config.networking.nat;
+          output = { interface = natCfg.externalInterface; };
+          inputs = map (input: { interface = input; }) natCfg.internalInterfaces;
+          outputSpecs = map (input: { from = input ; to = output; }) inputs;
+          inputSpecs  = map (input: { from = output; to = input ; match = { states = [ "ESTABLISHED" "RELATED" ]; }; }) inputs;
+        in {
+          # TODO internalIPs, externalIP, ipv6, forwardPorts
+          extraCommands = ''
+            # networking.firewall nat
+            ${concatStringsSep "\n" (map (outputSpec: fwCmd "insert-rule" { chain = fwdChain; spec = outputSpec; target = acceptChain; }) outputSpecs)}
+            ${concatStringsSep "\n" (map ( inputSpec: fwCmd "insert-rule" { chain = fwdChain; spec =  inputSpec; target = acceptChain; })  inputSpecs)}
+          '';
+        };
+      })]))
     ]));
 }

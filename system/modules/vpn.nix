@@ -1,5 +1,5 @@
 ## https://nixos.wiki/wiki/WireGuard
-{ pkgs, config, options, lib, ... }:
+{ pkgs, config, options, lib, slib, ... }:
 with lib;
 with types;
 {
@@ -17,7 +17,7 @@ with types;
         type        = str;
         description = "Mask part of ip addresses.";
       };
-    intIf =
+    vpnIf =
       mkOption {
         default     = "wg0";
         type        = str;
@@ -108,12 +108,12 @@ with types;
         sss = {
           secrets."vpn-privkey-${hostName}" = {
             text      = self.priv;
-            dependent = [ "wireguard-${cfg.intIf}.service" ];
+            dependent = [ "wireguard-${cfg.vpnIf}.service" ];
           };
         };
 
         networking = {
-          wireguard.interfaces."${cfg.intIf}" = rec {
+          wireguard.interfaces."${cfg.vpnIf}" = rec {
             privateKeyFile = toString config.sss.secrets."vpn-privkey-${hostName}".target;
             ips            = [ (fullAddr cfg.subnet self.addr cfg.mask) ];
             listenPort     = self.port;
@@ -132,11 +132,20 @@ with types;
 
           firewall = {
             allowedUDPPorts = [ self.port ];
-            # disable traffic from non vpn hosts
-            extraCommands = ''
-              iptables -I nixos-fw          -d ${fullAddr cfg.subnet self.addr cfg.mask} -j nixos-fw-refuse
-              iptables -I nixos-fw -i "wg0" -d ${fullAddr cfg.subnet self.addr cfg.mask} -j nixos-fw-accept
-              iptables -I nixos-fw -i "lo"  -d ${fullAddr cfg.subnet self.addr cfg.mask} -j nixos-fw-accept
+
+            extraCommands = let
+              spec = { to = { addresses = [ (fullAddr cfg.subnet self.addr cfg.mask) ]; }; };
+              rule =
+                target: spec: {
+                  chain  = "nixos-fw";
+                  inherit spec target;
+                };
+              fwCmd = name: cmd: "iptables -w ${slib.firewall.command name cmd}";
+            in ''
+              # vpn: disable traffic from non vpn hosts
+              ${fwCmd "insert-rule" (rule "nixos-fw-refuse" spec) }
+              ${fwCmd "insert-rule" (rule "nixos-fw-accept" (spec // { from = { interface = cfg.vpnIf; }; }))}
+              ${fwCmd "insert-rule" (rule "nixos-fw-accept" (spec // { from = { interface = "lo"     ; }; }))}
             '';
           };
 
@@ -144,8 +153,8 @@ with types;
             enable = true;
             firewall = {
               allow = [
-                { from = { interface = cfg.intIf; }; }
-                { to   = { interface = cfg.intIf; }; match = { states = [ "ESTABLISHED" "RELATED" ]; }; }
+                { from = { interface = cfg.vpnIf; }; }
+                { to   = { interface = cfg.vpnIf; }; match = { states = [ "ESTABLISHED" "RELATED" ]; }; }
               ];
             };
           };
@@ -159,7 +168,7 @@ with types;
                 [ "/" "-"    " "     "+"     "="      ]
                 [ "-" "\\x2d" "\\x20" "\\x2b" "\\x3d" ];
               unitName = keyToUnitName other.pub;
-            in nameValuePair "wireguard-${cfg.intIf}-peer-${unitName}" {
+            in nameValuePair "wireguard-${cfg.vpnIf}-peer-${unitName}" {
               serviceConfig = {
                 Type       = mkForce "simple";
                 Restart    = mkForce "always";
@@ -173,19 +182,26 @@ with types;
       })
       (mkIf isNatEnabled {
         networking = {
-          wireguard.interfaces."${cfg.intIf}" = {
-            postSetup = ''
-              ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s ${fullAddr cfg.subnet "0" cfg.mask} -o ${cfg.extIf} -j MASQUERADE
-            '';
-            postShutdown = ''
-              ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s ${fullAddr cfg.subnet "0" cfg.mask} -o ${cfg.extIf} -j MASQUERADE
-            '';
-          };
-
+          wireguard.interfaces."${cfg.vpnIf}" =
+            let
+              rule = {
+                table = "nat";
+                chain = "POSTROUTING";
+                spec = {
+                  from = { addresses = [ (fullAddr cfg.subnet "0" cfg.mask) ]; };
+                  to   = { interface = cfg.extIf; };
+                };
+                target = "MASQUERADE";
+              };
+              fwCmd = name: cmd: "${pkgs.iptables}/bin/iptables -w ${slib.firewall.command name cmd}";
+            in {
+              postSetup    = fwCmd "append-rule"  rule;
+              postShutdown = fwCmd "delete-rules" rule;
+            };
           nat = {
             enable             = true;
-            externalInterface  = cfg.extIf;
-            internalInterfaces = [ cfg.intIf ];
+            externalInterface  =   cfg.extIf;
+            internalInterfaces = [ cfg.vpnIf ];
           };
         };
       })
