@@ -43,7 +43,6 @@
         "ps"    = "${pkgs.procs}/bin/procs";
         "top"   = "${pkgs.zenith}/bin/zenith";
         "du"    = "${pkgs.du-dust}/bin/dust";
-        "jq"    = "${pkgs.jql}/bin/jql";
         "noidle" = ''
           echo "Press Ctrl+C to interrupt..." && \
           systemd-inhibit --what=idle --mode=block --who="noidle" --why="Manual prevent from sleep" sleep infinity
@@ -122,5 +121,6 @@
     with pkgs; [
       fasd
       bandwhich
+      jq
     ];
 }
