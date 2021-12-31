@@ -159,6 +159,7 @@ in {
             "sublime_text"
             "telegram-desktop"
             "slack"
+            "discord"
             "mkfifo ${ob_file} && tail -f ${ob_file} | ${ob}"
             "mako"
             "MellowPlayer"
@@ -170,7 +171,7 @@ in {
         {
           "${w_web}"   = [{ app_id = "firefox"; }];
           "${w_dev}"   = [{ app_id = "sublime_text"; }];
-          "${w_msg}"   = [{ app_id = "telegramdesktop"; } { class ="Slack"; }];
+          "${w_msg}"   = [{ app_id = "telegramdesktop"; } { class ="Slack"; } { class ="discord"; } ];
           "${w_music}" = [{ app_id = "ColinDuquesnoy.gitlab.com."; }];
           "${w_calls}" = [{ class  = "Chromium-browser"; }];
         };
