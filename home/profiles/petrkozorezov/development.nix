@@ -29,7 +29,7 @@
         gtypist
         grapherl
         pandoc
-        zinc
+        solana
       ];
 
     sessionVariables.COQPATH = "/etc/profiles/per-user/petrkozorezov/lib/coq/8.13/user-contrib"; # FIXME

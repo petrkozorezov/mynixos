@@ -67,4 +67,6 @@ rec {
             });}
           )
         ) {};
+
+  solana = super.callPackage ./solana.nix {};
 }
