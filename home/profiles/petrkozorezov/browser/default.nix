@@ -14,6 +14,10 @@
       change-timezone-time-shift
       behave
 
+      # wallets
+      solflare-wallet
+      ether-metamask
+
       # ui
       tree-style-tab
 

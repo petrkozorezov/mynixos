@@ -7,5 +7,7 @@
   { "slug": "behave"                     },
   { "slug": "plantuml-visualizer"        },
   { "slug": "detect-cloudflare-plus"     },
-  { "slug": "change-timezone-time-shift" }
+  { "slug": "change-timezone-time-shift" },
+  { "slug": "solflare-wallet"            },
+  { "slug": "ether-metamask"             }
 ]

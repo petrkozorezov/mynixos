@@ -41,6 +41,18 @@
         platforms = platforms.all;
         };
       };
+    "ether-metamask" = buildFirefoxXpiAddon {
+      pname = "ether-metamask";
+      version = "10.8.1";
+      addonId = "webextension@metamask.io";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3885451/metamask-10.8.1-an+fx.xpi";
+      sha256 = "a9d10052cb7d4e74c7e560fc54975f9f29dc1c02205ee6964925097d18db2da7";
+      meta = with lib;
+      {
+        description = "Ethereum Browser Extension";
+        platforms = platforms.all;
+        };
+      };
     "foxyproxy-standard" = buildFirefoxXpiAddon {
       pname = "foxyproxy-standard";
       version = "7.5.1";
@@ -94,12 +106,25 @@
         platforms = platforms.all;
         };
       };
+    "solflare-wallet" = buildFirefoxXpiAddon {
+      pname = "solflare-wallet";
+      version = "1.17";
+      addonId = "{6d72262a-b243-4dc6-8f4f-be96c74e0a86}";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3886961/solflare_wallet-1.17-fx.xpi";
+      sha256 = "f450addba51093a69575c43088a216b3370e3b12f73aca668fa120106a3cb643";
+      meta = with lib;
+      {
+        homepage = "https://solflare.com/";
+        description = "The only wallet you need to do everything on the Solana blockchain. Store, stake, and swap your tokens with Solflare.";
+        platforms = platforms.all;
+        };
+      };
     "tree-style-tab" = buildFirefoxXpiAddon {
       pname = "tree-style-tab";
-      version = "3.8.16";
+      version = "3.8.18";
       addonId = "treestyletab@piro.sakura.ne.jp";
-      url = "https://addons.mozilla.org/firefox/downloads/file/3866562/tree_style_tab-3.8.16-fx.xpi";
-      sha256 = "9cf29fdd9ed11f7fa43c0bf094a5fbf599c69c4568017478f1f57a934f30d18b";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3886076/tree_style_tab-3.8.18-fx.xpi";
+      sha256 = "0cbb1bcfe9f488f3618723b6bd9ee076eb2da097a3a008c8fffecf4c98dcafd1";
       meta = with lib;
       {
         homepage = "http://piro.sakura.ne.jp/xul/_treestyletab.html.en";
@@ -109,10 +134,10 @@
       };
     "ublock-origin" = buildFirefoxXpiAddon {
       pname = "ublock-origin";
-      version = "1.39.2";
+      version = "1.40.2";
       addonId = "uBlock0@raymondhill.net";
-      url = "https://addons.mozilla.org/firefox/downloads/file/3875359/ublock_origin-1.39.2-an+fx.xpi";
-      sha256 = "02e139624549b733542b95c4c75b6b315a09cce91373c263ba2f18ca5ed8d93a";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3886236/ublock_origin-1.40.2-an+fx.xpi";
+      sha256 = "837915929c950651e46ed5cc30aa9faed84136e7715e74369a2eadf328bea065";
       meta = with lib;
       {
         homepage = "https://github.com/gorhill/uBlock#ublock-origin";

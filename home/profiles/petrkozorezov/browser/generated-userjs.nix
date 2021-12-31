@@ -9,7 +9,6 @@
   "geo.provider.network.url" = "https://location.services.mozilla.com/v1/geolocate?key=%MOZILLA_API_KEY%";
   "browser.region.network.url" = "";
   "browser.region.update.enabled" = false;
-  "app.update.auto" = false;
   "app.update.background.scheduling.enabled" = false;
   "browser.search.update" = false;
   "extensions.getAddons.showPane" = false;
@@ -67,7 +66,6 @@
   "privacy.userContext.enabled" = true;
   "privacy.userContext.ui.enabled" = true;
   "media.eme.enabled" = false;
-  "dom.push.enabled" = false;
   "beacon.enabled" = false;
   "browser.helperApps.deleteTempFileOnExit" = true;
   "browser.uitour.enabled" = false;
