@@ -334,6 +334,17 @@
         "type": "github"
       }
     },
+    "nixos-channel": {
+      "locked": {
+        "narHash": "sha256-S4/vWDVBvc2urOibGss3pIesS06IuXtEFamscD3vS+k=",
+        "type": "tarball",
+        "url": "https://nixos.org/channels/nixos-21.11/nixexprs.tar.xz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://nixos.org/channels/nixos-21.11/nixexprs.tar.xz"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1632086102,
@@ -558,6 +569,7 @@
         "emacs-overlay": "emacs-overlay",
         "home-manager": "home-manager",
         "nix-doom-emacs": "nix-doom-emacs",
+        "nixos-channel": "nixos-channel",
         "nixpkgs": "nixpkgs_5",
         "nur": "nur",
         "terranix": "terranix"

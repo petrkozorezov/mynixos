@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 {
   programs = {
     zsh = {
@@ -109,7 +109,10 @@
     # };
 
     bat.enable = true;
-    command-not-found.enable = true;
+    command-not-found = {
+      enable = true;
+      dbPath = "${inputs.nixos-channel}/programs.sqlite";
+    };
   };
 
   # TODO

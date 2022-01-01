@@ -2,6 +2,7 @@
   description = "My NixOS configuration";
 
   inputs = {
+     nixos-channel.url = "https://nixos.org/channels/nixos-21.11/nixexprs.tar.xz";
            nixpkgs.url = "github:NixOS/nixpkgs/nixos-21.11"       ;
       home-manager.url = "github:rycee/home-manager/release-21.11";
                nur.url = "github:nix-community/NUR"               ;
