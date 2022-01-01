@@ -32,5 +32,12 @@
       # others
       # gucharmap
       uhk-agent
+
+      # sound
+      pulsemixer pamixer
+
+      # obsidian
+      # zotero
+
     ];
 }

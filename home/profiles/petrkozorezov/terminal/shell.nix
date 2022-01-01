@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 {
   programs = {
     zsh = {
@@ -11,7 +11,6 @@
           PURE_GIT_PULL=0
           PURE_PROMPT_SYMBOL=λ
           prompt pure
-          path+="$HOME/bin"
           nsh() {
             nix shell "self#$1"
           }
@@ -122,5 +121,33 @@
       fasd
       bandwhich
       jq
+
+      # utils
+      bc
+      killall
+      curl wget
+      ranger mc
+      # nnn
+      gnupg
+      unzip
+      vim
+      # rlwrap
+      # asciinema
+      # ruplacer
+      pandoc
+      qrencode
+
+      # hardware
+      pciutils
+      usbutils
+
+      # admin
+      bind.dnsutils
+      ldns
+      lsof
+
+      # pmount # (?)
+      lm_sensors
+      nix-index
     ];
 }

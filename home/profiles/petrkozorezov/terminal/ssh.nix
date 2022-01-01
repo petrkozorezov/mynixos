@@ -20,10 +20,6 @@
           } // extra;
       in {
         "github.com" = matchBlock {};
-        # "*.prod.kubient.net" = matchBlock {
-        #   user = "petr.kozorezov";
-        #   identityFile = sshConfigHome + "id_rsa_ybk1.pub";
-        # };
       };
 
     extraConfig =

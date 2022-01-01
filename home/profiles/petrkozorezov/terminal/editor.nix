@@ -6,7 +6,8 @@ in {
     inputs.nix-doom-emacs.hmModule
   ];
 
-  home.sessionVariables.EDITOR = "${term} emacsclient";
+  # restart needed
+  home.sessionVariables.EDITOR = "emacsclient";
   programs.doom-emacs = {
     enable               = true;
     doomPrivateDir       = ./emacs;

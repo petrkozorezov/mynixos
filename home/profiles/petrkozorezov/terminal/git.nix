@@ -1,18 +1,22 @@
 { pkgs, ... }:
-{
+let email = "petr.kozorezov@gmail.com"; in {
   programs = {
     git = {
       enable    = true;
-      userEmail = "petr.kozorezov@gmail.com";
+      userEmail = email;
       userName  = "Petr Kozorezov";
       extraConfig = {
         push.default   = "current";
         pull.ff        = "only";
         core.quotePath = false;
       };
+      signing = {
+        key           = email;
+        signByDefault = true;
+      };
     };
     gh = {
-      enable      = true;
+      enable = true;
       settings.gitProtocol = "ssh";
       # TODO
       #aliases = {};
