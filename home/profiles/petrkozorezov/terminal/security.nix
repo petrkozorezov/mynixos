@@ -1,19 +1,15 @@
+# https://nixos.wiki/wiki/Yubikey
 { config, pkgs, lib, ... }: {
   home.packages = with pkgs;
     [
-      # yubikey
-      yubikey-manager
-      yubikey-personalization
-
       # tools
       haskellPackages.hopenpgp-tools
       pgpdump
       paperkey
     ];
 
-  programs.pinentry.enable = true;
-
   # gpg
+  programs.pinentry.enable = true;
   services.gpg-agent = {
     enable           = true;
     enableSshSupport = true;
@@ -25,7 +21,7 @@
   # TODO
   # home.file.".gnupg/".mode = "700";
   home.file.".gnupg/pubring.kbx".source = config.zoo.secrets.filesPath + "/gnupg.pubring.kbx";
-  home.file.".gnupg/scdaemon.conf".text = "reader-port Yubico Yubi";
+  home.file.".gnupg/scdaemon.conf".text = "disable-ccid";
   home.file.".ssh/id_rsa_ybk1.pub".text = config.zoo.secrets.users.petrkozorezov.authPublicKey;
 
   # add card auto-insertion before commit
