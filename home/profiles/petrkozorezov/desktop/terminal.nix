@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 {
   programs.alacritty = {
     enable = true;
@@ -63,4 +63,5 @@
         cursor.style.shape = "beam";
       };
   };
+  home.packages = with pkgs; [ jetbrains-mono ];
 }

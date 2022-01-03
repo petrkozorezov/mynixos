@@ -88,5 +88,6 @@
     chromium
     torbrowser
     # nyxt
+    hack-font
   ];
 }

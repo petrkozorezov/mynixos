@@ -65,5 +65,6 @@
         }
       '';
   };
+  home.packages = [ pkgs.hack-font ];
 }
 

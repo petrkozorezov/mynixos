@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 {
   programs.mako = {
     enable = true;
@@ -11,4 +11,6 @@
     borderColor     = "#cc2900D0";
     progressColor   = "#cc2900D0";
   };
+
+  home.packages = [ pkgs.hack-font ];
 }

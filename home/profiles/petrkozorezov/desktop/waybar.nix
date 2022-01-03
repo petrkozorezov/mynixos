@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 {
   programs.waybar = {
     enable = true;
@@ -188,4 +188,5 @@
       ''
     ;
   };
+  home.packages = [ pkgs.hack-font ];
 }

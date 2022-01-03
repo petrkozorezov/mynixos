@@ -57,6 +57,8 @@ in {
 
     capitaine-cursors
     hicolor-icon-theme
+
+    hack-font
   ];
 
   home.sessionVariables.QT_QPA_PLATFORMTHEME = "qt5ct";
