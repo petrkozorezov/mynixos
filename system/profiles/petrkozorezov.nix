@@ -1,6 +1,7 @@
 { config, ... }: {
   # TODO move to flake
   users = {
+    groups.plugdev = {};
     mutableUsers = false;
     users = let
       userCfg = config.zoo.secrets.users.petrkozorezov;

@@ -53,6 +53,8 @@ rec {
         };
     });
 
+  ledger-live = super.callPackage ./ledger-live.nix { };
+
   # build-support ?
   testing.addTestAll =
     tests:
