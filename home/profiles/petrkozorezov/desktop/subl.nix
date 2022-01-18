@@ -62,6 +62,7 @@ let
       "Dockerfile Syntax Highlighting"
       "Coq"
       "TypeScript"
+      "Ethereum"
       # doesn't work
       #"Markdown Preview"
       #"TabNine"
