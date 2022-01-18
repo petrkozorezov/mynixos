@@ -109,7 +109,7 @@ in {
         # forwarding_not_works() # nat enables forwarding
         nat_works()
 
-      with subtest("Checking switch to configuration with forwarding.enable = false"):
+      with subtest("Checking switch to configuration with forwarding.enable = true"):
         router.succeed(
           "${closure nodes.router}/bin/switch-to-configuration test 2>&1"
         )

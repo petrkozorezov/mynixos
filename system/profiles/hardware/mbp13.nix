@@ -11,7 +11,7 @@
 
   boot = {
     loader = {
-      # when enabled deploy-rs does not wokr
+      # when enabled deploy-rs does not work
       #systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
       grub = {
