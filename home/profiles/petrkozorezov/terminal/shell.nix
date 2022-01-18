@@ -40,7 +40,6 @@
         "grep"  = "${pkgs.ripgrep}/bin/rg";
         "find"  = "${pkgs.fd}/bin/fd";
         "ps"    = "${pkgs.procs}/bin/procs";
-        "top"   = "${pkgs.zenith}/bin/zenith";
         "du"    = "${pkgs.du-dust}/bin/dust";
         "noidle" = ''
           echo "Press Ctrl+C to interrupt..." && \
@@ -124,6 +123,7 @@
       fasd
       bandwhich
       jq
+      btop
 
       # utils
       bc
@@ -152,5 +152,8 @@
       # pmount # (?)
       lm_sensors
       nix-index
+
+      # TODO
+      nushell
     ];
 }
