@@ -30,11 +30,13 @@ in {
     coreutils
     # clang
     xterm-24bit
+
+    emacs-all-the-icons-fonts
   ];
 
   services.emacs = {
     enable                  = true;
-    socketActivation.enable = true;
+    # socketActivation.enable = true;
   };
 
   programs.zsh.shellAliases = { "emacs" = "${term} emacs"; "emacsclient" = "${term} emacsclient"; };

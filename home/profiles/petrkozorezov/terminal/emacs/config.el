@@ -24,16 +24,6 @@
 ;; (global-unset-key (kbd "C-<down-mouse-1>")                             )
 ;; (global-set-key   (kbd "C-<mouse-1>"     ) 'mc/add-cursor-on-click     )
 
-;; (defun scroll-up-10-lines ()
-;;   "Scroll up 10 lines"
-;;   (interactive)
-;;   (scroll-up 10))
-
-;; (defun scroll-down-10-lines ()
-;;   "Scroll down 10 lines"
-;;   (interactive)
-;;   (scroll-down 10))
-
 (map!
  "<mouse-4>" (lambda () (interactive) (scroll-down 3))
  "<mouse-5>" (lambda () (interactive) (scroll-up   3))
