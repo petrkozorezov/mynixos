@@ -120,12 +120,14 @@
   #  -
   home.packages =
     with pkgs; [
-      fasd
+
       bandwhich
-      jq
       btop
+      radeontop #gputop
 
       # utils
+      fasd
+      jq
       bc
       killall
       curl wget
