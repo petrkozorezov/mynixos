@@ -35,6 +35,7 @@ build\:user\:%:
 build\:%:
 	$(NIX_BUILD) ".#$*"
 
+# make deploy:asrock-x300.system
 deploy\:%:
 	deploy -s ".#$*"
 

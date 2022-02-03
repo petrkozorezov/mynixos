@@ -43,15 +43,15 @@ rec {
 
   xterm-24bit = super.callPackage ./xterm-24bit.nix { };
 
-  torbrowser =
-    super.torbrowser.overrideAttrs (oldAttrs: rec {
-      version = "11.0.2";
-      src =
-        super.fetchurl {
-          url    = "https://dist.torproject.org/torbrowser/${version}/tor-browser-linux64-${version}_en-US.tar.xz";
-          sha256 = "1bqlb8dlh92dpl9gmfh3yclq5ii09vv333yisa0i5gpwwzajnh5s";
-        };
-    });
+  # torbrowser =
+  #   super.torbrowser.overrideAttrs (oldAttrs: rec {
+  #     version = "11.0.2";
+  #     src =
+  #       super.fetchurl {
+  #         url    = "https://dist.torproject.org/torbrowser/${version}/tor-browser-linux64-${version}_en-US.tar.xz";
+  #         sha256 = "1bqlb8dlh92dpl9gmfh3yclq5ii09vv333yisa0i5gpwwzajnh5s";
+  #       };
+  #   });
 
   ledger-live = super.callPackage ./ledger-live.nix { };
 
