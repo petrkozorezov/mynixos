@@ -16,8 +16,8 @@ show-repo-path:
 
 update:
 	nix flake update
-	cd home/profiles/petrkozorezov/browser && ./userjs-nix.sh > generated-userjs.nix
 	cd overlay && nixpkgs-firefox-addons firefox-addons.json generated-firefox-addons.nix
+	cd home/profiles/petrkozorezov/desktop/browser && ./userjs-nix.sh > generated-userjs.nix
 
 # make build:system:mbp13
 build\:system\:%:
