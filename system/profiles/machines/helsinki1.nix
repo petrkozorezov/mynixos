@@ -5,5 +5,10 @@
 {
   imports = [ ../dns.nix ../vpn.nix ../proxy.nix ];
 
+  zoo.proxy = {
+    address    = "1";
+    tor.enable = true;
+  };
+
   zoo.vpn.extIf = "ens3";
 }

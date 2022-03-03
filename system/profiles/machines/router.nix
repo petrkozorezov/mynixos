@@ -5,7 +5,9 @@ let
   address  = "${net}.1";
   uplink   = "enp3s0";
 in {
-  imports = [ ../vpn.nix ];
+  imports = [ ../vpn.nix ../proxy.nix ];
+
+  zoo.proxy.address = "3";
 
   zoo.router = {
     enable     = true;
