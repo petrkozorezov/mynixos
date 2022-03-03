@@ -9,8 +9,6 @@
   "geo.provider.network.url" = "https://location.services.mozilla.com/v1/geolocate?key=%MOZILLA_API_KEY%";
   "browser.region.network.url" = "";
   "browser.region.update.enabled" = false;
-  "app.update.background.scheduling.enabled" = false;
-  "browser.search.update" = false;
   "extensions.getAddons.showPane" = false;
   "extensions.htmlaboutaddons.recommendations.enabled" = false;
   "browser.discovery.enabled" = false;
@@ -33,9 +31,9 @@
   "browser.crashReports.unsubmittedCheck.autoSubmit2" = false;
   "captivedetect.canonicalURL" = "";
   "browser.safebrowsing.downloads.remote.enabled" = false;
-  "browser.safebrowsing.downloads.remote.url" = "";
   "network.dns.disablePrefetch" = true;
   "network.predictor.enabled" = false;
+  "browser.places.speculativeConnect.enabled" = false;
   "network.dns.disableIPv6" = true;
   "keyword.enabled" = false;
   "browser.fixup.alternate.enabled" = false;
@@ -116,4 +114,5 @@
   "privacy.window.name.update.enabled" = true;
   "privacy.firstparty.isolate" = false;
   "browser.urlbar.suggest.quicksuggest" = false;
+  "app.update.background.scheduling.enabled" = false;
 }

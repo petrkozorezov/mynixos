@@ -43,10 +43,10 @@
       };
     "ether-metamask" = buildFirefoxXpiAddon {
       pname = "ether-metamask";
-      version = "10.8.1";
+      version = "10.10.1";
       addonId = "webextension@metamask.io";
-      url = "https://addons.mozilla.org/firefox/downloads/file/3885451/metamask-10.8.1-an+fx.xpi";
-      sha256 = "a9d10052cb7d4e74c7e560fc54975f9f29dc1c02205ee6964925097d18db2da7";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3914203/metamask-10.10.1-an+fx.xpi";
+      sha256 = "a157d977329ee64d186a492cdc73693f700e80efec146e542378c560550c03d2";
       meta = with lib;
       {
         description = "Ethereum Browser Extension";
@@ -108,10 +108,10 @@
       };
     "solflare-wallet" = buildFirefoxXpiAddon {
       pname = "solflare-wallet";
-      version = "1.17";
+      version = "1.21";
       addonId = "{6d72262a-b243-4dc6-8f4f-be96c74e0a86}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/3886961/solflare_wallet-1.17-fx.xpi";
-      sha256 = "f450addba51093a69575c43088a216b3370e3b12f73aca668fa120106a3cb643";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3911325/solflare_wallet-1.21-fx.xpi";
+      sha256 = "c5e6b2885e3d1effd7e7efd33dbc2e9337fdb1790e190adf58c49136b4117b47";
       meta = with lib;
       {
         homepage = "https://solflare.com/";
@@ -121,10 +121,10 @@
       };
     "tree-style-tab" = buildFirefoxXpiAddon {
       pname = "tree-style-tab";
-      version = "3.8.18";
+      version = "3.8.21";
       addonId = "treestyletab@piro.sakura.ne.jp";
-      url = "https://addons.mozilla.org/firefox/downloads/file/3886076/tree_style_tab-3.8.18-fx.xpi";
-      sha256 = "0cbb1bcfe9f488f3618723b6bd9ee076eb2da097a3a008c8fffecf4c98dcafd1";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3908159/tree_style_tab-3.8.21-fx.xpi";
+      sha256 = "80f83f6314f0c85f405fcbe76fec0fdcc69eb844417a1b2a450c1f46f4417021";
       meta = with lib;
       {
         homepage = "http://piro.sakura.ne.jp/xul/_treestyletab.html.en";
@@ -134,10 +134,10 @@
       };
     "ublock-origin" = buildFirefoxXpiAddon {
       pname = "ublock-origin";
-      version = "1.40.2";
+      version = "1.41.8";
       addonId = "uBlock0@raymondhill.net";
-      url = "https://addons.mozilla.org/firefox/downloads/file/3886236/ublock_origin-1.40.2-an+fx.xpi";
-      sha256 = "837915929c950651e46ed5cc30aa9faed84136e7715e74369a2eadf328bea065";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3913320/ublock_origin-1.41.8-an+fx.xpi";
+      sha256 = "527c7527116a6c6ffddb963cdfb901518d56f624cfc922f6eab32916b24e8f5d";
       meta = with lib;
       {
         homepage = "https://github.com/gorhill/uBlock#ublock-origin";
