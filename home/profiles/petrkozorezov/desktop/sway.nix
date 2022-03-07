@@ -184,11 +184,7 @@ in {
         outer = 5 ;
       };
 
-      bars = [
-        {
-          command = "waybar";
-        }
-      ];
+      bars = [ { command = "waybar"; } ];
 
       input = {
         "2:7:SynPS/2_Synaptics_TouchPad" = {
@@ -205,13 +201,17 @@ in {
           pointer_accel = "0.35";
         };
 
+        "1133:49188:B16_b_02_USB-PS/2_Optical_Mouse" = {
+          accel_profile = "adaptive";
+          pointer_accel = "1.0";
+        };
+
         "*" = {
           repeat_delay = "200";
           repeat_rate  = "70";
           xkb_layout   = "us,ru";
           xkb_variant  = "dvp,mac";
           xkb_options  = "grp:lctrl_lwin_rctrl_menu";
-          #xkb_options  = "grp:rwin_switch";
         };
       };
 
