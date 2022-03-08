@@ -43,10 +43,10 @@
       };
     "ether-metamask" = buildFirefoxXpiAddon {
       pname = "ether-metamask";
-      version = "10.10.1";
+      version = "10.10.2";
       addonId = "webextension@metamask.io";
-      url = "https://addons.mozilla.org/firefox/downloads/file/3914203/metamask-10.10.1-an+fx.xpi";
-      sha256 = "a157d977329ee64d186a492cdc73693f700e80efec146e542378c560550c03d2";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3916893/metamask-10.10.2-an+fx.xpi";
+      sha256 = "15f51acbec630fec3d3b5cacc9435286d1cd72b3fe7720f7f0f3543ad7be4dcb";
       meta = with lib;
       {
         description = "Ethereum Browser Extension";
@@ -108,10 +108,10 @@
       };
     "solflare-wallet" = buildFirefoxXpiAddon {
       pname = "solflare-wallet";
-      version = "1.21";
+      version = "1.22";
       addonId = "{6d72262a-b243-4dc6-8f4f-be96c74e0a86}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/3911325/solflare_wallet-1.21-fx.xpi";
-      sha256 = "c5e6b2885e3d1effd7e7efd33dbc2e9337fdb1790e190adf58c49136b4117b47";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3917094/solflare_wallet-1.22-fx.xpi";
+      sha256 = "2e826f1b2af31e47a0b143ab80dc12cd08a13c675e5d5fdf9649a2fadd7711ca";
       meta = with lib;
       {
         homepage = "https://solflare.com/";
