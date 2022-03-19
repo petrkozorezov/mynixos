@@ -27,7 +27,7 @@
     },
     {
       "_name": "NixOSOption",
-      "description": "Onion DuckDuckGo",
+      "description": "NixOS options",
       "_urls": [
         {
           "params": [
@@ -46,7 +46,7 @@
     },
     {
       "_name": "NixOSPackages",
-      "description": "Onion DuckDuckGo",
+      "description": "NixOS packages",
       "_urls": [
         {
           "params": [
