@@ -50,4 +50,7 @@
   nix.nixPath = [ "self=/etc/self" ];
   nix.registry.self.flake = inputs.self;
   environment.etc.self.source = inputs.self;
+
+  documentation.man.enable = true;
+  services.journald.extraConfig = "SystemMaxUse=1G";
 }

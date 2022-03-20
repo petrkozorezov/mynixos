@@ -1,4 +1,4 @@
-{ pkgs, config, inputs, lib, ... }: let
+{ pkgs, config, inputs, lib, ... }: with lib; let
   hostname = config.networking.hostName;
   reformatDateTime = datetime:
     let s = from: count: builtins.substring from count datetime;
@@ -34,6 +34,14 @@ in {
     # timesyncd.enable = true;
     # ntp.enable       = false;
   };
+
+  documentation = {
+    man.enable   = mkDefault false;
+    doc.enable   = mkDefault false;
+    info.enable  = mkDefault false;
+    nixos.enable = mkDefault false;
+  };
+  services.journald.extraConfig = mkDefault "SystemMaxUse=100M";
 
   sss = let
     age = pkgs.rage + /bin/rage;
