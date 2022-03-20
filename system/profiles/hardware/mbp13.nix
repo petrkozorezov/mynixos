@@ -21,14 +21,15 @@
         efiSupport       = true;
         enableCryptodisk = true;
       };
-      timeout            = 1;
+      timeout = 1;
     };
     initrd = {
       availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" "uas" ]; # TODO clarify
       kernelModules = [ "dm-snapshot" ];
       luks.devices.root = {
-        device = "/dev/disk/by-uuid/ac46ad51-44d4-4af4-9ffd-d7911b225396";
-        preLVM = true;
+        device           = "/dev/disk/by-uuid/ac46ad51-44d4-4af4-9ffd-d7911b225396";
+        preLVM           = true;
+        bypassWorkqueues = true;
       };
     };
     kernelModules = [ "kvm-intel" "wl" ];
