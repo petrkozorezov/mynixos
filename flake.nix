@@ -58,6 +58,7 @@
             inherit system;
             modules = [
               { networking.hostName = hostname; }
+              ./modules
               ./system/modules
               ./system/profiles/nix.nix
               ./system/profiles/nixpkgs.nix
@@ -68,6 +69,7 @@
 
       sharedHMModules =
         [
+          ./modules
           ./home/modules
           ./secrets
         ];
@@ -216,7 +218,7 @@
               testing  = import (nixpkgs + /nixos/lib/testing-python.nix) {
                 inherit pkgs system;
                 specialArgs         = configExtraAgrs;
-                extraConfigurations = [ ./system/modules ];
+                extraConfigurations = [ ./modules ./system/modules ];
               };
             };
       in pkgs.testing.addTestAll {

@@ -6,30 +6,9 @@ let
   escp = arg: esc (toString arg);
 in {
   options = {
-    sss = {
-      enable = mkEnableOption "";
-
-      path = mkOption {
-        description = "";
-        type        = types.path;
-        default     = /run/keys;
-      };
-
-      commands = {
-        encrypt = mkOption {
-          description = "Command reads plain secret from stdin encrypt and writes result to stdout.";
-          type        = types.str;
-          example     = "${pkgs.rage}/bin/rage -e -r 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJwzqyKI0/H6h8yiZLCyUE914PZXXLHA9BhdOSwLUEEN'";
-        };
-        decrypt = mkOption {
-          description = "Command reads encrypted secret from stdin decrypt and writes result to stdout.";
-          type        = types.str;
-          example     = "${pkgs.rage}/bin/rage -d -i /etc/ssh/ssh_host_ed25519_key";
-        };
-      };
-
+    sss = let
       secrets = mkOption {
-        description = "";
+        description = "List of secrets.";
         type = types.attrsOf (types.submodule ({ name, config, ... }: let
           secretName = name;
           secretCfg  = config;
@@ -37,7 +16,7 @@ in {
           options = {
             name = mkOption {
               default     = name;
-              description = "Name of the secret";
+              description = "Name of the secret.";
               type        = types.str;
             };
 
@@ -57,37 +36,37 @@ in {
             };
 
             dependent = mkOption {
-              description = "";
+              description = "Systemd services that dependent of this secret ('requiredBy' and 'before' unit file section).";
               type        = types.listOf types.str;
               default     = [ "multi-user.target" ];
             };
 
             text = mkOption {
-              description = "";
+              description = "Text of the secret, will be overridden by 'source' or 'encrypted'.";
               type        = types.nullOr types.str;
               example     = "your very sensitive secret";
             };
 
             source = mkOption {
-              description = "";
+              description = "File with the plain secret text, will override 'text' and will be overridden by 'encrypted'.";
               type        = types.path;
               default     = pkgs.writeText "sss-${secretName}-plain" secretCfg.text;
             };
 
             encrypted = mkOption {
-              description = "";
+              description = "Encrypted version of the secret file, will override 'text' and 'source'.";
               type        = types.path;
               default     = pkgs.runCommandLocal "sss-${secretName}-encrypted" {} "cat ${escp secretCfg.source} | ${secretCfg.encryptCommand} > $out";
             };
 
             encryptCommand = mkOption {
-              description = "";
+              description = "Command reads plain secret from stdin encrypt and writes result to stdout.";
               type        = types.str;
               default     = cfg.commands.encrypt;
             };
 
             decryptCommand = mkOption {
-              description = "";
+              description = "Command reads encrypted secret from stdin decrypt and writes result to stdout.";
               type        = types.str;
               default     = cfg.commands.decrypt;
             };
@@ -99,27 +78,27 @@ in {
             };
 
             tmp = mkOption {
-              description = "";
+              description = "Temporary location of the secret file during decription.";
               type        = types.path;
               default     = secretCfg.target + ".tmp";
             };
 
             mode = mkOption {
-              description = "";
+              description = "Access mode of the secret file.";
               type        = types.str;
               default     = "400";
             };
 
             user = mkOption {
-              description = "";
+              description = "Owner user of the secret file.";
               type        = types.str;
-              default     = "root";
+              default     = "$USER";
             };
 
             group = mkOption {
-              description = "";
+              description = "Owner group of the secret file.";
               type        = types.str;
-              default     = "root";
+              default     = "nogroup";
             };
           };
         }));
@@ -131,6 +110,30 @@ in {
           };
         };
       };
+    in {
+      enable = mkEnableOption "";
+
+      path = mkOption {
+        description = "Path where unencrypted keys will be located by default.";
+        type        = types.path;
+        default     = /run/keys;
+      };
+
+      commands = {
+        encrypt = mkOption {
+          description = "Command reads plain secret from stdin encrypt and writes result to stdout.";
+          type        = types.str;
+          example     = "${pkgs.rage}/bin/rage -e -r 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJwzqyKI0/H6h8yiZLCyUE914PZXXLHA9BhdOSwLUEEN'";
+        };
+        decrypt = mkOption {
+          description = "Command reads encrypted secret from stdin decrypt and writes result to stdout.";
+          type        = types.str;
+          example     = "${pkgs.rage}/bin/rage -d -i /etc/ssh/ssh_host_ed25519_key";
+        };
+      };
+
+      inherit secrets;
+      user = { inherit secrets; };
     };
   };
 
@@ -144,9 +147,9 @@ in {
             tmp     = escp secret.tmp;
           in mkIf secret.enable {
             preStart = ''
-              test -f ${source} || (echo "unencrypted secret is not exist" && exit 1)
+              test -f ${source} || (echo "encrypted secret is not exist" && exit 1)
               mkdir -p $(dirname ${target})
-              mkdir -p $(dirname ${tmp})
+              mkdir -p $(dirname ${tmp   })
             '';
 
             # TODO test error case
@@ -171,7 +174,7 @@ in {
             '';
 
             serviceConfig = {
-              Type = "oneshot";
+              Type            = "oneshot";
               RemainAfterExit = "yes";
             };
 
@@ -180,6 +183,7 @@ in {
           }
       );
   in mkIf cfg.enable {
-    systemd.services = mapAttrs' service cfg.secrets;
+    systemd.services      = mapAttrs' service cfg.secrets     ;
+    systemd.user.services = mapAttrs' service cfg.user.secrets;
   };
 }

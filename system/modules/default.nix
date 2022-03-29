@@ -5,7 +5,6 @@
     ./forwarding.nix
     ./nm-connections.nix
     ./proxy.nix
-    ./sss.nix
     ./terraform-state.nix
     ./vpn.nix
   ];
