@@ -1,6 +1,7 @@
-{ config, lib, pkgs, modulesPath, ... }:
-
-{
+{ config, lib, pkgs, modulesPath, ... }: let
+  bootDevice = "/dev/disk/by-uuid/C359-1E76";
+  luksDevice = "/dev/disk/by-uuid/ac46ad51-44d4-4af4-9ffd-d7911b225396";
+in {
   imports =
     [
       (modulesPath + "/installer/scan/not-detected.nix")
@@ -23,14 +24,29 @@
       };
       timeout = 1;
     };
+    supportedFilesystems = [ "btrfs" ];
     initrd = {
       availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" "uas" ]; # TODO clarify
       kernelModules = [ "dm-snapshot" ];
       luks.devices.root = {
-        device           = "/dev/disk/by-uuid/ac46ad51-44d4-4af4-9ffd-d7911b225396";
+        device           = luksDevice;
         preLVM           = true;
         bypassWorkqueues = true;
       };
+      # restore root
+      postDeviceCommands = lib.mkBefore ''
+        echo "restoring blank root..."
+        mkdir -p /mnt
+        mount -o subvol=/ /dev/mapper/lvm-root /mnt
+
+        echo "deleting /root subvolume..."
+        btrfs subvolume delete /mnt/root
+
+        echo "restoring blank /root subvolume..."
+        btrfs subvolume snapshot /mnt/root-blank /mnt/root
+
+        umount /mnt
+      '';
     };
     kernelModules = [ "kvm-intel" "wl" ];
     extraModulePackages = [
@@ -45,29 +61,27 @@
     let
       brtfsSubVolume = subvol:
         {
-          device        = "/dev/disk/by-uuid/3618fcf6-09bd-4cfe-8090-8dd21ce9a7e4";
+          device        = "/dev/mapper/lvm-root";
           fsType        = "btrfs";
           options       = [ ("subvol=" + subvol) "compress=zstd:1" "noatime" ]; # nosuid noexec?
           neededForBoot = true;
         };
     in {
-      "/"        = { fsType = "tmpfs"; device = "none"; options = [ "defaults" "size=2G" "mode=755" ]; };
-      "/boot"    = { fsType = "vfat" ; device = "/dev/disk/by-uuid/C359-1E76";  };
+      "/"        = brtfsSubVolume "root";
+      "/boot"    = { fsType = "vfat" ; device = bootDevice;  };
       "/home"    = brtfsSubVolume "home";
       "/nix"     = brtfsSubVolume "nix";
+      "/srv"     = brtfsSubVolume "srv";
       "/var/lib" = brtfsSubVolume "lib";
       "/var/log" = brtfsSubVolume "log";
       "/etc/ssh" = brtfsSubVolume "ssh";
     };
 
-  swapDevices = [ { device = "/dev/disk/by-uuid/669e1030-cb9a-4f4f-9ba8-26324b6b9645"; } ];
+  swapDevices = [ { device = "/dev/mapper/lvm-swap"; } ];
 
-  # high-resolution display
 
   nix.maxJobs = lib.mkDefault 4;
   #powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
-
-  # High-DPI console
 
   # TODO clarify
   services = {

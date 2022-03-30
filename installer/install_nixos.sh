@@ -44,9 +44,11 @@ function create-disks {
   mount -t btrfs "$BTRFS_DISK" "$MNT"
 
   # We first create the subvolumes outlined above:
-  #btrfs subvolume create "$MNT"/root
+  btrfs subvolume create "$MNT"/root
+  btrfs subvolume snapshot -r "$MNT"/root "$MNT"/root-blank
   btrfs subvolume create "$MNT"/home
   btrfs subvolume create "$MNT"/nix
+  btrfs subvolume create "$MNT"/srv
   btrfs subvolume create "$MNT"/lib
   btrfs subvolume create "$MNT"/log
 
@@ -67,7 +69,7 @@ function create-disks {
 function mount-disks {
   mkdir "$MNT"
   mount -t tmpfs none "$MNT"
-  mkdir "$MNT"/{boot,home,nix,var,var/lib/,var/log}
+  mkdir "$MNT"/{boot,home,nix,srv,var,var/lib/,var/log}
 
   mount "$DISK"1 "$MNT"/boot
   cryptsetup open "$DISK"2 "$LUKS_DISK_NAME"
@@ -76,8 +78,10 @@ function mount-disks {
   #swapon "$SWAP_DISK"
 
   BTRFS_OPTS="compress=zstd:1,noatime"
+  mount -o "subvol=root,$BTRFS_OPTS" "$BTRFS_DISK" "$MNT"/
   mount -o "subvol=home,$BTRFS_OPTS" "$BTRFS_DISK" "$MNT"/home
   mount -o "subvol=nix,$BTRFS_OPTS" "$BTRFS_DISK" "$MNT"/nix
+  mount -o "subvol=nix,$BTRFS_OPTS" "$BTRFS_DISK" "$MNT"/srv
   mount -o "subvol=lib,$BTRFS_OPTS" "$BTRFS_DISK" "$MNT"/var/lib
   mount -o "subvol=log,$BTRFS_OPTS" "$BTRFS_DISK" "$MNT"/var/log
 }
@@ -86,8 +90,10 @@ function umount-disks {
   umount "$MNT"/boot
   umount "$MNT"/var/log
   umount "$MNT"/var/lib
+  umount "$MNT"/srv
   umount "$MNT"/nix
   umount "$MNT"/home
+  umount "$MNT"/
   #swapoff "$SWAP_DISK"
   cryptsetup close "$LVM_NAME"-root
   cryptsetup close "$LVM_NAME"-swap
@@ -105,7 +111,7 @@ function show-config {
 "{
   boot=\"/dev/disk/by-uuid/$(get-uuid ${DISK}1)\";
   luks=\"/dev/disk/by-uuid/$(get-uuid ${DISK}2)\";
-  main=\"/dev/disk/by-uuid/$(get-uuid ${BTRFS_DISK})\";
+  root=\"/dev/disk/by-uuid/$(get-uuid ${BTRFS_DISK})\";
   swap=\"/dev/disk/by-uuid/$(get-uuid ${SWAP_DISK})\";
 }"
 }
