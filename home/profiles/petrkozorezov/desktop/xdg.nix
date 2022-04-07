@@ -20,6 +20,7 @@
     mimeApps = {
       enable = true;
       defaultApplications             = {
+        # TODO move to specific places
         "x-scheme-handler/http"         = "firefox.desktop";
         "x-scheme-handler/https"        = "firefox.desktop";
         "x-scheme-handler/ftp"          = "firefox.desktop";
@@ -32,6 +33,9 @@
         "application/x-extension-xhtml" = "firefox.desktop";
         "application/x-extension-xht"   = "firefox.desktop";
 
+        "image/jpeg"      = "imv-folder.desktop";
+        "application/pdf" = "org.pwmt.zathura-pdf-mupdf.desktop";
+
         "text/plain"                = "sublime_text.desktop";
         "text/tab-separated-values" = "sublime_text.desktop";
         "application/text"          = "sublime_text.desktop";
@@ -39,6 +43,7 @@
 
         "x-scheme-handler/tg"           = "userapp-Telegram Desktop-1FKGD1.desktop"; # FIXME
         "x-scheme-handler/mailto"       = "chromium-browser.desktop"; # FIXME
+
       };
     };
   };
