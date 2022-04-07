@@ -43,10 +43,10 @@
       };
     "ether-metamask" = buildFirefoxXpiAddon {
       pname = "ether-metamask";
-      version = "10.10.2";
+      version = "10.11.3";
       addonId = "webextension@metamask.io";
-      url = "https://addons.mozilla.org/firefox/downloads/file/3916893/metamask-10.10.2-an+fx.xpi";
-      sha256 = "15f51acbec630fec3d3b5cacc9435286d1cd72b3fe7720f7f0f3543ad7be4dcb";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3926177/metamask-10.11.3-an+fx.xpi";
+      sha256 = "e0a79a525016e7a4091eda0f59789c2b13ed74c80d69937095cef0c1ee4d41f9";
       meta = with lib;
       {
         description = "Ethereum Browser Extension";
@@ -96,10 +96,10 @@
       };
     "skip-redirect" = buildFirefoxXpiAddon {
       pname = "skip-redirect";
-      version = "2.3.5";
+      version = "2.3.6";
       addonId = "skipredirect@sblask";
-      url = "https://addons.mozilla.org/firefox/downloads/file/3750630/skip_redirect-2.3.5-an+fx.xpi";
-      sha256 = "ed64848bbf986bc985690b2873161ad44c41726a859b8db60afe27d24fd9b747";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3920533/skip_redirect-2.3.6-fx.xpi";
+      sha256 = "dbe8950245c1f475c5c1c6daab89c79b83ba4680621c91e80f15be7b09b618ae";
       meta = with lib;
       {
         description = "Some web pages use intermediary pages before redirecting to a final page. This add-on tries to extract the final url from the intermediary url and goes there straight away if successful.";
@@ -122,10 +122,10 @@
       };
     "solflare-wallet" = buildFirefoxXpiAddon {
       pname = "solflare-wallet";
-      version = "1.22";
+      version = "1.23.1";
       addonId = "{6d72262a-b243-4dc6-8f4f-be96c74e0a86}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/3917094/solflare_wallet-1.22-fx.xpi";
-      sha256 = "2e826f1b2af31e47a0b143ab80dc12cd08a13c675e5d5fdf9649a2fadd7711ca";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3927572/solflare_wallet-1.23.1-fx.xpi";
+      sha256 = "9d667a0ff2b2f98f9caeed05202930c18a1e72b137d88d84814344b7b4da3d0d";
       meta = with lib;
       {
         homepage = "https://solflare.com/";
@@ -148,10 +148,10 @@
       };
     "ublock-origin" = buildFirefoxXpiAddon {
       pname = "ublock-origin";
-      version = "1.41.8";
+      version = "1.42.0";
       addonId = "uBlock0@raymondhill.net";
-      url = "https://addons.mozilla.org/firefox/downloads/file/3913320/ublock_origin-1.41.8-an+fx.xpi";
-      sha256 = "527c7527116a6c6ffddb963cdfb901518d56f624cfc922f6eab32916b24e8f5d";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3929378/ublock_origin-1.42.0-an+fx.xpi";
+      sha256 = "a0e00dd0d859b472bcdb9a3dfc0d1166ad3e0d49731ab4d6408281532eb79b06";
       meta = with lib;
       {
         homepage = "https://github.com/gorhill/uBlock#ublock-origin";
