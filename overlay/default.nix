@@ -12,13 +12,7 @@ rec {
     };
   };
   erlang = super.erlangR24;
-  firefox-addons = super.callPackage (
-    { pkgs, fetchurl, lib, stdenv }:
-      import ./generated-firefox-addons.nix {
-        inherit fetchurl lib stdenv;
-        buildFirefoxXpiAddon = pkgs.nur.repos.rycee.firefox-addons.buildFirefoxXpiAddon;
-      }
-  ) { };
+  firefox-addons = super.callPackage ./firefox-addons.nix { };
 
   zinc = super.callPackage ./zinc.nix  { };
   uhk-agent = super.callPackage ./uhk-agent.nix { };

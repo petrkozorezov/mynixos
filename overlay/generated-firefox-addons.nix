@@ -67,6 +67,20 @@
         platforms = platforms.all;
         };
       };
+    "passff" = buildFirefoxXpiAddon {
+      pname = "passff";
+      version = "1.13";
+      addonId = "passff@invicem.pro";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3849458/passff-1.13-fx.xpi";
+      sha256 = "29f3b0e84437d02ee2d2d54c442ac1719353ccd982e8f8e8297c601bcd6f8a19";
+      meta = with lib;
+      {
+        homepage = "https://github.com/passff/passff";
+        description = "Add-on that allows users of the unix password manager 'pass' (see <a href=\"https://outgoing.prod.mozaws.net/v1/24f646fb865abe6edf9e3f626db62565bfdc2e7819ab33a5b4c30a9573787988/https%3A//www.passwordstore.org/\" rel=\"nofollow\">https://www.passwordstore.org/</a>) to access their password store from Firefox";
+        license = licenses.gpl2;
+        platforms = platforms.all;
+        };
+      };
     "plantuml-visualizer" = buildFirefoxXpiAddon {
       pname = "plantuml-visualizer";
       version = "1.15.0";

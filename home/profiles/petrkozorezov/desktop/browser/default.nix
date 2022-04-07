@@ -1,6 +1,8 @@
-{ pkgs, lib, config, ... }:
-  with lib;
-{
+{ pkgs, lib, config, ... }: {
+  imports = [
+    ./passff.nix
+    ./search.nix
+  ];
   programs.firefox = {
     enable = true;
     package = pkgs.firefox-wayland;
@@ -68,20 +70,6 @@
       };
     };
   };
-
-  # TODO generate search.json
-  home.file =
-    let
-      profilesPath = ".mozilla/firefox"; # TODO get from appropriate place
-      searchJson   = ./search.json;
-    in
-      mapAttrs'
-        (name: profile:
-          nameValuePair "${profilesPath}/${profile.path}/search.json.mozlz4" {
-            source = pkgs.runCommandLocal "firefox-${name}-search.json" {} "${pkgs.mozlz4a}/bin/mozlz4a ${searchJson} $out";
-          }
-        )
-        config.programs.firefox.profiles;
 
   home.sessionVariables.BROWSER = "firefox";
   home.packages = with pkgs; [
