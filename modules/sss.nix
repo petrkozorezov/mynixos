@@ -182,8 +182,9 @@ in {
             before     = secret.dependent;
           }
       );
-  in mkIf cfg.enable {
-    systemd.services      = mapAttrs' service cfg.secrets     ;
-    systemd.user.services = mapAttrs' service cfg.user.secrets;
-  };
-}
+  systemServices = mapAttrs' service cfg.secrets     ;
+  userServices   = mapAttrs' service cfg.user.secrets;
+  systemd =
+    (if systemServices != {} then { services      = systemServices; } else {}) //
+    (if userServices   != {} then { user.services = userServices  ; } else {});
+in mkIf cfg.enable { inherit systemd; };}
