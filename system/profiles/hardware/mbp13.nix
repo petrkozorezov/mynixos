@@ -1,4 +1,5 @@
-{ config, lib, pkgs, modulesPath, ... }: let
+# TODO: https://gist.github.com/martijnvermaat/76f2e24d0239470dd71050358b4d5134
+ { config, lib, pkgs, modulesPath, ... }: let
   bootDevice = "/dev/disk/by-uuid/C359-1E76";
   luksDevice = "/dev/disk/by-uuid/ac46ad51-44d4-4af4-9ffd-d7911b225396";
 in {
