@@ -2,8 +2,8 @@
   hostname = config.networking.hostName;
   reformatDateTime = datetime:
     let s = from: count: builtins.substring from count datetime;
-    in "${s 0 4}.${s 4 2}.${s 6 2}-${s 8 2}:${s 10 2}:${s 12 2}";
-  version = "${self.lastModifiedDate}-${self.shortRev or "dirty"}";
+    in "${s 0 4}${s 4 2}${s 6 2}-${s 8 2}${s 10 2}${s 12 2}";
+  version = "${reformatDateTime self.lastModifiedDate}-${self.shortRev or "dirty"}";
 in {
   imports = [ ./nix.nix ];
   system.configurationRevision = version;
