@@ -32,6 +32,7 @@ in {
           channel       = 1;
           noScan        = true;
           extraConfig   =
+              # TODO https://wireless.wiki.kernel.org/en/users/Drivers/ath10k/configuration
               ''
                 #uuid=${uuid}
                 auth_algs=1
@@ -136,6 +137,6 @@ in {
   };
   sss.secrets."dnssec-${domain}" = {
     text      = config.zoo.secrets.dnssec.tsig.${domain};
-    dependent = [ "ddns-client-update.timer" ];
+    dependent = [ "ddns-client-update.service" ];
   };
 }

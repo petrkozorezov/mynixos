@@ -54,6 +54,8 @@ with lib; {
             OnUnitActiveSec = "1m";
           };
           wantedBy = [ "timers.target" ];
+          requires = [ "network-online.target" ];
+          after    = [ "network-online.target" ];
         };
         systemd.services.ddns-client-update = {
           description = "DDNS client updater service";
