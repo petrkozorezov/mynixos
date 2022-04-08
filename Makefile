@@ -14,10 +14,19 @@ clean:
 show-repo-path:
 	@echo $(REPO_PATH)
 
-update:
-	nix flake update
-	cd overlay && nixpkgs-firefox-addons firefox-addons.json generated-firefox-addons.nix
+update-ff-addons:
+	cd deps/overlay && nixpkgs-firefox-addons firefox-addons.json generated-firefox-addons.nix
+
+update-ff-userjs:
 	cd home/profiles/petrkozorezov/desktop/browser && ./userjs-nix.sh > generated-userjs.nix
+
+update-deps:
+	cd deps/ && nix flake update
+
+update-flake: update-deps
+	nix flake update
+
+update: update-ff-userjs update-ff-addons update-flake
 
 # make build:system:mbp13
 build\:system\:%:

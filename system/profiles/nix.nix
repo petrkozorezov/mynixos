@@ -1,5 +1,19 @@
-{ pkgs, inputs, lib, ... }:
-{
+{ pkgs, deps, lib, ... }: {
+  imports = [
+    {
+      # for eg `nix shel mynixos#hello`
+      nix.registry.mynixos.flake = deps;
+      # for eg `nix eval --impure --expr 'import <mynixos>'`
+      nix.nixPath = [ "mynixos=/etc/mynixos" ];
+      environment.etc.mynixos.source = deps;
+    }
+    {
+      # exactly the nixpkgs version from which the system was built
+      nix.registry.nixpkgs.flake = deps.inputs.nixpkgs;
+      nix.nixPath = [ "nixpkgs=/etc/nixpkgs" ];
+      environment.etc.nixpkgs.source = deps.inputs.nixpkgs;
+    }
+  ];
   nix = {
     package      = pkgs.nixFlakes;
     allowedUsers = [ "@wheel" ];
@@ -18,10 +32,6 @@
     autoOptimiseStore  = true;
     optimise.automatic = true;
 
-    registry.nixpkgs.flake = inputs.nixpkgs;
-    nixPath = [ "nixpkgs=/etc/nixpkgs" ];
     requireSignedBinaryCaches = true;
   };
-
-  environment.etc.nixpkgs.source = inputs.nixpkgs;
 }

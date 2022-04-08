@@ -52,28 +52,6 @@
         "type": "github"
       }
     },
-    "deps": {
-      "inputs": {
-        "deploy-rs": "deploy-rs",
-        "dns": "dns",
-        "emacs-overlay": "emacs-overlay",
-        "home-manager": "home-manager",
-        "nix-doom-emacs": "nix-doom-emacs",
-        "nixos-channel": "nixos-channel",
-        "nixpkgs": "nixpkgs_5",
-        "nur": "nur",
-        "terranix": "terranix"
-      },
-      "locked": {
-        "narHash": "sha256-+wvxu5ciBco3VF3kV4PymwJtDnpaBX4APGITl8f8JV8=",
-        "path": "./deps",
-        "type": "path"
-      },
-      "original": {
-        "path": "./deps",
-        "type": "path"
-      }
-    },
     "dns": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -306,7 +284,6 @@
         "doom-emacs": "doom-emacs",
         "doom-snippets": "doom-snippets",
         "emacs-overlay": [
-          "deps",
           "emacs-overlay"
         ],
         "emacs-so-long": "emacs-so-long",
@@ -587,7 +564,15 @@
     },
     "root": {
       "inputs": {
-        "deps": "deps"
+        "deploy-rs": "deploy-rs",
+        "dns": "dns",
+        "emacs-overlay": "emacs-overlay",
+        "home-manager": "home-manager",
+        "nix-doom-emacs": "nix-doom-emacs",
+        "nixos-channel": "nixos-channel",
+        "nixpkgs": "nixpkgs_5",
+        "nur": "nur",
+        "terranix": "terranix"
       }
     },
     "rotate-text": {

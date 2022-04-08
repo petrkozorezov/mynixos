@@ -1,9 +1,9 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, deps, ... }:
 let
   term = "TERM=xterm-24bit";
 in {
   imports = [
-    inputs.nix-doom-emacs.hmModule
+    deps.inputs.nix-doom-emacs.hmModule
   ];
 
   # restart needed

@@ -3,10 +3,10 @@
 #  - reload bind when zone is changed
 #  - dnssec
 #
-{ lib, inputs, system, config, ... }:
+{ lib, self, deps, system, config, ... }:
 with lib;
 let
-  dns     = inputs.dns;
+  dns     = deps.inputs.dns;
   address = config.tfattrs.hcloud_server.helsinki1.ipv4_address;
   domain  = config.tfattrs.hcloud_rdns.master.dns_ptr;
   ddnsZoneName = "knk.${domain}";
@@ -22,7 +22,7 @@ in {
         SOA = {
           nameServer = "ns1.${domain}.";
           adminEmail = "admin@${domain}";
-          serial     = inputs.self.lastModified; # is it ok?
+          serial     = self.lastModified; # is it ok?
           ttl        = 60 * 60; # 1h
         };
         NS = [

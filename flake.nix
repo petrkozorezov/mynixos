@@ -3,29 +3,15 @@
 
   # TODO remove copy-paste
   # see https://github.com/NixOS/nix/issues/3966
-  inputs = {
-           nixpkgs.url = "github:NixOS/nixpkgs/nixos-21.11"                      ;
-     nixos-channel.url = "https://nixos.org/channels/nixos-21.11/nixexprs.tar.xz";
-      home-manager.url = "github:rycee/home-manager/release-21.11"               ;
-               nur.url = "github:nix-community/NUR"                              ;
-         deploy-rs.url = "github:serokell/deploy-rs"                             ;
-          terranix.url = "github:terranix/terranix"                              ;
-    nix-doom-emacs.url = "github:vlaci/nix-doom-emacs"                           ;
-               dns.url = "github:kirelagin/dns.nix"                              ;
-    # sometimes version of emacs-overlay in nix-doom-emacs lock file is outdated
-    # and some packages are not building
-    # an explicitly input is needed here to prevent emacs-overlay from auto update
-    emacs-overlay.url = "github:nix-community/emacs-overlay";
-    nix-doom-emacs.inputs.emacs-overlay.follows = "emacs-overlay";
-  };
+  inputs.deps.url = "path:./deps";
 
-  outputs = { self, nixpkgs, home-manager, deploy-rs, terranix, nur, ... }@inputs:
+  outputs = { self, deps, ...}:
     let
+      inherit (deps.inputs) nixpkgs home-manager deploy-rs terranix nur;
       # high level system description
-      system   = "x86_64-linux";
-      overlays = (import ./system/profiles/nixpkgs.nix { inherit inputs; }).nixpkgs.overlays;
-      pkgs     = import nixpkgs { inherit system overlays; };
-      nodes =
+      system = "x86_64-linux";
+      pkgs   = deps.legacyPackages.${system};
+      nodes  =
         let
           relativePaths = basePath: map (path: ./. + ("/" + basePath + ("/" + path)));
           hmPaths       = relativePaths "home/profiles";
@@ -51,34 +37,23 @@
       # self lib
       # TODO find a better way
       slib = import ./lib { inherit slib; inherit (nixpkgs) lib; };
-      configExtraAgrs = { inherit system inputs slib; };
+      configExtraAgrs = { inherit self system slib deps; };
+      commonModules = [ ./modules deps.module ./secrets ];
       systemConfig =
         hostname: modules:
           nixpkgs.lib.nixosSystem {
             inherit system;
-            modules = [
-              { networking.hostName = hostname; }
-              ./modules
-              ./system/modules
-              ./system/profiles/nix.nix
-              ./system/profiles/nixpkgs.nix
-              ./secrets
-            ] ++ modules;
+            modules = [ { networking.hostName = hostname; } ] ++ commonModules ++ [ ./system/modules ] ++ modules;
             extraArgs = configExtraAgrs;
           };
 
-      sharedHMModules =
-        [
-          ./modules
-          ./home/modules
-          ./secrets
-        ];
+      commonHMModules = commonModules ++ [ ./home/modules ];
       userConfig =
         username: modules:
           home-manager.lib.homeManagerConfiguration {
             inherit system pkgs username;
             homeDirectory    = "/home/" + username;
-            configuration    = { imports = [ ./system/profiles/nixpkgs.nix ] ++ sharedHMModules ++ modules; };
+            configuration    = { imports = commonHMModules ++ modules; };
             extraSpecialArgs = configExtraAgrs;
           };
 
@@ -89,14 +64,11 @@
               useGlobalPkgs     = true;
               useUserPackages   = true;
               users.${username} = { imports = modules; };
-              sharedModules     = sharedHMModules;
+              sharedModules     = commonHMModules;
               extraSpecialArgs  = configExtraAgrs;
             };
           };
     in rec {
-      legacyPackages."${system}" = pkgs;
-      # inherit overlays;
-
       #
       # development & deployment shell
       #
@@ -213,7 +185,7 @@
       tests = let
         args =
             {
-              inherit inputs pkgs;
+              inherit deps pkgs;
               lib      = nixpkgs.lib;
               testing  = import (nixpkgs + /nixos/lib/testing-python.nix) {
                 inherit pkgs system;

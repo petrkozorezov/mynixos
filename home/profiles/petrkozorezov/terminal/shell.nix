@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, deps, ... }:
 {
   programs = {
     zsh = {
@@ -12,7 +12,7 @@
           PURE_PROMPT_SYMBOL=λ
           prompt pure
           nsh() {
-            nix shell "self#$1"
+            nix shell "mynixos#$1"
           }
         '';
       autocd = true;
@@ -34,7 +34,7 @@
         "ls"    = "${"l"}";
         "tree"  = "${"l"} -T";
         "cat"   = "${pkgs.bat}/bin/bat";
-        "ns"    = "nix search self";
+        "ns"    = "nix search mynixos";
         "nb"    = "nix build";
         "cloc"  = "${pkgs.tokei}/bin/tokei";
         "grep"  = "${pkgs.ripgrep}/bin/rg";
@@ -110,7 +110,7 @@
     bat.enable = true;
     command-not-found = {
       enable = true;
-      dbPath = "${inputs.nixos-channel}/programs.sqlite";
+      dbPath = "${deps.inputs.nixos-channel}/programs.sqlite";
     };
   };
 

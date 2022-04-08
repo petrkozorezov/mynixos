@@ -1,17 +1,20 @@
-{ pkgs, config, inputs, lib, ... }: with lib; let
+{ pkgs, config, self, lib, ... }: with lib; let
   hostname = config.networking.hostName;
   reformatDateTime = datetime:
     let s = from: count: builtins.substring from count datetime;
     in "${s 0 4}.${s 4 2}.${s 6 2}-${s 8 2}:${s 10 2}:${s 12 2}";
+  version = "${self.lastModifiedDate}-${self.shortRev or "dirty"}";
 in {
-  system.configurationRevision = "${reformatDateTime inputs.self.lastModifiedDate}-${inputs.self.shortRev or "dirty"}";
+  imports = [ ./nix.nix ];
+  system.configurationRevision = version;
+  system.nixos.label           = version;
 
   services.openssh = {
     enable                 = true;
     passwordAuthentication = false;
     hostKeys               = [];
     banner                 = ''
-      Hello, leather bastard from ${config.networking.hostName} ${config.system.configurationRevision}!
+      Hello, leather bastard from ${config.networking.hostName}@${version}!
     '';
   };
   environment.defaultPackages = lib.mkForce [];
