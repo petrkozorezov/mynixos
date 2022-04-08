@@ -139,10 +139,9 @@ with lib;
       # TODO write my own hostapd module to deploy config using sss to hide wireless config
       services.hostapd = cfg.local.wireless // { enable = true; };
 
-      # nixos networking https://nixos.wiki/wiki/Networking
-      # wifi setup https://habr.com/ru/post/315960/
-      # wifi security https://habr.com/ru/post/224955/
-      # WPA2-PSK-CCMP
+      # otherwise reloading is not working with:
+      #  `br0-netdev.service is not active, cannot reload.`
+      systemd.services."${bridge}-netdev".reloadIfChanged = mkForce false;
 
       # services.home-assistant = {
       #   enable = true;
