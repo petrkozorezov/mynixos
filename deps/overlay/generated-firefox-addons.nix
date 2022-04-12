@@ -13,6 +13,20 @@
         platforms = platforms.all;
         };
       };
+    "buster-captcha-solver" = buildFirefoxXpiAddon {
+      pname = "buster-captcha-solver";
+      version = "1.3.1";
+      addonId = "{e58d3966-3d76-4cd9-8552-1582fbc800c1}";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3861819/buster_captcha_solver_for_humans-1.3.1-fx.xpi";
+      sha256 = "e64f8c043c34325e60b7050b616ebef2df4dc35d15602961ccfabd0a9a0e637a";
+      meta = with lib;
+      {
+        homepage = "https://github.com/dessant/buster";
+        description = "Save time by asking Buster to solve captchas for you.";
+        license = licenses.gpl3;
+        platforms = platforms.all;
+        };
+      };
     "change-timezone-time-shift" = buildFirefoxXpiAddon {
       pname = "change-timezone-time-shift";
       version = "0.1.5";
@@ -53,6 +67,19 @@
         platforms = platforms.all;
         };
       };
+    "flagfox" = buildFirefoxXpiAddon {
+      pname = "flagfox";
+      version = "6.1.49";
+      addonId = "{1018e4d6-728f-4b20-ad56-37578a4de76b}";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3929226/flagfox-6.1.49-fx.xpi";
+      sha256 = "ab7e010b236afde566fb5742f45db264b835256e4b7b14ae0dae8c3561417218";
+      meta = with lib;
+      {
+        homepage = "https://flagfox.wordpress.com/";
+        description = "Displays a country flag depicting the location of the current website's server and provides a multitude of tools such as site safety checks, whois, translation, similar sites, validation, URL shortening, and more...";
+        platforms = platforms.all;
+        };
+      };
     "foxyproxy-standard" = buildFirefoxXpiAddon {
       pname = "foxyproxy-standard";
       version = "7.5.1";
@@ -64,6 +91,32 @@
         homepage = "https://getfoxyproxy.org";
         description = "FoxyProxy is an advanced proxy management tool that completely replaces Firefox's limited proxying capabilities. For a simpler tool and less advanced configuration options, please use FoxyProxy Basic.";
         license = licenses.gpl2;
+        platforms = platforms.all;
+        };
+      };
+    "image-search-options" = buildFirefoxXpiAddon {
+      pname = "image-search-options";
+      version = "3.0.12";
+      addonId = "{4a313247-8330-4a81-948e-b79936516f78}";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3059971/image_search_options-3.0.12-fx.xpi";
+      sha256 = "1fbdd8597fc32b1be11302a958ea3ba2b010edcfeb432c299637b2c58c6fd068";
+      meta = with lib;
+      {
+        homepage = "http://saucenao.com/";
+        description = "A customizable reverse image search tool that conveniently presents a variety of top image search engines.";
+        platforms = platforms.all;
+        };
+      };
+    "languagetool" = buildFirefoxXpiAddon {
+      pname = "languagetool";
+      version = "5.0.7";
+      addonId = "languagetool-webextension@languagetool.org";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3929583/grammatik_und_rechtschreibprufung_languagetool-5.0.7-fx.xpi";
+      sha256 = "286ec19eaf58f4488583e3d5875c8a7cd330180dfb44591e9d558f5052d30026";
+      meta = with lib;
+      {
+        homepage = "https://languagetool.org";
+        description = "With this extension you can check text with the free style and grammar checker LanguageTool. It finds many errors that a simple spell checker cannot detect, like mixing up there/their, a/an, or repeating a word.";
         platforms = platforms.all;
         };
       };
@@ -91,6 +144,34 @@
       {
         homepage = "https://github.com/WillBooster/plantuml-visualizer";
         description = "A Chrome / Firefox extension for visualizing PlantUML descriptions.";
+        platforms = platforms.all;
+        };
+      };
+    "sidebery" = buildFirefoxXpiAddon {
+      pname = "sidebery";
+      version = "4.10.0";
+      addonId = "{3c078156-979c-498b-8990-85f7987dd929}";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3884195/sidebery-4.10.0-fx.xpi";
+      sha256 = "10343868b5906aa612c07fe978ee6854e2baab1eb5d3f1b46d2a185ea3637914";
+      meta = with lib;
+      {
+        homepage = "https://github.com/mbnuqw/sidebery";
+        description = "Tabs tree and bookmarks in sidebar with advanced containers configuration.";
+        license = licenses.mit;
+        platforms = platforms.all;
+        };
+      };
+    "simple-translate" = buildFirefoxXpiAddon {
+      pname = "simple-translate";
+      version = "2.7.2";
+      addonId = "simple-translate@sienori";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3917923/simple_translate-2.7.2-fx.xpi";
+      sha256 = "238d8f361f02fd22ff3b27cc98e45280580eb3ae20e65d47ec4c1140bf42e070";
+      meta = with lib;
+      {
+        homepage = "https://simple-translate.sienori.com";
+        description = "Quickly translate selected or typed text on web pages. Supports Google Translate and DeepL API.";
+        license = licenses.mpl20;
         platforms = platforms.all;
         };
       };
@@ -157,6 +238,61 @@
         homepage = "https://github.com/gorhill/uBlock#ublock-origin";
         description = "Finally, an efficient wide-spectrum content blocker. Easy on CPU and memory.";
         license = licenses.gpl3;
+        platforms = platforms.all;
+        };
+      };
+    "user-agent-string-switcher" = buildFirefoxXpiAddon {
+      pname = "user-agent-string-switcher";
+      version = "0.4.7.1";
+      addonId = "{a6c4a591-f1b2-4f03-b3ff-767e5bedf4e7}";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3769639/user_agent_switcher_and_manager-0.4.7.1-an+fx.xpi";
+      sha256 = "9760558c47886730e61d9691e0457b4d9b358b42085db53309af3c0ebf9043ba";
+      meta = with lib;
+      {
+        homepage = "http://add0n.com/useragent-switcher.html";
+        description = "Spoof websites trying to gather information about your web navigation—like your browser type and operating system—to deliver distinct content you may not want.";
+        license = licenses.mpl20;
+        platforms = platforms.all;
+        };
+      };
+    "view-page-archive" = buildFirefoxXpiAddon {
+      pname = "view-page-archive";
+      version = "3.1.0";
+      addonId = "{d07ccf11-c0cd-4938-a265-2a4d6ad01189}";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3894402/web_archives-3.1.0-an+fx.xpi";
+      sha256 = "b8276479bc7b2accf234bb1b455b94969acdf1eb2059d80020ab43ebf48949d4";
+      meta = with lib;
+      {
+        homepage = "https://github.com/dessant/web-archives#readme";
+        description = "View archived and cached versions of web pages on 10+ search engines, such as the Wayback Machine, Archive․is, Google, Bing, Yandex, Baidu and Yahoo.";
+        license = licenses.gpl3;
+        platforms = platforms.all;
+        };
+      };
+    "window-titler" = buildFirefoxXpiAddon {
+      pname = "window-titler";
+      version = "3.0";
+      addonId = "{35dd5f9a-ca89-4643-b107-f07d09cc94b5}";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3365362/window_titler-3.0-fx.xpi";
+      sha256 = "9b1be1ce4fdcc25504a6c269f1e686f689bef599b7dcacc9b06b893c8ea11ca6";
+      meta = with lib;
+      {
+        homepage = "https://github.com/tpamula/webextension-window-titler";
+        description = "Label your windows and profiles using custom window titles.";
+        license = licenses.mit;
+        platforms = platforms.all;
+        };
+      };
+    "youtube-addon" = buildFirefoxXpiAddon {
+      pname = "youtube-addon";
+      version = "3.935";
+      addonId = "{3c6bf0cc-3ae2-42fb-9993-0d33104fdcaf}";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3896635/improve_youtube_open_source_for_youtube-3.935-an+fx.xpi";
+      sha256 = "9d68b6d4507e2a8aa0b2b1f6f48f91591d2ff81ea18e773021b1d1da95919ea7";
+      meta = with lib;
+      {
+        homepage = "https://github.com/code4charity/YouTube-Extension/";
+        description = "Make YouTube tidy &amp; powerful! YouTube Player Size Theme Quality Auto HD Colors Playback Speed Style ad block Playlist Channel H.264";
         platforms = platforms.all;
         };
       };

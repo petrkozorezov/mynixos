@@ -23,10 +23,11 @@ update-ff-userjs:
 update-deps:
 	cd deps/ && nix flake update
 
-update-flake: update-deps
+update-flake:
 	nix flake update
 
-update: update-ff-userjs update-ff-addons update-flake
+update: update-ff-userjs update-ff-addons update-deps
+	$(MAKU) update-flake
 
 # make build:system:mbp13
 build\:system\:%:

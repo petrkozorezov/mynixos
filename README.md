@@ -39,3 +39,4 @@ switch to profile '${profile}/bin/switch-to-configuration switch'
   - [YubiKey-Guide](https://github.com/drduh/YubiKey-Guide)
   - https://github.com/srid/nixos-config
   - https://github.com/maxhbr/myconfig
+  - screen capture test https://mozilla.github.io/webrtc-landing/gum_test.html

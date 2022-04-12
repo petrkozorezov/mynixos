@@ -155,16 +155,17 @@ in {
         lib.lists.forEach
           [
             "${importGsettings}"
+            "mkfifo ${ob_file} && tail -f ${ob_file} | ${ob}"
             "nm-applet --indicator"
+            "mako"
             "blueman-applet"
+
             "firefox -P personal"
+            "firefox -P clean"
             "sublime_text"
             "telegram-desktop"
             # "slack"
             "discord"
-            "chromium"
-            "mkfifo ${ob_file} && tail -f ${ob_file} | ${ob}"
-            "mako"
             "MellowPlayer"
          ]
          (cmd: { command = cmd; })
@@ -172,11 +173,11 @@ in {
 
       assigns =
         {
-          "${w_web}"   = [{ app_id = "firefox"; }];
-          "${w_dev}"   = [{ app_id = "sublime_text"; }];
-          "${w_msg}"   = [{ app_id = "telegramdesktop"; } { class ="Slack"; } { class ="discord"; } ];
-          "${w_music}" = [{ app_id = "ColinDuquesnoy.gitlab.com."; }];
-          "${w_calls}" = [{ class  = "Chromium-browser"; }];
+          "${w_web}"   = [ { app_id = "firefox"; } ];
+          "${w_dev}"   = [ { app_id = "sublime_text"; } ];
+          "${w_msg}"   = [ { app_id = "telegramdesktop"; } { class = "Slack"; } { class = "discord"; } ];
+          "${w_music}" = [ { app_id = "ColinDuquesnoy.gitlab.com."; } ];
+          "${w_calls}" = [ { class  = "Chromium-browser"; } ];
         };
 
       gaps = {

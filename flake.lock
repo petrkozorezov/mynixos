@@ -65,7 +65,7 @@
         "terranix": "terranix"
       },
       "locked": {
-        "narHash": "sha256-+wvxu5ciBco3VF3kV4PymwJtDnpaBX4APGITl8f8JV8=",
+        "narHash": "sha256-k04jOPnFveAe65m186n3W/tHiJgdRwjCAjPdiH705H4=",
         "path": "./deps",
         "type": "path"
       },

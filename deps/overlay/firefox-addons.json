@@ -1,6 +1,15 @@
 [
   { "slug": "passff"                     },
-
+  { "slug": "buster-captcha-solver"      },
+  { "slug": "simple-translate"           },
+  { "slug": "languagetool"               },
+  { "slug": "sidebery"                   },
+  { "slug": "image-search-options"       },
+  { "slug": "flagfox"                    },
+  { "slug": "view-page-archive"          },
+  { "slug": "user-agent-string-switcher" },
+  { "slug": "window-titler"              },
+  { "slug": "youtube-addon"              },
   { "slug": "ublock-origin"              },
   { "slug": "tree-style-tab"             },
   { "slug": "foxyproxy-standard"         },
