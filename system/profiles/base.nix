@@ -48,13 +48,7 @@ in {
 
   sss = let
     age = pkgs.rage + /bin/rage;
-    pubKeys = {
-      "asrock-x300" = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJwzqyKI0/H6h8yiZLCyUE914PZXXLHA9BhdOSwLUEEN";
-      "mbp13"       = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC8h05MlXkvReetLrVjzPzzDVvcZEtlqM1cpS8TX9p8K";
-      "helsinki1"   = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ4LkiDqNHY+OYYcd5OG1weezvYDNOnvTeatNYpH589J";
-      "router"      = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOxNyBMfD0nhn1Hc/m9SVv84pT9Pj4NjrtZbljI0T4NA";
-    };
-    pubKey = pubKeys.${config.networking.hostName};
+    pubKey = config.zoo.secrets.sshPubKeys.${config.networking.hostName};
   in {
     enable = true;
     commands = {
@@ -62,5 +56,4 @@ in {
       decrypt = "${age} -d -i /etc/ssh/ssh_host_ed25519_key";
     };
   };
-
 }

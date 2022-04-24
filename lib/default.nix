@@ -23,6 +23,7 @@ args: let
   slib = addAll {
     tests     = { inherit addAll callLib assertVal; };
     firewall  = callLib ./firewall.nix;
+    syncthing = callLib ./syncthing   ;
     xml       = callLib ./xml.nix     ;
     utils     = callLib ./utils.nix   ;
   };
