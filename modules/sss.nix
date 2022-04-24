@@ -2,7 +2,7 @@
 with lib;
 let
   cfg  = config.sss;
-  esc  = strings.escapeShellArg;
+  esc  = arg: "\"${strings.replaceStrings ["\""] ["\\\""] arg}\"";
   escp = arg: esc (toString arg);
 in {
   options = {
@@ -36,7 +36,7 @@ in {
             };
 
             dependent = mkOption {
-              description = "Systemd services that dependent of this secret ('requiredBy' and 'before' unit file section).";
+              description = "Systemd services that dependent of this secret ('wantedBy' and 'before' unit file section).";
               type        = types.listOf types.str;
               default     = [ "multi-user.target" ];
             };
@@ -86,19 +86,19 @@ in {
             mode = mkOption {
               description = "Access mode of the secret file.";
               type        = types.str;
-              default     = "400";
+              default     = cfg.mode;
             };
 
             user = mkOption {
               description = "Owner user of the secret file.";
               type        = types.str;
-              default     = "$USER";
+              default     = cfg.user;
             };
 
             group = mkOption {
-              description = "Owner group of the secret file.";
+              description = "Group of the secret file.";
               type        = types.str;
-              default     = "nogroup";
+              default     = cfg.group;
             };
           };
         }));
@@ -132,59 +132,131 @@ in {
         };
       };
 
+      mode = mkOption {
+        description = "Default access mode of the secret file.";
+        type        = types.str;
+        default     = "400";
+      };
+
+      user = mkOption {
+        description = "Default owner user of the secret file.";
+        type        = types.str;
+        default     = "$(id -u)";
+      };
+
+      group = mkOption {
+        description = "Default group of the secret file.";
+        type        = types.str;
+        default     = "nogroup";
+      };
+
       inherit secrets;
-      user = { inherit secrets; };
+      hm = { inherit secrets; };
     };
   };
 
   config = let
-    service =
-      name: secret:
+    scripts =
+      secret:
+        let
+          source = escp secret.encrypted;
+          target = escp secret.target;
+          tmp    = escp secret.tmp;
+          user   = esc secret.user;
+          group  = esc secret.group;
+        in {
+          # TODO customize directory mode
+          # TODO set correct mode/user/group to the all created directories in the path (not only the last)
+          preStart = ''
+            test -f ${source} || (echo "encrypted secret is not exist" && exit 1) &&
+            install -d -m 0700 -o ${user} -g ${group} $(dirname ${target}) &&
+            install -d -m 0700 -o ${user} -g ${group} $(dirname ${tmp   })
+          '';
+
+          script = ''
+            if (
+              echo -n "Decrypting..." &&
+              cat ${source} | ${secret.decryptCommand} > ${tmp} &&
+              chown ${user}:${group} ${tmp} &&
+              chmod ${esc secret.mode} ${tmp} &&
+              mv -f ${tmp} ${target}
+            ); then
+              echo "Ok"
+            else
+              echo "Failed"
+              rm -f ${tmp}
+              exit 1
+            fi
+          '';
+
+          preStop = ''
+            rm -f ${target}
+          '';
+        };
+
+    systemService =
+      _: secret: let
+        serviceScripts = scripts secret;
+      in
         nameValuePair "${secret.service}" (
-          let
-            source  = escp secret.encrypted;
-            target  = escp secret.target;
-            tmp     = escp secret.tmp;
-          in mkIf secret.enable {
-            preStart = ''
-              test -f ${source} || (echo "encrypted secret is not exist" && exit 1)
-              mkdir -p $(dirname ${target})
-              mkdir -p $(dirname ${tmp   })
-            '';
-
-            # TODO test error case
-            script = ''
-              if (
-                echo -n "Decrypting..."
-                cat ${source} | ${secret.decryptCommand} > ${tmp}
-                chown ${esc secret.user}:${esc secret.group} ${tmp}
-                chmod ${esc secret.mode} ${tmp}
-                mv -f ${tmp} ${target}
-              ); then
-                echo "Ok"
-              else
-                echo "Failed"
-                rm -f ${tmp}
-                exit 1
-              fi
-            '';
-
-            preStop = ''
-              rm -f ${target}
-            '';
+          mkIf secret.enable {
+            inherit (serviceScripts) preStart script preStop;
 
             serviceConfig = {
               Type            = "oneshot";
               RemainAfterExit = "yes";
             };
 
-            requiredBy = secret.dependent;
-            before     = secret.dependent;
+            wantedBy = secret.dependent;
+            before   = secret.dependent;
           }
       );
-  systemServices = mapAttrs' service cfg.secrets     ;
-  userServices   = mapAttrs' service cfg.user.secrets;
-  systemd =
-    (if systemServices != {} then { services      = systemServices; } else {}) //
-    (if userServices   != {} then { user.services = userServices  ; } else {});
-in mkIf cfg.enable { inherit systemd; };}
+
+    systemdEsc = replaceChars [ "\\" "@" ] [ "-" "_" ];
+    # from nixpkgs
+    makeJobScript = name: text:
+      let
+        scriptName = systemdEsc name;
+        out = pkgs.writeTextFile {
+          # The derivation name is different from the script file name
+          # to keep the script file name short to avoid cluttering logs.
+          name        = "unit-script-${scriptName}";
+          executable  = true;
+          destination = "/bin/${scriptName}";
+          text = ''
+            #!${pkgs.runtimeShell} -e
+            ${text}
+          '';
+          checkPhase = ''
+            ${pkgs.stdenv.shell} -n "$out/bin/${scriptName}"
+          '';
+        };
+      in "${out}/bin/${scriptName}";
+
+    hmService =
+      name: secret: let
+        serviceName    = secret.service;
+        serviceScripts = scripts secret;
+      in
+        nameValuePair serviceName ({
+          Unit = {
+            Description = "Sss ${name} user secret";
+            Before      = secret.dependent;
+          };
+          Service = {
+            ExecStartPre    = makeJobScript "${serviceName}-pre-start" serviceScripts.preStart;
+            ExecStart       = makeJobScript "${serviceName}-start"     serviceScripts.script;
+            ExecStop        = makeJobScript "${serviceName}-pre-stop"  serviceScripts.preStop;
+            Type            = "oneshot";
+            RemainAfterExit = "yes";
+          };
+          Install.WantedBy = secret.dependent;
+        });
+
+    systemServices = mapAttrs' systemService cfg.secrets   ;
+    hmServices     = mapAttrs' hmService     cfg.hm.secrets;
+    systemd =
+      (if systemServices != {} then { services      = systemServices; } else {}) //
+      (if hmServices     != {} then { user.services = hmServices    ; } else {});
+  in mkIf cfg.enable { inherit systemd; };
+}

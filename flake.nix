@@ -1,8 +1,6 @@
 {
   description = "My NixOS configuration";
 
-  # TODO remove copy-paste
-  # see https://github.com/NixOS/nix/issues/3966
   inputs.deps.url = "path:./deps";
 
   outputs = { self, deps, ...}:

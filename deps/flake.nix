@@ -1,5 +1,7 @@
 {
   description = "My Nix Packages";
+  # TODO remove copy-paste
+  # see https://github.com/NixOS/nix/issues/3966
   inputs = {
            nixpkgs.url = "github:NixOS/nixpkgs/nixos-21.11"                      ;
      nixos-channel.url = "https://nixos.org/channels/nixos-21.11/nixexprs.tar.xz";
