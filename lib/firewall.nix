@@ -4,7 +4,7 @@
 #  - express only valid commands and rules and show errors on nix stage;
 #  - use nix modules system to construct rules.
 #
-{ lib, ... }:
+{ lib, file, slib, ... }:
 with lib;
 with builtins;
 rec {
@@ -292,33 +292,16 @@ rec {
 
     treeToStr = asList: concatStringsSep " " (lists.flatten asList);
     toStr     = formatter: data: treeToStr (formatter data);
-    optToStr  = formatter: type: data: toStr formatter (utils.evalOpt type data);
+    optToStr  = formatter: type: data: toStr formatter (evalOpt type data);
   };
   command =
     name: cmd:
       format.optToStr format.command types.command (nameValuePair name cmd);
 
-  # to call from outside of modules
-  # inside modules utils.evalOpt is useless
-  # cmd: with slib.firewall.format; format.commandToString (utils.evalOpt types.command cmd)
-  utils.evalOpt = type: value:
-    (evalOptionValue [] (mkOption{ inherit type; }) [ { file = ./firewall.nix; inherit value; }]).value;
+  evalOpt = slib.utils.evalOpt file;
 
   tests =
-    let
-      testAssert =
-        expr: expected_: let
-          expected = replaceStrings [ "\n" ] [ " " ] expected_;
-          # TODO 'try'
-          in if (expr == replaceStrings [ "\n" ] [ " " ] expected) then
-            { status   = "ok"; }
-          else
-            {
-              status   = "failed";
-              expected = expected;
-              got      = expr;
-            };
-    in {
+    {
       spec =
         let
           spec = {
@@ -339,9 +322,9 @@ rec {
             }; };
           };
         in
-          testAssert
-            # (format.spec (utils.evalOpt types.spec spec)) ''
-            (format.optToStr format.spec types.spec spec) ''
+          slib.tests.assertVal
+            # (format.spec (slib.utils.evalOpt file types.spec spec)) ''
+            (format.optToStr format.spec types.spec spec) (replaceStrings [ "\n" ] [ " " ] ''
               -s 10.2.1.1,10.2.1.2
               -i eth1
               -d 10.2.2.1,10.2.2.2
@@ -349,7 +332,7 @@ rec {
               -m state --state NEW
               -m limit --limit 10/minute
               ! -p tcp --dport 42 --tcp-flags ACK,FIN,SYN SYN --tcp-option 42
-              ! -f'';
+              ! -f'');
 
       command =
           let
@@ -365,9 +348,9 @@ rec {
                 target = "testTarget";
               };
           in
-            testAssert
+            slib.tests.assertVal
               (format.optToStr format.command types.command command)
-              ''-t filter -A testChain ! -s 10.2.1.1 -j testTarget'';
+              "-t filter -A testChain ! -s 10.2.1.1 -j testTarget";
 
   };
 }
