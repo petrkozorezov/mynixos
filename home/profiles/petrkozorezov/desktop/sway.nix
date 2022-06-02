@@ -17,11 +17,15 @@ let
   ob_file  = "\$${sock}.${ob}";
   wallpaper =
     builtins.fetchurl {
-      url    = "https://i.imgur.com/OHkR2vt.png";
-      sha256 = "13cbs5kgf8nyz8laasc60kpxhb3jrkb72dr3gr4lx98r5y3xdg4c";
+      url    = "https://wallpaperaccess.com/full/117782.png";
+      sha256 = "0icwx5wib95yapb7i9vgy89wv9idcc2fbb69cgx57zadsfbdy4r3";
     };
+    # https://i.imgur.com/OHkR2vt.png
     # http://getwallpapers.com/wallpaper/full/c/6/c/52323.jpg
     # http://getwallpapers.com/wallpaper/full/c/7/4/271955.jpg
+    # https://wallup.net/wp-content/uploads/2016/01/260716-orange-flowers-abstract.jpg
+    # https://www.pixel4k.com/wp-content/uploads/2019/07/orange-render-abstract_1563221459.jpg
+    # https://wallpaperaccess.com/full/117782.png
   cursorsTheme    = "capitaine-cursors-white";
   gsettings       = "${pkgs.glib}/bin/gsettings";
   gnomeSchema     = "org.gnome.desktop.interface";
