@@ -109,10 +109,10 @@
   "webgl.disabled" = true;
   "extensions.blocklist.enabled" = true;
   "network.http.referer.spoofSource" = false;
-  "security.csp.enable" = true;
   "dom.targetBlankNoOpener.enabled" = true;
   "privacy.window.name.update.enabled" = true;
   "privacy.firstparty.isolate" = false;
   "browser.urlbar.suggest.quicksuggest" = false;
   "app.update.background.scheduling.enabled" = false;
+  "security.csp.enable" = true;
 }

@@ -57,10 +57,10 @@
       };
     "ether-metamask" = buildFirefoxXpiAddon {
       pname = "ether-metamask";
-      version = "10.11.3";
+      version = "10.12.4";
       addonId = "webextension@metamask.io";
-      url = "https://addons.mozilla.org/firefox/downloads/file/3926177/metamask-10.11.3-an+fx.xpi";
-      sha256 = "e0a79a525016e7a4091eda0f59789c2b13ed74c80d69937095cef0c1ee4d41f9";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3936095/metamask-10.12.4-an+fx.xpi";
+      sha256 = "112b049c8ca9237d779e9aa9366a1c6cf5381a422abf70de88e12f01e7e046d7";
       meta = with lib;
       {
         description = "Ethereum Browser Extension";
@@ -109,10 +109,10 @@
       };
     "languagetool" = buildFirefoxXpiAddon {
       pname = "languagetool";
-      version = "5.0.7";
+      version = "5.1.1";
       addonId = "languagetool-webextension@languagetool.org";
-      url = "https://addons.mozilla.org/firefox/downloads/file/3929583/grammatik_und_rechtschreibprufung_languagetool-5.0.7-fx.xpi";
-      sha256 = "286ec19eaf58f4488583e3d5875c8a7cd330180dfb44591e9d558f5052d30026";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3938898/grammar_and_spell_checker_languagetool-5.1.1-fx.xpi";
+      sha256 = "0db5bd85a4f44e9549b14ebe53decb05ff48e29421b68869dfe061e555743223";
       meta = with lib;
       {
         homepage = "https://languagetool.org";
@@ -122,10 +122,10 @@
       };
     "passff" = buildFirefoxXpiAddon {
       pname = "passff";
-      version = "1.13";
+      version = "1.14";
       addonId = "passff@invicem.pro";
-      url = "https://addons.mozilla.org/firefox/downloads/file/3849458/passff-1.13-fx.xpi";
-      sha256 = "29f3b0e84437d02ee2d2d54c442ac1719353ccd982e8f8e8297c601bcd6f8a19";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3939178/passff-1.14-fx.xpi";
+      sha256 = "23ec6c09b499d35db1c028e5455c760dc4421d92365ce8a923080faf486b5e33";
       meta = with lib;
       {
         homepage = "https://github.com/passff/passff";
@@ -149,10 +149,10 @@
       };
     "sidebery" = buildFirefoxXpiAddon {
       pname = "sidebery";
-      version = "4.10.0";
+      version = "4.10.1";
       addonId = "{3c078156-979c-498b-8990-85f7987dd929}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/3884195/sidebery-4.10.0-fx.xpi";
-      sha256 = "10343868b5906aa612c07fe978ee6854e2baab1eb5d3f1b46d2a185ea3637914";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3939103/sidebery-4.10.1-fx.xpi";
+      sha256 = "ee2c96dff631b4d4dd110f826bfb2c0edde8ea3272a56ace491e9b9f651de42d";
       meta = with lib;
       {
         homepage = "https://github.com/mbnuqw/sidebery";
@@ -216,10 +216,10 @@
       };
     "tree-style-tab" = buildFirefoxXpiAddon {
       pname = "tree-style-tab";
-      version = "3.8.21";
+      version = "3.8.22";
       addonId = "treestyletab@piro.sakura.ne.jp";
-      url = "https://addons.mozilla.org/firefox/downloads/file/3908159/tree_style_tab-3.8.21-fx.xpi";
-      sha256 = "80f83f6314f0c85f405fcbe76fec0fdcc69eb844417a1b2a450c1f46f4417021";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3939893/tree_style_tab-3.8.22-fx.xpi";
+      sha256 = "866dd252b40386e13d46ba832462352528a3b7770024305c6ddad148b01ab727";
       meta = with lib;
       {
         homepage = "http://piro.sakura.ne.jp/xul/_treestyletab.html.en";
