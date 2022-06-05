@@ -14,7 +14,7 @@
             normal.family = "JetBrains Mono";
             size = 14.0;
           };
-        background_opacity = 0.95;
+        window.opacity = 0.95;
         colors = {
           primary = {
             background = "#272822";

@@ -22,7 +22,7 @@ rustPlatform.buildRustPackage rec {
 
   buildInputs = [
     libclang
-    libudev
+    udev
     openssl
     zlib
     openssl

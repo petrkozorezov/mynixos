@@ -11,4 +11,5 @@
   };
 
   zoo.vpn.extIf = "ens3";
+  system.stateVersion = "21.05";
 }

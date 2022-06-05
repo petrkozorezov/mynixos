@@ -11,7 +11,10 @@ in {
   programs.doom-emacs = {
     enable               = true;
     doomPrivateDir       = ./emacs;
-    emacsPackage         = pkgs.emacs-nox;
+    emacsPackage         =
+      pkgs.emacs-nox.override {
+        nativeComp = true;
+      };
     emacsPackagesOverlay = self: super: {
       xclip = super.xclip.overrideAttrs (esuper: {
         buildInputs = esuper.buildInputs ++ [ pkgs.wl-clipboard-x11 ];

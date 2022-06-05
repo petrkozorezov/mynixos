@@ -3,7 +3,7 @@
   home.packages = with pkgs;
     [
       # tools
-      haskellPackages.hopenpgp-tools
+      #haskellPackages.hopenpgp-tools # TODO broken
       pgpdump
       paperkey
     ];

@@ -11,13 +11,12 @@ let
 
   desktopItem = makeDesktopItem {
     name        = pname;
+    exec        = pname;
     desktopName = "UHK Agent";
     genericName = "Keyboard configuration";
     comment     = "Agent is the configuration application of the Ultimate Hacking Keyboard";
     icon        = "uhk-keyboard";
-    terminal    = "false";
-    exec        = pname;
-    categories  = "Utility;";
+    categories  = [ "Utility" ];
   };
 
   xdgDirs = builtins.concatStringsSep ":" [

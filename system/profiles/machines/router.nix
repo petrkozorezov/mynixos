@@ -7,6 +7,8 @@ let
 in {
   imports = [ ../vpn.nix ../proxy.nix ];
 
+  system.stateVersion = "21.05";
+
   zoo.proxy.address = "3";
 
   zoo.router = {

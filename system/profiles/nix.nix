@@ -19,7 +19,7 @@
     allowedUsers = [ "@wheel" ];
     extraOptions = ''
       # for flakes
-      experimental-features = nix-command flakes ca-references
+      experimental-features = nix-command flakes
       # for direnv
       #keep-outputs = true
       #keep-derivations = true

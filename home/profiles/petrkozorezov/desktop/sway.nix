@@ -37,8 +37,8 @@ let
 in {
   home.packages = with pkgs; [
     rofi
-    networkmanager_vpnc
-    networkmanager_l2tp
+    networkmanager-vpnc
+    networkmanager-l2tp
     networkmanagerapplet
     pavucontrol
 
@@ -292,7 +292,7 @@ in {
     iconTheme.name = "hicolor"; # TODO set smth better
     # TODO https://github.com/mitch-kyle/monokai-gtk
     theme = {
-      package = pkgs.gnome3.gnome_themes_standard;
+      package = pkgs.gnome3.gnome-themes-extra;
       name    = "Adwaita-dark";
     };
     gtk2.extraConfig = ''
