@@ -87,6 +87,9 @@ let
       "Ethereum"
       "MarkdownEditing"
       # "LSP-ltex-ls"
+      "TLAPlus"
+
+      "Debugger"
 
       # VCS
       "SublimeGit"
@@ -113,6 +116,15 @@ let
   lspTypescript.settings = {
     "typescript.format.semicolons" = "remove";
   };
+  rustAnalyzer.settings = {
+    "rust-analyzer.inlayHints.enable" = false;
+    # "rust-analyzer.cargo.loadOutDirsFromCheck" = true;
+    # "rust-analyzer.procMacro.enable" = false;
+    # "rust-analyzer.experimental.procAttrMacros" = false;
+    "rust-analyzer.diagnostics".disabled = [
+      "unresolved-proc-macro"
+    ];
+  };
   # rustFmt = {
   #   format_on_save = true;
   #   executable     = ["${pkgs.rustfmt}/bin/rustfmt"];
@@ -131,6 +143,8 @@ in
         builtins.toJSON packages;
       "${userPath}/LSP-typescript.sublime-settings".text =
         builtins.toJSON lspTypescript;
+      "${userPath}/LSP-rust-analyzer.sublime-settings".text =
+        builtins.toJSON rustAnalyzer;
 
       # "${userPath}/RustFmt.sublime-settings".text =
       #   builtins.toJSON rustFmt;
