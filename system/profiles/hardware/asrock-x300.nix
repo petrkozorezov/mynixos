@@ -6,6 +6,7 @@
       ./ssd-970-pro.nix
       ./audio.nix
       ./video.nix
+      ./tp-link-archer-t4u-plus.nix
     ];
 
   boot = {
