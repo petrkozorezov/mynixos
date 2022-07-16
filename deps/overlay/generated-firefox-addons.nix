@@ -69,10 +69,10 @@
       };
     "flagfox" = buildFirefoxXpiAddon {
       pname = "flagfox";
-      version = "6.1.51";
+      version = "6.1.52";
       addonId = "{1018e4d6-728f-4b20-ad56-37578a4de76b}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/3956569/flagfox-6.1.51.xpi";
-      sha256 = "dabc64335ca9ac2e3b1ad9a93301f5902f3845a5043c8b13f1e470c9fd8c12fd";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3969994/flagfox-6.1.52.xpi";
+      sha256 = "b036b01c38f5bb865c76c7ecd212c174ec3b24c52959e9ec2cbc9300a55ca79a";
       meta = with lib;
       {
         homepage = "https://flagfox.wordpress.com/";
@@ -109,10 +109,10 @@
       };
     "languagetool" = buildFirefoxXpiAddon {
       pname = "languagetool";
-      version = "5.2.3";
+      version = "5.3.3";
       addonId = "languagetool-webextension@languagetool.org";
-      url = "https://addons.mozilla.org/firefox/downloads/file/3956771/languagetool-5.2.3.xpi";
-      sha256 = "e922a83577654dfafe36123ca1efa8ff206102426d86d16d86cab1dd4c263919";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3974818/languagetool-5.3.3.xpi";
+      sha256 = "241739c92c2612b04d41cb7089359ff7535b92a185b7a7e4e1e95178aab68a4f";
       meta = with lib;
       {
         homepage = "https://languagetool.org";
@@ -203,10 +203,10 @@
       };
     "solflare-wallet" = buildFirefoxXpiAddon {
       pname = "solflare-wallet";
-      version = "1.28";
+      version = "1.30.2";
       addonId = "{6d72262a-b243-4dc6-8f4f-be96c74e0a86}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/3954808/solflare_wallet-1.28.xpi";
-      sha256 = "d5db778fae633a79a42f60dab67d2e0001a9a7b7b3b16c1c3bb77c2ce5f05ac9";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3973348/solflare_wallet-1.30.2.xpi";
+      sha256 = "0c7301b73b156041f81d8e734cfc59f5a32f4f59fbe7a895c99482d68783e492";
       meta = with lib;
       {
         homepage = "https://solflare.com/";
@@ -216,10 +216,10 @@
       };
     "tree-style-tab" = buildFirefoxXpiAddon {
       pname = "tree-style-tab";
-      version = "3.8.24";
+      version = "3.8.26";
       addonId = "treestyletab@piro.sakura.ne.jp";
-      url = "https://addons.mozilla.org/firefox/downloads/file/3956945/tree_style_tab-3.8.24.xpi";
-      sha256 = "8f06b0442311ff83d427291585bb5cdcf654e279796d63c8e9e6e71e7bb9ed5c";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3975864/tree_style_tab-3.8.26.xpi";
+      sha256 = "fad45a87897df26613c89403f8dc0eb22eea55faeb98119810e8c1856114e4c1";
       meta = with lib;
       {
         homepage = "http://piro.sakura.ne.jp/xul/_treestyletab.html.en";
@@ -229,10 +229,10 @@
       };
     "ublock-origin" = buildFirefoxXpiAddon {
       pname = "ublock-origin";
-      version = "1.42.4";
+      version = "1.43.0";
       addonId = "uBlock0@raymondhill.net";
-      url = "https://addons.mozilla.org/firefox/downloads/file/3933192/ublock_origin-1.42.4.xpi";
-      sha256 = "bc3c335c961269cb40dd11551788d0d8674aefcacdc8fbdf6c19845eaea339ce";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3961087/ublock_origin-1.43.0.xpi";
+      sha256 = "ab2d4fa8dfc4f50841093830ff131d7a6e99052ba6e7359f8592e84f39c18a16";
       meta = with lib;
       {
         homepage = "https://github.com/gorhill/uBlock#ublock-origin";

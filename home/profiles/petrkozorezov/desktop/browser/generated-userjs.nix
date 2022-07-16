@@ -37,7 +37,6 @@
   "network.dns.disableIPv6" = true;
   "keyword.enabled" = false;
   "browser.fixup.alternate.enabled" = false;
-  "browser.urlbar.trimURLs" = false;
   "browser.search.suggest.enabled" = false;
   "browser.urlbar.suggest.searches" = false;
   "browser.urlbar.speculativeConnect.enabled" = false;
@@ -83,17 +82,14 @@
   "extensions.postDownloadThirdPartyPrompt" = false;
   "browser.contentblocking.category" = "strict";
   "privacy.partition.serviceWorkers" = true;
-  "network.cookie.lifetimePolicy" = 2;
-  "network.cookie.thirdparty.sessionOnly" = true;
-  "network.cookie.thirdparty.nonsecureSessionOnly" = true;
   "privacy.sanitize.sanitizeOnShutdown" = true;
   "privacy.clearOnShutdown.cache" = true;
   "privacy.clearOnShutdown.downloads" = true;
   "privacy.clearOnShutdown.formdata" = true;
   "privacy.clearOnShutdown.history" = true;
   "privacy.clearOnShutdown.sessions" = true;
-  "privacy.clearOnShutdown.offlineApps" = false;
-  "privacy.clearOnShutdown.cookies" = false;
+  "privacy.clearOnShutdown.offlineApps" = true;
+  "privacy.clearOnShutdown.cookies" = true;
   "privacy.cpd.cache" = true;
   "privacy.cpd.formdata" = true;
   "privacy.cpd.history" = true;
@@ -109,10 +105,9 @@
   "webgl.disabled" = true;
   "extensions.blocklist.enabled" = true;
   "network.http.referer.spoofSource" = false;
-  "dom.targetBlankNoOpener.enabled" = true;
-  "privacy.window.name.update.enabled" = true;
   "privacy.firstparty.isolate" = false;
   "browser.urlbar.suggest.quicksuggest" = false;
   "app.update.background.scheduling.enabled" = false;
   "security.csp.enable" = true;
+  "network.cookie.lifetimePolicy" = 2;
 }

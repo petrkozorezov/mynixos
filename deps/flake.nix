@@ -9,7 +9,7 @@
                nur.url = "github:nix-community/NUR"                              ;
          deploy-rs.url = "github:serokell/deploy-rs"                             ;
           terranix.url = "github:terranix/terranix"                              ;
-    nix-doom-emacs.url = "github:vlaci/nix-doom-emacs"                           ;
+    nix-doom-emacs.url = "github:nix-community/nix-doom-emacs"                   ;
                dns.url = "github:kirelagin/dns.nix"                              ;
     # sometimes version of emacs-overlay in nix-doom-emacs lock file is outdated
     # and some packages are not building
