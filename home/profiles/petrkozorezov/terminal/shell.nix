@@ -14,6 +14,10 @@
           nsh() {
             nix shell "mynixos#$1"
           }
+          configure-aws() {
+            export AWS_ACCESS_KEY_ID=$2
+            export AWS_SECRET_ACCESS_KEY=`pass show $1/aws-key-$2`
+          }
         '';
       autocd = true;
       history = {
@@ -157,5 +161,7 @@
 
       # TODO
       nushell
+
+      awscli2
     ];
 }
