@@ -15,10 +15,10 @@
       };
     "buster-captcha-solver" = buildFirefoxXpiAddon {
       pname = "buster-captcha-solver";
-      version = "1.3.1";
+      version = "1.3.2";
       addonId = "{e58d3966-3d76-4cd9-8552-1582fbc800c1}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/3861819/buster_captcha_solver-1.3.1.xpi";
-      sha256 = "e64f8c043c34325e60b7050b616ebef2df4dc35d15602961ccfabd0a9a0e637a";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3997075/buster_captcha_solver-1.3.2.xpi";
+      sha256 = "bd8b13aebb7437b57acd898c5f0a1326e5af61ac41316abbca30c075636fa1f7";
       meta = with lib;
       {
         homepage = "https://github.com/dessant/buster";
@@ -57,10 +57,10 @@
       };
     "ether-metamask" = buildFirefoxXpiAddon {
       pname = "ether-metamask";
-      version = "10.14.7";
+      version = "10.18.4";
       addonId = "webextension@metamask.io";
-      url = "https://addons.mozilla.org/firefox/downloads/file/3953574/ether_metamask-10.14.7.xpi";
-      sha256 = "e39fc2c2d74645dcc049563678aee9324a7d8659be8055d4b8bbe7c1d342b1aa";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4003278/ether_metamask-10.18.4.xpi";
+      sha256 = "7a10cebf3b4445561f2217cc83ce1e8b00568042f01aaefaeaaafbf028d724e7";
       meta = with lib;
       {
         description = "Ethereum Browser Extension";
@@ -69,10 +69,10 @@
       };
     "flagfox" = buildFirefoxXpiAddon {
       pname = "flagfox";
-      version = "6.1.52";
+      version = "6.1.54";
       addonId = "{1018e4d6-728f-4b20-ad56-37578a4de76b}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/3969994/flagfox-6.1.52.xpi";
-      sha256 = "b036b01c38f5bb865c76c7ecd212c174ec3b24c52959e9ec2cbc9300a55ca79a";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3996798/flagfox-6.1.54.xpi";
+      sha256 = "5f7cebaea3d24d42fd170e623bd9c257eaaca238cdf116d9588348e59b03f435";
       meta = with lib;
       {
         homepage = "https://flagfox.wordpress.com/";
@@ -109,10 +109,10 @@
       };
     "languagetool" = buildFirefoxXpiAddon {
       pname = "languagetool";
-      version = "5.3.3";
+      version = "5.4.3";
       addonId = "languagetool-webextension@languagetool.org";
-      url = "https://addons.mozilla.org/firefox/downloads/file/3974818/languagetool-5.3.3.xpi";
-      sha256 = "241739c92c2612b04d41cb7089359ff7535b92a185b7a7e4e1e95178aab68a4f";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3985810/languagetool-5.4.3.xpi";
+      sha256 = "0a5fd00fd7a6fdd0e18479783596b553b18fc06507ff54ebba425d6d0f25f76e";
       meta = with lib;
       {
         homepage = "https://languagetool.org";
@@ -149,10 +149,10 @@
       };
     "sidebery" = buildFirefoxXpiAddon {
       pname = "sidebery";
-      version = "4.10.1";
+      version = "4.10.2";
       addonId = "{3c078156-979c-498b-8990-85f7987dd929}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/3939103/sidebery-4.10.1.xpi";
-      sha256 = "ee2c96dff631b4d4dd110f826bfb2c0edde8ea3272a56ace491e9b9f651de42d";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3994928/sidebery-4.10.2.xpi";
+      sha256 = "60e35f2bfac88e5b2b4e044722dde49b4ed0eca9e9216f3d67dafdd9948273ac";
       meta = with lib;
       {
         homepage = "https://github.com/mbnuqw/sidebery";
@@ -163,10 +163,10 @@
       };
     "simple-translate" = buildFirefoxXpiAddon {
       pname = "simple-translate";
-      version = "2.7.2";
+      version = "2.8.0";
       addonId = "simple-translate@sienori";
-      url = "https://addons.mozilla.org/firefox/downloads/file/3917923/simple_translate-2.7.2.xpi";
-      sha256 = "238d8f361f02fd22ff3b27cc98e45280580eb3ae20e65d47ec4c1140bf42e070";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3996565/simple_translate-2.8.0.xpi";
+      sha256 = "fcee11b477465c87d5b1f3c922e40edbcbf2c99a95022f57265a8fab22047ca8";
       meta = with lib;
       {
         homepage = "https://simple-translate.sienori.com";
@@ -203,10 +203,10 @@
       };
     "solflare-wallet" = buildFirefoxXpiAddon {
       pname = "solflare-wallet";
-      version = "1.30.2";
+      version = "1.35";
       addonId = "{6d72262a-b243-4dc6-8f4f-be96c74e0a86}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/3973348/solflare_wallet-1.30.2.xpi";
-      sha256 = "0c7301b73b156041f81d8e734cfc59f5a32f4f59fbe7a895c99482d68783e492";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4002422/solflare_wallet-1.35.xpi";
+      sha256 = "b4f696b024f56957213e3a80043d1e81e1bfb34404cd9bd138a400185d8c1977";
       meta = with lib;
       {
         homepage = "https://solflare.com/";
@@ -216,10 +216,10 @@
       };
     "tree-style-tab" = buildFirefoxXpiAddon {
       pname = "tree-style-tab";
-      version = "3.8.26";
+      version = "3.9.5";
       addonId = "treestyletab@piro.sakura.ne.jp";
-      url = "https://addons.mozilla.org/firefox/downloads/file/3975864/tree_style_tab-3.8.26.xpi";
-      sha256 = "fad45a87897df26613c89403f8dc0eb22eea55faeb98119810e8c1856114e4c1";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4004810/tree_style_tab-3.9.5.xpi";
+      sha256 = "f867a2790e3e149c1fc8ff7ad547b4c03beb7a5164cd67a188bbba83590a0144";
       meta = with lib;
       {
         homepage = "http://piro.sakura.ne.jp/xul/_treestyletab.html.en";
@@ -229,10 +229,10 @@
       };
     "ublock-origin" = buildFirefoxXpiAddon {
       pname = "ublock-origin";
-      version = "1.43.0";
+      version = "1.44.4";
       addonId = "uBlock0@raymondhill.net";
-      url = "https://addons.mozilla.org/firefox/downloads/file/3961087/ublock_origin-1.43.0.xpi";
-      sha256 = "ab2d4fa8dfc4f50841093830ff131d7a6e99052ba6e7359f8592e84f39c18a16";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4003969/ublock_origin-1.44.4.xpi";
+      sha256 = "0be550c9a27c040d04ad71954dd9e9a4967a27d48ffa2cdfe91171752e152685";
       meta = with lib;
       {
         homepage = "https://github.com/gorhill/uBlock#ublock-origin";

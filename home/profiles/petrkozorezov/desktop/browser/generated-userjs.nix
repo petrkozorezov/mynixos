@@ -44,11 +44,6 @@
   "browser.urlbar.suggest.quicksuggest.nonsponsored" = false;
   "browser.urlbar.suggest.quicksuggest.sponsored" = false;
   "browser.formfill.enable" = false;
-  "extensions.formautofill.addresses.enabled" = false;
-  "extensions.formautofill.available" = "off";
-  "extensions.formautofill.creditCards.available" = false;
-  "extensions.formautofill.creditCards.enabled" = false;
-  "extensions.formautofill.heuristics.enabled" = false;
   "signon.autofillForms" = false;
   "signon.formlessCapture.enabled" = false;
   "browser.cache.disk.enable" = false;
@@ -88,8 +83,8 @@
   "privacy.clearOnShutdown.formdata" = true;
   "privacy.clearOnShutdown.history" = true;
   "privacy.clearOnShutdown.sessions" = true;
-  "privacy.clearOnShutdown.offlineApps" = true;
   "privacy.clearOnShutdown.cookies" = true;
+  "privacy.clearOnShutdown.offlineApps" = true;
   "privacy.cpd.cache" = true;
   "privacy.cpd.formdata" = true;
   "privacy.cpd.history" = true;
