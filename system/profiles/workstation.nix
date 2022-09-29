@@ -2,6 +2,16 @@
 {
   boot.kernel.sysctl."fs.inotify.max_user_watches" = 524288;
 
+  fonts = {
+    fonts = with pkgs; [
+      pkgs.hack-font
+    ];
+    fontconfig = {
+      enable = true;
+      defaultFonts.monospace = [ "Hack" ];
+    };
+  };
+
   # wireshark
   programs.wireshark = {
     enable = true;
