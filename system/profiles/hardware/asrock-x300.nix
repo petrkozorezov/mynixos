@@ -34,7 +34,7 @@
 
   # amd vulkan
   hardware.opengl = {
-    extraPackages   = with pkgs              ; [ amdvlk ];
+    extraPackages   = with pkgs              ; [ amdvlk rocm-opencl-icd rocm-runtime ];
     extraPackages32 = with pkgs.pkgsi686Linux; [ amdvlk libva ];
   };
   environment.variables.VK_ICD_FILENAMES = "/run/opengl-driver/share/vulkan/icd.d/amd_icd64.json";
