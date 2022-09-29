@@ -68,6 +68,7 @@ let
 
       # languages
       "LSP"
+      "LSP-json"
       # "LSP-file-watcher-chokidar" # periodically eats too much CPU
       # "LSP-bash"
       "ElixirSyntax"
@@ -82,6 +83,7 @@ let
       "Idris Syntax"
       "LSP-typescript"
       "LSP-eslint"
+      "LSP-pyright"
       "Rust Enhanced"
       "LSP-rust-analyzer"
       "Ethereum"
