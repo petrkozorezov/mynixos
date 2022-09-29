@@ -21,6 +21,7 @@
       # wallets
       solflare-wallet
       ether-metamask
+      # tronlink-wallet # TODO
 
       # ui
       tree-style-tab
@@ -104,6 +105,7 @@
     extensions = [
       "cjpalhdlnbpafiamejdnhcphjbkeiagm" # uBlock Origin    - https://github.com/gorhill/uBlock
       "gcbommkclmclpchllfjekcdonpmejbdp" # HTTPS Everywhere - https://github.com/EFForg/https-everywhere
+      "ibnejdfjmmkpcnlpebklmnkoeoihofec" # TronLink
     ];
   };
 
