@@ -26,14 +26,15 @@ with lib; {
                 ipv6 = { method = "auto"; };
               }
           );
-    in {
+      vpn = let
+        cfg       = config.zoo.secrets.vpn;
+        self      = cfg.${config.networking.hostName};
+        helsinki1 = cfg.helsinki1;
+        router    = cfg.router;
+        net       = "192.168.4";
+      in {
         helsinki1 =
-          let
-            cfg       = config.zoo.secrets.vpn;
-            self      = cfg.${config.networking.hostName};
-            helsinki1 = cfg.helsinki1;
-            vpnNet    = "192.168.4";
-          in {
+          {
             connection = rec {
               id   = "helsinki1";
               uuid = "1d98ff68-0a2c-4834-8d8b-7bb9888080aa";
@@ -49,16 +50,44 @@ with lib; {
             # TODO remove hardcode
             ipv4 = {
               method   = "manual";
-              address1 = "${vpnNet}.${self.addr}/32";
-              dns      = "1.1.1.1;"; # TODO use ${vpnNet}.${helsinki1.addr}
+              address1 = "${net}.${self.addr}/32";
+              dns      = "1.1.1.1;"; # TODO use ${net}.${helsinki1.addr}
             };
             ipv6.method = "disabled";
             proxy = {
               method     = "1 ";
-              pac-script = "function FindProxyForURL(url, host) { PROXY ${vpnNet}.${helsinki1.addr}:8118; }";
+              pac-script = "function FindProxyForURL(url, host) { PROXY ${net}.${helsinki1.addr}:8118; }";
             };
           };
-      } // wifis;
+        router =
+          {
+            connection = rec {
+              id   = "router";
+              uuid = "808291c7-3290-4c84-9c8a-a25eb7128745";
+              type = "wireguard";
+              interface-name = id;
+            };
+            wireguard.private-key = self.priv;
+            "wireguard-peer.${router.pub}" = {
+              endpoint             = "${router.endpoint}:${builtins.toString router.port}";
+              persistent-keepalive = "25";
+              allowed-ips          = "0.0.0.0/0";
+            };
+            # TODO remove hardcode
+            ipv4 = {
+              method   = "manual";
+              address1 = "${net}.${self.addr}/32";
+              dns      = "1.1.1.1;"; # TODO use ${net}.${helsinki1.addr}
+            };
+            ipv6.method = "disabled";
+            proxy = {
+              method     = "1 ";
+              pac-script = "function FindProxyForURL(url, host) { PROXY ${net}.${router.addr}:8118; }";
+            };
+          };
+
+        };
+      in vpn // wifis;
 
   # to allow send all traffic through wg
   networking.firewall.checkReversePath = false;
