@@ -10,6 +10,7 @@ in {
   system.stateVersion = "21.05";
 
   zoo.proxy.address = "3";
+  zoo.vpn.extIf = "enp3s0";
 
   zoo.router = {
     enable     = true;
