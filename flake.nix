@@ -83,7 +83,7 @@
             terraform
             terranix.defaultPackage.${system}
             pkgs.ripgrep
-            pkgs.nur.repos.rycee.firefox-addons-generator
+            pkgs.nur.repos.rycee.mozilla-addons-to-nix
           ];
         };
 
