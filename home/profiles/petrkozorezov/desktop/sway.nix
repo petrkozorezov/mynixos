@@ -200,6 +200,10 @@ in {
           pointer_accel  = "0.35";
         };
 
+        "1452:602:bcm5974" = {
+          tap = "enabled";
+        };
+
         "2:10:TPPS/2_ALPS_TrackPoint" = {
           dwt           = "enabled";
           accel_profile = "flat";
@@ -209,6 +213,10 @@ in {
         "1133:49188:B16_b_02_USB-PS/2_Optical_Mouse" = {
           accel_profile = "adaptive";
           pointer_accel = "1.0";
+        };
+
+        "1452:602:Apple_Inc._Apple_Internal_Keyboard_\/_Trackpad" = {
+          xkb_options  = "ctrl:nocaps,grp:lctrl_toggle";
         };
 
         "*" = {
