@@ -133,6 +133,7 @@
       fasd
       jq
       bc
+      file
       killall
       curl wget
       ranger mc

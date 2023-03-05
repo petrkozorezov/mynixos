@@ -6,9 +6,10 @@ let email = "petr.kozorezov@gmail.com"; in {
       userEmail = email;
       userName  = "Petr Kozorezov";
       extraConfig = {
-        push.default   = "current";
-        pull.ff        = "only";
-        core.quotePath = false;
+        push.default       = "current";
+        pull.ff            = "only";
+        core.quotePath     = false;
+        init.defaultBranch = "master";
       };
       signing = {
         key           = email;
