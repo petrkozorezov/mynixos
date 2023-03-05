@@ -9,18 +9,18 @@ let
   sublSetting       = {
     # ui
     theme                             = "Afterglow.sublime-theme";
-    tabs_small                        = true;
     sidebar_size_13                   = true;
     color_scheme                      = "Packages/Theme - Afterglow/Afterglow-monokai.tmTheme";
     font_face                         = "JetBrains Mono";
     font_size                         = 14;
-
+    overlay_scroll_bars               = "enabled";
     auto_complete                     = true;
     auto_match_enabled                = false;
     ignored_packages                  = [];
     tab_size                          = 2;
+    tabs_small                        = true;
     translate_tabs_to_spaces          = true;
-    trim_trailing_white_space_on_save = true;
+    trim_trailing_white_space_on_save = "all";
     ensure_newline_at_eof_on_save     = true;
     update_check                      = false;
     vintage_start_in_command_mode     = true;
@@ -71,6 +71,7 @@ let
       "LSP-json"
       # "LSP-file-watcher-chokidar" # periodically eats too much CPU
       # "LSP-bash"
+      "Elixir"
       "ElixirSyntax"
       "LSP-elixir"
       "Nix"
@@ -91,7 +92,7 @@ let
       # "LSP-ltex-ls"
       "TLAPlus"
 
-      "Debugger"
+      # "Debugger" # shows a lot errors
 
       # VCS
       "SublimeGit"
@@ -127,10 +128,22 @@ let
       "unresolved-proc-macro"
     ];
   };
+
   # rustFmt = {
   #   format_on_save = true;
   #   executable     = ["${pkgs.rustfmt}/bin/rustfmt"];
   # };
+
+  lspElixir.settings.elixirLS = {
+    dialyzerEnabled  = true;
+    dialyzerWarnOpts = [
+      "error_handling"
+      "unknown"
+      "no_return"
+      "no_unused"
+    ];
+    dialyzerFormat = "dialyxir_short";
+  };
 in
 {
   xdg = {
@@ -147,6 +160,8 @@ in
         builtins.toJSON lspTypescript;
       "${userPath}/LSP-rust-analyzer.sublime-settings".text =
         builtins.toJSON rustAnalyzer;
+      "${userPath}/LSP-elixir.sublime-settings".text =
+        builtins.toJSON lspElixir;
 
       # "${userPath}/RustFmt.sublime-settings".text =
       #   builtins.toJSON rustFmt;
@@ -170,7 +185,7 @@ in
 
     erlang
     nodejs
-    elixir
+    elixir_1_14
     rustc cargo
     mdl # markdownlint
     shellcheck
