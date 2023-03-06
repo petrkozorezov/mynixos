@@ -166,11 +166,9 @@ in {
 
             "firefox -P personal"
             "firefox -P clean"
+            "firefox -P work"
             "sublime_text"
             "telegram-desktop"
-            # "slack"
-            "discord"
-            "MellowPlayer"
          ]
          (cmd: { command = cmd; })
       ;

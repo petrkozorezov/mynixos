@@ -40,6 +40,7 @@ with lib; {
               uuid = "1d98ff68-0a2c-4834-8d8b-7bb9888080aa";
               type = "wireguard";
               interface-name = id;
+              autoconnect    = true;
             };
             wireguard.private-key = self.priv;
             "wireguard-peer.${helsinki1.pub}" = {
@@ -66,6 +67,7 @@ with lib; {
               uuid = "808291c7-3290-4c84-9c8a-a25eb7128745";
               type = "wireguard";
               interface-name = id;
+              autoconnect    = false;
             };
             wireguard.private-key = self.priv;
             "wireguard-peer.${router.pub}" = {

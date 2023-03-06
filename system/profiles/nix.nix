@@ -16,7 +16,6 @@
   ];
   nix = {
     package      = pkgs.nixFlakes;
-    allowedUsers = [ "@wheel" ];
     extraOptions = ''
       # for flakes
       experimental-features = nix-command flakes
@@ -29,9 +28,12 @@
       dates     = "weekly";
       options   = "--delete-older-than 30d";
     };
-    autoOptimiseStore  = true;
     optimise.automatic = true;
 
-    requireSignedBinaryCaches = true;
+    settings = {
+      allowed-users       = [ "@wheel" ];
+      require-sigs        = true;
+      auto-optimise-store = true;
+    };
   };
 }

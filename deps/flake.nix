@@ -3,9 +3,9 @@
   # TODO remove copy-paste
   # see https://github.com/NixOS/nix/issues/3966
   inputs = {
-           nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.05"                      ;
-     nixos-channel.url = "https://nixos.org/channels/nixos-22.05/nixexprs.tar.xz";
-      home-manager.url = "github:rycee/home-manager/release-22.05"               ;
+           nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11"                      ;
+     nixos-channel.url = "https://nixos.org/channels/nixos-22.11/nixexprs.tar.xz";
+      home-manager.url = "github:rycee/home-manager/release-22.11"               ;
                nur.url = "github:nix-community/NUR"                              ;
          deploy-rs.url = "github:serokell/deploy-rs"                             ;
           terranix.url = "github:terranix/terranix"                              ;

@@ -4,7 +4,7 @@
 
   fonts = {
     fonts = with pkgs; [
-      pkgs.hack-font
+      hack-font
     ];
     fontconfig = {
       enable = true;
@@ -14,7 +14,7 @@
 
   # wireshark
   programs.wireshark = {
-    enable = true;
+    enable  = true;
     package = pkgs.wireshark;
   };
 
@@ -31,13 +31,13 @@
   # security
   services.pcscd.enable   = true;
   programs.ssh.startAgent = false;
-  services.udev.packages = [ pkgs.yubikey-personalization ];
+  services.udev.packages  = [ pkgs.yubikey-personalization ];
   security.pam.services.swaylock = {};
 
   # networking
   networking = {
     networkmanager = {
-      enable = true;
+      enable       = true;
       wifi.backend = "iwd";
     };
     useDHCP = false;
@@ -48,11 +48,9 @@
     autostart.enable = true;
     portal = {
       enable       = true;
-      extraPortals = with pkgs; [
-        xdg-desktop-portal-gtk
-        xdg-desktop-portal-wlr
-      ];
-      gtkUsePortal = true;
+      wlr.enable   = true;
+      extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+      gtkUsePortal = true; # TODO remove and GTK_USE_PORTAL=1 specifically for ff
     };
   };
 

@@ -15,13 +15,13 @@
       };
     "buster-captcha-solver" = buildFirefoxXpiAddon {
       pname = "buster-captcha-solver";
-      version = "1.3.2";
+      version = "2.0.1";
       addonId = "{e58d3966-3d76-4cd9-8552-1582fbc800c1}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/3997075/buster_captcha_solver-1.3.2.xpi";
-      sha256 = "bd8b13aebb7437b57acd898c5f0a1326e5af61ac41316abbca30c075636fa1f7";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4044701/buster_captcha_solver-2.0.1.xpi";
+      sha256 = "9910d2d0add8ba10d7053fd90818e17e6d844050c125f07cb4e4f5759810efcf";
       meta = with lib;
       {
-        homepage = "https://github.com/dessant/buster";
+        homepage = "https://github.com/dessant/buster#readme";
         description = "Save time by asking Buster to solve captchas for you.";
         license = licenses.gpl3;
         platforms = platforms.all;
@@ -57,10 +57,10 @@
       };
     "ether-metamask" = buildFirefoxXpiAddon {
       pname = "ether-metamask";
-      version = "10.18.4";
+      version = "10.18.1";
       addonId = "webextension@metamask.io";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4003278/ether_metamask-10.18.4.xpi";
-      sha256 = "7a10cebf3b4445561f2217cc83ce1e8b00568042f01aaefaeaaafbf028d724e7";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3980615/ether_metamask-10.18.1.xpi";
+      sha256 = "b7f2512613d55981ee28ca95501b23c8c9e3b20e3ac4eb5431a131108f1129b0";
       meta = with lib;
       {
         description = "Ethereum Browser Extension";
@@ -69,10 +69,10 @@
       };
     "flagfox" = buildFirefoxXpiAddon {
       pname = "flagfox";
-      version = "6.1.54";
+      version = "6.1.59";
       addonId = "{1018e4d6-728f-4b20-ad56-37578a4de76b}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/3996798/flagfox-6.1.54.xpi";
-      sha256 = "5f7cebaea3d24d42fd170e623bd9c257eaaca238cdf116d9588348e59b03f435";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4064420/flagfox-6.1.59.xpi";
+      sha256 = "472dcbc63acdb66103cd9b05f7d91ceed68604acad64e34b07e6eecbd2173950";
       meta = with lib;
       {
         homepage = "https://flagfox.wordpress.com/";
@@ -109,10 +109,10 @@
       };
     "languagetool" = buildFirefoxXpiAddon {
       pname = "languagetool";
-      version = "5.4.3";
+      version = "6.0.1";
       addonId = "languagetool-webextension@languagetool.org";
-      url = "https://addons.mozilla.org/firefox/downloads/file/3985810/languagetool-5.4.3.xpi";
-      sha256 = "0a5fd00fd7a6fdd0e18479783596b553b18fc06507ff54ebba425d6d0f25f76e";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4034972/languagetool-6.0.1.xpi";
+      sha256 = "a72439258d7e937625b762ab4e35e27d80bddbb1bf9c57947e65ec94d8587e79";
       meta = with lib;
       {
         homepage = "https://languagetool.org";
@@ -122,24 +122,24 @@
       };
     "passff" = buildFirefoxXpiAddon {
       pname = "passff";
-      version = "1.14";
+      version = "1.14.1";
       addonId = "passff@invicem.pro";
-      url = "https://addons.mozilla.org/firefox/downloads/file/3939178/passff-1.14.xpi";
-      sha256 = "23ec6c09b499d35db1c028e5455c760dc4421d92365ce8a923080faf486b5e33";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4069548/passff-1.14.1.xpi";
+      sha256 = "465c204212b93546d20dc8fef2c99ac8b06b2d884cd2d38aaf73d825c8be7383";
       meta = with lib;
       {
         homepage = "https://github.com/passff/passff";
-        description = "Add-on that allows users of the unix password manager 'pass' (see <a href=\"https://outgoing.prod.mozaws.net/v1/24f646fb865abe6edf9e3f626db62565bfdc2e7819ab33a5b4c30a9573787988/https%3A//www.passwordstore.org/\" rel=\"nofollow\">https://www.passwordstore.org/</a>) to access their password store from Firefox";
+        description = "Add-on that allows users of the unix password manager 'pass' (see <a href=\"https://prod.outgoing.prod.webservices.mozgcp.net/v1/24f646fb865abe6edf9e3f626db62565bfdc2e7819ab33a5b4c30a9573787988/https%3A//www.passwordstore.org/\" rel=\"nofollow\">https://www.passwordstore.org/</a>) to access their password store from Firefox";
         license = licenses.gpl2;
         platforms = platforms.all;
         };
       };
     "plantuml-visualizer" = buildFirefoxXpiAddon {
       pname = "plantuml-visualizer";
-      version = "1.15.0";
+      version = "2.0.1";
       addonId = "{d324f64b-b423-4c2b-a9b4-d415705c26a9}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/3802523/plantuml_visualizer-1.15.0.xpi";
-      sha256 = "21c2aba891c0b05b5e0d998447569652ff17e511ad650c34c3aaa0f6115fac8b";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4079147/plantuml_visualizer-2.0.1.xpi";
+      sha256 = "71c72f3796023ae44a5a54f952aabe6efe20da09064ef2b66d147cd9ba3c3129";
       meta = with lib;
       {
         homepage = "https://github.com/WillBooster/plantuml-visualizer";
@@ -163,10 +163,10 @@
       };
     "simple-translate" = buildFirefoxXpiAddon {
       pname = "simple-translate";
-      version = "2.8.0";
+      version = "2.8.1";
       addonId = "simple-translate@sienori";
-      url = "https://addons.mozilla.org/firefox/downloads/file/3996565/simple_translate-2.8.0.xpi";
-      sha256 = "fcee11b477465c87d5b1f3c922e40edbcbf2c99a95022f57265a8fab22047ca8";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4072586/simple_translate-2.8.1.xpi";
+      sha256 = "23f1953d588d5d9943ab43845407b84a51bbcc1824b8c010ed56caa119711a27";
       meta = with lib;
       {
         homepage = "https://simple-translate.sienori.com";
@@ -203,10 +203,10 @@
       };
     "solflare-wallet" = buildFirefoxXpiAddon {
       pname = "solflare-wallet";
-      version = "1.35";
+      version = "1.41.1";
       addonId = "{6d72262a-b243-4dc6-8f4f-be96c74e0a86}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4002422/solflare_wallet-1.35.xpi";
-      sha256 = "b4f696b024f56957213e3a80043d1e81e1bfb34404cd9bd138a400185d8c1977";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4069294/solflare_wallet-1.41.1.xpi";
+      sha256 = "b7b1a73579ba336109d5d9c53d32ce9652f143dac2d936820e19526f0afd8a7d";
       meta = with lib;
       {
         homepage = "https://solflare.com/";
@@ -216,10 +216,10 @@
       };
     "tree-style-tab" = buildFirefoxXpiAddon {
       pname = "tree-style-tab";
-      version = "3.9.5";
+      version = "3.9.12";
       addonId = "treestyletab@piro.sakura.ne.jp";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4004810/tree_style_tab-3.9.5.xpi";
-      sha256 = "f867a2790e3e149c1fc8ff7ad547b4c03beb7a5164cd67a188bbba83590a0144";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4053198/tree_style_tab-3.9.12.xpi";
+      sha256 = "8a2e3b223756c0ba90960ecddc64d282b4dc8293a1c18c9a1b0c77929dcaa5b8";
       meta = with lib;
       {
         homepage = "http://piro.sakura.ne.jp/xul/_treestyletab.html.en";
@@ -229,10 +229,10 @@
       };
     "ublock-origin" = buildFirefoxXpiAddon {
       pname = "ublock-origin";
-      version = "1.44.4";
+      version = "1.47.2";
       addonId = "uBlock0@raymondhill.net";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4003969/ublock_origin-1.44.4.xpi";
-      sha256 = "0be550c9a27c040d04ad71954dd9e9a4967a27d48ffa2cdfe91171752e152685";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4073921/ublock_origin-1.47.2.xpi";
+      sha256 = "2ae62bf1e5632f793c734e36ef9dabfc16c8865516adaf8e90e5a4d1852170f6";
       meta = with lib;
       {
         homepage = "https://github.com/gorhill/uBlock#ublock-origin";
@@ -243,10 +243,10 @@
       };
     "user-agent-string-switcher" = buildFirefoxXpiAddon {
       pname = "user-agent-string-switcher";
-      version = "0.4.8";
+      version = "0.4.9";
       addonId = "{a6c4a591-f1b2-4f03-b3ff-767e5bedf4e7}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/3952467/user_agent_string_switcher-0.4.8.xpi";
-      sha256 = "723a1846f165544b82a97e69000f25ffbe9de312f0a932c1f6c35e54240a03ee";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4047133/user_agent_string_switcher-0.4.9.xpi";
+      sha256 = "617ab726419f6c1addedc727ad41dca18f52fbde34af59ed7d42425f139129d1";
       meta = with lib;
       {
         homepage = "http://add0n.com/useragent-switcher.html";
@@ -257,14 +257,14 @@
       };
     "view-page-archive" = buildFirefoxXpiAddon {
       pname = "view-page-archive";
-      version = "3.1.0";
+      version = "4.0.0";
       addonId = "{d07ccf11-c0cd-4938-a265-2a4d6ad01189}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/3894402/view_page_archive-3.1.0.xpi";
-      sha256 = "b8276479bc7b2accf234bb1b455b94969acdf1eb2059d80020ab43ebf48949d4";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4065318/view_page_archive-4.0.0.xpi";
+      sha256 = "3e0e0a7d757135975e093e2339f750ce8a762be47c802c59679a0994931ed346";
       meta = with lib;
       {
         homepage = "https://github.com/dessant/web-archives#readme";
-        description = "View archived and cached versions of web pages on 10+ search engines, such as the Wayback Machine, Archive․is, Google, Bing, Yandex, Baidu and Yahoo.";
+        description = "View archived and cached versions of web pages on 10+ search engines, such as the Wayback Machine, Archive․is, Google, Bing and Yandex";
         license = licenses.gpl3;
         platforms = platforms.all;
         };
@@ -285,10 +285,10 @@
       };
     "youtube-addon" = buildFirefoxXpiAddon {
       pname = "youtube-addon";
-      version = "3.935";
+      version = "4.0.17.1";
       addonId = "{3c6bf0cc-3ae2-42fb-9993-0d33104fdcaf}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/3896635/youtube_addon-3.935.xpi";
-      sha256 = "9d68b6d4507e2a8aa0b2b1f6f48f91591d2ff81ea18e773021b1d1da95919ea7";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4059315/youtube_addon-4.0.17.1.xpi";
+      sha256 = "6a1e464ff9e99a760a09a208f517ad851c3263174a76e6383e5796cb13a73a5e";
       meta = with lib;
       {
         homepage = "https://github.com/code4charity/YouTube-Extension/";

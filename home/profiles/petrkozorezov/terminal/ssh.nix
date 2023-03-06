@@ -4,7 +4,7 @@
     enable              = true;
 
     # compression         = true;
-    forwardAgent        = false;
+    forwardAgent        = true;
     hashKnownHosts      = true;
     serverAliveInterval = 300;
     serverAliveCountMax = 2;

@@ -49,9 +49,13 @@
       userConfig =
         username: modules:
           home-manager.lib.homeManagerConfiguration {
-            inherit system pkgs username;
-            homeDirectory    = "/home/" + username;
-            configuration    = { imports = commonHMModules ++ modules; };
+            inherit pkgs;
+            modules = commonHMModules ++ modules ++ [{
+              home = {
+                inherit username;
+                homeDirectory = "/home/" + username;
+              };
+            }];
             extraSpecialArgs = configExtraAgrs;
           };
 
@@ -73,7 +77,7 @@
       defaultPackage.${system} =
         let
           terraform =
-            pkgs.terraform_0_15.withPlugins (tp: [
+            pkgs.terraform.withPlugins (tp: [
               tp.hcloud
             ]);
         in pkgs.buildEnv {

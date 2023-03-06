@@ -15,7 +15,7 @@ show-repo-path:
 	@echo $(REPO_PATH)
 
 update-ff-addons:
-	cd deps/overlay && nixpkgs-firefox-addons firefox-addons.json generated-firefox-addons.nix
+	cd deps/overlay && mozilla-addons-to-nix firefox-addons.json generated-firefox-addons.nix
 
 update-ff-userjs:
 	cd home/profiles/petrkozorezov/desktop/browser && ./userjs-nix.sh > generated-userjs.nix
@@ -50,7 +50,7 @@ deploy\:%:
 	deploy -s ".#$*"
 
 shell:
-	nix shell
+	nix shell # TODO --profile .nix-profile
 
 config.tf.json: cloud/*.nix
 	terranix cloud/default.nix | jq . > $@

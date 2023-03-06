@@ -6,15 +6,11 @@ in {
     deps.inputs.nix-doom-emacs.hmModule
   ];
 
-  # restart needed
-  home.sessionVariables.EDITOR = "emacsclient";
+  # home.sessionVariables.EDITOR = "emacsclient";
   programs.doom-emacs = {
-    enable               = true;
-    doomPrivateDir       = ./emacs;
-    emacsPackage         =
-      pkgs.emacs-nox.override {
-        nativeComp = true;
-      };
+    enable         = true;
+    doomPrivateDir = ./emacs;
+    emacsPackage   = pkgs.emacs-nox;
     emacsPackagesOverlay = self: super: {
       xclip = super.xclip.overrideAttrs (esuper: {
         buildInputs = esuper.buildInputs ++ [ pkgs.wl-clipboard-x11 ];
@@ -38,9 +34,12 @@ in {
   ];
 
   services.emacs = {
-    enable                  = true;
+    enable = true;
     # socketActivation.enable = true;
   };
 
-  programs.zsh.shellAliases = { "emacs" = "${term} emacs"; "emacsclient" = "${term} emacsclient"; };
+  programs.zsh.shellAliases = {
+    emacs       = "${term} emacs";
+    emacsclient = "${term} emacsclient";
+  };
 }

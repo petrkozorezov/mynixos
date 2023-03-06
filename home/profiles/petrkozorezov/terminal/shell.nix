@@ -163,6 +163,7 @@
       # TODO
       nushell
 
+      sshfs
       awscli2
     ];
 }

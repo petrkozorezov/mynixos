@@ -109,6 +109,7 @@
     ];
   };
 
+  # TODO add GTK_USE_PORTAL=1
   home.sessionVariables.BROWSER = "firefox";
   home.packages = with pkgs; [
     # torbrowser
