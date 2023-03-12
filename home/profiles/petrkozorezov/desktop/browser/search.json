@@ -1,98 +1,197 @@
 {
-  "version": 6,
-  "engines": [
-    {
-      "_name": "DuckDuckGo",
-      "_isAppProvided": true,
-      "_metaData": { "alias": ".d", "order": 1}
-    },
-    {
-      "_name": "OnionDuckDuckGo",
-      "description": "Onion DuckDuckGo",
-      "_urls": [
+    "version": 8,
+    "engines":
+    [
         {
-          "params": [
+            "id": "google@search.mozilla.orgdefault",
+            "_name": "Google",
+            "_isAppProvided": true,
+            "_metaData":
             {
-              "name": "q",
-              "value": "{searchTerms}"
+                "alias": ".g",
+                "order": 5
             }
-          ],
-          "rels": [],
-          "template": "https://duckduckgogg42xjoc72x3sjasowoarfbgcmvfimaftt6twagswzczad.onion/"
-        }
-      ],
-      "_isAppProvided": false,
-      "queryCharset": "[UTF-8]",
-      "_metaData": { "alias": ".od", "order": 2 }
-    },
-    {
-      "_name": "NixOSOption",
-      "description": "NixOS options",
-      "_urls": [
+        },
         {
-          "params": [
+            "id": "amazondotcom@search.mozilla.orgdefault",
+            "_name": "Amazon.com",
+            "_isAppProvided": true,
+            "_metaData":
             {
-              "name": "query",
-              "value": "{searchTerms}"
+                "hidden": true,
+                "order": 7
             }
-          ],
-          "rels": [],
-          "template": "https://search.nixos.org/options"
-        }
-      ],
-      "_isAppProvided": false,
-      "queryCharset": "[UTF-8]",
-      "_metaData": { "alias": ".nso", "order": 3 }
-    },
-    {
-      "_name": "NixOSPackages",
-      "description": "NixOS packages",
-      "_urls": [
+        },
         {
-          "params": [
+            "id": "wikipedia@search.mozilla.orgdefault",
+            "_name": "Wikipedia (en)",
+            "_isAppProvided": true,
+            "_metaData":
             {
-              "name": "query",
-              "value": "{searchTerms}"
+                "alias": ".w",
+                "order": 6
             }
-          ],
-          "rels": [],
-          "template": "https://search.nixos.org/packages"
+        },
+        {
+            "id": "bing@search.mozilla.orgdefault",
+            "_name": "Bing",
+            "_isAppProvided": true,
+            "_metaData":
+            {
+                "hidden": true,
+                "order": 8
+            }
+        },
+        {
+            "id": "ddg@search.mozilla.orgdefault",
+            "_name": "DuckDuckGo",
+            "_isAppProvided": true,
+            "_metaData":
+            {
+                "alias": ".d",
+                "order": 1
+            }
+        },
+        {
+            "id": "2150470d-b5aa-437e-8ce0-88dabad89f30",
+            "_name": "OnionDuckDuckGo",
+            "_loadPath": "[opensearch]loading",
+            "description": "Onion DuckDuckGo",
+            "_iconURL": "",
+            "_iconMapObj": null,
+            "_metaData":
+            {
+                "alias": ".od",
+                "order": 2
+            },
+            "_urls":
+            [
+                {
+                    "params":
+                    [
+                        {
+                            "name": "q",
+                            "value": "{searchTerms}"
+                        }
+                    ],
+                    "rels":
+                    [],
+                    "template": "https://duckduckgogg42xjoc72x3sjasowoarfbgcmvfimaftt6twagswzczad.onion/"
+                }
+            ],
+            "_orderHint": null,
+            "_telemetryId": null,
+            "_updateInterval": null,
+            "_updateURL": null,
+            "_iconUpdateURL": null,
+            "_filePath": null,
+            "_extensionID": null,
+            "_locale": null,
+            "_definedAliases":
+            [],
+            "queryCharset": "[UTF-8]"
+        },
+        {
+            "id": "c30ab8b8-343d-4834-a857-34c6378f413e",
+            "_name": "NixOSOption",
+            "_loadPath": "[opensearch]loading",
+            "description": "NixOS options",
+            "_iconURL": "",
+            "_iconMapObj": null,
+            "_metaData":
+            {
+                "alias": ".nso",
+                "order": 3
+            },
+            "_urls":
+            [
+                {
+                    "params":
+                    [
+                        {
+                            "name": "query",
+                            "value": "{searchTerms}"
+                        }
+                    ],
+                    "rels":
+                    [],
+                    "template": "https://search.nixos.org/options"
+                }
+            ],
+            "_orderHint": null,
+            "_telemetryId": null,
+            "_updateInterval": null,
+            "_updateURL": null,
+            "_iconUpdateURL": null,
+            "_filePath": null,
+            "_extensionID": null,
+            "_locale": null,
+            "_definedAliases":
+            [],
+            "queryCharset": "[UTF-8]"
+        },
+        {
+            "id": "dfbda240-81bc-40ae-8715-f8737f4f8693",
+            "_name": "NixOSPackages",
+            "_loadPath": "[opensearch]loading",
+            "description": "NixOS packages",
+            "_iconURL": "",
+            "_iconMapObj": null,
+            "_metaData":
+            {
+                "alias": ".nsp",
+                "order": 4
+            },
+            "_urls":
+            [
+                {
+                    "params":
+                    [
+                        {
+                            "name": "query",
+                            "value": "{searchTerms}"
+                        }
+                    ],
+                    "rels":
+                    [],
+                    "template": "https://search.nixos.org/packages"
+                }
+            ],
+            "_orderHint": null,
+            "_telemetryId": null,
+            "_updateInterval": null,
+            "_updateURL": null,
+            "_iconUpdateURL": null,
+            "_filePath": null,
+            "_extensionID": null,
+            "_locale": null,
+            "_definedAliases":
+            [],
+            "queryCharset": "[UTF-8]"
+        },
+        {
+            "_name": "Yandex",
+            "_isAppProvided": true,
+            "_metaData":
+            {
+                "hidden": true,
+                "order": 7
+            }
         }
-      ],
-      "_isAppProvided": false,
-      "queryCharset": "[UTF-8]",
-      "_metaData": { "alias": ".nsp", "order": 4 }
-    },
-
+    ],
+    "metaData":
     {
-      "_name": "Google",
-      "_isAppProvided": true,
-      "_metaData": { "alias": ".g", "order": 5 }
-    },
-    {
-      "_name": "Wikipedia (en)",
-      "_isAppProvided": true,
-      "_metaData": { "alias": ".w", "order": 6 }
-    },
-
-    {
-      "_name": "Yandex",
-      "_isAppProvided": true,
-      "_metaData": { "hidden": true, "order": 7 }
-    },
-    {
-      "_name": "Amazon.com",
-      "_isAppProvided": true,
-      "_metaData": { "hidden": true, "order": 8 }
-    },
-    {
-      "_name": "Bing",
-      "_isAppProvided": true,
-      "_metaData": { "hidden": true, "order": 9 }
+        "useSavedOrder": true,
+        "current": "DuckDuckGo",
+        "locale": "en-US",
+        "region": "RU",
+        "channel": "default",
+        "experiment": "",
+        "distroID": "nixos",
+        "defaultEngineId": "ddg@search.mozilla.orgdefault",
+        "defaultEngineIdHash": "eB4O41LKHzVqmGRb/cw+cysyMdjbzJ37MkgbRxlTCgA=",
+        "privateDefaultEngineId": "",
+        "privateDefaultEngineIdHash": "bEZ2B96ENRkfYYieumqxnCLa75jee6ZJuvC7K2TdttU=",
+        "appDefaultEngineId": "google@search.mozilla.orgdefault"
     }
-  ],
-  "metaData": {
-    "useSavedOrder": true,
-    "current": "DuckDuckGo"
-  }
 }

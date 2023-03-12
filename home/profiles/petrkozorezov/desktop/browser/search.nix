@@ -9,7 +9,12 @@ with lib; {
       mapAttrs'
         (name: profile:
           nameValuePair "${profilesPath}/${profile.path}/search.json.mozlz4" {
-            source = pkgs.runCommandLocal "firefox-${name}-search.json" {} "${pkgs.mozlz4a}/bin/mozlz4a ${searchJson} $out";
+            source =
+              pkgs.runCommandLocal "firefox-${name}-search.json" {} ''
+                cat ${searchJson} | ${pkgs.jq}/bin/jq -r tostring > tmp.json
+                ${pkgs.mozlz4a}/bin/mozlz4a tmp.json $out
+                rm -f tmp.json
+              '';
           }
         )
         config.programs.firefox.profiles;
