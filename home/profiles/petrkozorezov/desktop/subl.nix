@@ -66,7 +66,6 @@ let
       "Pretty JSON"
       "Text Pastry"
       "ColorHelper"
-      "AutoFileName"
 
       # languages
       "LSP"
@@ -75,7 +74,6 @@ let
       # "LSP-bash"
       "Elixir"
       "ElixirSyntax"
-      "LSP-elixir"
       "Nix"
       "Protocol Buffer Syntax"
       "ThriftSyntax"
@@ -104,6 +102,7 @@ let
   };
   lsp = {
     clients =
+      # TODO nil (ls for nix)
       {
         erlang-ls =
           {
@@ -111,6 +110,22 @@ let
             command  = [ "${pkgs.erlang-ls}/bin/erlang_ls" "--transport" "stdio" "" ];
             selector = "source.erlang";
           };
+        elixir-ls = {
+          enabled  = true;
+          selector = "source.elixir";
+          command  = [ "${pkgs.nix}/bin/nix" "develop" "-c" "elixir-ls" ];
+          settings.elixirLS = {
+            dialyzerEnabled = true;
+            # TODO get config from project
+            dialyzerWarnOpts = [
+              "error_handling"
+              "unknown"
+              "no_return"
+              "no_unused"
+            ];
+            dialyzerFormat = "dialyxir_short";
+          };
+        };
       };
     initialize_timeout = 30;
     log_debug    = false;
@@ -123,28 +138,9 @@ let
   };
   rustAnalyzer.settings = {
     "rust-analyzer.inlayHints.enable" = false;
-    # "rust-analyzer.cargo.loadOutDirsFromCheck" = true;
-    # "rust-analyzer.procMacro.enable" = false;
-    # "rust-analyzer.experimental.procAttrMacros" = false;
     "rust-analyzer.diagnostics".disabled = [
       "unresolved-proc-macro"
     ];
-  };
-
-  # rustFmt = {
-  #   format_on_save = true;
-  #   executable     = ["${pkgs.rustfmt}/bin/rustfmt"];
-  # };
-
-  lspElixir.settings.elixirLS = {
-    dialyzerEnabled  = true;
-    dialyzerWarnOpts = [
-      "error_handling"
-      "unknown"
-      "no_return"
-      "no_unused"
-    ];
-    dialyzerFormat = "dialyxir_short";
   };
 in
 {
@@ -162,11 +158,7 @@ in
         builtins.toJSON lspTypescript;
       "${userPath}/LSP-rust-analyzer.sublime-settings".text =
         builtins.toJSON rustAnalyzer;
-      "${userPath}/LSP-elixir.sublime-settings".text =
-        builtins.toJSON lspElixir;
 
-      # "${userPath}/RustFmt.sublime-settings".text =
-      #   builtins.toJSON rustFmt;
       # TODO pass by config
       "${localPath}/License.sublime_license".source = config.zoo.secrets.filesPath + "/sublime.license";
       "${installedPkgsPath}/Package Control.sublime-package".source =
@@ -185,9 +177,8 @@ in
   home.packages = with pkgs; [
     jetbrains-mono
 
-    erlang
+    # TODO refactor lsp to use flake.nix
     nodejs
-    elixir_1_14
     rustc cargo
     mdl # markdownlint
     shellcheck
@@ -197,7 +188,5 @@ in
       propagatedBuildInputs =
         propagatedBuildInputs ++ [];
     }))
-
-    # oni2 # just to look on it
   ];
 }
