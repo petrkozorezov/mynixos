@@ -95,6 +95,7 @@ in {
     enableAllFirmware             = true;
     cpu.intel.updateMicrocode     = true;
     enableRedistributableFirmware = true;
+    opengl.extraPackages          = [ pkgs.intel-media-driver ];
   };
 
   # facetimehd
