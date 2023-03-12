@@ -1,15 +1,16 @@
 { pkgs, ... }:
 {
-
   programs.rofi = {
     enable      = true;
+    package     = pkgs.rofi-wayland;
     terminal    = "alacritty";
     theme       = "theme";
     extraConfig =
       {
-        matching    = "fuzzy";
+        matching = "fuzzy";
       };
   };
+  home.packages = with pkgs; [ hack-font rofi-power-menu rofi-calc rofi-bluetooth ];
   xdg.configFile = {
     "rofi/theme.rasi".text =
       ''
@@ -65,6 +66,5 @@
         }
       '';
   };
-  home.packages = [ pkgs.hack-font ];
 }
 

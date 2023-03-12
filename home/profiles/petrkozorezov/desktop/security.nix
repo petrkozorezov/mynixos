@@ -5,6 +5,7 @@
       wl-clipboard
     ];
 
+  # TODO pinentry-rofi
   programs.pinentry.package = pkgs.pinentry-gtk2;
   services.gpg-agent.pinentryFlavor = "gtk2";
 

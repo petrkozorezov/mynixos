@@ -36,7 +36,6 @@ let
   '';
 in {
   home.packages = with pkgs; [
-    rofi
     networkmanager-vpnc
     networkmanager-l2tp
     networkmanagerapplet
@@ -182,10 +181,10 @@ in {
           "${w_calls}" = [ { class  = "Chromium-browser"; } ];
         };
 
-      gaps = {
-        inner = 10;
-        outer = 5 ;
-      };
+      # gaps = {
+      #   inner = 10;
+      #   outer = 5 ;
+      # };
 
       bars = [ { command = "waybar"; } ];
 
