@@ -26,7 +26,7 @@ let
     vintage_start_in_command_mode     = true;
     copy_with_empty_selection         = true;
     highlight_line                    = true;
-    folder_exclude_patterns           = [ "_build" ".git" ".cache" ];
+    folder_exclude_patterns           = [ ".git" ];
     binary_file_patterns =
       [
         "*.jpg" "*.jpeg" "*.png" "*.gif" "*.ttf" "*.tga" "*.dds" "*.ico" "*.eot" "*.pdf" "*.swf" "*.jar" "*.zip" "*.beam"
@@ -35,8 +35,8 @@ let
   };
   sublKeymap =
     [
-      { keys = ["ctrl+*"      ]; command = "focus_side_bar";                                  }
-      { keys = ["ctrl+)"      ]; command = "focus_group"   ; args = { group        = 0   ; }; }
+      { keys = ["alt+tab"     ]; command = "toggle_side_bar"; }
+      { keys = ["ctrl+*"      ]; command = "focus_side_bar" ; }
       { keys = ["ctrl+)"      ]; command = "focus_group"   ; args = { group        = 0   ; }; }
       { keys = ["ctrl++"      ]; command = "focus_group"   ; args = { group        = 1   ; }; }
       { keys = ["ctrl+]"      ]; command = "focus_group"   ; args = { group        = 2   ; }; }
@@ -65,6 +65,8 @@ let
       "EditorConfig"
       "Pretty JSON"
       "Text Pastry"
+      "ColorHelper"
+      "AutoFileName"
 
       # languages
       "LSP"
