@@ -3,7 +3,7 @@ rec {
   # just to ensure overlay works
   test = super.hello;
 
-  # erlang related packages
+  # erlang/elixir related packages
   grapherl  = super.callPackage ./grapherl.nix  { };
   hamler    = super.callPackage ./hamler.nix    { };
   beam      = super.beam // {
@@ -12,6 +12,8 @@ rec {
     };
   };
   erlang = super.erlangR24;
+  livebook = super.callPackage ./livebook.nix  { };
+
   firefox-addons = super.callPackage ./firefox-addons.nix { };
 
   zinc = super.callPackage ./zinc.nix  { };

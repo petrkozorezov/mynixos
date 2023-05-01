@@ -16,15 +16,19 @@
     # an explicitly input is needed here to prevent emacs-overlay from auto update
     emacs-overlay.url = "github:nix-community/emacs-overlay";
     nix-doom-emacs.inputs.emacs-overlay.follows = "emacs-overlay";
+    fenix = {
+      url = "github:nix-community/fenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nur, ... }:
+  outputs = { self, nixpkgs, nur, fenix, ... }:
     let
       config = {
         allowUnfree = true;
         permittedInsecurePackages = [ ];
       };
-      overlays = [ nur.overlay (import ./overlay) ];
+      overlays = [ nur.overlay fenix.overlays.default (import ./overlay) ];
       system = "x86_64-linux";
     in rec {
       legacyPackages.${system} = import nixpkgs { inherit system config overlays; };

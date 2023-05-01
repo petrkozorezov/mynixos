@@ -11,6 +11,8 @@
         erlang
         rebar3
 
+        livebook
+
         # coq
         # coq_8_13
         # coqPackages_8_13.mathcomp-ssreflect
