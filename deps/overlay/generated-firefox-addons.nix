@@ -57,10 +57,10 @@
       };
     "ether-metamask" = buildFirefoxXpiAddon {
       pname = "ether-metamask";
-      version = "10.18.1";
+      version = "10.27.0";
       addonId = "webextension@metamask.io";
-      url = "https://addons.mozilla.org/firefox/downloads/file/3980615/ether_metamask-10.18.1.xpi";
-      sha256 = "b7f2512613d55981ee28ca95501b23c8c9e3b20e3ac4eb5431a131108f1129b0";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4090626/ether_metamask-10.27.0.xpi";
+      sha256 = "9d1fb78615e6fc036aa2edade6441c091b5541ce85182c991a7677d45deaac61";
       meta = with lib;
       {
         description = "Ethereum Browser Extension";
@@ -69,10 +69,10 @@
       };
     "flagfox" = buildFirefoxXpiAddon {
       pname = "flagfox";
-      version = "6.1.59";
+      version = "6.1.61";
       addonId = "{1018e4d6-728f-4b20-ad56-37578a4de76b}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4064420/flagfox-6.1.59.xpi";
-      sha256 = "472dcbc63acdb66103cd9b05f7d91ceed68604acad64e34b07e6eecbd2173950";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4091245/flagfox-6.1.61.xpi";
+      sha256 = "e2e243e82b971b02e20ede3ce1c514f9955a4392b11c0c70cb4d4cf2750e48e6";
       meta = with lib;
       {
         homepage = "https://flagfox.wordpress.com/";
@@ -109,10 +109,10 @@
       };
     "languagetool" = buildFirefoxXpiAddon {
       pname = "languagetool";
-      version = "6.0.1";
+      version = "6.2.5";
       addonId = "languagetool-webextension@languagetool.org";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4034972/languagetool-6.0.1.xpi";
-      sha256 = "a72439258d7e937625b762ab4e35e27d80bddbb1bf9c57947e65ec94d8587e79";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4086343/languagetool-6.2.5.xpi";
+      sha256 = "d17977befe90e9c15b86407668a985587e8fb25aee353c7d47d34b917dec7cd9";
       meta = with lib;
       {
         homepage = "https://languagetool.org";
@@ -203,10 +203,10 @@
       };
     "solflare-wallet" = buildFirefoxXpiAddon {
       pname = "solflare-wallet";
-      version = "1.41.1";
+      version = "1.43.1";
       addonId = "{6d72262a-b243-4dc6-8f4f-be96c74e0a86}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4069294/solflare_wallet-1.41.1.xpi";
-      sha256 = "b7b1a73579ba336109d5d9c53d32ce9652f143dac2d936820e19526f0afd8a7d";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4091629/solflare_wallet-1.43.1.xpi";
+      sha256 = "054fc09d0f596ab66a850915392f0aa81bf56db17fad8caac3b4f724af7b9bf0";
       meta = with lib;
       {
         homepage = "https://solflare.com/";
@@ -216,10 +216,10 @@
       };
     "tree-style-tab" = buildFirefoxXpiAddon {
       pname = "tree-style-tab";
-      version = "3.9.12";
+      version = "3.9.15";
       addonId = "treestyletab@piro.sakura.ne.jp";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4053198/tree_style_tab-3.9.12.xpi";
-      sha256 = "8a2e3b223756c0ba90960ecddc64d282b4dc8293a1c18c9a1b0c77929dcaa5b8";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4088468/tree_style_tab-3.9.15.xpi";
+      sha256 = "7c993bae2d43488615f1a3b7459a2c35730a486b3855049709c636a84751d252";
       meta = with lib;
       {
         homepage = "http://piro.sakura.ne.jp/xul/_treestyletab.html.en";
@@ -229,10 +229,10 @@
       };
     "ublock-origin" = buildFirefoxXpiAddon {
       pname = "ublock-origin";
-      version = "1.47.2";
+      version = "1.48.4";
       addonId = "uBlock0@raymondhill.net";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4073921/ublock_origin-1.47.2.xpi";
-      sha256 = "2ae62bf1e5632f793c734e36ef9dabfc16c8865516adaf8e90e5a4d1852170f6";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4092158/ublock_origin-1.48.4.xpi";
+      sha256 = "d7666b963c2969b0014937aae55472eea5098ff21ed3bea8a2e1f595f62856c1";
       meta = with lib;
       {
         homepage = "https://github.com/gorhill/uBlock#ublock-origin";
@@ -285,14 +285,14 @@
       };
     "youtube-addon" = buildFirefoxXpiAddon {
       pname = "youtube-addon";
-      version = "4.0.17.1";
+      version = "4.6";
       addonId = "{3c6bf0cc-3ae2-42fb-9993-0d33104fdcaf}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4059315/youtube_addon-4.0.17.1.xpi";
-      sha256 = "6a1e464ff9e99a760a09a208f517ad851c3263174a76e6383e5796cb13a73a5e";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4089432/youtube_addon-4.6.xpi";
+      sha256 = "37a92848d64cf997363b7741a0f0b4efe222d34f0f19f0757d3d917ffac9a6aa";
       meta = with lib;
       {
         homepage = "https://github.com/code4charity/YouTube-Extension/";
-        description = "Make YouTube tidy &amp; powerful! YouTube Player Size Theme Quality Auto HD Colors Playback Speed Style ad block Playlist Channel H.264";
+        description = "Youtube Extension. Powerful but lightweight. Enrich your Youtube &amp; content selection.\nMake YouTube tidy&amp;smart! Layout Filters Shortcuts Adblocker Playlist";
         platforms = platforms.all;
         };
       };
