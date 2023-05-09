@@ -20,5 +20,12 @@
   { "slug": "detect-cloudflare-plus"     },
   { "slug": "change-timezone-time-shift" },
   { "slug": "solflare-wallet"            },
-  { "slug": "ether-metamask"             }
+  { "slug": "ether-metamask"             },
+  { "slug": "consent-o-matic"            },
+  { "slug": "tabliss"                    },
+  { "slug": "imagus"                     },
+  { "slug": "augmented-steam"            },
+  { "slug": "auto-tab-discard"           },
+  { "slug": "search_by_image"            },
+  { "slug": "epubreader"                 }
 ]

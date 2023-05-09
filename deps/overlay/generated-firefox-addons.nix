@@ -1,5 +1,33 @@
 { buildFirefoxXpiAddon, fetchurl, lib, stdenv }:
   {
+    "augmented-steam" = buildFirefoxXpiAddon {
+      pname = "augmented-steam";
+      version = "2.4.1";
+      addonId = "{1be309c5-3e4f-4b99-927d-bb500eb4fa88}";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4054613/augmented_steam-2.4.1.xpi";
+      sha256 = "962412b40471bc0dfafe72cd29c7e80ef789c33dc322086bbc03d3a89a5d08db";
+      meta = with lib;
+      {
+        homepage = "https://augmentedsteam.com/";
+        description = "Augments your Steam Experience";
+        license = licenses.gpl3;
+        platforms = platforms.all;
+        };
+      };
+    "auto-tab-discard" = buildFirefoxXpiAddon {
+      pname = "auto-tab-discard";
+      version = "0.6.7";
+      addonId = "{c2c003ee-bd69-42a2-b0e9-6f34222cb046}";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4045009/auto_tab_discard-0.6.7.xpi";
+      sha256 = "89e59b8603c444258c89a507d7126be52ad7a35e4f7b8cfbca039b746f70b5d5";
+      meta = with lib;
+      {
+        homepage = "https://webextension.org/listing/tab-discard.html";
+        description = "Increase browser speed and reduce memory load and when you have numerous open tabs.";
+        license = licenses.mpl20;
+        platforms = platforms.all;
+        };
+      };
     "behave" = buildFirefoxXpiAddon {
       pname = "behave";
       version = "0.9.7.1";
@@ -41,6 +69,20 @@
         platforms = platforms.all;
         };
       };
+    "consent-o-matic" = buildFirefoxXpiAddon {
+      pname = "consent-o-matic";
+      version = "1.0.12";
+      addonId = "gdpr@cavi.au.dk";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4074847/consent_o_matic-1.0.12.xpi";
+      sha256 = "013ea48757b8a4d84a2a0d944bc49b5612d62bae1d337f9569f425f2b8310e0f";
+      meta = with lib;
+      {
+        homepage = "https://consentomatic.au.dk/";
+        description = "Automatic handling of GDPR consent forms";
+        license = licenses.mit;
+        platforms = platforms.all;
+        };
+      };
     "detect-cloudflare-plus" = buildFirefoxXpiAddon {
       pname = "detect-cloudflare-plus";
       version = "1.7.1";
@@ -55,12 +97,25 @@
         platforms = platforms.all;
         };
       };
+    "epubreader" = buildFirefoxXpiAddon {
+      pname = "epubreader";
+      version = "2.0.13";
+      addonId = "{5384767E-00D9-40E9-B72F-9CC39D655D6F}";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3594370/epubreader-2.0.13.xpi";
+      sha256 = "2a294660517194c37b3f6c89aec4610646102fd38df65f95194aff80464bc46c";
+      meta = with lib;
+      {
+        homepage = "https://www.epubread.com/";
+        description = "Read ePub files right in Firefox. No additional software needed!";
+        platforms = platforms.all;
+        };
+      };
     "ether-metamask" = buildFirefoxXpiAddon {
       pname = "ether-metamask";
-      version = "10.27.0";
+      version = "10.28.3";
       addonId = "webextension@metamask.io";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4090626/ether_metamask-10.27.0.xpi";
-      sha256 = "9d1fb78615e6fc036aa2edade6441c091b5541ce85182c991a7677d45deaac61";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4096869/ether_metamask-10.28.3.xpi";
+      sha256 = "bf034e8296bc4a6aafc5152a240c0c3a40641e1687a95c0ec7f964118a3e3e97";
       meta = with lib;
       {
         description = "Ethereum Browser Extension";
@@ -69,10 +124,10 @@
       };
     "flagfox" = buildFirefoxXpiAddon {
       pname = "flagfox";
-      version = "6.1.61";
+      version = "6.1.62";
       addonId = "{1018e4d6-728f-4b20-ad56-37578a4de76b}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4091245/flagfox-6.1.61.xpi";
-      sha256 = "e2e243e82b971b02e20ede3ce1c514f9955a4392b11c0c70cb4d4cf2750e48e6";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4104463/flagfox-6.1.62.xpi";
+      sha256 = "db564593264aa417ec659c53de5bdda28eec0e52b250b329afb0cff982fed382";
       meta = with lib;
       {
         homepage = "https://flagfox.wordpress.com/";
@@ -104,6 +159,19 @@
       {
         homepage = "http://saucenao.com/";
         description = "A customizable reverse image search tool that conveniently presents a variety of top image search engines.";
+        platforms = platforms.all;
+        };
+      };
+    "imagus" = buildFirefoxXpiAddon {
+      pname = "imagus";
+      version = "0.9.8.74";
+      addonId = "{00000f2a-7cde-4f20-83ed-434fcb420d71}";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3547888/imagus-0.9.8.74.xpi";
+      sha256 = "2b754aa4fca1c99e86d7cdc6d8395e534efd84c394d5d62a1653f9ed519f384e";
+      meta = with lib;
+      {
+        homepage = "https://tiny.cc/Imagus";
+        description = "With a simple mouse-over you can enlarge images and display images/videos from links.";
         platforms = platforms.all;
         };
       };
@@ -144,6 +212,20 @@
       {
         homepage = "https://github.com/WillBooster/plantuml-visualizer";
         description = "A Chrome / Firefox extension for visualizing PlantUML descriptions.";
+        platforms = platforms.all;
+        };
+      };
+    "search_by_image" = buildFirefoxXpiAddon {
+      pname = "search_by_image";
+      version = "5.4.2";
+      addonId = "{2e5ff8c8-32fe-46d0-9fc8-6b8986621f3c}";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4034617/search_by_image-5.4.2.xpi";
+      sha256 = "327549ce86f8dc27794ece4a065cf673e007eefe716fb188b8c6d28102fca22f";
+      meta = with lib;
+      {
+        homepage = "https://github.com/dessant/search-by-image#readme";
+        description = "A powerful reverse image search tool, with support for various search engines, such as Google, Bing, Yandex, Baidu and TinEye.";
+        license = licenses.gpl3;
         platforms = platforms.all;
         };
       };
@@ -203,14 +285,28 @@
       };
     "solflare-wallet" = buildFirefoxXpiAddon {
       pname = "solflare-wallet";
-      version = "1.43.1";
+      version = "1.43.2";
       addonId = "{6d72262a-b243-4dc6-8f4f-be96c74e0a86}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4091629/solflare_wallet-1.43.1.xpi";
-      sha256 = "054fc09d0f596ab66a850915392f0aa81bf56db17fad8caac3b4f724af7b9bf0";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4096959/solflare_wallet-1.43.2.xpi";
+      sha256 = "05430da68db79a31389a3dbb7cd5b03c3e795a5961285830c3a9f858ae2980a1";
       meta = with lib;
       {
         homepage = "https://solflare.com/";
         description = "The only wallet you need to do everything on the Solana blockchain. Store, stake, and swap your tokens with Solflare.";
+        platforms = platforms.all;
+        };
+      };
+    "tabliss" = buildFirefoxXpiAddon {
+      pname = "tabliss";
+      version = "2.6.0";
+      addonId = "extension@tabliss.io";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3940751/tabliss-2.6.0.xpi";
+      sha256 = "de766810f234b1c13ffdb7047ae6cbf06ed79c3d08b51a07e4766fadff089c0f";
+      meta = with lib;
+      {
+        homepage = "https://tabliss.io";
+        description = "A beautiful New Tab page with many customisable backgrounds and widgets that does not require any permissions.";
+        license = licenses.gpl3;
         platforms = platforms.all;
         };
       };
@@ -229,10 +325,10 @@
       };
     "ublock-origin" = buildFirefoxXpiAddon {
       pname = "ublock-origin";
-      version = "1.48.4";
+      version = "1.49.2";
       addonId = "uBlock0@raymondhill.net";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4092158/ublock_origin-1.48.4.xpi";
-      sha256 = "d7666b963c2969b0014937aae55472eea5098ff21ed3bea8a2e1f595f62856c1";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4103048/ublock_origin-1.49.2.xpi";
+      sha256 = "39266486f720cd31d291d2fdad78625b079782a05517e1936eec7e780bc2a84d";
       meta = with lib;
       {
         homepage = "https://github.com/gorhill/uBlock#ublock-origin";
@@ -243,10 +339,10 @@
       };
     "user-agent-string-switcher" = buildFirefoxXpiAddon {
       pname = "user-agent-string-switcher";
-      version = "0.4.9";
+      version = "0.5.0";
       addonId = "{a6c4a591-f1b2-4f03-b3ff-767e5bedf4e7}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4047133/user_agent_string_switcher-0.4.9.xpi";
-      sha256 = "617ab726419f6c1addedc727ad41dca18f52fbde34af59ed7d42425f139129d1";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4098688/user_agent_string_switcher-0.5.0.xpi";
+      sha256 = "9dc8da3c8c46d4f04d12fd789c63501fa6a2f502f859b286939a090db63eae33";
       meta = with lib;
       {
         homepage = "http://add0n.com/useragent-switcher.html";
@@ -285,10 +381,10 @@
       };
     "youtube-addon" = buildFirefoxXpiAddon {
       pname = "youtube-addon";
-      version = "4.6";
+      version = "4.9";
       addonId = "{3c6bf0cc-3ae2-42fb-9993-0d33104fdcaf}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4089432/youtube_addon-4.6.xpi";
-      sha256 = "37a92848d64cf997363b7741a0f0b4efe222d34f0f19f0757d3d917ffac9a6aa";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4104259/youtube_addon-4.9.xpi";
+      sha256 = "89e9915310101c62c1ef1c67be9963a5dcb3ea90778836f59f4dfc16b95d2cf4";
       meta = with lib;
       {
         homepage = "https://github.com/code4charity/YouTube-Extension/";

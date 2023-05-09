@@ -17,6 +17,7 @@
       skip-redirect
       change-timezone-time-shift
       behave
+      consent-o-matic # Automatic handling of GDPR consent forms
 
       # wallets
       solflare-wallet
@@ -25,20 +26,28 @@
 
       # ui
       tree-style-tab
-      #sidebery # same as treestyletab TODO try
+      tabliss # nicer new tab tab window
+      imagus  # mouse-over enlarges images and displays images/videos from links
+      augmented-steam
 
       # work
       plantuml-visualizer
 
+      # performance
+      auto-tab-discard # Increase browser speed and reduce memory load and when you have numerous open tabs.
+
       # tools
-      buster-captcha-solver
       simple-translate
       languagetool # spell checker
-      image-search-options
       flagfox # site information
       view-page-archive
       user-agent-string-switcher
       window-titler
+      epubreader
+
+      # FIXME блокируется skip-redirect
+      # image-search-options
+      # search_by_image
     ];
     # https://github.com/piroor/treestyletab/issues/1525
     profiles = let
