@@ -134,8 +134,8 @@
     ];
   };
 
-  # TODO add GTK_USE_PORTAL=1
   home.sessionVariables.BROWSER = "firefox";
+  home.sessionVariables.GTK_USE_PORTAL = "1"; # TODO set it specifically for ff
   home.packages = with pkgs; [
     # torbrowser
     # nyxt

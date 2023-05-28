@@ -50,7 +50,6 @@
       enable       = true;
       wlr.enable   = true;
       extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-      gtkUsePortal = true; # TODO remove and GTK_USE_PORTAL=1 specifically for ff
     };
   };
 
