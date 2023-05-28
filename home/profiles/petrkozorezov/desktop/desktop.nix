@@ -13,8 +13,8 @@
 
       # messengers
       tdesktop
-      slack
-      discord
+      # slack
+      # discord
 
       # books
       calibre
@@ -31,7 +31,7 @@
 
       # others
       # gucharmap
-      uhk-agent
+      # uhk-agent
 
       # sound
       pulsemixer pamixer
