@@ -1,5 +1,9 @@
 { config, pkgs, ... }: {
   imports = [
+    ../base.nix
+    ../hardware/mbp13.nix
+    ../workstation.nix
+
     ../nm-connections.nix
     ../yubikey.nix
     ../hardware/uhk.nix

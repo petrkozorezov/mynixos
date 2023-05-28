@@ -16,10 +16,10 @@
           sysPaths      = relativePaths "system/profiles";
           users         = { petrkozorezov = hmPaths [ "petrkozorezov" ]; };
         in {
-          mbp13       = { system = sysPaths [ "hardware/mbp13.nix"         "base.nix" "petrkozorezov.nix" "workstation.nix" "machines/mbp13.nix"       ]; } // users;
-          asrock-x300 = { system = sysPaths [ "hardware/asrock-x300.nix"   "base.nix" "petrkozorezov.nix" "workstation.nix" "machines/asrock-x300.nix" ]; } // users;
-          router      = { system = sysPaths [ "hardware/router.nix"        "base.nix" "petrkozorezov.nix" "machines/router.nix"    ]; };
-          helsinki1   = { system = sysPaths [ "hardware/hetzner-cloud.nix" "base.nix" "petrkozorezov.nix" "machines/helsinki1.nix" ]; };
+          mbp13       = { system = sysPaths [ "machines/mbp13.nix"       "users/petrkozorezov.nix" ]; } // users;
+          asrock-x300 = { system = sysPaths [ "machines/asrock-x300.nix" "users/petrkozorezov.nix" ]; } // users;
+          router      = { system = sysPaths [ "machines/router.nix"      ]; };
+          helsinki1   = { system = sysPaths [ "machines/helsinki1.nix"   ]; };
         };
 
       mapProfiles =
@@ -62,11 +62,12 @@
         username: modules:
           {
             home-manager = {
-              useGlobalPkgs     = true;
-              useUserPackages   = true;
-              users.${username} = { imports = modules; };
-              sharedModules     = commonHMModules;
-              extraSpecialArgs  = configExtraAgrs;
+              useGlobalPkgs       = true;
+              useUserPackages     = true;
+              users.${username}   = { imports = modules; };
+              sharedModules       = commonHMModules;
+              extraSpecialArgs    = configExtraAgrs;
+              backupFileExtension = ".bak";
             };
           };
     in rec {

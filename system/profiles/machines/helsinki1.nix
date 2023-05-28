@@ -3,7 +3,14 @@
     extIf = "ens3";
   in
 {
-  imports = [ ../dns.nix ../vpn.nix ../proxy.nix ];
+  imports = [
+    ../base.nix
+    ../hardware/hetzner-cloud.nix
+
+    ../dns.nix
+    ../vpn.nix
+    ../proxy.nix
+  ];
 
   zoo.proxy = {
     address    = "1";

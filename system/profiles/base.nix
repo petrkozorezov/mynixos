@@ -18,8 +18,19 @@ in {
     '';
   };
   environment.defaultPackages = lib.mkForce [];
-  users.users.root.openssh.authorizedKeys.keys = [ config.zoo.secrets.deployment.authPublicKey ];
   security.sudo.extraConfig = "Defaults lecture = never";
+
+  users = {
+    mutableUsers = false;
+    users = let recoveryCfg = config.zoo.secrets.users.recovery; in {
+      recovery = {
+        inherit (recoveryCfg) uid description hashedPassword;
+        isNormalUser                = true;
+        openssh.authorizedKeys.keys = [ recoveryCfg.authPublicKey ];
+      };
+      root.openssh.authorizedKeys.keys = [ config.zoo.secrets.deployment.authPublicKey ];
+    };
+  };
 
   i18n.defaultLocale = "en_US.UTF-8";
   console = {
@@ -32,11 +43,6 @@ in {
 
   environment.systemPackages = [ pkgs.test ];
   environment.pathsToLink    = [ "/share/zsh" ]; # for programs.zsh.enableCompletion
-
-  services = {
-    # timesyncd.enable = true;
-    # ntp.enable       = false;
-  };
 
   documentation = {
     man.enable   = mkDefault false;

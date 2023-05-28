@@ -5,7 +5,13 @@ let
   address  = "${net}.1";
   uplink   = "enp3s0";
 in {
-  imports = [ ../vpn.nix ../proxy.nix ];
+  imports = [
+    ../base.nix
+    ../hardware/router.nix
+
+    ../vpn.nix
+    ../proxy.nix
+  ];
 
   system.stateVersion = "21.05";
 
