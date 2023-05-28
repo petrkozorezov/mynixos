@@ -16,21 +16,23 @@ let
     overlay_scroll_bars               = "enabled";
     auto_complete                     = true;
     auto_match_enabled                = false;
-    ignored_packages                  = [];
     tab_size                          = 2;
     tabs_small                        = true;
     translate_tabs_to_spaces          = true;
     trim_trailing_white_space_on_save = "all";
     ensure_newline_at_eof_on_save     = true;
     update_check                      = false;
-    vintage_start_in_command_mode     = true;
     copy_with_empty_selection         = true;
     highlight_line                    = true;
-    folder_exclude_patterns           = [ ".git" ];
-    binary_file_patterns =
-      [
-        "*.jpg" "*.jpeg" "*.png" "*.gif" "*.ttf" "*.tga" "*.dds" "*.ico" "*.eot" "*.pdf" "*.swf" "*.jar" "*.zip" "*.beam"
-      ];
+    ignored_packages = [
+      "Vintage"
+    ];
+    folder_exclude_patterns = [
+      ".git"
+    ];
+    binary_file_patterns = [
+      "*.jpg" "*.jpeg" "*.png" "*.gif" "*.ttf" "*.tga" "*.dds" "*.ico" "*.eot" "*.pdf" "*.swf" "*.jar" "*.zip" "*.beam"
+    ];
     node = pkgs.nodejs;
   };
   sublKeymap =
