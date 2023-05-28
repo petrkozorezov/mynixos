@@ -36,13 +36,12 @@
       # TODO find a better way
       slib = import ./lib { inherit slib; inherit (nixpkgs) lib; };
       configExtraAgrs = { inherit self system slib deps; };
-      commonModules = [ ./modules deps.module ./secrets ];
+      commonModules = [ ./modules deps.module.${system} ./secrets ];
       systemConfig =
         hostname: modules:
           nixpkgs.lib.nixosSystem {
             inherit system;
-            modules = [ { networking.hostName = hostname; } ] ++ commonModules ++ [ ./system/modules ] ++ modules;
-            extraArgs = configExtraAgrs;
+            modules = [ { networking.hostName = hostname; _module.args = configExtraAgrs; } ] ++ commonModules ++ [ ./system/modules ] ++ modules;
           };
 
       commonHMModules = commonModules ++ [ ./home/modules ];

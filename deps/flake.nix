@@ -4,6 +4,7 @@
   # see https://github.com/NixOS/nix/issues/3966
   inputs = {
            nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11"                      ;
+       flake-utils.url = "github:numtide/flake-utils"                            ;
      nixos-channel.url = "https://nixos.org/channels/nixos-22.11/nixexprs.tar.xz";
       home-manager.url = "github:rycee/home-manager/release-22.11"               ;
                nur.url = "github:nix-community/NUR"                              ;
@@ -22,16 +23,18 @@
     };
   };
 
-  outputs = { self, nixpkgs, nur, fenix, ... }:
-    let
-      config = {
-        allowUnfree = true;
-        permittedInsecurePackages = [ ];
-      };
-      overlays = [ nur.overlay fenix.overlays.default (import ./overlay) ];
-      system = "x86_64-linux";
-    in rec {
-      legacyPackages.${system} = import nixpkgs { inherit system config overlays; };
-      module.nixpkgs = { inherit config overlays; };
-    };
+  outputs = { self, nixpkgs, flake-utils, nur, fenix, ... }:
+    flake-utils.lib.eachDefaultSystem (
+      system:
+        let
+          config = {
+            allowUnfree = true;
+            permittedInsecurePackages = [ ];
+          };
+          overlays = [ nur.overlay fenix.overlays.default (import ./overlay) ];
+        in rec {
+          legacyPackages = import nixpkgs { inherit system config overlays; };
+          module.nixpkgs = { inherit system config overlays; };
+        }
+    );
 }
