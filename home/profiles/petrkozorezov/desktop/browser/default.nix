@@ -17,7 +17,8 @@
       skip-redirect
       change-timezone-time-shift
       behave
-      consent-o-matic # Automatic handling of GDPR consent forms
+      # Automatic handling of GDPR consent forms
+      consent-o-matic
 
       # wallets
       solflare-wallet
@@ -26,20 +27,25 @@
 
       # ui
       tree-style-tab
-      tabliss # nicer new tab tab window
-      imagus  # mouse-over enlarges images and displays images/videos from links
+      # nicer new tab tab window
+      # tabliss
+      # mouse-over enlarges images and displays images/videos from links
+      imagus
       augmented-steam
 
       # work
       plantuml-visualizer
 
       # performance
-      auto-tab-discard # Increase browser speed and reduce memory load and when you have numerous open tabs.
+      # Increase browser speed and reduce memory load and when you have numerous open tabs.
+      auto-tab-discard
 
       # tools
       simple-translate
-      languagetool # spell checker
-      flagfox # site information
+      # spell checker
+      languagetool
+      # site information
+      flagfox
       view-page-archive
       user-agent-string-switcher
       window-titler
@@ -74,6 +80,16 @@
         "services.sync.engine.passwords"                      = false; # do not sync passwords
         "browser.sessionstore.resume_session_once"            = true ; # ?
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true ; # ?
+
+        # security
+        # prevent av/malware injection
+        "accessibility.force_disabled" = 1;
+
+        # performance
+        # https://www.reddit.com/r/browsers/comments/nugbaw/firefox_going_up_to_1000_mb_with_only_5_tabs_open/
+        "dom.ipc.processCount"                       = 0;
+        "dom.ipc.processPrelaunch.enabled"           = false;
+        "dom.ipc.keepProcessesAlive.privilegedabout" = 0;
       };
       arkenfoxUserJsSettings =
         # SEE https://github.com/arkenfox/user.js
