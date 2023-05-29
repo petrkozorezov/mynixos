@@ -1,7 +1,7 @@
 { pkgs, deps, lib, ... }: {
   imports = [
     {
-      # for eg `nix shel mynixos#hello`
+      # for eg `nix shell mynixos#hello`
       nix.registry.mynixos.flake = deps;
       # for eg `nix eval --impure --expr 'import <mynixos>'`
       nix.nixPath = [ "mynixos=/etc/mynixos" ];

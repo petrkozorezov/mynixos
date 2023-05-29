@@ -24,6 +24,7 @@ update-deps:
 	cd deps/ && nix flake update
 
 update-flake:
+	#cd deps/ && nix flake info
 	nix flake update
 
 update: update-ff-userjs update-ff-addons update-deps
