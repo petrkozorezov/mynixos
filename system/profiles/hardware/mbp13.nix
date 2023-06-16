@@ -28,7 +28,7 @@ in {
     supportedFilesystems = [ "btrfs" ];
     initrd = {
       availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" "uas" ]; # TODO clarify
-      kernelModules = [ "dm-snapshot" ];
+      kernelModules = [ "i915" "dm-snapshot" ];
       luks.devices.root = {
         device           = luksDevice;
         preLVM           = true;
@@ -95,7 +95,15 @@ in {
     enableAllFirmware             = true;
     cpu.intel.updateMicrocode     = true;
     enableRedistributableFirmware = true;
-    opengl.extraPackages          = [ pkgs.intel-media-driver ];
+    opengl.extraPackages          = with pkgs; [
+      vaapiIntel
+      libvdpau-va-gl
+      intel-media-driver
+    ];
+  };
+
+  environment.variables = {
+    VDPAU_DRIVER = lib.mkIf config.hardware.opengl.enable (lib.mkDefault "va_gl");
   };
 
   # facetimehd
