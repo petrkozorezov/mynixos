@@ -16,6 +16,8 @@ in {
     };
   };
 
+  nix.settings.trusted-users = [ user ];
+
   # main user secret to decrypt user specific secrets
   sss.secrets."${user}-main-secret" = {
     text   = userCfg.mainSecret.priv;

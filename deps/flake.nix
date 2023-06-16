@@ -12,6 +12,7 @@
           terranix.url = "github:terranix/terranix"                              ;
     nix-doom-emacs.url = "github:nix-community/nix-doom-emacs"                   ;
                dns.url = "github:kirelagin/dns.nix"                              ;
+            devenv.url = "github:cachix/devenv/latest"                           ;
     # sometimes version of emacs-overlay in nix-doom-emacs lock file is outdated
     # and some packages are not building
     # an explicitly input is needed here to prevent emacs-overlay from auto update

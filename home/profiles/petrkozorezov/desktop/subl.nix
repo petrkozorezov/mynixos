@@ -100,6 +100,8 @@ let
       "SublimeGit"
       "GitGutter"
       "FileDiffs"
+
+      "Direnv"
     ];
   };
   lsp = {
@@ -115,18 +117,7 @@ let
         elixir-ls = {
           enabled  = true;
           selector = "source.elixir";
-          command  = [ "${pkgs.nix}/bin/nix" "develop" "-c" "elixir-ls" ];
-          settings.elixirLS = {
-            dialyzerEnabled = true;
-            # TODO get config from project
-            dialyzerWarnOpts = [
-              "error_handling"
-              "unknown"
-              "no_return"
-              "no_unused"
-            ];
-            dialyzerFormat = "dialyxir_short";
-          };
+          command  = [ "elixir-ls" ];
         };
       };
     initialize_timeout = 30;
