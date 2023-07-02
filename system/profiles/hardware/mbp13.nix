@@ -117,4 +117,6 @@ in {
   hardware.video.hidpi.enable = lib.mkDefault true;
   console.font = lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
   programs.light.enable = true; # backlight control
+
+  environment.systemPackages = with pkgs; [ bclmctl ];
 }
