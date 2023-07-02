@@ -188,7 +188,14 @@ in {
 
       bars = [ { command = "waybar"; } ];
 
-      input = {
+      input = let
+        mbp_touchpad = {
+          tap = "enabled";
+        };
+        mbp_keyboard = {
+          xkb_options = "ctrl:nocaps,grp:lctrl_toggle";
+        };
+      in {
         "2:7:SynPS/2_Synaptics_TouchPad" = {
           dwt = "enabled";
           tap = "enabled";
@@ -197,9 +204,8 @@ in {
           pointer_accel  = "0.35";
         };
 
-        "1452:602:bcm5974" = {
-          tap = "enabled";
-        };
+        "1452:628:bcm5974" = mbp_touchpad;
+        "1452:602:bcm5974" = mbp_touchpad;
 
         "2:10:TPPS/2_ALPS_TrackPoint" = {
           dwt           = "enabled";
@@ -212,9 +218,8 @@ in {
           pointer_accel = "1.0";
         };
 
-        "1452:602:Apple_Inc._Apple_Internal_Keyboard_\/_Trackpad" = {
-          xkb_options  = "ctrl:nocaps,grp:lctrl_toggle";
-        };
+        "1452:602:Apple_Inc._Apple_Internal_Keyboard_\/_Trackpad" = mbp_keyboard;
+        "1452:628:Apple_Inc._Apple_Internal_Keyboard_\/_Trackpad" = mbp_keyboard;
 
         "*" = {
           repeat_delay = "200";
