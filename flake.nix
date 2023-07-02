@@ -86,9 +86,12 @@
             deploy-rs.packages.${system}.deploy-rs
             terraform
             terranix.defaultPackage.${system}
-            pkgs.ripgrep
-            pkgs.nur.repos.rycee.mozilla-addons-to-nix
-          ];
+          ] ++ (with pkgs; [
+            ripgrep
+            nur.repos.rycee.mozilla-addons-to-nix
+            nix-prefetch-git
+            nix-prefetch-github
+          ]);
         };
 
       # terraform bindings
