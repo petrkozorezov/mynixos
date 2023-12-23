@@ -25,7 +25,6 @@ rustPlatform.buildRustPackage rec {
     udev
     openssl
     zlib
-    openssl
   ];
 
   nativeBuildInputs = [

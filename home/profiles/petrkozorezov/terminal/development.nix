@@ -4,7 +4,7 @@
     packages = with pkgs;
       [
         gtypist
-        grapherl
+        # grapherl
         pandoc
         # solana
 

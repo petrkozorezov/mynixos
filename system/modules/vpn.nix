@@ -164,7 +164,7 @@ with types;
         systemd.services = listToAttrs (map
           (other:
             let
-              keyToUnitName = replaceChars
+              keyToUnitName = replaceStrings
                 [ "/" "-"    " "     "+"     "="      ]
                 [ "-" "\\x2d" "\\x20" "\\x2b" "\\x3d" ];
               unitName = keyToUnitName other.pub;

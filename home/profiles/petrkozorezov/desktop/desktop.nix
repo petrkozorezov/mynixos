@@ -23,11 +23,11 @@
       libreoffice
 
       # multimedia
-      mellowplayer
       playerctl
       mpv
       imv
       nomacs
+      spotify
 
       # others
       # gucharmap

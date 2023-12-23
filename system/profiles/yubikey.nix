@@ -2,7 +2,7 @@
   environment.systemPackages = with pkgs; [
     yubikey-manager
     yubikey-personalization
-    yubioath-desktop
+    #yubioath-desktop # FIXME
   ];
   services.udev.packages = [ pkgs.yubikey-personalization ];
   services.pcscd.enable = true;

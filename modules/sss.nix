@@ -212,7 +212,7 @@ in {
           }
       );
 
-    systemdEsc = replaceChars [ "\\" "@" ] [ "-" "_" ];
+    systemdEsc = replaceStrings [ "\\" "@" ] [ "-" "_" ];
     # from nixpkgs
     makeJobScript = name: text:
       let

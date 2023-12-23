@@ -3,7 +3,7 @@
   boot.kernel.sysctl."fs.inotify.max_user_watches" = 524288;
 
   fonts = {
-    fonts = with pkgs; [
+    packages = with pkgs; [
       hack-font
     ];
     fontconfig = {
@@ -50,6 +50,7 @@
       enable       = true;
       wlr.enable   = true;
       extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+      config.common.default = "*";
     };
   };
 

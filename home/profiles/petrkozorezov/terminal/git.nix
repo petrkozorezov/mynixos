@@ -10,6 +10,7 @@ let email = "petr.kozorezov@gmail.com"; in {
         pull.ff            = "only";
         core.quotePath     = false;
         init.defaultBranch = "master";
+        fetch.prune        = true;
       };
       signing = {
         key           = email;

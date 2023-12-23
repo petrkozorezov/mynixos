@@ -18,7 +18,6 @@ in {
       efi.canTouchEfiVariables = true;
       grub = {
         enable           = true;
-        version          = 2;
         device           = "nodev";
         efiSupport       = true;
         enableCryptodisk = true;
@@ -114,7 +113,6 @@ in {
   services.blueman.enable = true;
 
   # video
-  hardware.video.hidpi.enable = lib.mkDefault true;
   console.font = lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
   programs.light.enable = true; # backlight control
 

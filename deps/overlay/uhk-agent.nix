@@ -34,9 +34,18 @@ in pkgs.appimageTools.wrapType2 rec {
 
   multiPkgs = null;
 
-  # Borrows Electron packages from Atom
-  # Ref: https://github.com/NixOS/nixpkgs/blob/master/pkgs/applications/editors/atom/env.nix
-  extraPkgs = pkgs: with pkgs; atomEnv.packages ++ [
+  extraPkgs = pkgs: with pkgs; [
+    # Borrows Electron packages from Atom
+    # Ref: https://github.com/NixOS/nixpkgs/blob/0561103cedb11e7554cf34cea81e5f5d578a4753/pkgs/applications/editors/atom/env.nix#L9C1-L16C9
+    stdenv.cc.cc zlib glib dbus gtk3 atk pango freetype
+    fontconfig gdk-pixbuf cairo cups expat libgpg-error alsa-lib nspr nss
+    xorg.libXrender xorg.libX11 xorg.libXext xorg.libXdamage xorg.libXtst
+    xorg.libXcomposite xorg.libXi xorg.libXfixes xorg.libXrandr
+    xorg.libXcursor xorg.libxkbfile xorg.libXScrnSaver libcap systemd libnotify
+    xorg.libxcb libsecret libuuid at-spi2-atk at-spi2-core libdbusmenu
+    libdrm
+    mesa
+
     pciutils
     libusb1
 

@@ -103,6 +103,7 @@ let
 
       "Direnv"
     ];
+    auto_upgrade_ignore = ["Package Control"];
   };
   lsp = {
     clients =
@@ -156,9 +157,8 @@ in
       "${localPath}/License.sublime_license".source = config.zoo.secrets.filesPath + "/sublime.license";
       "${installedPkgsPath}/Package Control.sublime-package".source =
         builtins.fetchurl {
-          name   = "sublime-package-control";
-          url    = "https://packagecontrol.io/Package%20Control.sublime-package";
-          sha256 = "0ffi4qn0ndhqphnggy02mhzrqvv5n8c57f23rn44rj1l9ha3fyc1";
+          url    = "https://github.com/wbond/package_control/releases/download/4.0.1/Package.Control.sublime-package";
+          sha256 = "1564lj73wgn2kqhf2jmg98c6c7r8ygv9ipfvv89qpsva9ails5mh";
         };
     };
   };

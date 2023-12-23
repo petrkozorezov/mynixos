@@ -1,7 +1,7 @@
 .PHONY = clean show-repo-path update build\:% build\:deploy installer image shell
 REPO_PATH = `pwd`/$(dir $(lastword $(MAKEFILE_LIST)))
 DIRS=/etc/nixos ~/.config/nixpkgs # FIXME better name
-NIX_BUILD=nix build ${NIX_FLAGS} -v -L
+NIX_BUILD=nix build ${NIX_FLAGS} -v -L # --show-trace
 NIX_EVAL=nix eval ${NIX_FLAGS} -v
 
 

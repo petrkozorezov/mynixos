@@ -64,12 +64,19 @@ in {
     hack-font
   ];
 
-  home.sessionVariables.QT_QPA_PLATFORMTHEME = "qt5ct";
+  home.sessionVariables = {
+    QT_QPA_PLATFORMTHEME = "qt5ct";
+    XDG_CURRENT_DESKTOP = "sway";
+    SDL_VIDEODRIVER     = "wayland";
+    # needs qt5.qtwayland in systemPackages
+    QT_QPA_PLATFORM = "wayland";
+    QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
+  };
 
   wayland.windowManager.sway = {
     enable = true;
     # xwayland = false;
-    systemdIntegration  = true;
+    systemd.enable      = true;
     wrapperFeatures.gtk = true;
     config = rec {
       modifier = mod;
@@ -97,6 +104,10 @@ in {
           "${mod_}+h" = "${action}  left";
           "${mod_}+n" = "${action} right";
         };
+        kbd_light_dev = "sysfs/leds/smc::kbd_backlight";
+        mon_light_dev = "sysfs/backlight/auto";
+        exec_light = device: action:
+          "exec light -s ${device} ${action} && light -G | cut -d'.' -f1 > ${ob_file}";
       in
         workspaces               "${mod}" ""                      //
         workspaces         "Shift+${mod}" "move"                  //
@@ -136,6 +147,7 @@ in {
         "${mod}+Shift+space"     = "floating toggle";
         "${mod}+space"           = "focus mode_toggle";
 
+        # TODO bindsym --locked
         "XF86AudioRaiseVolume"   = "exec pamixer -ui 2 && pamixer --get-volume > ${ob_file}";
         "XF86AudioLowerVolume"   = "exec pamixer -ud 2 && pamixer --get-volume > ${ob_file}";
         "XF86AudioMute"          = "exec pamixer --toggle-mute && ( pamixer --get-mute && echo 0 > ${ob_file} ) || pamixer --get-volume > ${ob_file}";
@@ -143,15 +155,10 @@ in {
         "XF86AudioPlay"          = "exec playerctl play-pause";
         "XF86AudioPrev"          = "exec playerctl previous";
 
-        # set $kbd_light light -s sysfs/leds/smc::kbd_backlight
-        # set $mon_light light
-
-        # "XF86MonBrightnessUp"   = "exec $mon_light -A 5 && $mon_light -G | cut -d'.' -f1 > ${ob_file}";
-        # "XF86MonBrightnessDown" = "exec $mon_light -U 5 && $mon_light -G | cut -d'.' -f1 > ${ob_file}";
-
-        # "XF86KbdBrightnessUp"   = "exec $kbd_light -A 5 && $kbd_light -G | cut -d'.' -f1 > ${ob_file}";
-        # "XF86KbdBrightnessDown" = "exec $kbd_light -U 5 && $kbd_light -G | cut -d'.' -f1 > ${ob_file}";
-
+        "XF86MonBrightnessUp"   = exec_light mon_light_dev "-A 5";
+        "XF86MonBrightnessDown" = exec_light mon_light_dev "-U 5";
+        "XF86KbdBrightnessUp"   = exec_light kbd_light_dev "-A 5";
+        "XF86KbdBrightnessDown" = exec_light kbd_light_dev "-U 5";
       };
 
       startup =
@@ -164,8 +171,6 @@ in {
             "blueman-applet"
 
             "firefox -P personal"
-            "firefox -P clean"
-            "firefox -P work"
             "sublime_text"
             "telegram-desktop"
          ]
@@ -181,16 +186,12 @@ in {
           "${w_calls}" = [ { class  = "Chromium-browser"; } ];
         };
 
-      # gaps = {
-      #   inner = 10;
-      #   outer = 5 ;
-      # };
-
       bars = [ { command = "waybar"; } ];
 
       input = let
         mbp_touchpad = {
-          tap = "enabled";
+          tap            = "enabled";
+          natural_scroll = "disabled";
         };
         mbp_keyboard = {
           xkb_options = "ctrl:nocaps,grp:lctrl_toggle";
@@ -275,17 +276,6 @@ in {
       # TODO moveto nix
       for_window [shell="xwayland"] title_format "%title [XWayland]"
     '';
-    extraSessionCommands =
-      ''
-        export SDL_VIDEODRIVER=wayland
-        # needs qt5.qtwayland in systemPackages
-        export QT_QPA_PLATFORM=wayland
-        export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
-        # Fix for some Java AWT applications (e.g. Android Studio),
-        # use this if they aren't displayed properly:
-        export _JAVA_AWT_WM_NONREPARENTING=1
-        export XDG_CURRENT_DESKTOP=sway
-      '';
   };
 
   programs.zsh.initExtra =
@@ -331,33 +321,26 @@ in {
     };
   };
 
-
-#
-
   services.kanshi = {
     enable   = true;
     profiles =
       let
-        xiaomiMiDisplay = {
+        macbook = {
           status   = "enable";
-          criteria = "Unknown Mi Monitor 0x00000000";
-          mode     = "3440x1440@144.000Hz";
-          position = "0,0";
-          scale    = 1.0;
+          criteria = "Apple Computer Inc Color LCD Unknown";
+          scale    = 2.0;
+        };
+        portable = {
+          status   = "enable";
+          criteria = "DO NOT USE - RTK HDMI 0x00000101";
+          scale    = 2.0;
         };
       in
       {
-        "Main" = { outputs = [ xiaomiMiDisplay ]; };
+        "Main" = { outputs = [ macbook portable ]; };
       };
   };
 
-  home.file."chromium-flags.conf".text = ''
-    --enable-features=UseOzonePlatform
-    --ozone-platform=wayland
-    --use-vulkan
-    --enable-features=Vulkan
-  '';
-
-  home.sessionVariables.ENABLE_VULKAN = "true";
-
+  home.sessionVariables.ENABLE_VULKAN  = "true";
+  home.sessionVariables.NIXOS_OZONE_WL = "1";
 }

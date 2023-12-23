@@ -11,12 +11,12 @@
           PURE_GIT_PULL=0
           PURE_PROMPT_SYMBOL=λ
           prompt pure
+          # TODO fix 'nsh hello -c hello'
           nsh() {
             nix shell "mynixos#$1"
           }
-          configure-aws() {
-            export AWS_ACCESS_KEY_ID=$2
-            export AWS_SECRET_ACCESS_KEY=`pass show $1/aws-key-$2`
+          fix-touchpad() {
+            sudo rmmod bcm5974 && sudo modprobe bcm5974 && dmesg | tail
           }
         '';
       autocd = true;
@@ -32,7 +32,7 @@
         "..."   = "../..";
         "...."  = "../../..";
         "....." = "../../../..";
-        "l"     = "${pkgs.exa}/bin/exa --group-directories-first";
+        "l"     = "${pkgs.eza}/bin/eza --group-directories-first";
         "ll"    = "${"l"} -l -b --git --icons --octal-permissions --no-permissions";
         "lll"   = "${"l"} -l -g";
         "ls"    = "${"l"}";

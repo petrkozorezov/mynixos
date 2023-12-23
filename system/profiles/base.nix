@@ -10,12 +10,12 @@ in {
   system.nixos.label           = version;
 
   services.openssh = {
-    enable                 = true;
-    passwordAuthentication = false;
-    hostKeys               = [];
-    banner                 = ''
+    enable   = true;
+    hostKeys = [];
+    banner   = ''
       Hello, leather bastard from ${config.networking.hostName}@${version}!
     '';
+    settings.PasswordAuthentication = false;
   };
   environment.defaultPackages = lib.mkForce [];
   security.sudo.extraConfig = "Defaults lecture = never";

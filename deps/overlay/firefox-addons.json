@@ -1,5 +1,6 @@
 [
   { "slug": "passff"                     },
+  { "slug": "browserpass-ce"             },
   { "slug": "buster-captcha-solver"      },
   { "slug": "simple-translate"           },
   { "slug": "languagetool"               },
@@ -27,5 +28,6 @@
   { "slug": "augmented-steam"            },
   { "slug": "auto-tab-discard"           },
   { "slug": "search_by_image"            },
-  { "slug": "epubreader"                 }
+  { "slug": "epubreader"                 },
+  { "slug": "firefox-translations"       }
 ]

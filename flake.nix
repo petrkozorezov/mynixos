@@ -5,7 +5,7 @@
 
   outputs = { self, deps, ...}:
     let
-      inherit (deps.inputs) nixpkgs home-manager deploy-rs terranix nur;
+      inherit (deps.inputs) nixpkgs home-manager deploy-rs terranix;
       # high level system description
       system = "x86_64-linux";
       pkgs   = deps.legacyPackages.${system};
@@ -88,7 +88,7 @@
             terranix.defaultPackage.${system}
           ] ++ (with pkgs; [
             ripgrep
-            nur.repos.rycee.mozilla-addons-to-nix
+            pkgs.nur.repos.rycee.mozilla-addons-to-nix
             nix-prefetch-git
             nix-prefetch-github
           ]);

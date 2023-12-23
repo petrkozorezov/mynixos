@@ -27,7 +27,6 @@
   console.font = lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
 
   hardware = {
-    video.hidpi.enable            = lib.mkDefault true;
     enableAllFirmware             = true;
     enableRedistributableFirmware = true;
   };

@@ -1,4 +1,4 @@
-{ config, ... }: let
+{ config, pkgs, ... }: let
   user    = "petrkozorezov";
   userCfg = config.zoo.secrets.users.${user};
 in {
@@ -8,14 +8,27 @@ in {
     mutableUsers = false;
     users = {
       "${user}" = {
-        inherit (userCfg) uid description shell hashedPassword;
-        isNormalUser                = true;
-        extraGroups                 = [ "wheel" "audio" "video" "plugdev" "input" "wireshark" "vboxusers" "networkmanager" "docker" ];
+        inherit (userCfg) uid description hashedPassword;
+        isNormalUser = true;
+        shell        = pkgs.zsh;
+        extraGroups  = [
+          "wheel"
+          "audio"
+          "video"
+          "render"
+          "plugdev"
+          "input"
+          "wireshark"
+          "vboxusers"
+          "networkmanager"
+          "docker"
+        ];
         openssh.authorizedKeys.keys = [ userCfg.authPublicKey ];
       };
     };
   };
 
+  programs.zsh.enable = true;
   nix.settings.trusted-users = [ user ];
 
   # main user secret to decrypt user specific secrets
