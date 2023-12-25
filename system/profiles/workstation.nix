@@ -2,6 +2,13 @@
 {
   boot.kernel.sysctl."fs.inotify.max_user_watches" = 524288;
 
+  # I don't know why, so maybe later...
+  # boot.plymouth.enable = true;
+  services.greetd = {
+    enable = true;
+    settings.default_session.command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --remember --cmd sway";
+  };
+
   fonts = {
     packages = with pkgs; [
       hack-font
