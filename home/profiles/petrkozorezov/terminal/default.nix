@@ -5,7 +5,7 @@
     ./git.nix
     ./htop.nix
     ./security.nix
-    ./shell.nix
+    ./shell
     ./ssh.nix
   ];
 }
