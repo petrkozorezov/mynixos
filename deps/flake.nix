@@ -8,8 +8,6 @@
      nixos-channel.url = "https://nixos.org/channels/nixos-23.11/nixexprs.tar.xz";
       home-manager.url = "github:rycee/home-manager/release-23.11"               ;
                nur.url = "github:nix-community/NUR"                              ;
-         deploy-rs.url = "github:serokell/deploy-rs"                             ;
-          terranix.url = "github:terranix/terranix"                              ;
     nix-doom-emacs.url = "github:nix-community/nix-doom-emacs"                   ;
                dns.url = "github:kirelagin/dns.nix"                              ;
             devenv.url = "github:cachix/devenv/latest"                           ;

@@ -72,55 +72,6 @@
           };
     in rec {
       #
-      # development & deployment shell
-      #
-      defaultPackage.${system} =
-        let
-          terraform =
-            pkgs.terraform.withPlugins (tp: [
-              tp.hcloud
-            ]);
-        in pkgs.buildEnv {
-          name  = "zoo-shell";
-          paths = [
-            deploy-rs.packages.${system}.deploy-rs
-            terraform
-            terranix.defaultPackage.${system}
-          ] ++ (with pkgs; [
-            ripgrep
-            pkgs.nur.repos.rycee.mozilla-addons-to-nix
-            nix-prefetch-git
-            nix-prefetch-github
-          ]);
-        };
-
-      # terraform bindings
-      # allows to run only one command (eg `nix run .#tf.plan`)
-      tf = let
-        terraformConfiguration =
-          terranix.lib.terranixConfiguration {
-            inherit system;
-            modules = [ ./cloud ];
-          };
-        tapp = name: code:
-          {
-            type = "app";
-            program = toString (pkgs.writers.writeBash name (''
-              set -ex
-              if [[ -e config.tf.json ]]; then rm -f config.tf.json; fi
-              cp ${terraformConfiguration} config.tf.json
-            '' + code));
-          };
-        tfapp = cmd: tapp ("tf" + cmd) ("terraform " + cmd);
-      in {
-        gen     = tapp "tfgen" "";
-        init    = tfapp "init"   ;
-        plan    = tfapp "plan"   ;
-        apply   = tfapp "apply"  ;
-        destroy = tfapp "destroy";
-      };
-
-      #
       # configurations
       # construct `{ hostname = { profile = configuration } }`
       #

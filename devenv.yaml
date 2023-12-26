@@ -1,0 +1,10 @@
+allowUnfree: true
+inputs:
+  nixpkgs:
+    url: github:NixOS/nixpkgs/nixpkgs-unstable
+  nur:
+    url: github:nix-community/NUR
+  deploy-rs:
+    url: github:serokell/deploy-rs
+  terranix:
+    url: github:terranix/terranix

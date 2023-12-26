@@ -3,4 +3,13 @@ result
 config.tf.json
 .terraform*
 terraform.tfstate.backup
-.nix-profile
+
+# Devenv
+.devenv*
+devenv.local.nix
+
+# direnv
+.direnv
+
+# pre-commit
+.pre-commit-config.yaml

@@ -56,6 +56,8 @@ shell:
 config.tf.json: cloud/*.nix
 	terranix cloud/default.nix | jq . > $@
 
+# TODO tf-init/plan/apply/destroy
+
 # make -s lib-tests:firewall | jq .command
 lib-tests\:%:
 	${NIX_EVAL} --json .#lib.tests.$* | jq .
