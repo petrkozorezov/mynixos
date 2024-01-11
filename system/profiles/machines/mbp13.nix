@@ -6,8 +6,6 @@
 
     ../nm-connections.nix
     ../yubikey.nix
-    ../hardware/uhk.nix
-    ../hardware/ledger.nix
   ];
   # boot.kernelPackages = pkgs.linuxPackages_latest;
   environment.etc.machine-id.text = "b285cdcc5b80442fa5cae227fb6423b6";

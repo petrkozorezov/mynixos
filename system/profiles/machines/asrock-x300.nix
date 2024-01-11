@@ -6,8 +6,6 @@
 
     ../nm-connections.nix
     ../yubikey.nix
-    ../hardware/uhk.nix
-    ../hardware/ledger.nix
     ../livebook.nix
   ];
 

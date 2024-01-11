@@ -9,6 +9,7 @@
     settings.default_session.command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --remember --cmd sway";
   };
 
+  # TODO to home profile
   fonts = {
     packages = with pkgs; [
       hack-font
@@ -63,4 +64,7 @@
 
   documentation.man.enable = true;
   services.journald.extraConfig = "SystemMaxUse=1G";
+
+  hardware.ledger.enable = true;
+  hardware.keyboard.uhk.enable = true;
 }

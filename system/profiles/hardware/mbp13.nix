@@ -8,7 +8,6 @@ in {
       (modulesPath + "/installer/scan/not-detected.nix")
       ./audio.nix
       ./video.nix
-      ./uhk.nix
     ];
 
   boot = {

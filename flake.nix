@@ -3,9 +3,10 @@
 
   inputs.deps.url = "path:./deps";
 
-  outputs = { self, deps, ...}:
+  outputs = { self, deps, ... }:
     let
-      inherit (deps.inputs) nixpkgs home-manager deploy-rs terranix;
+      inputs = deps.inputs;
+      inherit (inputs) nixpkgs home-manager deploy-rs;
       # high level system description
       system = "x86_64-linux";
       pkgs   = deps.legacyPackages.${system};
@@ -71,6 +72,12 @@
             };
           };
     in rec {
+      # dev shell
+      devShell."${system}" = inputs.devenv.lib.mkShell {
+        inherit inputs pkgs;
+        modules = [ ./devenv.nix ];
+      };
+
       #
       # configurations
       # construct `{ hostname = { profile = configuration } }`

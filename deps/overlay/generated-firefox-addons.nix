@@ -383,10 +383,10 @@
       };
     "ether-metamask" = buildFirefoxXpiAddon {
       pname = "ether-metamask";
-      version = "11.6.2";
+      version = "11.7.2";
       addonId = "webextension@metamask.io";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4207789/ether_metamask-11.6.2.xpi";
-      sha256 = "a728af64dc99847cbc231bc36209a553f3d921f6ad72df1fcb08eaeb9d99c915";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4211857/ether_metamask-11.7.2.xpi";
+      sha256 = "09cdbc8c55b4042692c9b13f85b84b5304b70cac44f5854d0877a753fb17a6f5";
       meta = with lib;
       {
         description = "Ethereum Browser Extension";
@@ -435,10 +435,10 @@
       };
     "flagfox" = buildFirefoxXpiAddon {
       pname = "flagfox";
-      version = "6.1.69";
+      version = "6.1.70";
       addonId = "{1018e4d6-728f-4b20-ad56-37578a4de76b}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4202613/flagfox-6.1.69.xpi";
-      sha256 = "76110aa0ffa225c3530013f372d7d2be6310f0783afa1e467a451571e207147b";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4215210/flagfox-6.1.70.xpi";
+      sha256 = "0a639b3eae2d69382f6415df51a5a6d64d67013e1f5618ea7496ae1fa7fc8ac5";
       meta = with lib;
       {
         homepage = "https://flagfox.wordpress.com/";
@@ -461,10 +461,10 @@
       };
     "foxyproxy-standard" = buildFirefoxXpiAddon {
       pname = "foxyproxy-standard";
-      version = "8.7";
+      version = "8.8";
       addonId = "foxyproxy@eric.h.jung";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4209841/foxyproxy_standard-8.7.xpi";
-      sha256 = "4f0761eac3493689a4968b7f6625fe37c7bad38bb604e625c5aec7573fa7d246";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4212976/foxyproxy_standard-8.8.xpi";
+      sha256 = "b93e4e4ed0469a3bcd75450dda0faca451c3a4e16e3ca096262cab7e73bd3460";
       meta = with lib;
       {
         homepage = "https://getfoxyproxy.org";
@@ -771,16 +771,17 @@
       };
     "ublock-origin" = buildFirefoxXpiAddon {
       pname = "ublock-origin";
-      version = "1.54.0";
+      version = "1.55.0";
       addonId = "uBlock0@raymondhill.net";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4198829/ublock_origin-1.54.0.xpi";
-      sha256 = "9797160908191710ff0858536ba6dc29ecad9923c30b2ad6d3e5e371d759e44d";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4216633/ublock_origin-1.55.0.xpi";
+      sha256 = "a02ca1d32737c3437f97553e5caaead6479a66ac1f8ff3b84a06cfa6bb0c7647";
       meta = with lib;
       {
         homepage = "https://github.com/gorhill/uBlock#ublock-origin";
         description = "Finally, an efficient wide-spectrum content blocker. Easy on CPU and memory.";
         license = licenses.gpl3;
         mozPermissions = [
+          "alarms"
           "dns"
           "menus"
           "privacy"
@@ -877,10 +878,10 @@
       };
     "youtube-addon" = buildFirefoxXpiAddon {
       pname = "youtube-addon";
-      version = "4.506";
+      version = "4.600";
       addonId = "{3c6bf0cc-3ae2-42fb-9993-0d33104fdcaf}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4208945/youtube_addon-4.506.xpi";
-      sha256 = "30046864ac8311a49ace7df364969a8fe4aea0936be5e7afde00161000a01bd6";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4219118/youtube_addon-4.600.xpi";
+      sha256 = "23d76f6d2e6dd8f2e22a6ecfc20a77ea8cb9125c107bdb352657607cf0bbfad6";
       meta = with lib;
       {
         homepage = "https://github.com/code4charity/YouTube-Extension/";

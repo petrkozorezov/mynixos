@@ -51,7 +51,7 @@ deploy\:%:
 	deploy -s ".#$*"
 
 shell:
-	nix shell # TODO --profile .nix-profile
+	nix develop --impure
 
 config.tf.json: cloud/*.nix
 	terranix cloud/default.nix | jq . > $@
