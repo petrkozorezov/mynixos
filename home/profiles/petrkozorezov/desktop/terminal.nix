@@ -12,7 +12,7 @@
         font =
           {
             normal.family = "JetBrains Mono";
-            size = 14.0;
+            size = 10.0;
           };
         window.opacity = 0.95;
         colors = {
@@ -64,4 +64,5 @@
       };
   };
   home.packages = with pkgs; [ jetbrains-mono ];
+  home.sessionVariables.TERMINAL = "alacritty";
 }

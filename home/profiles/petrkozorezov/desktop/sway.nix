@@ -1,6 +1,8 @@
-{ config, lib, pkgs, ... }:
-
-let
+# TODO:
+#  - [ ] fuzzel + swayr
+#  - [ ] fuzzel pinetry
+# fuzzel --layer=overlay --terminal='alacritty -e'
+{ config, lib, pkgs, ... }: let
   mod      = "Mod4";
   terminal = "alacritty";
   w_term_0 = "00";
@@ -20,7 +22,6 @@ let
       url    = "https://wallpaperaccess.com/full/117782.png";
       sha256 = "0icwx5wib95yapb7i9vgy89wv9idcc2fbb69cgx57zadsfbdy4r3";
     };
-    # https://i.imgur.com/OHkR2vt.png
     # http://getwallpapers.com/wallpaper/full/c/6/c/52323.jpg
     # http://getwallpapers.com/wallpaper/full/c/7/4/271955.jpg
     # https://wallup.net/wp-content/uploads/2016/01/260716-orange-flowers-abstract.jpg
@@ -46,6 +47,7 @@ in {
     slurp                # screenshoter
     notify-desktop       # notifications
     wl-clipboard         # clipboard (wl-copy wl-paste)
+    wlprop               # window info
     ydotool              # gui automation tool
     waypipe              # wayland over ssh
     wob                  # volume control overlay
@@ -66,25 +68,28 @@ in {
 
   home.sessionVariables = {
     QT_QPA_PLATFORMTHEME = "qt5ct";
-    XDG_CURRENT_DESKTOP = "sway";
-    SDL_VIDEODRIVER     = "wayland";
+    XDG_CURRENT_DESKTOP  = "sway";
+    SDL_VIDEODRIVER      = "wayland";
     # needs qt5.qtwayland in systemPackages
-    QT_QPA_PLATFORM = "wayland";
+    QT_QPA_PLATFORM      = "wayland";
     QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
   };
 
   wayland.windowManager.sway = {
     enable = true;
     # xwayland = false;
-    systemd.enable      = true;
     wrapperFeatures.gtk = true;
     config = rec {
       modifier = mod;
-      fonts =
-        {
-          names = [ "Hack" ];
-          size = 10.0;
-        };
+      fonts = {
+        names = [ "Hack" ];
+        size  = 10.0;
+      };
+      gaps = {
+        inner        = 1;
+        outer        = 1;
+        smartGaps    = true;
+      };
       bindkeysToCode = true;
       keybindings = let
         workspaces = mod_: action: {
@@ -108,6 +113,9 @@ in {
         mon_light_dev = "sysfs/backlight/auto";
         exec_light = device: action:
           "exec light -s ${device} ${action} && light -G | cut -d'.' -f1 > ${ob_file}";
+        take_screenshot =
+          msg: geometry_cmd:
+            "exec grim -t jpeg -g \"`${geometry_cmd}`\" \"$HOME/Dropbox/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).jpg\" && notify-desktop '${msg} screenshot taken'";
       in
         workspaces               "${mod}" ""                      //
         workspaces         "Shift+${mod}" "move"                  //
@@ -116,7 +124,6 @@ in {
         arrows           "Control+${mod}" "focus output"          //
         arrows     "Shift+Control+${mod}" "move workspace output" //
       {
-        #"Alt+Shift+22"          = "exec loginctl lock-sessionx";
         "${mod}+u"               = "exec rofi -show run";
         "${mod}+Shift+u"         = "exec rofi -show drun";
         "${mod}+e"               = "exec rofi -show ssh";
@@ -137,23 +144,14 @@ in {
         "${mod}+x"               = "split h";
         "${mod}+k"               = "split v";
 
-        "${mod}+minus"           = "exec grim -t jpeg -g \"$(slurp)\" \"$HOME/Dropbox/Screenshots/$(date +%Y-%m-%d_%H-%m-%S).jpg\"";
-        # window
-        # grim ~/Dropbox/Screenshots/${NAME} && notify-desktop "fullscreen screenshot taken $NAME"
-        # region
-        # GEOMETRY=`swaymsg -t get_tree | jq -r '.. | select(.pid? and .visible?) | .rect | "\(.x),\(.y) \(.width)x\(.height)"' | slurp`
-        #grim -g "${GEOMETRY}" ~/Dropbox/Screenshots/${NAME} && notify-desktop "fullscreen screenshot taken $NAME"
+        "${mod}+minus"               = take_screenshot "region"     "slurp";
+        # BUG sway handles comma as command separator
+        # "${mod}+Shift+minus"         = take_screenshot "window"     "swaymsg -t get_tree | jq -r '.. | select(.pid? and .visible?) | .rect | \"\\(.x),\\(.y) \\(.width)x\\(.height)\"' | slurp -r";
+        "${mod}+Shift+Control+minus" = take_screenshot "fullscreen" "slurp -or";
+
         #"${mod}+r"              = "mode resize";
         "${mod}+Shift+space"     = "floating toggle";
         "${mod}+space"           = "focus mode_toggle";
-
-        # TODO bindsym --locked
-        "XF86AudioRaiseVolume"   = "exec pamixer -ui 2 && pamixer --get-volume > ${ob_file}";
-        "XF86AudioLowerVolume"   = "exec pamixer -ud 2 && pamixer --get-volume > ${ob_file}";
-        "XF86AudioMute"          = "exec pamixer --toggle-mute && ( pamixer --get-mute && echo 0 > ${ob_file} ) || pamixer --get-volume > ${ob_file}";
-        "XF86AudioNext"          = "exec playerctl next";
-        "XF86AudioPlay"          = "exec playerctl play-pause";
-        "XF86AudioPrev"          = "exec playerctl previous";
 
         "XF86MonBrightnessUp"   = exec_light mon_light_dev "-A 5";
         "XF86MonBrightnessDown" = exec_light mon_light_dev "-U 5";
@@ -173,6 +171,7 @@ in {
             "firefox -P personal"
             "sublime_text"
             "telegram-desktop"
+            "spotify --ozone-platform=wayland"
          ]
          (cmd: { command = cmd; })
       ;
@@ -181,8 +180,8 @@ in {
         {
           "${w_web}"   = [ { app_id = "firefox"; } ];
           "${w_dev}"   = [ { app_id = "sublime_text"; } ];
-          "${w_msg}"   = [ { app_id = "telegramdesktop"; } { class = "Slack"; } { class = "discord"; } ];
-          "${w_music}" = [ { app_id = "ColinDuquesnoy.gitlab.com."; } ];
+          # "${w_music}" = [ { name   = "Spotify Premium"; } ];
+          "${w_msg}"   = [ { app_id = "org.telegram.desktop"; } { class = "Slack"; } { class = "discord"; } ];
           "${w_calls}" = [ { class  = "Chromium-browser"; } ];
         };
 
@@ -237,59 +236,58 @@ in {
         };
       };
 
+      seat = {
+        "*" = {
+          fallback      = "true";
+          hide_cursor   = "5000";
+          xcursor_theme = cursorsTheme;
+        };
+      };
+
+      colors.focused = let
+        # red = "#801a00";
+        gray  = "#666666";
+        white = "#ffffff";
+      in {
+        background  = gray;
+        border      = gray;
+        childBorder = gray;
+        indicator   = gray;
+        text        = white;
+      };
+
     };
     extraConfig = ''
-      #bindswitch --reload lid:on  output eDP-1 disable
-      #bindswitch --reload lid:off output eDP-1 enable
+      default_border pixel 0
 
-      set $red #801a00
-      set $red1 #cc2900
-      set $white #ffffff
-      set $gray #666666
-
-      # class                 border  backgr. text    indicator child_border
-      client.focused          $gray   $gray   $white  $gray     $gray
-      #client.focused          $red1   $red    $white  $red      $red1
-
-      popup_during_fullscreen leave_fullscreen
-      default_border pixel 1
-
-      # TODO sleep
-      set $mon_off swaymsg "output * dpms off"
-      set $mon_on  swaymsg "output * dpms on"
-      set $lock_cmd swaylock -f -i ${wallpaper}
-      set $lock_and_mon_off $lock_cmd && $mon_off
-      set $send_lock_signal kill -USR1 `pidof swayidle`
+      set $mon_off            swaymsg "output * dpms off"
+      set $mon_on             swaymsg "output * dpms on"
+      set $lock_cmd           swaylock -f -i ${wallpaper}
+      set $send_lock_signal   kill -USR1 `pidof swayidle`
       set $send_unlock_signal kill `pidof swaylock`
+
       exec swayidle -w timeout 310 '$lock_cmd'  timeout 300 '$mon_off' resume '$mon_on' before-sleep '$lock_cmd' lock '$lock_cmd' unlock '$send_unlock_signal'
       bindsym --to-code Control+Shift+backspace exec "$send_lock_signal && sleep 2 && $send_lock_signal"
 
+      bindsym --to-code --locked XF86AudioRaiseVolume  exec pamixer -ui 2 && pamixer --get-volume > ${ob_file}
+      bindsym --to-code --locked XF86AudioLowerVolume  exec pamixer -ud 2 && pamixer --get-volume > ${ob_file}
+      bindsym --to-code --locked XF86AudioMute         exec pamixer --toggle-mute && ( pamixer --get-mute && echo 0 > ${ob_file} ) || pamixer --get-volume > ${ob_file}
+      bindsym --to-code --locked XF86AudioNext         exec playerctl next
+      bindsym --to-code --locked XF86AudioPlay         exec playerctl play-pause
+      bindsym --to-code --locked XF86AudioPrev         exec playerctl previous
+
       focus_follows_mouse no
       mouse_warping container
-
-      seat seat0 {
-        fallback      true
-        hide_cursor   5000
-        xcursor_theme ${cursorsTheme}
-      }
 
       # TODO moveto nix
       for_window [shell="xwayland"] title_format "%title [XWayland]"
     '';
   };
 
-  programs.zsh.initExtra =
-    ''
-      test -z $DISPLAY && \
-      test 1 -eq $XDG_VTNR && \
-      sway && \
-      exit;
-    '';
-
   gtk = {
     enable         = true;
     font.name      = "Hack 10";
-    iconTheme.name = "hicolor"; # TODO set smth better
+    iconTheme.name = "hicolor"; # TODO use smth better
     # TODO https://github.com/mitch-kyle/monokai-gtk
     theme = {
       package = pkgs.gnome3.gnome-themes-extra;

@@ -2,6 +2,7 @@
   imports = [
     ./browser
     ./desktop.nix
+    ./discord.nix
     ./dropbox.nix
     ./fonts.nix
     ./games.nix

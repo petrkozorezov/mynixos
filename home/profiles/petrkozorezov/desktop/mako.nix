@@ -10,6 +10,7 @@
     textColor       = "#ffffffD0";
     borderColor     = "#cc2900D0";
     progressColor   = "#cc2900D0";
+    layer           = "overlay"  ;
   };
 
   home.packages = [ pkgs.hack-font ];

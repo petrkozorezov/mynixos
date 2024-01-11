@@ -1,43 +1,38 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
+  home.packages = with pkgs; [
+    # privacy
+    veracrypt
+    # opensnitch
+    # opensnitch-ui
 
-  home.packages = with pkgs;
-    [
-      # privacy
-      veracrypt
-      # opensnitch
-      # opensnitch-ui
+    # mail clients
+    # TODO
 
-      # mail clients
-      # TODO
+    # messengers
+    tdesktop
+    slack
 
-      # messengers
-      tdesktop
-      # slack
-      # discord
+    # books
+    calibre
 
-      # books
-      calibre
+    # office
+    libreoffice
 
-      # office
-      libreoffice
+    # multimedia
+    playerctl
+    mpv
+    imv
+    nomacs
+    spotify
 
-      # multimedia
-      playerctl
-      mpv
-      imv
-      nomacs
-      spotify
+    # others
+    # gucharmap
+    # uhk-agent
 
-      # others
-      # gucharmap
-      # uhk-agent
+    # sound
+    pulsemixer pamixer
 
-      # sound
-      pulsemixer pamixer
-
-      # obsidian
-      # zotero
-
-    ];
+    # obsidian
+    # zotero
+  ];
 }
