@@ -68,6 +68,7 @@ let
       "Pretty JSON"
       "Text Pastry"
       "ColorHelper"
+      "INI"
 
       # languages
       "LSP"
@@ -88,7 +89,7 @@ let
       "LSP-eslint"
       "LSP-pyright"
       "Rust Enhanced"
-      "LSP-rust-analyzer"
+      # "LSP-rust-analyzer" # TODO use rust-analyzer from devenv
       "Ethereum"
       "MarkdownEditing"
       # "LSP-ltex-ls"
@@ -103,7 +104,7 @@ let
 
       "Direnv"
     ];
-    auto_upgrade_ignore = ["Package Control"];
+    auto_upgrade_ignore = [ "Package Control" ];
   };
   lsp = {
     clients =
@@ -112,7 +113,7 @@ let
         erlang-ls =
           {
             enabled  = true;
-            command  = [ "${pkgs.erlang-ls}/bin/erlang_ls" "--transport" "stdio" "" ];
+            command  = [ "erlang_ls" "--transport" "stdio" "" ];
             selector = "source.erlang";
           };
         elixir-ls = {
@@ -163,23 +164,13 @@ in
     };
   };
 
-  home.file = {
-    # TODO other LSP packages
-    "${packageStorage}/LSP-rust-analyzer/rust-analyzer".source = "${pkgs.rust-analyzer}/bin/rust-analyzer";
-  };
   home.packages = with pkgs; [
+    sublime4
     jetbrains-mono
 
-    # TODO refactor lsp to use flake.nix
-    nodejs
-    rustc cargo
+    # TODO remove(?)
     mdl # markdownlint
     shellcheck
     adoptopenjdk-jre-bin
-
-    (sublime4.overrideAttrs ({ propagatedBuildInputs ? [], ... }: {
-      propagatedBuildInputs =
-        propagatedBuildInputs ++ [];
-    }))
   ];
 }
