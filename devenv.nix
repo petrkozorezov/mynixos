@@ -13,7 +13,11 @@ in {
     inputs.deploy-rs.defaultPackage."${system}"
     terranix
     (terraform.withPlugins (tp: [ tp.hcloud ]))
-    # config.nur.repos.rycee.mozilla-addons-to-nix
+
+    # TODO move to packages build deps
+    ripgrep
+    curl
+    config.nur.repos.rycee.mozilla-addons-to-nix
   ];
 
   env.GREET = "Hello to MyNixOS shell";

@@ -4,6 +4,7 @@
 #  - autin(?)
 { pkgs, deps, ... }: {
   imports = [
+    deps.inputs.nix-index-database.hmModules.nix-index
     ./nushell.nix
     ./zsh.nix
     ./packages.nix
@@ -26,10 +27,6 @@
       erlang = { disabled = true; };
       elixir = { disabled = true; };
     };
-  };
-  programs.command-not-found = {
-    enable = true;
-    dbPath = "${deps.inputs.nixos-channel}/programs.sqlite";
   };
   programs.skim = rec {
     enable                 = true;

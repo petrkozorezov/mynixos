@@ -1,19 +1,24 @@
+# The main reason to have this separation is
+# to be able to store nixpkgs with deps on disk without the secrets
 {
   description = "My Nix Packages";
-  # TODO https://github.com/NixOS/nix/issues/3966
+  # TODO remove copy/paste (https://github.com/NixOS/nix/issues/3966)
   inputs = {
-           nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11"                      ;
-            devenv.url = "github:cachix/devenv/v0.6.3"                           ;
-         deploy-rs.url = "github:serokell/deploy-rs"                             ;
-       flake-utils.url = "github:numtide/flake-utils"                            ;
-     nixos-channel.url = "https://nixos.org/channels/nixos-23.11/nixexprs.tar.xz";
-      home-manager.url = "github:rycee/home-manager/release-23.11"               ;
-               nur.url = "github:nix-community/NUR"                              ;
-               dns.url = "github:kirelagin/dns.nix"                              ;
-    fenix = {
-      url = "github:nix-community/fenix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+               nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11"       ;
+          home-manager.url = "github:rycee/home-manager/release-23.11";
+                   nur.url = "github:nix-community/NUR"               ;
+                devenv.url = "github:cachix/devenv/v0.6.3"            ;
+             deploy-rs.url = "github:serokell/deploy-rs"              ;
+           flake-utils.url = "github:numtide/flake-utils"             ;
+                   dns.url = "github:kirelagin/dns.nix"               ;
+    nix-index-database.url = "github:Mic92/nix-index-database"        ;
+                 fenix.url = "github:nix-community/fenix"             ;
+
+          home-manager.inputs.nixpkgs.follows = "nixpkgs";
+             deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
+                   dns.inputs.nixpkgs.follows = "nixpkgs";
+    nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
+                 fenix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { self, nixpkgs, flake-utils, ... } @ inputs:

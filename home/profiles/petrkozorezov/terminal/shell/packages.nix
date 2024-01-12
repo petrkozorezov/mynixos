@@ -33,7 +33,6 @@
 
     # pmount # (?)
     lm_sensors
-    nix-index
 
     sshfs
   ];

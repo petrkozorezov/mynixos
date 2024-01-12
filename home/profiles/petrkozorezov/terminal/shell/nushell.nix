@@ -4,6 +4,7 @@
   #  - nu_scripts (eg git/gh/nix completions)
   #  - skim integration # https://github.com/nushell/nushell/issues/1275
   #  - plugins
+  #  - nix-index as command-not-found
   programs = {
     nushell = {
       enable  = true;
