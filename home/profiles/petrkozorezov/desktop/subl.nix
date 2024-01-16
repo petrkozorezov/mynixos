@@ -12,7 +12,7 @@ let
     sidebar_size_13                   = true;
     color_scheme                      = "Packages/Theme - Afterglow/Afterglow-monokai.tmTheme";
     font_face                         = "JetBrains Mono";
-    font_size                         = 14;
+    font_size                         = 10;
     overlay_scroll_bars               = "enabled";
     auto_complete                     = true;
     auto_match_enabled                = false;

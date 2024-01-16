@@ -20,7 +20,7 @@
            white : #E8E8E8;
 
            transparency: "real";
-           font: "Hack 14";
+           font: "Hack 10";
            background-color: #00000000;
         }
 
