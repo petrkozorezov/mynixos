@@ -323,11 +323,6 @@ in {
     enable   = true;
     profiles =
       let
-        macbook = {
-          status   = "enable";
-          criteria = "Apple Computer Inc Color LCD Unknown";
-          scale    = 2.0;
-        };
         portable = {
           status   = "enable";
           criteria = "DO NOT USE - RTK HDMI 0x00000101";
@@ -335,7 +330,7 @@ in {
         };
       in
       {
-        "Main" = { outputs = [ macbook portable ]; };
+        "Main" = { outputs = [ portable ]; };
       };
   };
 
