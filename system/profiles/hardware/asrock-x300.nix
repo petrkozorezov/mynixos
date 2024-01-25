@@ -6,7 +6,6 @@
       ./ssd-970-pro.nix
       ./audio.nix
       ./video.nix
-      ./tp-link-archer-t4u-plus.nix
     ];
 
   boot = {
@@ -19,6 +18,10 @@
       kernelModules = [ ];
     };
     kernelModules = [ "kvm-amd" ];
+    # TODO try 6.8 linux
+    kernelParams  = [
+      "amdgpu.ppfeaturemask=0xffffffff" # enable overclocking and tuning
+    ];
     extraModulePackages = [ ];
   };
 
@@ -31,10 +34,8 @@
     enableRedistributableFirmware = true;
   };
 
-  # amd vulkan
   hardware.opengl = {
-    extraPackages   = with pkgs              ; [ amdvlk rocm-opencl-icd rocm-runtime ];
-    extraPackages32 = with pkgs.pkgsi686Linux; [ amdvlk libva ];
+    extraPackages   = with pkgs              ; [ rocm-opencl-icd rocmPackages.rocm-runtime ];
+    extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
   };
-  environment.variables.VK_ICD_FILENAMES = "/run/opengl-driver/share/vulkan/icd.d/amd_icd64.json";
 }
