@@ -1,11 +1,11 @@
 {
   imports = [
     ./browser
+    ./games
     ./desktop.nix
     ./discord.nix
     ./dropbox.nix
     ./fonts.nix
-    ./games.nix
     ./mako.nix
     ./rofi.nix
     ./security.nix

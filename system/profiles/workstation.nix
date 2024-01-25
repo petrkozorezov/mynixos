@@ -33,8 +33,16 @@
   virtualisation.docker.enable = true;
 
   # steam
-  # TODO move to home profile
-  programs.steam.enable = true;
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall      = true;
+    dedicatedServer.openFirewall = true;
+  };
+  # broken
+  programs.gamescope = {
+    enable     = true;
+    # capSysNice = true; # is no working
+  };
 
   # security
   services.pcscd.enable   = true;
