@@ -10,6 +10,9 @@
           nsh() {
             nix shell "mynixos#$1"
           }
+          nshu() {
+            nix shell "github:NixOS/nixpkgs/nixpkgs-unstable#$1"
+          }
           fix-touchpad() {
             sudo rmmod bcm5974 && sudo modprobe bcm5974 && dmesg | tail
           }
@@ -34,6 +37,7 @@
         "tree"  = "${"l"} -T";
         "cat"   = "${pkgs.bat}/bin/bat";
         "ns"    = "nix search mynixos";
+        "nsu"   = "nix search github:NixOS/nixpkgs/nixpkgs-unstable";
         "nb"    = "nix build";
         "cloc"  = "${pkgs.tokei}/bin/tokei";
         "grep"  = "${pkgs.ripgrep}/bin/rg";
