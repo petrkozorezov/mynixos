@@ -49,6 +49,7 @@
   programs.ssh.startAgent = false;
   services.udev.packages  = [ pkgs.yubikey-personalization ];
   security.pam.services.swaylock = {};
+  security.polkit.enable = true;
 
   # networking
   networking = {
