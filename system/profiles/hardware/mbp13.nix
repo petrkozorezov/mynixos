@@ -8,6 +8,7 @@ in {
       (modulesPath + "/installer/scan/not-detected.nix")
       ./audio.nix
       ./video.nix
+      ./bluetooth.nix
     ];
 
   boot = {
@@ -106,10 +107,6 @@ in {
 
   # facetimehd
   hardware.facetimehd.enable = true;
-
-  # bluetooth
-  hardware.bluetooth.enable = true;
-  services.blueman.enable = true;
 
   # video
   console.font = lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";

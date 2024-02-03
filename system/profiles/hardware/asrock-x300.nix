@@ -6,6 +6,7 @@
       ./ssd-970-pro.nix
       ./audio.nix
       ./video.nix
+      ./bluetooth.nix
     ];
 
   boot = {
