@@ -168,6 +168,7 @@ in {
             "mako"
             "blueman-applet"
             "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
+            "udiskie --no-automount --tray"
 
             "firefox -P personal"
             "sublime_text"

@@ -8,6 +8,7 @@
     enable = true;
     settings.default_session.command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --remember --cmd sway";
   };
+  services.udisks2.enable = true;
 
   # TODO to home profile
   fonts = {
