@@ -42,15 +42,18 @@
   # broken
   programs.gamescope = {
     enable     = true;
-    # capSysNice = true; # is no working
+    # capSysNice = true; # is not working
   };
 
   # security
   services.pcscd.enable   = true;
   programs.ssh.startAgent = false;
   services.udev.packages  = [ pkgs.yubikey-personalization ];
+
   security.pam.services.swaylock = {};
+
   security.polkit.enable = true;
+  security.rtkit.enable  = true;
 
   # networking
   networking = {
