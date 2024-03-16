@@ -57,7 +57,7 @@ in {
     xwayland
     wallutils # TODO use it
     xorg.xhost
-
+    udiskie
     dconf
 
     capitaine-cursors
