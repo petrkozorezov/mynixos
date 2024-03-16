@@ -33,6 +33,7 @@
               # sublime4 depends on it
               "openssl-1.1.1w"
             ];
+            rocmSupport = true; # TODO move it to a appropriate place
           };
           overlays = [
             # TODO use a single common way

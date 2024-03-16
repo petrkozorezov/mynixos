@@ -2,10 +2,10 @@
   {
     "augmented-steam" = buildFirefoxXpiAddon {
       pname = "augmented-steam";
-      version = "2.6.0";
+      version = "3.0.0";
       addonId = "{1be309c5-3e4f-4b99-927d-bb500eb4fa88}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4167723/augmented_steam-2.6.0.xpi";
-      sha256 = "949f9f8c8a932cbaee3fea6ccbb25a34fa1d260c61df78e5c384bdf7d4118c59";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4234656/augmented_steam-3.0.0.xpi";
+      sha256 = "14032ec9220d621aea6d6f7415cf205852a6d0b47fa2dd79cdf9e2a49bcde3f1";
       meta = with lib;
       {
         homepage = "https://augmentedsteam.com/";
@@ -332,16 +332,16 @@
       };
     "consent-o-matic" = buildFirefoxXpiAddon {
       pname = "consent-o-matic";
-      version = "1.0.12";
+      version = "1.0.13";
       addonId = "gdpr@cavi.au.dk";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4074847/consent_o_matic-1.0.12.xpi";
-      sha256 = "013ea48757b8a4d84a2a0d944bc49b5612d62bae1d337f9569f425f2b8310e0f";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4246350/consent_o_matic-1.0.13.xpi";
+      sha256 = "ee577eaedebd9fef65f77218b86c59972818442c9af551d551a7015a4a246e9a";
       meta = with lib;
       {
         homepage = "https://consentomatic.au.dk/";
         description = "Automatic handling of GDPR consent forms";
         license = licenses.mit;
-        mozPermissions = [ "activeTab" "storage" "<all_urls>" ];
+        mozPermissions = [ "activeTab" "tabs" "storage" "<all_urls>" ];
         platforms = platforms.all;
         };
       };
@@ -383,10 +383,10 @@
       };
     "ether-metamask" = buildFirefoxXpiAddon {
       pname = "ether-metamask";
-      version = "11.7.2";
+      version = "11.10.1";
       addonId = "webextension@metamask.io";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4211857/ether_metamask-11.7.2.xpi";
-      sha256 = "09cdbc8c55b4042692c9b13f85b84b5304b70cac44f5854d0877a753fb17a6f5";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4242329/ether_metamask-11.10.1.xpi";
+      sha256 = "728ee6e988fecbe312b644d28d6591478ba15afb3193f8bf74d76052ad132502";
       meta = with lib;
       {
         description = "Ethereum Browser Extension";
@@ -435,10 +435,10 @@
       };
     "flagfox" = buildFirefoxXpiAddon {
       pname = "flagfox";
-      version = "6.1.70";
+      version = "6.1.72";
       addonId = "{1018e4d6-728f-4b20-ad56-37578a4de76b}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4215210/flagfox-6.1.70.xpi";
-      sha256 = "0a639b3eae2d69382f6415df51a5a6d64d67013e1f5618ea7496ae1fa7fc8ac5";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4243023/flagfox-6.1.72.xpi";
+      sha256 = "e86e74636f641512d2237a90fa97d7ccd491399e85b05e0965da71b4340252be";
       meta = with lib;
       {
         homepage = "https://flagfox.wordpress.com/";
@@ -461,10 +461,10 @@
       };
     "foxyproxy-standard" = buildFirefoxXpiAddon {
       pname = "foxyproxy-standard";
-      version = "8.8";
+      version = "8.9";
       addonId = "foxyproxy@eric.h.jung";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4212976/foxyproxy_standard-8.8.xpi";
-      sha256 = "b93e4e4ed0469a3bcd75450dda0faca451c3a4e16e3ca096262cab7e73bd3460";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4228676/foxyproxy_standard-8.9.xpi";
+      sha256 = "b1e1b85f4b3b047560f5329040e14a2fec9699edd4706391f6f2318b203ab023";
       meta = with lib;
       {
         homepage = "https://getfoxyproxy.org";
@@ -589,10 +589,10 @@
       };
     "search_by_image" = buildFirefoxXpiAddon {
       pname = "search_by_image";
-      version = "6.1.1";
+      version = "6.1.2";
       addonId = "{2e5ff8c8-32fe-46d0-9fc8-6b8986621f3c}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4209928/search_by_image-6.1.1.xpi";
-      sha256 = "254d78084e332190a2b6ccb1959a42257bdc287addc0685419fcde7df1a52e76";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4227669/search_by_image-6.1.2.xpi";
+      sha256 = "fed46723702c79d0d2dcd2132901402b6c391f9fef8efbb58635b5ea9e47476f";
       meta = with lib;
       {
         homepage = "https://github.com/dessant/search-by-image#readme";
@@ -618,14 +618,14 @@
       };
     "sidebery" = buildFirefoxXpiAddon {
       pname = "sidebery";
-      version = "5.0.0";
+      version = "5.2.0";
       addonId = "{3c078156-979c-498b-8990-85f7987dd929}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4170134/sidebery-5.0.0.xpi";
-      sha256 = "f592427a1c68d3e51aee208d05588f39702496957771fd84b76a93e364138bf5";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4246774/sidebery-5.2.0.xpi";
+      sha256 = "a5dd94227daafeec200dc2052fae6daa74d1ba261c267b71c03faa4cc4a6fa14";
       meta = with lib;
       {
         homepage = "https://github.com/mbnuqw/sidebery";
-        description = "Tabs tree and bookmarks in sidebar with advanced containers configuration.";
+        description = "Vertical tabs tree and bookmarks in sidebar with advanced containers configuration, grouping and many other features.";
         license = licenses.mit;
         mozPermissions = [
           "activeTab"
@@ -709,10 +709,10 @@
       };
     "solflare-wallet" = buildFirefoxXpiAddon {
       pname = "solflare-wallet";
-      version = "1.60.0";
+      version = "1.63.0";
       addonId = "{6d72262a-b243-4dc6-8f4f-be96c74e0a86}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4212377/solflare_wallet-1.60.0.xpi";
-      sha256 = "8857bfe488dfe2347388d5e408afe03f46d7907684bd795ede6c078e438e809a";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4240565/solflare_wallet-1.63.0.xpi";
+      sha256 = "cceee8ce11d01bc74ab81098fb8e903aa5127e1da9c04e7e8f8b87de117a343a";
       meta = with lib;
       {
         homepage = "https://solflare.com/";
@@ -745,10 +745,10 @@
       };
     "tree-style-tab" = buildFirefoxXpiAddon {
       pname = "tree-style-tab";
-      version = "3.9.19";
+      version = "4.0.3";
       addonId = "treestyletab@piro.sakura.ne.jp";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4197314/tree_style_tab-3.9.19.xpi";
-      sha256 = "bb67f47a554f8f937f4176bee6144945eb0f240630b93f73d2cff49f0985b55a";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4249095/tree_style_tab-4.0.3.xpi";
+      sha256 = "0904fe9db63b949b66f876cbea911c1f2d9f59d5b2ae0e0f1cae362a1ca36720";
       meta = with lib;
       {
         homepage = "http://piro.sakura.ne.jp/xul/_treestyletab.html.en";
@@ -771,10 +771,10 @@
       };
     "ublock-origin" = buildFirefoxXpiAddon {
       pname = "ublock-origin";
-      version = "1.55.0";
+      version = "1.56.0";
       addonId = "uBlock0@raymondhill.net";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4216633/ublock_origin-1.55.0.xpi";
-      sha256 = "a02ca1d32737c3437f97553e5caaead6479a66ac1f8ff3b84a06cfa6bb0c7647";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4237670/ublock_origin-1.56.0.xpi";
+      sha256 = "f5fbeeac511ca4e10a74723413727fda8e6f9236c726d16eb54ade1fbe7be5be";
       meta = with lib;
       {
         homepage = "https://github.com/gorhill/uBlock#ublock-origin";
@@ -878,10 +878,10 @@
       };
     "youtube-addon" = buildFirefoxXpiAddon {
       pname = "youtube-addon";
-      version = "4.600";
+      version = "4.702";
       addonId = "{3c6bf0cc-3ae2-42fb-9993-0d33104fdcaf}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4219118/youtube_addon-4.600.xpi";
-      sha256 = "23d76f6d2e6dd8f2e22a6ecfc20a77ea8cb9125c107bdb352657607cf0bbfad6";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4241069/youtube_addon-4.702.xpi";
+      sha256 = "292eff2b102b81213371ec2151c5f5844775e01a5ae9092ebab16a1c2cc69638";
       meta = with lib;
       {
         homepage = "https://github.com/code4charity/YouTube-Extension/";

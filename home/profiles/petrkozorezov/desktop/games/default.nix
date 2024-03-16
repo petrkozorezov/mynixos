@@ -29,9 +29,11 @@
     };
   };
 
+  # steam args
+  # https://gist.github.com/davispuh/6600880
+
   # run command
-  # gamescope --expose-wayland -f -F fsr -r 144 -e -- mangohud steam -tenfoot -steamos
-  # gamescope --expose-wayland -f -F fsr -W 2560 -H 1600 -r 144 -e -- mangohud steam -tenfoot -steamos
+  # gamescope --expose-wayland -f -F fsr -W 2560 -H 1600 -r 144 -e -- mangohud steam -steamos -bigpicture -console
 }
 
 

@@ -41,7 +41,7 @@
   };
   # broken
   programs.gamescope = {
-    enable     = true;
+    enable = true;
     # capSysNice = true; # is not working
   };
 

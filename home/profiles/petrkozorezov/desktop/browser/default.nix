@@ -58,6 +58,8 @@
         passff
         browserpass-ce
 
+        # libredirect # TODO
+
         # FIXME блокируется skip-redirect
         # image-search-options
         # search_by_image
