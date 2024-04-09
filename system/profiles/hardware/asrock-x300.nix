@@ -39,4 +39,7 @@
     extraPackages   = with pkgs              ; [ rocm-opencl-icd rocmPackages.rocm-runtime ];
     extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
   };
+
+  # thunderbolt control daemon
+  services.hardware.bolt.enable = true;
 }
