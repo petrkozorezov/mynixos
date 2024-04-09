@@ -18,6 +18,7 @@ in {
     ripgrep
     curl
     config.nur.repos.rycee.mozilla-addons-to-nix
+    devenv
   ];
 
   env.GREET = "Hello to MyNixOS shell";

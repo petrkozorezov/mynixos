@@ -7,7 +7,8 @@
                nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11"       ;
           home-manager.url = "github:rycee/home-manager/release-23.11";
                    nur.url = "github:nix-community/NUR"               ;
-                devenv.url = "github:cachix/devenv/v0.6.3"            ;
+        devenv-nixpkgs.url = "github:cachix/devenv-nixpkgs/rolling"   ;
+                devenv.url = "github:cachix/devenv/v1.0.3"            ;
              deploy-rs.url = "github:serokell/deploy-rs"              ;
            flake-utils.url = "github:numtide/flake-utils"             ;
                    dns.url = "github:kirelagin/dns.nix"               ;
@@ -15,6 +16,7 @@
                  fenix.url = "github:nix-community/fenix"             ;
 
           home-manager.inputs.nixpkgs.follows = "nixpkgs";
+                devenv.inputs.nixpkgs.follows = "devenv-nixpkgs";
              deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
                    dns.inputs.nixpkgs.follows = "nixpkgs";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";

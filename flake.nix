@@ -5,7 +5,7 @@
 
   outputs = { self, deps, ... }:
     let
-      inputs = deps.inputs;
+      inputs = deps.inputs // {self = deps;};
       inherit (inputs) nixpkgs home-manager deploy-rs;
       # high level system description
       system = "x86_64-linux";
