@@ -102,9 +102,15 @@ let
       "GitGutter"
       "FileDiffs"
 
-      "Direnv"
+      # others
+      "Direnv"      # применение direvn окружения при в проекте
+      "ApplySyntax" # возможность кастомно настраивать включение синтаксиса
+      "UnicodeMath" # ввод unicode'ых символов через \
     ];
-    auto_upgrade_ignore = [ "Package Control" ];
+    auto_upgrade_ignore = [
+      # не убирать, иначе будут конфликты при деплое
+      "Package Control"
+    ];
   };
   lsp = {
     clients =
@@ -153,13 +159,14 @@ in
         builtins.toJSON lspTypescript;
       "${userPath}/LSP-rust-analyzer.sublime-settings".text =
         builtins.toJSON rustAnalyzer;
+      "${packagesPath}/subl/Lean.sublime-syntax".source = ./lean.sublime-syntax;
 
       # TODO pass by config
       "${localPath}/License.sublime_license".source = config.zoo.secrets.filesPath + "/sublime.license";
       "${installedPkgsPath}/Package Control.sublime-package".source =
         builtins.fetchurl {
-          url    = "https://github.com/wbond/package_control/releases/download/4.0.1/Package.Control.sublime-package";
-          sha256 = "1564lj73wgn2kqhf2jmg98c6c7r8ygv9ipfvv89qpsva9ails5mh";
+          url    = "https://github.com/wbond/package_control/releases/download/4.0.7/Package.Control.sublime-package";
+          sha256 = "07w18kk9x52pf5rd1lxxbq0nqahdkkybv01p766vy0vjihr19rpz";
         };
     };
   };
@@ -174,3 +181,22 @@ in
     adoptopenjdk-jre-bin
   ];
 }
+
+## TODO сделать отдельный модуль для саблайма с установкой пакетов вместо Package Control
+
+# сделать софтину аналогичную с firefox-extension,
+#  которая будет по списку пакетов хэшировать последние версии из packages.io
+# функция вроде sublime_with_packages [список пакетов]
+# для каждого пакета нужно
+#  - читать dependencies.json
+#  - выбирать платформу и версию саблайма
+#  - отдавать список нужных пакетов
+# генерить саблайм с питон 3.8 окружением с установленными пакетами выше
+
+# также саблайму нужно передавать
+#  - настройки
+#  - настройки пакетов
+#  - лицензию
+#  - кеймапы и синтаксисы
+#  - доп пакеты
+#  - что-то ещё?
