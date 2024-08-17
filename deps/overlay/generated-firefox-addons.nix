@@ -383,10 +383,10 @@
     };
     "ether-metamask" = buildFirefoxXpiAddon {
       pname = "ether-metamask";
-      version = "11.16.15";
+      version = "11.16.16";
       addonId = "webextension@metamask.io";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4314725/ether_metamask-11.16.15.xpi";
-      sha256 = "0ae84354d844454142312a12a508154d29588659eb87fa6a03707601ded22105";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4326873/ether_metamask-11.16.16.xpi";
+      sha256 = "c91ea731551b8f2fdf32a87735a60eb607541872e71969d623b3c462b8f7d67e";
       meta = with lib;
       {
         description = "Ethereum Browser Extension";
@@ -436,10 +436,10 @@
     };
     "flagfox" = buildFirefoxXpiAddon {
       pname = "flagfox";
-      version = "6.1.76";
+      version = "6.1.77";
       addonId = "{1018e4d6-728f-4b20-ad56-37578a4de76b}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4311612/flagfox-6.1.76.xpi";
-      sha256 = "01eee0e108389c3b73aebcdf0c6fec8e778308c16e427e49f9edff6e87fed671";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4328442/flagfox-6.1.77.xpi";
+      sha256 = "7b3b77a688b153d114f631c2749f1c1bf7ae4c69be82804d1a1afa29194d4f7c";
       meta = with lib;
       {
         homepage = "https://flagfox.wordpress.com/";
@@ -528,10 +528,10 @@
     };
     "languagetool" = buildFirefoxXpiAddon {
       pname = "languagetool";
-      version = "8.10.4";
+      version = "8.11.6";
       addonId = "languagetool-webextension@languagetool.org";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4317259/languagetool-8.10.4.xpi";
-      sha256 = "cf5fed5704ac8b6d4052fcf5819d1aa46ee61c76811393a7e355064baa32679c";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4332776/languagetool-8.11.6.xpi";
+      sha256 = "dc14ac983d3fb5f91ea3930451529e1cb8919f79e375cdae293e6b49c6c419a4";
       meta = with lib;
       {
         homepage = "https://languagetool.org";
@@ -552,10 +552,10 @@
     };
     "passff" = buildFirefoxXpiAddon {
       pname = "passff";
-      version = "1.19.5";
+      version = "1.20";
       addonId = "passff@invicem.pro";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4303400/passff-1.19.5.xpi";
-      sha256 = "03331d671c759b8689726aca7146cc2e2d9a4118d2d00e184dda20d1176e79e7";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4333675/passff-1.20.xpi";
+      sha256 = "cf07997a5687f4a1db191b5229a97ff839ec29f581bce2b6fa42b141635e0f7d";
       meta = with lib;
       {
         homepage = "https://codeberg.org/PassFF/passff";
@@ -697,7 +697,7 @@
       meta = with lib;
       {
         homepage = "https://gitlab.com/smart-referer/smart-referer";
-        description = "Improve your privacy by limiting Referer information leak!";
+        description = "Improve your privacy by limiting Referer information leak!\n\nPlease note that this extension has been largely superseded by better browser defaults for websites using HTTPS (almost all) and is not maintained anymore.";
         mozPermissions = [
           "menus"
           "storage"
@@ -740,10 +740,10 @@
     };
     "tree-style-tab" = buildFirefoxXpiAddon {
       pname = "tree-style-tab";
-      version = "4.0.20";
+      version = "4.0.22";
       addonId = "treestyletab@piro.sakura.ne.jp";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4310845/tree_style_tab-4.0.20.xpi";
-      sha256 = "1c1588dc4cafff49344cfc97df40d763651aea3964de774c925e460e8e307552";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4333810/tree_style_tab-4.0.22.xpi";
+      sha256 = "7712bb35bddaf4178a2847476c9dc4938c28e2661d02895fafefb2e3eae7fe9a";
       meta = with lib;
       {
         homepage = "http://piro.sakura.ne.jp/xul/_treestyletab.html.en";
@@ -766,10 +766,10 @@
     };
     "ublock-origin" = buildFirefoxXpiAddon {
       pname = "ublock-origin";
-      version = "1.58.0";
+      version = "1.59.0";
       addonId = "uBlock0@raymondhill.net";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4290466/ublock_origin-1.58.0.xpi";
-      sha256 = "470c56994a7174db21578adce598b158a5dc0970c87c5cfe889ac632bd3085ea";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4328681/ublock_origin-1.59.0.xpi";
+      sha256 = "1db9c676a07d141f8d36dbbc24f9e3d64a6cc2340dbfc6c848bc4395f96cfb14";
       meta = with lib;
       {
         homepage = "https://github.com/gorhill/uBlock#ublock-origin";
@@ -872,10 +872,10 @@
     };
     "youtube-addon" = buildFirefoxXpiAddon {
       pname = "youtube-addon";
-      version = "4.1077";
+      version = "4.1093";
       addonId = "{3c6bf0cc-3ae2-42fb-9993-0d33104fdcaf}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4315923/youtube_addon-4.1077.xpi";
-      sha256 = "2ddfa1a93f25f2e23e8488ab35c0831bd61e898c339c287efb9dbff91b38fe67";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4334089/youtube_addon-4.1093.xpi";
+      sha256 = "b06c862d223bef895822114fc5be1a3a903c1464c11322d440725be5f068bf53";
       meta = with lib;
       {
         homepage = "https://github.com/code4charity/YouTube-Extension/";
@@ -884,6 +884,7 @@
           "contextMenus"
           "storage"
           "https://www.youtube.com/*"
+          "https://m.youtube.com/*"
         ];
         platforms = platforms.all;
       };

@@ -8,7 +8,7 @@
           home-manager.url = "github:rycee/home-manager/release-24.05";
                    nur.url = "github:nix-community/NUR"               ;
         devenv-nixpkgs.url = "github:cachix/devenv-nixpkgs/rolling"   ;
-                devenv.url = "github:cachix/devenv/v1.0.7"            ;
+                devenv.url = "github:cachix/devenv/v1.0.8"            ;
              deploy-rs.url = "github:serokell/deploy-rs"              ;
            flake-utils.url = "github:numtide/flake-utils"             ;
                    dns.url = "github:kirelagin/dns.nix"               ;
