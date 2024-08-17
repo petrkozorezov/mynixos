@@ -25,7 +25,8 @@ in {
     users = let recoveryCfg = config.zoo.secrets.users.recovery; in {
       recovery = {
         inherit (recoveryCfg) uid description hashedPassword;
-        isNormalUser                = true;
+        isNormalUser = true;
+        extraGroups  = [ "wheel" ];
         openssh.authorizedKeys.keys = [ recoveryCfg.authPublicKey ];
       };
       root.openssh.authorizedKeys.keys = [ config.zoo.secrets.deployment.authPublicKey ];
@@ -68,5 +69,4 @@ in {
       decrypt = "${age} -d -i /etc/ssh/ssh_host_ed25519_key";
     };
   };
-
 }
