@@ -4,11 +4,11 @@
   description = "My Nix Packages";
   # TODO remove copy/paste (https://github.com/NixOS/nix/issues/3966)
   inputs = {
-               nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11"       ;
-          home-manager.url = "github:rycee/home-manager/release-23.11";
+               nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05"       ;
+          home-manager.url = "github:rycee/home-manager/release-24.05";
                    nur.url = "github:nix-community/NUR"               ;
         devenv-nixpkgs.url = "github:cachix/devenv-nixpkgs/rolling"   ;
-                devenv.url = "github:cachix/devenv/v1.0.3"            ;
+                devenv.url = "github:cachix/devenv/v1.0.7"            ;
              deploy-rs.url = "github:serokell/deploy-rs"              ;
            flake-utils.url = "github:numtide/flake-utils"             ;
                    dns.url = "github:kirelagin/dns.nix"               ;

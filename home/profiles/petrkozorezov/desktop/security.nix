@@ -6,8 +6,7 @@
     ];
 
   # TODO pinentry-rofi
-  programs.pinentry.package = pkgs.pinentry-gtk2;
-  services.gpg-agent.pinentryFlavor = "gtk2";
+  services.gpg-agent.pinentryPackage = pkgs.pinentry-gtk2;
 
   programs.zsh.initExtra =
     # TODO pass init

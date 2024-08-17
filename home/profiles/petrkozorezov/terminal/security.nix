@@ -9,14 +9,13 @@
     ];
 
   # gpg
-  programs.pinentry.enable = true;
   services.gpg-agent = {
     enable           = true;
     enableSshSupport = true;
     sshKeys          = [ "1948ED036DD78C36E037A1574CE34B744329301F" ]; # keygrip
     defaultCacheTtl  = 60;
     maxCacheTtl      = 120;
-    pinentryFlavor   = lib.mkDefault "curses";
+    pinentryPackage  = lib.mkDefault pkgs.pinentry-curses;
   };
   # TODO
   # home.file.".gnupg/".mode = "700";

@@ -1,5 +1,3 @@
 {
-  imports = [
-    ./pinentry.nix
-  ];
+  imports = [ ];
 }
