@@ -60,34 +60,6 @@ with lib; {
               pac-script = "function FindProxyForURL(url, host) { PROXY ${net}.${helsinki1.addr}:8118; }";
             };
           };
-        router =
-          {
-            connection = rec {
-              id   = "router";
-              uuid = "808291c7-3290-4c84-9c8a-a25eb7128745";
-              type = "wireguard";
-              interface-name = id;
-              autoconnect    = false;
-            };
-            wireguard.private-key = self.priv;
-            "wireguard-peer.${router.pub}" = {
-              endpoint             = "${router.endpoint}:${builtins.toString router.port}";
-              persistent-keepalive = "25";
-              allowed-ips          = "0.0.0.0/0";
-            };
-            # TODO remove hardcode
-            ipv4 = {
-              method   = "manual";
-              address1 = "${net}.${self.addr}/32";
-              dns      = "1.1.1.1;"; # TODO use ${net}.${helsinki1.addr}
-            };
-            ipv6.method = "disabled";
-            proxy = {
-              method     = "1 ";
-              pac-script = "function FindProxyForURL(url, host) { PROXY ${net}.${router.addr}:8118; }";
-            };
-          };
-
         };
       in vpn // wifis;
 
