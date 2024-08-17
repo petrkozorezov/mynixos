@@ -1,10 +1,10 @@
 { pkgs, config, lib, ... }:
 with lib;
 let
-  cfg = config.services.livebook;
+  cfg = config.services.mylivebook;
 in {
   options.services = {
-    livebook = {
+    mylivebook = {
 
       enable = mkEnableOption "livebook";
 
@@ -24,6 +24,12 @@ in {
         description = "group to run from";
         type        = types.str;
         default     = config.users.users."${cfg.user}".group;
+      };
+
+      openFirewall = mkOption {
+        description = "whether to open firewall";
+        type        = types.bool;
+        default     = true;
       };
 
       settings = {
@@ -139,11 +145,11 @@ in {
         isNormalUser = true;
       };
       networking.firewall.allowedTCPPorts = [ cfg.settings.iframe.port ];
-      systemd.services.livebook = {
+      systemd.services.mylivebook = {
         description   = "Livebook server";
         wantedBy      = [ "multi-user.target" ];
         after         = [ "network.target" ];
-        path          = [""]; # HACK "/bin" not in the PATH by default, but os_mon needs it
+        path          = [ "" ]; # HACK "/bin" not in the PATH by default, but os_mon needs it
         preStart      = "${pkgs.coreutils}/bin/mkdir -p ${cfg.settings.dataPath }";
         script = let
           passwordFile      = cfg.settings.passwordFile;
@@ -151,7 +157,7 @@ in {
         in
           (optionalString (passwordFile      != null)        "LIVEBOOK_PASSWORD=\"`cat ${passwordFile     }`\"") + " " +
           (optionalString (secretKeyBaseFile != null) "LIVEBOOK_SECRET_KEY_BASE=\"`cat ${secretKeyBaseFile}`\"") + " " +
-          "${cfg.package}/bin/livebook server";
+          "${cfg.package}/bin/livebook start";
         serviceConfig = {
           Type             = "simple";
           Restart          = "always";
@@ -179,7 +185,7 @@ in {
         ];
       };
     }
-    (mkIf (cfg.settings.port != 0) {
+    (mkIf (cfg.openFirewall) {
       networking.firewall.allowedTCPPorts = [ cfg.settings.port ];
     })
   ]);
