@@ -159,7 +159,7 @@ in
         builtins.toJSON lspTypescript;
       "${userPath}/LSP-rust-analyzer.sublime-settings".text =
         builtins.toJSON rustAnalyzer;
-      "${packagesPath}/subl/Lean.sublime-syntax".source = ./lean.sublime-syntax;
+      "${packagesPath}/Lean.sublime-syntax".source = ./subl/lean.sublime-syntax;
 
       # TODO pass by config
       "${localPath}/License.sublime_license".source = config.zoo.secrets.filesPath + "/sublime.license";
