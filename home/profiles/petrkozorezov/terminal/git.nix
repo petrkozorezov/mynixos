@@ -20,6 +20,11 @@ let email = "petr.kozorezov@gmail.com"; in {
     gh = {
       enable = true;
       settings.gitProtocol = "ssh";
+      extensions = with pkgs; [
+        gh-dash # dashboard
+        gh-poi  # branches sync
+        gh-s    # search
+      ];
       # TODO
       #aliases = {};
     };
