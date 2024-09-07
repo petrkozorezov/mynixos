@@ -144,7 +144,6 @@ in {
         name         = cfg.user;
         isNormalUser = true;
       };
-      networking.firewall.allowedTCPPorts = [ cfg.settings.iframe.port ];
       systemd.services.mylivebook = {
         description   = "Livebook server";
         wantedBy      = [ "multi-user.target" ];
@@ -186,7 +185,10 @@ in {
       };
     }
     (mkIf (cfg.openFirewall) {
-      networking.firewall.allowedTCPPorts = [ cfg.settings.port ];
+      networking.firewall.allowedTCPPorts = [
+        cfg.settings.port
+        cfg.settings.iframe.port
+      ];
     })
   ]);
 }

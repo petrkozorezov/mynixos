@@ -6,7 +6,7 @@
 
     ../nm-connections.nix
     ../yubikey.nix
-    #../mylivebook.nix
+    ../mylivebook.nix
   ];
 
   system.stateVersion = "21.05";
