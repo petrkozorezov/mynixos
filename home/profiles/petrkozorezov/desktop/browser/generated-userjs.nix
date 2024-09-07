@@ -4,7 +4,6 @@
   "browser.startup.page" = 0;
   "browser.startup.homepage" = "about:blank";
   "browser.newtabpage.enabled" = false;
-  "geo.provider.network.url" = "https://location.services.mozilla.com/v1/geolocate?key=%MOZILLA_API_KEY%";
   "extensions.getAddons.showPane" = false;
   "extensions.htmlaboutaddons.recommendations.enabled" = false;
   "browser.discovery.enabled" = false;
@@ -29,9 +28,13 @@
   "captivedetect.canonicalURL" = "";
   "browser.safebrowsing.downloads.remote.enabled" = false;
   "network.dns.disablePrefetch" = true;
+  "network.dns.disablePrefetchFromHTTPS" = true;
   "network.predictor.enabled" = false;
   "browser.places.speculativeConnect.enabled" = false;
   "browser.urlbar.speculativeConnect.enabled" = false;
+  "browser.urlbar.quicksuggest.enabled" = false;
+  "browser.urlbar.suggest.quicksuggest.nonsponsored" = false;
+  "browser.urlbar.suggest.quicksuggest.sponsored" = false;
   "browser.search.suggest.enabled" = false;
   "browser.urlbar.suggest.searches" = false;
   "browser.urlbar.trending.featureGate" = false;
@@ -61,6 +64,7 @@
   "pdfjs.disabled" = false;
   "pdfjs.enableScripting" = false;
   "browser.tabs.searchclipboardfor.middleclick" = false;
+  "browser.contentanalysis.enabled" = false;
   "browser.download.useDownloadDir" = false;
   "browser.download.alwaysOpenPanel" = false;
   "browser.download.manager.addToRecentDocs" = false;
@@ -88,11 +92,8 @@
   "privacy.cpd.offlineApps" = false;
   "privacy.clearHistory.cookiesAndStorage" = false;
   "privacy.sanitize.timeSpan" = 0;
-  "privacy.resistFingerprinting" = true;
   "privacy.window.maxInnerWidth" = 1600;
   "privacy.window.maxInnerHeight" = 900;
-  "privacy.resistFingerprinting.letterboxing" = true;
-  "webgl.disabled" = true;
   "extensions.blocklist.enabled" = true;
   "network.http.referer.spoofSource" = false;
   "privacy.firstparty.isolate" = false;
