@@ -175,7 +175,7 @@ in {
 
           script = ''
             if (
-              echo -n "Decrypting..." &&
+              echo -n "Decrypting '${target}'..." &&
               cat ${source} | ${secret.decryptCommand} > ${tmp} &&
               chown ${user}:${group} ${tmp} &&
               chmod ${esc secret.mode} ${tmp} &&
