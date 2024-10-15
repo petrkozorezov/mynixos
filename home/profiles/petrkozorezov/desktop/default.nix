@@ -9,6 +9,7 @@
     ./mako.nix
     ./rofi.nix
     ./security.nix
+    ./sound.nix
     ./subl.nix
     ./sway.nix
     ./terminal.nix
