@@ -86,7 +86,8 @@ let
       "Coq"
       "Idris Syntax"
       "LSP-typescript"
-      "LSP-eslint"
+      # "LSP-eslint"
+      "LSP-biome" # rust based линтер для js/ts
       "LSP-pyright"
       "Rust Enhanced"
       # "LSP-rust-analyzer" # TODO use rust-analyzer from devenv
@@ -94,6 +95,7 @@ let
       "MarkdownEditing"
       # "LSP-ltex-ls"
       "TLAPlus"
+      "Nushell"
 
       # "Debugger" # shows a lot errors
 
