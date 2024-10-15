@@ -8,6 +8,8 @@
       cachix
       devenv
       gnumake
+
+      act # git actions local runner
     ];
   };
 

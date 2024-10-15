@@ -21,6 +21,7 @@
     # ruplacer
     pandoc
     qrencode
+    srisum # hash sum in sri format
 
     # hardware
     pciutils
