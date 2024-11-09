@@ -1,6 +1,7 @@
 # TODO:
 #  - [ ] fuzzel + swayr
 #  - [ ] fuzzel pinetry
+#  - переопределить WLR_XWAYLAND и добавить -hidpi
 # fuzzel --layer=overlay --terminal='alacritty -e'
 { config, lib, pkgs, ... }: let
   mod      = "Mod4";
@@ -171,9 +172,13 @@ in {
             "udiskie --no-automount --tray"
 
             "firefox -P personal"
+            "firefox -P clean"
+            "firefox -P work"
             "sublime_text"
             "telegram-desktop"
+
             "spotify --ozone-platform=wayland"
+            "easyeffects"
          ]
          (cmd: { command = cmd; })
       ;
@@ -259,7 +264,13 @@ in {
       };
 
     };
-    extraConfig = ''
+    extraConfig = let
+      timeouts = {
+        screensaver = 300;
+        monOff      = 420;
+        lock        = 430;
+      };
+    in ''
       default_border pixel 0
 
       set $mon_off            swaymsg "output * dpms off"
@@ -267,8 +278,19 @@ in {
       set $lock_cmd           swaylock -f -i ${wallpaper}
       set $send_lock_signal   kill -USR1 `pidof swayidle`
       set $send_unlock_signal kill `pidof swaylock`
+      set $screen_saver_start alacritty --class=screen_saver -e ${pkgs.unimatrix}/bin/unimatrix -s 98 -t ${toString(timeouts.monOff - timeouts.screensaver)} -i
+      set $screen_saver_stop  kill `pidof unimatrix`
 
-      exec swayidle -w timeout 310 '$lock_cmd'  timeout 300 '$mon_off' resume '$mon_on' before-sleep '$lock_cmd' lock '$lock_cmd' unlock '$send_unlock_signal'
+      for_window [app_id="screen_saver"] fullscreen global;
+
+      exec swayidle -w \
+        timeout ${toString(timeouts.screensaver)}  '$screen_saver_start' resume '$screen_saver_stop' \
+        timeout ${toString(timeouts.monOff     )}  '$mon_off'            resume '$mon_on' \
+        timeout ${toString(timeouts.lock       )}  '$lock_cmd' \
+        before-sleep '$lock_cmd' \
+        lock         '$lock_cmd' \
+        unlock       '$send_unlock_signal'
+
       bindsym --to-code Control+Shift+backspace exec "$send_lock_signal && sleep 2 && $send_lock_signal"
 
       bindsym --to-code --locked XF86AudioRaiseVolume  exec pamixer -ui 2 && pamixer --get-volume > ${ob_file}
@@ -281,7 +303,7 @@ in {
       focus_follows_mouse no
       mouse_warping container
 
-      # TODO moveto nix
+      # TODO move to nix
       for_window [shell="xwayland"] title_format "%title [XWayland]"
     '';
   };
@@ -323,17 +345,16 @@ in {
 
   services.kanshi = {
     enable   = true;
-    profiles =
-      let
-        portable = {
+    settings = [ {
+      profile = {
+        name = "default";
+        outputs = [ {
           status   = "enable";
-          criteria = "DO NOT USE - RTK HDMI 0x00000101";
+          criteria = "*"; # DP-5
           scale    = 2.0;
-        };
-      in
-      {
-        "Main" = { outputs = [ portable ]; };
+        } ];
       };
+    } ];
   };
 
   home.sessionVariables.ENABLE_VULKAN  = "true";
