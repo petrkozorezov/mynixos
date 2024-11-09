@@ -8,6 +8,7 @@
       cachix
       devenv
       gnumake
+      rsync
 
       act # git actions local runner
     ];
