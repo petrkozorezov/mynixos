@@ -426,10 +426,10 @@
     };
     "flagfox" = buildFirefoxXpiAddon {
       pname = "flagfox";
-      version = "6.1.79";
+      version = "6.1.80";
       addonId = "{1018e4d6-728f-4b20-ad56-37578a4de76b}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4361489/flagfox-6.1.79.xpi";
-      sha256 = "06d5c7a8788b724da9a93d46a0b68879daf4644e86b5c6ed000ae567b0bebd56";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4379273/flagfox-6.1.80.xpi";
+      sha256 = "fe70b303985a07ac7cc6c18ad3f185b0be1a893417c7c008178e92c29fd63ba8";
       meta = with lib;
       {
         homepage = "https://flagfox.wordpress.com/";
@@ -542,10 +542,10 @@
     };
     "passff" = buildFirefoxXpiAddon {
       pname = "passff";
-      version = "1.20.1";
+      version = "1.21";
       addonId = "passff@invicem.pro";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4339137/passff-1.20.1.xpi";
-      sha256 = "7418b41a6ee43d380d42147a3632c0cf7e68591a4341effc5dc2e40a72575122";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4383383/passff-1.21.xpi";
+      sha256 = "1119234918568333fb1c6119a023c4fbebb867fd3b05ec93af2c6df7001ae4b1";
       meta = with lib;
       {
         homepage = "https://codeberg.org/PassFF/passff";
@@ -701,15 +701,22 @@
     };
     "solflare-wallet" = buildFirefoxXpiAddon {
       pname = "solflare-wallet";
-      version = "1.72.2";
+      version = "1.72.3";
       addonId = "{6d72262a-b243-4dc6-8f4f-be96c74e0a86}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4369555/solflare_wallet-1.72.2.xpi";
-      sha256 = "1ef6cbca0c95746edf5c93505311d8480c007d1e4ee28fe986d28bf62a9bd5cb";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4381538/solflare_wallet-1.72.3_yVke3UO.xpi";
+      sha256 = "daf53052fa5cbf4efdeb0bb766bfe38e92799cc30adf658ef5b6a45982f6c4d2";
       meta = with lib;
       {
         homepage = "https://solflare.com/";
         description = "The only wallet you need to do everything on the Solana blockchain. Store, stake, and swap your tokens with Solflare.";
-        mozPermissions = [ "storage" "activeTab" "tabs" "alarms" "<all_urls>" ];
+        mozPermissions = [
+          "storage"
+          "activeTab"
+          "tabs"
+          "alarms"
+          "unlimitedStorage"
+          "<all_urls>"
+        ];
         platforms = platforms.all;
       };
     };
@@ -730,10 +737,10 @@
     };
     "tree-style-tab" = buildFirefoxXpiAddon {
       pname = "tree-style-tab";
-      version = "4.0.23";
+      version = "4.0.24";
       addonId = "treestyletab@piro.sakura.ne.jp";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4350896/tree_style_tab-4.0.23.xpi";
-      sha256 = "d8061eff00b56ccfdd6fd290b14ef2c8ef692a14eb8db1a27529f21e43df1f30";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4377780/tree_style_tab-4.0.24.xpi";
+      sha256 = "e1826e2054aede2f390cb98ff22915cc1e89778a6ebf94d68467200aeba8fefd";
       meta = with lib;
       {
         homepage = "http://piro.sakura.ne.jp/xul/_treestyletab.html.en";
@@ -756,10 +763,10 @@
     };
     "ublock-origin" = buildFirefoxXpiAddon {
       pname = "ublock-origin";
-      version = "1.60.0";
+      version = "1.61.0";
       addonId = "uBlock0@raymondhill.net";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4359936/ublock_origin-1.60.0.xpi";
-      sha256 = "e2cda9b2a1b0a7f6e5ef0da9f87f28df52f8560587ba2e51a3003121cfb81600";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4382536/ublock_origin-1.61.0.xpi";
+      sha256 = "e6fd55b799a568c66c10892a8f22428e6773fe16d7466ce9dee2952f224b203d";
       meta = with lib;
       {
         homepage = "https://github.com/gorhill/uBlock#ublock-origin";
@@ -862,10 +869,10 @@
     };
     "youtube-addon" = buildFirefoxXpiAddon {
       pname = "youtube-addon";
-      version = "4.1096";
+      version = "4.1122";
       addonId = "{3c6bf0cc-3ae2-42fb-9993-0d33104fdcaf}";
-      url = "https://addons.mozilla.org/firefox/downloads/file/4346846/youtube_addon-4.1096.xpi";
-      sha256 = "9623eec44ab770fb62754cf6282a90af14e6870f2f454a3c528216e842683860";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4375372/youtube_addon-4.1122.xpi";
+      sha256 = "d8666a49657254ed39c6f52c7500df2b575cd6c108034b01dd6afedf05d0c4a1";
       meta = with lib;
       {
         homepage = "https://github.com/code4charity/YouTube-Extension/";
