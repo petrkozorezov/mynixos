@@ -10,6 +10,18 @@
     ./packages.nix
   ];
 
+  home.packages = with pkgs; [
+    du-dust # du
+    duf     # df
+    procs   # ps
+    fd      # find
+    ripgrep # grep
+    tokei   # cloc
+    bat     # cat
+    jaq     # jq
+    rsync
+  ];
+
   programs.bat.enable = true;
   programs.direnv = {
     enable               = true;
@@ -37,6 +49,5 @@
     changeDirWidgetOptions = [ "--preview='tree -L 1 -C {} | head -200'" ];
     historyWidgetOptions   = [];
   };
-  home.packages = [ pkgs.perl ]; # zsh skim doesn't work without it
 }
 

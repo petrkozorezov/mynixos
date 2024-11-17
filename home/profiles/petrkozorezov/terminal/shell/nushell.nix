@@ -9,13 +9,26 @@
     nushell = {
       enable  = true;
       package = pkgs.nushellFull;
+
+      ## https://nixos.wiki/wiki/Nix_Cookbook#Wrapping_packages
+      # package = with pkgs;
+      #   runCommand "hello" {
+      #     buildInputs = [ makeWrapper ];
+      #   } ''
+      #     mkdir -p $out/bin
+      #     makeWrapper ${nushell}/bin/nu $out/bin/nu \
+      #       --plugins '[${nushellPlugins.polars}/nu_plugin_polars]'
+      #   '';
+
+      # formats
+      # gstat
+      # query
+
       shellAliases = {
         "."    = "ls";
         "l"    = "ls";
-        "cat"  = "${pkgs.bat}/bin/bat";
         "ns"   = "nix search mynixos";
         "nb"   = "nix build";
-        "cloc" = "${pkgs.tokei}/bin/tokei";
       };
       extraConfig = ''
         $env.config = {

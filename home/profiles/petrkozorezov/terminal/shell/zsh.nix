@@ -35,15 +35,9 @@
         "lll"   = "${"l"} -l -g";
         "ls"    = "${"l"}";
         "tree"  = "${"l"} -T";
-        "cat"   = "${pkgs.bat}/bin/bat";
         "ns"    = "nix search mynixos";
         "nsu"   = "nix search github:NixOS/nixpkgs/nixpkgs-unstable";
         "nb"    = "nix build";
-        "cloc"  = "${pkgs.tokei}/bin/tokei";
-        "grep"  = "${pkgs.ripgrep}/bin/rg";
-        "find"  = "${pkgs.fd}/bin/fd";
-        "ps"    = "${pkgs.procs}/bin/procs";
-        "du"    = "${pkgs.du-dust}/bin/dust";
         "noidle" = ''
           echo "Press Ctrl+C to interrupt..." && \
           systemd-inhibit --what=idle --mode=block --who="noidle" --why="Manual prevent from sleep" sleep infinity
@@ -77,4 +71,6 @@
     carapace.enableZshIntegration = true;
     skim.enableZshIntegration     = true;
   };
+
+  home.packages = [ pkgs.perl  ]; # zsh skim doesn't work without it
 }
