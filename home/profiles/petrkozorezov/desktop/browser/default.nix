@@ -30,9 +30,10 @@
         # tronlink-wallet # TODO
 
         # ui
-        tree-style-tab
-        # nicer new tab tab window
-        # tabliss
+        # tabs as "tree"
+        tree-style-tab # TODO sidebery
+        # nicer new tab tab window (NOTE eats memory)
+        tabliss
         # mouse-over enlarges images and displays images/videos from links
         imagus
         augmented-steam
@@ -209,3 +210,5 @@
     hack-font
   ];
 }
+
+# F1 -- open hide tree style tab
