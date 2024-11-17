@@ -231,8 +231,8 @@ in {
         "*" = {
           repeat_delay = "200";
           repeat_rate  = "70";
-          xkb_layout   = "us,ru";
-          xkb_variant  = "dvp,mac";
+          xkb_layout   = "us,ru,us";
+          xkb_variant  = "dvp,mac,";
           xkb_options  = "grp:lctrl_lwin_rctrl_menu";
         };
       };

@@ -37,8 +37,10 @@
           max-length = 50;
         };
         "sway/language" = {
-            format     = "{}";
-            max-length = 50;
+          format          = "{short}";
+          tooltip-format  = "{long}";
+          max-length      = 5;
+          on-click        = "swaymsg 'input type:keyboard xkb_switch_layout next'";
         };
         "tray" = {
           # icon-size = 21;
