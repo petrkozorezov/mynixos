@@ -180,7 +180,7 @@ in
     # TODO remove(?)
     mdl # markdownlint
     shellcheck
-    adoptopenjdk-jre-bin
+    temurin-jre-bin
   ];
 }
 

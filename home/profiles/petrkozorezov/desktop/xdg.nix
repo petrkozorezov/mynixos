@@ -50,5 +50,5 @@
     configFile."mimeapps.list".force = true;
   };
 
-  home.packages = with pkgs; [ xdg_utils mimeo ];
+  home.packages = with pkgs; [ xdg-utils mimeo ];
 }

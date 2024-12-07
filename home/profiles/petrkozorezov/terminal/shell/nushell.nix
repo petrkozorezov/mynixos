@@ -8,7 +8,6 @@
   programs = {
     nushell = {
       enable  = true;
-      package = pkgs.nushellFull;
 
       ## https://nixos.wiki/wiki/Nix_Cookbook#Wrapping_packages
       # package = with pkgs;

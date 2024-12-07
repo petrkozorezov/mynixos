@@ -28,6 +28,8 @@
     # https://wallup.net/wp-content/uploads/2016/01/260716-orange-flowers-abstract.jpg
     # https://www.pixel4k.com/wp-content/uploads/2019/07/orange-render-abstract_1563221459.jpg
     # https://wallpaperaccess.com/full/117782.png
+    # https://images.unsplash.com/photo-1511097646266-61a6d20ed830?q=85&w=2640
+    # https://unsplash.com/photos/parorama-photography-of-mountain-under-cloudy-sky-Ni4NgA64TFQ
   cursorsTheme    = "capitaine-cursors-white";
   gsettings       = "${pkgs.glib}/bin/gsettings";
   gnomeSchema     = "org.gnome.desktop.interface";
@@ -314,7 +316,7 @@ in {
     iconTheme.name = "hicolor"; # TODO use smth better
     # TODO https://github.com/mitch-kyle/monokai-gtk
     theme = {
-      package = pkgs.gnome3.gnome-themes-extra;
+      package = pkgs.gnome-themes-extra;
       name    = "Adwaita-dark";
     };
     gtk2.extraConfig = ''

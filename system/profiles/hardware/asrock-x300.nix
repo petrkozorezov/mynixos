@@ -7,6 +7,7 @@
       ./audio.nix
       ./video.nix
       ./bluetooth.nix
+      #./thunderbolt-devices.nix
     ];
 
   boot = {
@@ -35,10 +36,9 @@
     enableRedistributableFirmware = true;
   };
 
-  hardware.opengl = {
-    extraPackages   = with pkgs              ; [ rocm-opencl-icd rocmPackages.rocm-runtime ];
-    extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
-  };
+  hardware.graphics.extraPackages = with pkgs; [
+    rocmPackages.clr.icd
+  ];
 
   # thunderbolt control daemon
   services.hardware.bolt.enable = true;

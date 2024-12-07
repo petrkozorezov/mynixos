@@ -40,7 +40,10 @@ in {
    earlySetup = true;
   };
   time.timeZone = "Europe/Moscow";
-  programs.vim.defaultEditor = true;
+  programs.vim = {
+    enable = true;
+    defaultEditor = true;
+  };
 
   environment.systemPackages = [ pkgs.test ];
   environment.pathsToLink    = [ "/share/zsh" ]; # for programs.zsh.enableCompletion

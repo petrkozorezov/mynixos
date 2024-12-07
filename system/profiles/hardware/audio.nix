@@ -2,8 +2,6 @@
 let
   pipewirePulseEnable = true;
 in {
-  sound.enable = true;
-
   hardware.pulseaudio = {
     enable       = !pipewirePulseEnable;
     support32Bit = true;
