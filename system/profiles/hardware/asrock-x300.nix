@@ -7,7 +7,7 @@
       ./audio.nix
       ./video.nix
       ./bluetooth.nix
-      #./thunderbolt-devices.nix
+      ./thunderbolt-devices.nix
     ];
 
   boot = {
