@@ -63,7 +63,7 @@
         username: modules:
           {
             home-manager = {
-              useGlobalPkgs       = true;
+              useGlobalPkgs       = false;
               useUserPackages     = true;
               users.${username}   = { imports = modules; };
               sharedModules       = commonHMModules;
