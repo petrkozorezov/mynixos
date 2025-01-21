@@ -16,6 +16,7 @@
                  fenix.url = "github:nix-community/fenix"             ;
 
           home-manager.inputs.nixpkgs.follows = "nixpkgs";
+                   nur.inputs.nixpkgs.follows = "nixpkgs";
                 devenv.inputs.nixpkgs.follows = "devenv-nixpkgs";
              deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
                    dns.inputs.nixpkgs.follows = "nixpkgs";

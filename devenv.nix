@@ -1,8 +1,6 @@
 { pkgs, inputs, config, ... }: let
   system = pkgs.system;
 in {
-  imports = [ inputs.nur.nixosModules.nur ];
-
   packages = with pkgs; [
     gnumake
     git
@@ -17,7 +15,7 @@ in {
     # TODO move to packages build deps
     ripgrep
     curl
-    config.nur.repos.rycee.mozilla-addons-to-nix
+    nur.repos.rycee.mozilla-addons-to-nix
     devenv
   ];
 

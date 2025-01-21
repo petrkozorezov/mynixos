@@ -15,6 +15,8 @@ in {
           "wheel"
           "audio"
           "video"
+          "disk"
+          "storage"
           "render"
           "plugdev"
           "input"

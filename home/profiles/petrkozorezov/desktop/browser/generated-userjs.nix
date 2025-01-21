@@ -39,6 +39,7 @@
   "browser.urlbar.suggest.searches" = false;
   "browser.urlbar.trending.featureGate" = false;
   "browser.urlbar.addons.featureGate" = false;
+  "browser.urlbar.fakespot.featureGate" = false;
   "browser.urlbar.mdn.featureGate" = false;
   "browser.urlbar.pocket.featureGate" = false;
   "browser.urlbar.weather.featureGate" = false;
@@ -60,7 +61,6 @@
   "browser.helperApps.deleteTempFileOnExit" = true;
   "browser.uitour.enabled" = false;
   "permissions.manager.defaultsUrl" = "";
-  "webchannel.allowObject.urlWhitelist" = "";
   "pdfjs.disabled" = false;
   "pdfjs.enableScripting" = false;
   "browser.tabs.searchclipboardfor.middleclick" = false;

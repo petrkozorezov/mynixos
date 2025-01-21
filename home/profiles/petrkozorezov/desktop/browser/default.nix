@@ -166,6 +166,8 @@
             # TODO icon
             definedAliases = [ ".hde" ];
           };
+
+          # TODO add google/yandex translate (gt/yt) and mb chatgpt
         };
       };
     in {
