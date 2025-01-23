@@ -1,6 +1,7 @@
 { pkgs, config, lib, ... }:
 let
   location = "hel1";
+  nixos-infect = "#cloud-config\nruncmd:\n- curl https://raw.githubusercontent.com/elitak/nixos-infect/8a7527d7965430fdfb98aee208d1f67bdc0af79d/nixos-infect | PROVIDER=hetznercloud NIX_CHANNEL=nixos-unstable bash 2>&1 | tee /tmp/infect.log\n";
 in {
   imports = [ ../secrets ];
 
@@ -8,12 +9,12 @@ in {
   resource.hcloud_server.helsinki1 = {
     name        = "helsinki1";
     image       = "debian-9";
-    server_type = "cx11";
+    server_type = "cpx31";
     location    = location;
     depends_on  = [ "hcloud_network_subnet.subnet" ];
     ssh_keys    = [ "main_key" ];
     # FIXME split to lines
-    user_data   = "#cloud-config\nruncmd:\n- curl https://raw.githubusercontent.com/elitak/nixos-infect/8a7527d7965430fdfb98aee208d1f67bdc0af79d/nixos-infect | PROVIDER=hetznercloud NIX_CHANNEL=nixos-unstable bash 2>&1 | tee /tmp/infect.log\n";
+    user_data   = nixos-infect;
   };
 
   resource.hcloud_rdns.master = {
@@ -46,11 +47,11 @@ in {
   terraform = {
     required_providers.hcloud = {
       # FIXME use usual hashicorp/hcloud
-      source  = "nixpkgs/hcloud";
-      version = "= 1.22.0";
+      source  = "hetznercloud/hcloud";
+      version = "= 1.48.1";
     };
     # pin versions to prevent accidentally changes
-    required_version = "= 0.15.4";
+    required_version = "= 1.9.8";
   };
   provider.hcloud.token = config.zoo.secrets.others.hetzner.apiToken;
   resource.hcloud_ssh_key.main_key = {
