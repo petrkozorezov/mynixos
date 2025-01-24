@@ -19,9 +19,9 @@
   };
   # TODO
   # home.file.".gnupg/".mode = "700";
-  home.file.".gnupg/pubring.kbx".source = config.zoo.secrets.filesPath + "/gnupg.pubring.kbx";
+  home.file.".gnupg/pubring.kbx".source = config.mynixos.secrets.filesPath + "/gnupg.pubring.kbx";
   home.file.".gnupg/scdaemon.conf".text = "disable-ccid";
-  home.file.".ssh/id_rsa_ybk1.pub".text = config.zoo.secrets.users.petrkozorezov.authPublicKey;
+  home.file.".ssh/id_rsa_ybk1.pub".text = config.mynixos.secrets.users.petrkozorezov.authPublicKey;
 
   # add card auto-insertion before commit
   # TODO add programs.git.hooks

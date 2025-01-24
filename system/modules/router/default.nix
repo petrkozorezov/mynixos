@@ -2,8 +2,8 @@
 with lib;
 {
   options = {
-    zoo.router = {
-      enable = mkEnableOption "Will machine be configured as Zoo router.";
+    mynixos.router = {
+      enable = mkEnableOption "Will machine be configured as Mynixos router.";
 
       hostname = mkOption {
         type        = types.str;
@@ -14,7 +14,7 @@ with lib;
 
       domain = mkOption {
         type        = types.str;
-        example     = "zoo";
+        example     = "mynixos";
         default     = "lan";
         description = "Domain of the hosts in the local network.";
       };
@@ -101,7 +101,7 @@ with lib;
 
   config =
     let
-      cfg    = config.zoo.router;
+      cfg    = config.mynixos.router;
       bridge = cfg.local.bridge.interface;
     in mkIf cfg.enable {
 

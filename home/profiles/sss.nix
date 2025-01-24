@@ -1,14 +1,14 @@
 { config, pkgs, ... }: {
   sss = let
-    age        = pkgs.rage + /bin/rage;
-    userZooCfg = config.zoo.secrets.users.${config.home.username};
+    age     = pkgs.rage + /bin/rage;
+    userCfg = config.mynixos.secrets.users.${config.home.username};
   in {
     enable = true;
-    path   = "/run/user/${toString userZooCfg.uid}/keys";
+    path   = "/run/user/${toString userCfg.uid}/keys";
     group  = "users";
     commands = {
-      encrypt = "${age} -e -r ${userZooCfg.mainSecret.pub   }";
-      decrypt = "${age} -d -i ${userZooCfg.mainSecret.target}";
+      encrypt = "${age} -e -r ${userCfg.mainSecret.pub   }";
+      decrypt = "${age} -d -i ${userCfg.mainSecret.target}";
     };
 
     # # Example

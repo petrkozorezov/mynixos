@@ -60,7 +60,7 @@ in {
   };
   sss.secrets."ddns-${ddnsZoneName}" = {
     target    = "/run/named/ddns-${ddnsZoneName}";
-    text      = config.zoo.secrets.dnssec.tsig.${ddnsZoneName};
+    text      = config.mynixos.secrets.dnssec.tsig.${ddnsZoneName};
     user      = "named";
     dependent = [ "bind.service" ];
   };

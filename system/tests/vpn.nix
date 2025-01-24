@@ -47,7 +47,7 @@
       } ];
 
   vpnConfig = {
-    zoo.vpn = {
+    mynixos.vpn = {
       enable = true;
       subnet = netPrefixes.vpn;
       peers  = {

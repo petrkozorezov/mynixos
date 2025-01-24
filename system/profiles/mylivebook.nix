@@ -26,19 +26,19 @@ in {
   # TODO remove copy-paste
   sss.secrets.livebook-passwd = {
     inherit user;
-    text      = config.zoo.secrets.livebook.passwd;
+    text      = config.mynixos.secrets.livebook.passwd;
     target    = "${secretsPath}/livebook-passwd";
     dependent = [ "mylivebook.service" ];
   };
   sss.secrets.livebook-secret-key-base = {
     inherit user;
-    text      = config.zoo.secrets.livebook.secretKeyBase;
+    text      = config.mynixos.secrets.livebook.secretKeyBase;
     target    = "${secretsPath}/livebook-secret-key-base";
     dependent = [ "mylivebook.service" ];
   };
   sss.secrets.livebook-cookie = {
     inherit user;
-    text      = config.zoo.secrets.livebook.cookie;
+    text      = config.mynixos.secrets.livebook.cookie;
     target    = "${secretsPath}/livebook-cookie";
     dependent = [ "mylivebook.service" ];
   };

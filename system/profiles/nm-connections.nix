@@ -3,7 +3,7 @@ with lib; {
   networking.networkmanager.connections =
     let
       wifis =
-        flip mapAttrs' config.zoo.secrets.wifi (
+        flip mapAttrs' config.mynixos.secrets.wifi (
           uuid: connection:
             nameValuePair
               uuid
@@ -27,7 +27,7 @@ with lib; {
               }
           );
       vpn = let
-        cfg       = config.zoo.secrets.vpn;
+        cfg       = config.mynixos.secrets.vpn;
         self      = cfg.${config.networking.hostName};
         helsinki1 = cfg.helsinki1;
         router    = cfg.router;

@@ -3,7 +3,7 @@
 with lib;
 with types;
 {
-  options.zoo.vpn = {
+  options.mynixos.vpn = {
     enable = mkEnableOption "Will wireguard VPN be enabled.";
     subnet =
       mkOption {
@@ -90,7 +90,7 @@ with types;
 
   config =
     let
-      cfg          = config.zoo.vpn;
+      cfg          = config.mynixos.vpn;
       fullAddr     = subnet: addr: mask: "${subnet}.${addr}${mask}";
       hostName     = config.networking.hostName;
       self         = builtins.getAttr hostName cfg.peers;

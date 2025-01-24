@@ -2,10 +2,10 @@
 { config, lib, ... }:
 with lib;
 let
-  cfg = config.zoo.proxy;
+  cfg = config.mynixos.proxy;
   address = "${cfg.network}.${cfg.address}";
 in {
-  options.zoo.proxy = {
+  options.mynixos.proxy = {
     enable = mkEnableOption "";
     interface = mkOption {
       type    = types.str;

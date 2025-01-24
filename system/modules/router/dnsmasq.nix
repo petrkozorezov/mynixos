@@ -1,6 +1,6 @@
 { pkgs, config, lib, ... }:
 let
-  cfg     = config.zoo.router;
+  cfg     = config.mynixos.router;
   localIp = "${cfg.local.net}.${cfg.local.ip}"; # TODO remove copy/paste
 in lib.mkIf cfg.enable {
   networking = {

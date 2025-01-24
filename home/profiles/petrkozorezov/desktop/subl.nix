@@ -164,7 +164,7 @@ in
       "${packagesPath}/Lean.sublime-syntax".source = ./subl/lean.sublime-syntax;
 
       # TODO pass by config
-      "${localPath}/License.sublime_license".source = config.zoo.secrets.filesPath + "/sublime.license";
+      "${localPath}/License.sublime_license".source = config.mynixos.secrets.filesPath + "/sublime.license";
       "${installedPkgsPath}/Package Control.sublime-package".source =
         builtins.fetchurl {
           url    = "https://github.com/wbond/package_control/releases/download/4.0.7/Package.Control.sublime-package";

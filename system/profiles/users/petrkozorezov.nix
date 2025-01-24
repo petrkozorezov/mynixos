@@ -1,6 +1,6 @@
 { config, pkgs, ... }: let
   user    = "petrkozorezov";
-  userCfg = config.zoo.secrets.users.${user};
+  userCfg = config.mynixos.secrets.users.${user};
 in {
   # TODO move to flake
   users = {

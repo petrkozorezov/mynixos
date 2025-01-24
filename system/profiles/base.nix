@@ -22,14 +22,14 @@ in {
 
   users = {
     mutableUsers = false;
-    users = let recoveryCfg = config.zoo.secrets.users.recovery; in {
+    users = let recoveryCfg = config.mynixos.secrets.users.recovery; in {
       recovery = {
         inherit (recoveryCfg) uid description hashedPassword;
         isNormalUser = true;
         extraGroups  = [ "wheel" ];
         openssh.authorizedKeys.keys = [ recoveryCfg.authPublicKey ];
       };
-      root.openssh.authorizedKeys.keys = [ config.zoo.secrets.deployment.authPublicKey ];
+      root.openssh.authorizedKeys.keys = [ config.mynixos.secrets.deployment.authPublicKey ];
     };
   };
 

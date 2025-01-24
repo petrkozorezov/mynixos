@@ -15,10 +15,10 @@ in {
 
   system.stateVersion = "21.05";
 
-  zoo.proxy.address = "3";
-  zoo.vpn.extIf = "enp3s0";
+  mynixos.proxy.address = "3";
+  mynixos.vpn.extIf = "enp3s0";
 
-  zoo.router = {
+  mynixos.router = {
     enable     = true;
     hostname   = config.networking.hostName;
     domain     = domain;
@@ -31,7 +31,7 @@ in {
       wireless           =
         let
           uuid = "87654321-9abc-def0-1234-56789abc0000";
-          cfg = config.zoo.secrets.wifi.${uuid};
+          cfg = config.mynixos.secrets.wifi.${uuid};
         in {
           interface     = "wlp2s0";
           ssid          = cfg.ssid;
@@ -145,7 +145,7 @@ in {
     };
   };
   sss.secrets."dnssec-${domain}" = {
-    text      = config.zoo.secrets.dnssec.tsig.${domain};
+    text      = config.mynixos.secrets.dnssec.tsig.${domain};
     dependent = [ "ddns-client-update.service" ];
   };
 }

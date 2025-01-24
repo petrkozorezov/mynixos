@@ -53,9 +53,9 @@ in {
     # pin versions to prevent accidentally changes
     required_version = "= 1.9.8";
   };
-  provider.hcloud.token = config.zoo.secrets.others.hetzner.apiToken;
+  provider.hcloud.token = config.mynixos.secrets.others.hetzner.apiToken;
   resource.hcloud_ssh_key.main_key = {
     name       = "main_key";
-    public_key = config.zoo.secrets.users.petrkozorezov.authPublicKey;
+    public_key = config.mynixos.secrets.users.petrkozorezov.authPublicKey;
   };
 }

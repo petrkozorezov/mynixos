@@ -12,11 +12,11 @@
     ../proxy.nix
   ];
 
-  zoo.proxy = {
+  mynixos.proxy = {
     address    = "1";
     tor.enable = true;
   };
 
-  zoo.vpn.extIf = "ens3";
+  mynixos.vpn.extIf = "ens3";
   system.stateVersion = "21.05";
 }
