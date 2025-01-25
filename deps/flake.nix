@@ -12,7 +12,6 @@
            flake-utils.url = "github:numtide/flake-utils"             ;
                    dns.url = "github:kirelagin/dns.nix"               ;
     nix-index-database.url = "github:Mic92/nix-index-database"        ;
-                 fenix.url = "github:nix-community/fenix"             ;
 
           home-manager.inputs.nixpkgs.follows = "nixpkgs";
                    nur.inputs.nixpkgs.follows = "nixpkgs";
@@ -21,7 +20,6 @@
            flake-utils.inputs.nixpkgs.follows = "nixpkgs";
                    dns.inputs.nixpkgs.follows = "nixpkgs";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
-                 fenix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { self, nixpkgs, flake-utils, ... } @ inputs:
@@ -39,11 +37,9 @@
             rocmSupport = true; # TODO move it to a appropriate place
           };
           overlays = [
-            # TODO use a single common way
-            inputs.nur.overlay
-            inputs.fenix.overlays.default
-            # TODO inputs.devenv.overlay
-            (final: prev: { devenv = inputs.devenv.packages.${prev.system}.default; })
+            inputs.nur.overlays.default
+            inputs.devenv.overlays.default
+            inputs.deploy-rs.overlays.default
             (import ./overlay)
           ];
         in rec {

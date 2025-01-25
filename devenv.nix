@@ -1,4 +1,4 @@
-{ pkgs, inputs, config, ... }: let
+{ pkgs, ... }: let
   system = pkgs.system;
 in {
   packages = with pkgs; [
@@ -7,8 +7,7 @@ in {
     git-crypt
     nix-prefetch-git
     nix-prefetch-github
-    # use the same deploy-rs for 'deploy' command and for flake.nix activation package
-    inputs.deploy-rs.defaultPackage."${system}"
+    deploy-rs.deploy-rs
     terranix
     (terraform.withPlugins (tp: [ tp.hcloud ]))
 
