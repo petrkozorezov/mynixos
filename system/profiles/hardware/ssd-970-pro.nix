@@ -1,4 +1,3 @@
-{ ... }:
 {
   fileSystems."/" =
     {
@@ -16,4 +15,6 @@
     [
       { device = "/dev/disk/by-uuid/66be6355-c124-4035-928a-ce2e904893f5"; }
     ];
+
+  services.fstrim.enable = true;
 }

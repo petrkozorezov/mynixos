@@ -76,6 +76,7 @@ in {
       "/var/log" = brtfsSubVolume "log";
       "/etc/ssh" = brtfsSubVolume "ssh";
     };
+  services.fstrim.enable = true;
 
   swapDevices = [ { device = "/dev/mapper/lvm-swap"; } ];
 

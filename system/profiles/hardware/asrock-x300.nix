@@ -12,8 +12,11 @@
 
   boot = {
     loader = {
-      systemd-boot.enable = true;
-      timeout             = 1;
+      systemd-boot = {
+        enable = true;
+        editor = false; # !!!
+      };
+      timeout = 1;
     };
     initrd = {
       availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
@@ -25,6 +28,7 @@
       "amdgpu.ppfeaturemask=0xffffffff" # enable overclocking and tuning
     ];
     extraModulePackages = [ ];
+    binfmt.emulatedSystems = [ "aarch64-linux" ]; # to deploy aarch64-linux
   };
 
   nix.settings.max-jobs = lib.mkDefault 16;
@@ -32,6 +36,7 @@
   console.font = lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
 
   hardware = {
+    cpu.amd.updateMicrocode       = true;
     enableAllFirmware             = true;
     enableRedistributableFirmware = true;
   };
@@ -42,4 +47,6 @@
 
   # thunderbolt control daemon
   services.hardware.bolt.enable = true;
+
+  services.fwupd.enable = true;
 }
