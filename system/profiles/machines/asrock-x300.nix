@@ -6,7 +6,6 @@
 
     ../nm-connections.nix
     ../yubikey.nix
-    ../mylivebook.nix
   ];
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
