@@ -1,9 +1,9 @@
-{ config, lib, pkgs, ... }:
-with lib; {
+{ config, lib, pkgs, ... }: with lib; {
   networking.networkmanager.connections =
     let
+      inherit (config.mynixos) secrets;
       wifis =
-        flip mapAttrs' config.mynixos.secrets.wifi (
+        flip mapAttrs' secrets.wifi (
           uuid: connection:
             nameValuePair
               uuid
@@ -27,41 +27,36 @@ with lib; {
               }
           );
       vpn = let
-        cfg       = config.mynixos.secrets.vpn;
-        self      = cfg.${config.networking.hostName};
-        helsinki1 = cfg.helsinki1;
-        router    = cfg.router;
-        net       = "192.168.4";
+        self = secrets.vpn.${config.networking.hostName};
       in {
-        helsinki1 =
-          {
-            connection = rec {
-              id   = "helsinki1";
-              uuid = "1d98ff68-0a2c-4834-8d8b-7bb9888080aa";
-              type = "wireguard";
-              interface-name = id;
-              autoconnect    = true;
-            };
-            wireguard.private-key = self.priv;
-            "wireguard-peer.${helsinki1.pub}" = {
-              endpoint             = "${helsinki1.endpoint}:${builtins.toString helsinki1.port}";
-              persistent-keepalive = "25";
-              allowed-ips          = "0.0.0.0/0";
-            };
-            # TODO remove hardcode
-            ipv4 = {
-              method   = "manual";
-              address1 = "${net}.${self.addr}/32";
-              dns      = "1.1.1.1;"; # TODO use ${net}.${helsinki1.addr}
-            };
-            ipv6.method = "disabled";
-            proxy = {
-              method     = "1 ";
-              pac-script = "function FindProxyForURL(url, host) { PROXY ${net}.${helsinki1.addr}:8118; }";
-            };
+        srv1 = {
+          connection = rec {
+            id   = "srv1";
+            uuid = "607b0ac2-6b3c-4a36-9618-c5a8aec262d2";
+            type = "wireguard";
+            interface-name = id;
+            autoconnect    = true;
+          };
+          wireguard.private-key = self.priv;
+          "wireguard-peer.${secrets.vpn.srv1.pub}" = {
+            endpoint             = "${secrets.vpn.srv1.endpoint}:${builtins.toString secrets.vpn.srv1.port}";
+            persistent-keepalive = "25";
+            allowed-ips          = "0.0.0.0/0";
+          };
+          # TODO remove hardcode
+          ipv4 = {
+            method   = "manual";
+            address1 = "${secrets.vpnSubnet}.${self.addr}/32";
+            dns      = "1.1.1.1;"; # TODO use ${secrets.vpnSubnet}.${secrets.vpn.srv1.addr}
+          };
+          ipv6.method = "disabled";
+          proxy = {
+            method     = "1 ";
+            pac-script = "function FindProxyForURL(url, host) { PROXY ${secrets.vpnSubnet}.${secrets.vpn.srv1.addr}:8118; }";
           };
         };
-      in vpn // wifis;
+      };
+    in vpn // wifis;
 
   # to allow send all traffic through wg
   networking.firewall.checkReversePath = false;

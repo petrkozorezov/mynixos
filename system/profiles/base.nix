@@ -58,10 +58,11 @@ in {
 
   sss = let
     age = pkgs.rage + /bin/rage;
+    # `cat /etc/ssh/ssh_host_ed25519_key`
     pubKeys = {
       "asrock-x300" = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJwzqyKI0/H6h8yiZLCyUE914PZXXLHA9BhdOSwLUEEN";
       "mbp13"       = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC8h05MlXkvReetLrVjzPzzDVvcZEtlqM1cpS8TX9p8K";
-      "helsinki1"   = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ4LkiDqNHY+OYYcd5OG1weezvYDNOnvTeatNYpH589J";
+      "srv1"        = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAmqhpgy3J5u37HbIZqeS4xaiHuvXfekP0pAcog9lYh+";
       "router"      = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOxNyBMfD0nhn1Hc/m9SVv84pT9Pj4NjrtZbljI0T4NA";
     };
     pubKey = pubKeys.${config.networking.hostName};

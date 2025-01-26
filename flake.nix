@@ -5,52 +5,88 @@
 
   outputs = { self, deps, ... }:
     let
-      inputs = deps.inputs // {self = deps;};
+      inputs = deps.inputs // { self = deps; };
       inherit (inputs) nixpkgs home-manager deploy-rs;
-      # high level system description
-      system = "x86_64-linux";
-      pkgs   = deps.legacyPackages.${system};
-      nodes  =
+      buildSystem = "x86_64-linux"; # FIXME hardcode
+      legacyPackages = deps.legacyPackages;
+
+      # high level hosts description
+      hosts =
         let
-          relativePaths = basePath: map (path: ./. + ("/" + basePath + ("/" + path)));
-          hmPaths       = relativePaths "home/profiles";
-          sysPaths      = relativePaths "system/profiles";
-          users         = { petrkozorezov = hmPaths [ "petrkozorezov" ]; };
+          relPaths   = basePath: map (path: ./. + ("/" + basePath + ("/" + path)));
+          hmPaths    = relPaths "home/profiles";
+          nixosPaths = relPaths "system/profiles";
         in {
-          mbp13       = { system = sysPaths [ "machines/mbp13.nix"       "users/petrkozorezov.nix" ]; } // users;
-          asrock-x300 = { system = sysPaths [ "machines/asrock-x300.nix" "users/petrkozorezov.nix" ]; } // users;
-          router      = { system = sysPaths [ "machines/router.nix"      ]; };
-          helsinki1   = { system = sysPaths [ "machines/helsinki1.nix"   ]; };
+          mbp13 = {
+            system = "x86_64-linux";
+            profiles = {
+              nixos = nixosPaths [ "machines/mbp13.nix" "users/petrkozorezov.nix" ];
+              petrkozorezov = hmPaths [ "petrkozorezov" ];
+            };
+          };
+          asrock-x300 = {
+            system = "x86_64-linux";
+            profiles = {
+              nixos = nixosPaths [ "machines/asrock-x300.nix" "users/petrkozorezov.nix" ];
+              petrkozorezov = hmPaths [ "petrkozorezov" ];
+            };
+          };
+          router = {
+            system = "x86_64-linux";
+            profiles = {
+              nixos = nixosPaths [ "machines/router.nix" ];
+            };
+          };
+          srv1 = {
+            system = "aarch64-linux";
+            profiles = {
+              nixos = nixosPaths [ "machines/srv1.nix" ];
+            };
+          };
         };
 
-      mapProfiles =
-        systemMapF: userMapF: hostname:
-          builtins.mapAttrs (
-            profileName:
-              if profileName == "system" then
-                systemMapF hostname
-              else
-                userMapF profileName
-          );
+      mapHostProfiles =
+        nixosMapF: hmMapF: hostname: host:
+          {
+            system = host.system;
+            profiles =
+              builtins.mapAttrs (
+                profileName:
+                  if profileName == "nixos" then
+                    nixosMapF host.system hostname
+                  else
+                    hmMapF host.system profileName
+              ) host.profiles;
+          };
 
       # self lib
       # TODO find a better way
       slib = import ./lib { inherit slib; inherit (nixpkgs) lib; };
-      configExtraAgrs = { inherit self system slib deps; };
-      commonModules = [ ./modules deps.module.${system} ./secrets ];
-      systemConfig =
-        hostname: modules:
+      configExtraAgrs = { inherit self slib deps; };
+      commonModules = system: [
+        deps.module.${system} # nixpkgs: system, config, etc...
+        ./modules
+        ./secrets
+      ];
+      nixosConfig =
+        system: hostname: modules:
           nixpkgs.lib.nixosSystem {
             inherit system;
-            modules = [ { networking.hostName = hostname; _module.args = configExtraAgrs; } ] ++ commonModules ++ [ ./system/modules ] ++ modules;
+            modules =
+              [ {
+                networking.hostName = hostname;
+                _module.args = configExtraAgrs;
+              } ] ++
+              (commonModules system) ++ [ ./system/modules ] ++
+              modules;
           };
 
-      commonHMModules = commonModules ++ [ ./home/modules ];
-      userConfig =
-        username: modules:
+      commonHMModules = system: (commonModules system) ++ [ ./home/modules ];
+      hmConfig =
+        system: username: modules:
           home-manager.lib.homeManagerConfiguration {
-            inherit pkgs;
-            modules = commonHMModules ++ modules ++ [{
+            pkgs = legacyPackages.${system};
+            modules = (commonHMModules system) ++ modules ++ [{
               home = {
                 inherit username;
                 homeDirectory = "/home/" + username;
@@ -58,79 +94,85 @@
             }];
             extraSpecialArgs = configExtraAgrs;
           };
-
-      hmInitModule =
-        username: modules:
-          {
-            home-manager = {
-              useGlobalPkgs       = false;
-              useUserPackages     = true;
-              users.${username}   = { imports = modules; };
-              sharedModules       = commonHMModules;
-              extraSpecialArgs    = configExtraAgrs;
-              backupFileExtension = ".bak";
-            };
-          };
     in rec {
+      #
       # dev shell
-      devShell."${system}" = inputs.devenv.lib.mkShell {
-        inherit inputs pkgs;
+      #
+      devShell.${buildSystem} = inputs.devenv.lib.mkShell {
+        inherit inputs;
+        pkgs = legacyPackages.${buildSystem};
         modules = [ ./devenv.nix ];
       };
 
       #
       # configurations
-      # construct `{ hostname = { profile = configuration } }`
+      # `{ ${hostname} = { system = ${system}; profiles = { ${profile} = ${configuration}; }; }; }`
+      # λ nix build .#configs.$*.profiles.nixos.config.system.build.toplevel
       #
       configs =
-        builtins.mapAttrs (mapProfiles systemConfig userConfig) nodes;
+        builtins.mapAttrs (mapHostProfiles nixosConfig hmConfig) hosts;
 
       #
       # system configuration for `nixos-rebuild`
-      # nixosConfigurations."<hostname>".config.system.build.toplevel must be a derivation
-      # λ nixos-rebuild --flake .#<hostname> build
+      # nixosConfigurations.${hostname}.config.system.build.toplevel must be a derivation
+      # λ nixos-rebuild --flake ".#${hostname}" build
       #
-      nixosConfigurations =
+      nixosConfigurations = let
+        hmInitModule =
+          system: username: modules:
+            {
+              home-manager = {
+                useGlobalPkgs       = false;
+                useUserPackages     = true;
+                users.${username}   = { imports = modules; };
+                sharedModules       = commonHMModules system;
+                extraSpecialArgs    = configExtraAgrs;
+                backupFileExtension = ".bak";
+              };
+            };
+      in
         builtins.mapAttrs
           (
-            hostname: profiles:
+            hostname: host:
               let
-                systemProfile  = profiles.system;
-                usersProfiles  = removeAttrs profiles [ "system" ];
-                usersHMModules = builtins.attrValues (builtins.mapAttrs hmInitModule usersProfiles);
+                nixosProfile = host.profiles.nixos;
+                hmProfiles   = removeAttrs host.profiles [ "nixos" ];
+                hmModules    = builtins.attrValues (builtins.mapAttrs (hmInitModule host.system) hmProfiles);
               in
-                systemConfig hostname (systemProfile ++ [ home-manager.nixosModules.home-manager ] ++ usersHMModules)
+                nixosConfig hostname (nixosProfile ++ [ home-manager.nixosModules.home-manager ] ++ hmModules)
           )
-          nodes;
+          hosts;
 
       #
       # deploy-rs specs
-      # λ deploy ".#configs."<hostname>".system.config.system.build.toplevel"
+      # λ deploy ".#configs.${hostname}.nixos.config.system.build.toplevel"
       #
       deploy = let
-        activateHomeManager =
-          configuration:
-            deploy-rs.lib.${system}.activate.custom (configuration).activationPackage "$PROFILE/activate";
-        activateSystem =
-          deploy-rs.lib.${system}.activate.nixos;
+        activateNixos =
+          system: configuration:
+            legacyPackages.${system}.deploy-rs.lib.activate.nixos configuration;
+        activateHm =
+          system: configuration:
+            legacyPackages.${system}.deploy-rs.lib.activate.custom (configuration).activationPackage "$PROFILE/activate";
 
-        systemProfile =
-          hostname: configuration:
+        nixosProfile =
+          system: hostname: configuration:
             {
               user = "root";
-              path = activateSystem configuration;
+              path = activateNixos system configuration;
             };
-        userProfile =
-          username: configuration:
-          {
-            user = username;
-            path = activateHomeManager configuration;
-          };
+        hmProfile =
+          system: username: configuration:
+            {
+              user = username;
+              path = activateHm system configuration;
+            };
+
         host =
-          hostname: profiles:
+          hostname: host:
             {
               hostname = hostname;
-              profiles = mapProfiles systemProfile userProfile hostname profiles;
+              profiles = (mapHostProfiles nixosProfile hmProfile hostname host).profiles;
             };
       in
         {
@@ -146,6 +188,8 @@
 
       # tests
       tests = let
+        system = buildSystem;
+        pkgs = legacyPackages.${system};
         runTest =
           testFile:
             pkgs.testers.runNixOSTest {

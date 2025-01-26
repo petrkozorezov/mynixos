@@ -3,13 +3,14 @@
 #  - reload bind when zone is changed
 #  - dnssec
 #
-{ lib, self, deps, system, config, ... }:
+{ pkgs, lib, self, deps, config, ... }:
 with lib;
 let
   dns     = deps.inputs.dns;
-  address = config.tfattrs.hcloud_server.helsinki1.ipv4_address;
+  address = config.tfattrs.hcloud_server.srv1.ipv4_address; # FIXME hardcode
   domain  = config.tfattrs.hcloud_rdns.master.dns_ptr;
   ddnsZoneName = "knk.${domain}";
+  system  = pkgs.system;
 in {
   networking.firewall = {
     allowedUDPPorts = [ 53 ];

@@ -1,6 +1,6 @@
-{
+{ config, ... }: {
   mynixos.proxy = {
-    enable     = true;
-    network    = "192.168.4";
+    enable  = true;
+    network = config.mynixos.secrets.vpnSubnet;
   };
 }

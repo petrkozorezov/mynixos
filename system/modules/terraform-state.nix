@@ -15,7 +15,7 @@ with lib; {
       builtins.foldl'
         (
           acc: {type, name, instances, ...}:
-            acc // { ${type}.${name} = (head instances).attributes; }
+            lib.attrsets.recursiveUpdate acc { ${type}.${name} = (head instances).attributes; }
         )
         {}
         rawState.resources;

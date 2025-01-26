@@ -34,17 +34,29 @@
               # sublime4 depends on it
               "openssl-1.1.1w"
             ];
-            rocmSupport = true; # TODO move it to a appropriate place
+            # TODO move it to hardware config
+            # rocmSupport = true;
           };
           overlays = [
             inputs.nur.overlays.default
             inputs.devenv.overlays.default
             inputs.deploy-rs.overlays.default
+            # this ~HACK~ code from deploy-rs docs to prevent deploy-rs building (it's annoying for aarch64)
+            # (but it can lead to inconsistency)
+            (self: super: {
+              deploy-rs = {
+                deploy-rs = (import nixpkgs { inherit system config; }).deploy-rs;
+                lib = super.deploy-rs.lib;
+              };
+            })
             (import ./overlay)
           ];
+          nixpkgsOpts = { inherit system config overlays; };
+          pkgs = import nixpkgs nixpkgsOpts;
         in rec {
-          legacyPackages = import nixpkgs { inherit system config overlays; };
-          module.nixpkgs = { inherit system config overlays; };
+          # TODO move it flake
+          legacyPackages = pkgs;
+          module.nixpkgs = nixpkgsOpts;
         }
     );
 }

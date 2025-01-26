@@ -31,15 +31,16 @@ update-flake:
 update: update-ff-userjs update-ff-addons update-deps
 	$(MAKE) update-flake
 
-# make build:system:mbp13
-build\:system\:%:
-	# or `build:deploy.nodes.$*.profiles.system.path`
-	$(MAKE) build:configs.$*.system.config.system.build.toplevel
+# make build:nixos:mbp13
+build\:nixos\:%:
+	# or `build:deploy.nodes.$*.profiles.nixos.path`
+	$(MAKE) build:configs.$*.profiles.nixos.config.system.build.toplevel
 
-# make build:user:mbp13.petrkozorezov
-build\:user\:%:
+# make build:hm:mbp13.profiles.petrkozorezov
+build\:hm\:%:
 	$(MAKE) build:configs.$*.activationPackage
 
+# BROKEN
 # make build:image:installer
 # build\:image\:%:
 # 	$(MAKE) build:configs.$*.config.system.build.isoImage
@@ -47,7 +48,8 @@ build\:user\:%:
 build\:%:
 	$(NIX_BUILD) ".#$*"
 
-# make deploy:asrock-x300.system
+# make deploy:asrock-x300.nixos
+# make deploy:asrock-x300.petrkozorezov
 deploy\:%:
 	deploy -s ".#$*"
 
@@ -59,16 +61,21 @@ config.tf.json: cloud/*.nix
 
 # TODO tf-init/plan/apply/destroy
 
+# make -s lib-tests:all | jq '.[][].status'
 # make -s lib-tests:firewall | jq .command
+# make -s lib-tests:firewall.command
 lib-tests\:%:
 	${NIX_EVAL} --json .#lib.tests.$* | jq .
 
-# make intgr-tests:system.sss # mb with "NIX_FLAGS='--rebuild'"
+# make intgr-tests:all
+# make intgr-tests:system.sss
+# mb with "NIX_FLAGS='--rebuild'" (does not work with all target)
 intgr-tests\:%:
 	$(NIX_BUILD) ".#tests.$*"
 
-intgr-tests-interactive\:%:
-	$(NIX_BUILD) ".#tests.$*.driverInteractive" && ./result/bin/nixos-test-driver --interactive
+# BROKEN
+# intgr-tests-interactive\:%:
+# 	$(NIX_BUILD) ".#tests.$*.driverInteractive" && ./result/bin/nixos-test-driver --interactive
 
 tests-all:
 	$(MAKE) lib-tests:all

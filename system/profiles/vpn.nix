@@ -1,8 +1,7 @@
-{ config, ... }:
-{
+{ config, ... }: {
   mynixos.vpn = {
     enable = true;
-    subnet = "192.168.4";
+    subnet = config.mynixos.secrets.vpnSubnet;
     vpnIf  = "wg0";
     peers  = config.mynixos.secrets.vpn;
   };

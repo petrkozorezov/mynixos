@@ -1,35 +1,31 @@
 { pkgs, config, lib, ... }:
 let
-  location = "hel1";
-  nixos-infect = "#cloud-config\nruncmd:\n- curl https://raw.githubusercontent.com/elitak/nixos-infect/8a7527d7965430fdfb98aee208d1f67bdc0af79d/nixos-infect | PROVIDER=hetznercloud NIX_CHANNEL=nixos-unstable bash 2>&1 | tee /tmp/infect.log\n";
+  location = "fsn1";
+  hcloudImage = "ubuntu-24.04";
+  # FIXME split to lines
+  nixosInfect = "#cloud-config\nruncmd:\n- curl https://raw.githubusercontent.com/elitak/nixos-infect/5ef3f953d32ab92405b280615718e0b80da2ebe6/nixos-infect | PROVIDER=hetznercloud NIX_CHANNEL=nixos-unstable bash 2>&1 | tee /tmp/infect.log\n";
 in {
   imports = [ ../secrets ];
 
-  # helsinki1
-  resource.hcloud_server.helsinki1 = {
-    name        = "helsinki1";
-    image       = "debian-9";
-    server_type = "cpx31";
+  # srv1
+  resource.hcloud_server.srv1 = {
+    name        = "srv1";
+    image       = hcloudImage;
+    server_type = "cax31";
     location    = location;
     depends_on  = [ "hcloud_network_subnet.subnet" ];
     ssh_keys    = [ "main_key" ];
-    # FIXME split to lines
-    user_data   = nixos-infect;
+    user_data   = nixosInfect;
   };
 
-  resource.hcloud_rdns.master = {
-    server_id  = "\${hcloud_server.helsinki1.id}";
-    ip_address = "\${hcloud_server.helsinki1.ipv4_address}";
-    dns_ptr    = "kozorezov.ru"; # FIXME
-  };
-
-  resource.hcloud_server_network.helsinki1-network = {
-    server_id  = "\${hcloud_server.helsinki1.id}";
+  resource.hcloud_server_network.srv1-network = {
+    server_id  = "\${hcloud_server.srv1.id}";
     network_id = "\${hcloud_network.network.id}";
     ip         = "192.168.3.1";
     alias_ips  = [ ];
   };
 
+  # network
   resource.hcloud_network_subnet.subnet = {
     type         = "cloud";
     network_id   = "\${hcloud_network.network.id}";
@@ -37,10 +33,16 @@ in {
     ip_range     = "192.168.3.0/24";
   };
 
-  # network
   resource.hcloud_network.network = {
     name     = "network";
     ip_range = "192.168.0.0/16";
+  };
+
+  # rdns
+  resource.hcloud_rdns.master = {
+    server_id  = "\${hcloud_server.srv1.id}";
+    ip_address = "\${hcloud_server.srv1.ipv4_address}";
+    dns_ptr    = "kozorezov.ru"; # FIXME hardcode
   };
 
   # base

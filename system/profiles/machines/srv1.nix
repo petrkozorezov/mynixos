@@ -1,11 +1,7 @@
-{ pkgs, ... }:
-  let
-    extIf = "ens3";
-  in
 {
   imports = [
     ../base.nix
-    ../hardware/hetzner-cloud.nix
+    ../hardware/srv1.nix
 
     ../dns.nix
     ../vpn.nix
@@ -17,6 +13,6 @@
     tor.enable = true;
   };
 
-  mynixos.vpn.extIf = "ens3";
-  system.stateVersion = "21.05";
+  mynixos.vpn.extIf = "enp1s0";
+  system.stateVersion = "24.11";
 }
