@@ -69,7 +69,7 @@ rec {
   tests =
     {
       simple =
-        slib.tests.assertVal
+        slib.testing.assertVal
           (format.document (
             evalOpt types.document (with dsl;
               document

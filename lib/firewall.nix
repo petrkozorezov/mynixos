@@ -322,7 +322,7 @@ rec {
             }; };
           };
         in
-          slib.tests.assertVal
+          slib.testing.assertVal
             # (format.spec (slib.utils.evalOpt file types.spec spec)) ''
             (format.optToStr format.spec types.spec spec) (replaceStrings [ "\n" ] [ " " ] ''
               -s 10.2.1.1,10.2.1.2
@@ -348,10 +348,9 @@ rec {
                 target = "testTarget";
               };
           in
-            slib.tests.assertVal
+            slib.testing.assertVal
               (format.optToStr format.command types.command command)
               "-t filter -A testChain ! -s 10.2.1.1 -j testTarget";
-
   };
 }
 
