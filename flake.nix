@@ -146,19 +146,30 @@
 
       # tests
       tests = let
-        args =
-            {
-              inherit deps pkgs;
-              lib      = nixpkgs.lib;
-              testing  = import (nixpkgs + /nixos/lib/testing-python.nix) {
-                inherit pkgs system;
-                specialArgs         = configExtraAgrs;
-                extraConfigurations = [ ./modules ./system/modules ];
-              };
+        runTest =
+          testFile:
+            pkgs.testers.runNixOSTest {
+              imports = [ testFile ];
+              node.specialArgs = configExtraAgrs;
+              extraBaseModules = { imports = [ ./modules ./system/modules ]; };
             };
-      in pkgs.testing.addTestAll {
-        system = import ./system/tests args;
+        addTestAll =
+          tests:
+            # fake package that builds all tests as nativeBuildInputs
+            pkgs.callPackage (
+              { pkgs, lib, stdenv, ... }:
+                (tests // {
+                  all = (pkgs.stdenv.mkDerivation {
+                    name              = "tests-all";
+                    phases            = [ "fakeBuildPhase" ];
+                    fakeBuildPhase    = "echo true > $out";
+                    nativeBuildInputs = map (test: if lib.isDerivation test then test else test.all) (lib.attrValues tests);
+                  });
+                })
+              ) {};
+      in addTestAll {
+        system = import ./system/tests { inherit runTest addTestAll; };
       };
-
     };
 }
+

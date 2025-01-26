@@ -1,4 +1,4 @@
-{ pkgs, testing, ... }: testing.makeTest (let
+{ pkgs, ... }: (let
   path = "/run/keys";
   name = "test-secret";
   text = "my secret";
@@ -9,7 +9,7 @@ in {
 
   name = "sss";
 
-  machine =
+  nodes.machine =
     { pkgs, ... }: {
       virtualisation.memorySize = 192;
       sss = {

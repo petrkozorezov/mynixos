@@ -1,5 +1,5 @@
 # TODO check nat
-{ lib, testing, ... }: with lib; with builtins; testing.makeTest (let
+{ lib, ... }: with lib; with builtins; (let
   vlans = {
     external = 1;
     router1  = 2;

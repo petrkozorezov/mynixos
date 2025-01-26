@@ -1,4 +1,4 @@
-{ pkgs, lib, testing, ... }: with lib; with builtins; testing.makeTest (let
+{ pkgs, lib, ... }: with lib; with builtins; (let
   ifAddress =
     address:
       mkForce [ {
@@ -13,8 +13,8 @@
   };
   nodeAddress =
     node: interface:
-      (head node.config.networking.interfaces.${interface}.ipv4.addresses).address;
-  closure = node: node.config.system.build.toplevel;
+      (head node.networking.interfaces.${interface}.ipv4.addresses).address;
+  closure = node: node.system.build.toplevel;
   routerCfg =
     {
       imports = [ baseConfig ];
@@ -104,14 +104,14 @@ in {
 
       with subtest("Checking switch to configuration with forwarding.enable = false"):
         router.succeed(
-          "${closure nodes.routerOff}/bin/switch-to-configuration test 2>&1"
+          "${closure nodes.routerOff}/activate 2>&1"
         )
         # forwarding_not_works() # nat enables forwarding
         nat_works()
 
       with subtest("Checking switch to configuration with forwarding.enable = true"):
         router.succeed(
-          "${closure nodes.router}/bin/switch-to-configuration test 2>&1"
+          "${closure nodes.router}/activate 2>&1"
         )
         forwarding_works()
         nat_works()
