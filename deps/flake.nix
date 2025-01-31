@@ -17,7 +17,6 @@
                    nur.inputs.nixpkgs.follows = "nixpkgs";
                 devenv.inputs.nixpkgs.follows = "nixpkgs";
              deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
-           flake-utils.inputs.nixpkgs.follows = "nixpkgs";
                    dns.inputs.nixpkgs.follows = "nixpkgs";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
   };

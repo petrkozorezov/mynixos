@@ -36,5 +36,7 @@ in {
       with subtest("Stop secret service"):
         machine.systemctl("stop ${service}")
         machine.fail("[ -f ${target} ]")
+
+      # TODO add test to failed secret decrypt (dependent service will not try to start)
     '';
 })

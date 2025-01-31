@@ -6,6 +6,7 @@
     ../dns.nix
     ../vpn.nix
     ../proxy.nix
+    ../syncthing.nix
   ];
 
   mynixos.proxy = {

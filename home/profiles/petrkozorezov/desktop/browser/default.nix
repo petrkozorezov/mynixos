@@ -13,7 +13,7 @@
     #  - ~/.mozilla/firefox/personal/extensions.json
     # https://github.com/piroor/treestyletab/issues/1525
     profiles = let
-      extensions = with pkgs.firefox-addons; [
+      extensions = with pkgs.firefox-addons; [ # TODO use pkgs.nur.repos.rycee.firefox-addons
         # privacy
         ublock-origin
         foxyproxy-standard
@@ -167,7 +167,7 @@
             definedAliases = [ ".hde" ];
           };
 
-          # TODO add google/yandex translate (gt/yt) and mb chatgpt
+          # TODO add google/yandex translate (gt/yt) and mb chatgpt, noogle.dev (noo), home-manager (nhm) (where?)
         };
       };
     in {

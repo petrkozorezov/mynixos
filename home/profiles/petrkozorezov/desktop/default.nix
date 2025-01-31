@@ -12,6 +12,7 @@
     ./sound.nix
     ./subl.nix
     ./sway.nix
+    ./syncthing.nix
     ./terminal.nix
     ./waybar.nix
     ./xdg.nix

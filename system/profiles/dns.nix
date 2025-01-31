@@ -37,9 +37,10 @@ in {
       zone = recursiveUpdate baseZone (with dns.lib.combinators; {
         A = [ address ];
         subdomains = {
-          vpn = host address null;
-          ns1 = host address null;
-          ns2 = host address null;
+          vpn  = host address null;
+          sync = host address null;
+          ns1  = host address null;
+          ns2  = host address null;
         };
       });
     in {

@@ -36,7 +36,7 @@ in {
             };
 
             dependent = mkOption {
-              description = "Systemd services that dependent of this secret ('wantedBy' and 'before' unit file section).";
+              description = "Systemd services that need this secret ('RequiredBy' and 'before' in systemd service).";
               type        = types.listOf types.str;
               default     = [ "multi-user.target" ];
             };
@@ -73,13 +73,13 @@ in {
 
             target = mkOption {
               description = "Full path of unencrypted secret.";
-              type        = types.path;
+              type        = types.path; # TODO change to str
               default     = cfg.path + "/${config.name}";
             };
 
             tmp = mkOption {
               description = "Temporary location of the secret file during decription.";
-              type        = types.path;
+              type        = types.path; # TODO change to str
               default     = secretCfg.target + ".tmp";
             };
 
@@ -115,7 +115,7 @@ in {
 
       path = mkOption {
         description = "Path where unencrypted keys will be located by default.";
-        type        = types.path;
+        type        = types.path; # TODO change to str
         default     = /run/keys;
       };
 
@@ -207,8 +207,8 @@ in {
               RemainAfterExit = "yes";
             };
 
-            wantedBy = secret.dependent;
-            before   = secret.dependent;
+            requiredBy = secret.dependent;
+            before     = secret.dependent;
           }
       );
 
@@ -250,7 +250,7 @@ in {
             Type            = "oneshot";
             RemainAfterExit = "yes";
           };
-          Install.WantedBy = secret.dependent;
+          Install.RequiredBy = secret.dependent;
         });
 
     systemServices = mapAttrs' systemService cfg.secrets   ;
