@@ -20,10 +20,13 @@ in {
               type        = types.str;
             };
 
-            enable = mkOption {
+            serviceEnable = mkOption {
               default     = true;
-              description = "The way to quickly disable decryption of the secret.";
-              type        = types.bool;
+              description = ''
+                The way to quickly disable decryption systemd service
+                (secret can be used "by hands", e.g. by `sss.secret.foo.readCommand`).
+                '';
+              type = types.bool;
             };
 
             service = mkOption {
@@ -71,14 +74,20 @@ in {
               default     = cfg.commands.decrypt;
             };
 
+            echoCommand = mkOption {
+              description = "Command to echo decrypted password (e.g. can be useful from `programs.msmtp.accounts.default.passwordeval`)";
+              type        = types.str;
+              default     = "cat ${escp secretCfg.encrypted} | ${secretCfg.decryptCommand}";
+            };
+
             target = mkOption {
               description = "Full path of unencrypted secret.";
-              type        = types.path; # TODO change to str
+              type        = types.path;
               default     = cfg.path + "/${config.name}";
             };
 
             tmp = mkOption {
-              description = "Temporary location of the secret file during decription.";
+              description = "Temporary location of the secret file during description.";
               type        = types.path; # TODO change to str
               default     = secretCfg.target + ".tmp";
             };
@@ -115,7 +124,7 @@ in {
 
       path = mkOption {
         description = "Path where unencrypted keys will be located by default.";
-        type        = types.path; # TODO change to str
+        type        = types.path;
         default     = /run/keys;
       };
 
@@ -176,7 +185,7 @@ in {
           script = ''
             if (
               echo -n "Decrypting '${target}'..." &&
-              cat ${source} | ${secret.decryptCommand} > ${tmp} &&
+              ${secret.echoCommand} > ${tmp} &&
               chown ${user}:${group} ${tmp} &&
               chmod ${esc secret.mode} ${tmp} &&
               mv -f ${tmp} ${target}
@@ -198,8 +207,8 @@ in {
       _: secret: let
         serviceScripts = scripts secret;
       in
-        nameValuePair "${secret.service}" (
-          mkIf secret.enable {
+        nameValuePair secret.service (
+          mkIf secret.serviceEnable {
             inherit (serviceScripts) preStart script preStop;
 
             serviceConfig = {
@@ -238,7 +247,7 @@ in {
         serviceName    = secret.service;
         serviceScripts = scripts secret;
       in
-        nameValuePair serviceName ({
+        nameValuePair serviceName (mkIf secret.serviceEnable {
           Unit = {
             Description = "Sss ${name} user secret";
             Before      = secret.dependent;
