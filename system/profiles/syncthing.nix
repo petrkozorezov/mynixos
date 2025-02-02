@@ -1,5 +1,4 @@
-# TODO add rclone to packages
-{ config, ... }: {
+{ config, lib, ... }: {
   services.syncthing = {
     enable = true;
     settings = {
@@ -9,5 +8,10 @@
       };
     };
     openDefaultPorts = true;
+  };
+
+  mynixos.backups.snapshots.syncthing = {
+    paths = [ config.services.syncthing.dataDir ];
+    exclude = [ "*.tmp" ".devenv*" ".direnv*" "node_modules" ];
   };
 }
