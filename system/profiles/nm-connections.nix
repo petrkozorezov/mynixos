@@ -41,7 +41,7 @@
           "wireguard-peer.${secrets.vpn.srv1.pub}" = {
             endpoint             = "${secrets.vpn.srv1.endpoint}:${builtins.toString secrets.vpn.srv1.port}";
             persistent-keepalive = "25";
-            allowed-ips          = "0.0.0.0/0";
+            allowed-ips          = "${secrets.vpnSubnet}.0/24";
           };
           # TODO remove hardcode
           ipv4 = {
