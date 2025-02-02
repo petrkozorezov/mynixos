@@ -31,31 +31,33 @@ in {
       default = [ ];
     };
 
-    snapshots = mkOption { type =
-      attrsOf (submodule ({ name, ... }: {
-        options = {
-          name = mkOption {
-            default     = name;
-            description = "Name of the secret.";
-            type        = types.str;
-          };
+    snapshots = mkOption {
+      type =
+        attrsOf (submodule ({ name, ... }: {
+          options = {
+            name = mkOption {
+              default     = name;
+              description = "Name of the secret.";
+              type        = types.str;
+            };
 
-          enable = mkOption {
-            default = true;
-            type = types.bool;
-          };
+            enable = mkOption {
+              default = true;
+              type = types.bool;
+            };
 
-          paths = mkOption {
-            type = listOf str;
-            default = [ ];
-          };
+            paths = mkOption {
+              type = listOf str;
+              default = [ ];
+            };
 
-          exclude = mkOption {
-            type = listOf str;
-            default = [ ];
+            exclude = mkOption {
+              type = listOf str;
+              default = [ ];
+            };
           };
-        };
-      }));
+        }));
+      default = {};
     };
   };
 
@@ -112,6 +114,11 @@ in {
     resticBackups = mapAttrs' resticBackup cfg.snapshots;
     sssSecrets = map snapSecretsDeps (attrValues cfg.snapshots);
   in mkIf cfg.enable {
+    assertions = [ {
+      assertion = config.sss.enable;
+      message   = "backups uses SSS secrets system, please enable and setup it";
+    } ];
+
     services.restic.backups = resticBackups;
     sss.secrets = mkMerge (sssSecrets ++ [{
       restic-env.text = ''
