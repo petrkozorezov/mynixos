@@ -75,6 +75,7 @@ in {
       (mkIf cfg.tor.enable {
         services.tor = {
           enable = true;
+          client.enable = true;
           settings.SOCKSPort = [ { addr = address; port = cfg.tor.port; } ];
         };
         services.privoxy.settings."forward-socks5 .onion" = "${cfg.tor.endpoint} .";
