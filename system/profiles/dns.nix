@@ -1,8 +1,5 @@
-#
-# TODO:
-#  - reload bind when zone is changed
-#  - dnssec
-#
+# [dnssec checker](https://dnssec-analyzer.verisignlabs.com/)
+# [knot tutorial](https://aryak.me/blog/01-knot)
 { pkgs, lib, self, deps, config, ... }:
 with lib;
 let
@@ -14,9 +11,9 @@ in {
     allowedUDPPorts = [ 53 ];
     allowedTCPPorts = [ 53 ];
   };
-  # NOTE если падает деплой bind это ломает последующие деплои
   networking.resolvconf.useLocalResolver = mkForce false;
-  services.bind = let
+
+  services.knot = let
     baseZone = {
       SOA = {
         nameServer = "ns1.${domain}.";
@@ -29,7 +26,7 @@ in {
         "ns2.${domain}."
       ];
     };
-    file = dns.util.${pkgs.system}.writeZone domain (recursiveUpdate baseZone (with dns.lib.combinators; {
+    zoneFile = dns.util.${pkgs.system}.writeZone domain (recursiveUpdate baseZone (with dns.lib.combinators; {
       A = [ address ];
       subdomains = {
         vpn  = host address null;
@@ -40,23 +37,24 @@ in {
     }));
   in {
     enable = true;
-    forwarders = [ "1.1.1.1" ];
-    ipv4Only = true;
-    zones.${domain} = {
-      file = file;
-      master = true;
-      slaves = [];
-    };
-    extraOptions = ''
-      max-cache-size 5%;
-      '';
-    extraConfig = ''
-      logging {
-        channel default_syslog {
-          syslog daemon;
-          severity warning;
-        };
+    settings = {
+      server = {
+        rundir = "/run/knot";
+        user = "knot:knot";
+        listen = "0.0.0.0@53";
       };
-      '';
+      log.syslog.any = "info";
+      database.storage = "/var/lib/knot";
+
+      # `keymgr your.domain ds`
+      zone.${domain} = {
+        file = zoneFile;
+        dnssec-signing = "on";
+        semantic-checks = "on";
+        storage = "/var/lib/knot/zones";
+        # Don't override zonefile
+        zonefile-sync = -1;
+      };
+    };
   };
 }
