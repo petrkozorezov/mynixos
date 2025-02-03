@@ -15,5 +15,5 @@
     exclude = [ "*.tmp" ".devenv*" ".direnv*" "node_modules" ];
   };
 
-  mynixos.dns.subdomains = [ "sync" ];
+  mynixos.dns.ext.subdomains = [ "sync" ];
 }

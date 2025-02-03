@@ -47,7 +47,7 @@
           ipv4 = {
             method   = "manual";
             address1 = "${secrets.vpnSubnet}.${self.addr}/32";
-            dns      = "1.1.1.1;"; # TODO use ${secrets.vpnSubnet}.${secrets.vpn.srv1.addr}
+            dns      = "${secrets.vpnSubnet}.${secrets.vpn.srv1.addr}";
           };
           ipv6.method = "disabled";
           proxy = {

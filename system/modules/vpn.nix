@@ -180,7 +180,7 @@ with types;
           others
         );
 
-        mynixos.dns.subdomains = [ "vpn" ];
+        mynixos.dns.ext.subdomains = [ "vpn" ];
       })
       (mkIf isNatEnabled {
         networking = {
