@@ -13,7 +13,7 @@ in {
     enable   = true;
     hostKeys = [];
     banner   = ''
-      Hello, leather bastard from ${config.networking.hostName}@${version}!
+      Hello meatbag from ${config.networking.hostName}@${version}!
     '';
     settings.PasswordAuthentication = false;
   };
