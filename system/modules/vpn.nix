@@ -179,6 +179,8 @@ with types;
           )
           others
         );
+
+        mynixos.dns.subdomains = [ "vpn" ];
       })
       (mkIf isNatEnabled {
         networking = {

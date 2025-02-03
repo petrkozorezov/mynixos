@@ -10,7 +10,7 @@
                 devenv.url = "github:cachix/devenv/v1.3.1"            ;
              deploy-rs.url = "github:serokell/deploy-rs"              ;
            flake-utils.url = "github:numtide/flake-utils"             ;
-                   dns.url = "github:kirelagin/dns.nix"               ;
+                   dns.url = "github:kirelagin/dns.nix"               ; # TODO nix-community/dns.nix
     nix-index-database.url = "github:Mic92/nix-index-database"        ;
 
           home-manager.inputs.nixpkgs.follows = "nixpkgs";

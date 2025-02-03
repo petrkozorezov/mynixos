@@ -14,4 +14,6 @@
     paths = [ config.services.syncthing.dataDir ];
     exclude = [ "*.tmp" ".devenv*" ".direnv*" "node_modules" ];
   };
+
+  mynixos.dns.subdomains = [ "sync" ];
 }
