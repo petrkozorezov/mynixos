@@ -1,7 +1,6 @@
 { config, pkgs, ... }:
 let
   net      = "192.168.2";
-  domain   = "knk.${config.tfattrs.hcloud_rdns.master.dns_ptr}";
   address  = "${net}.1";
   uplink   = "enp3s0";
 in {
@@ -21,8 +20,6 @@ in {
   mynixos.router = {
     enable     = true;
     hostname   = config.networking.hostName;
-    domain     = domain;
-
     uplink.interface = uplink;
 
     local = {
@@ -122,30 +119,5 @@ in {
         };
       };
     };
-  };
-
-  services.bind.ddns = rec {
-    zone    = domain;
-    keyfile = config.sss.secrets."dnssec-${domain}".target;
-    client = {
-      enable  = true;
-      server  = "ns1.${config.tfattrs.hcloud_rdns.master.dns_ptr}"; # FIXME
-      updates = let
-        host = "router.${zone}";
-      in [
-        "delete ${host} A"
-        ''
-          add ${host} 60 A `\
-          ${pkgs.iproute2}/bin/ip -4 -o addr show ${uplink} | \
-          ${pkgs.gawk}/bin/awk '{print $4}' | \
-          cut -d "/" -f 1 \
-          `
-        ''
-      ];
-    };
-  };
-  sss.secrets."dnssec-${domain}" = {
-    text      = config.mynixos.secrets.dnssec.tsig.${domain};
-    dependent = [ "ddns-client-update.service" ];
   };
 }
