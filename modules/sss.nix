@@ -39,7 +39,7 @@ in {
             };
 
             dependent = mkOption {
-              description = "Systemd services that need this secret ('RequiredBy' and 'before' in systemd service).";
+              description = "Systemd services that need this secret ('RequiredBy', 'PartOf' and 'before' in systemd service).";
               type        = types.listOf types.str;
               default     = [ "multi-user.target" ];
             };
@@ -59,7 +59,12 @@ in {
             encrypted = mkOption {
               description = "Encrypted version of the secret file, will override 'text' and 'source'.";
               type        = types.path;
-              default     = pkgs.runCommandLocal "sss-${secretName}-encrypted" {} "cat ${escp secretCfg.source} | ${secretCfg.encryptCommand} > $out";
+              default     = pkgs.runCommandLocal "sss-${secretName}-encrypted" {
+                  src =
+                    if pathHasContext (toString secretCfg.source)
+                      then secretCfg.source
+                      else builtins.path { path = secretCfg.source; name = "sss-${secretName}-source"; };
+                } "cat $src | ${secretCfg.encryptCommand} > $out";
             };
 
             encryptCommand = mkOption {
@@ -80,10 +85,16 @@ in {
               default     = "cat ${escp secretCfg.encrypted} | ${secretCfg.decryptCommand}";
             };
 
+            path = mkOption {
+              description = "Path where unencrypted keys will be located by default.";
+              type        = types.str;
+              default     = cfg.path;
+            };
+
             target = mkOption {
               description = "Full path of unencrypted secret.";
               type        = types.path;
-              default     = cfg.path + "/${config.name}";
+              default     = secretCfg.path + "/${config.name}";
             };
 
             tmp = mkOption {
@@ -124,8 +135,8 @@ in {
 
       path = mkOption {
         description = "Path where unencrypted keys will be located by default.";
-        type        = types.path;
-        default     = /run/keys;
+        type        = types.str;
+        default     = "/run/keys";
       };
 
       commands = {
@@ -150,7 +161,7 @@ in {
       user = mkOption {
         description = "Default owner user of the secret file.";
         type        = types.str;
-        default     = "$(id -u)";
+        default     = "$(id -u)"; # nixos module -> root; hm -> user id
       };
 
       group = mkOption {
@@ -171,8 +182,8 @@ in {
           source = escp secret.encrypted;
           target = escp secret.target;
           tmp    = escp secret.tmp;
-          user   = esc secret.user;
-          group  = esc secret.group;
+          user   = esc  secret.user;
+          group  = esc  secret.group;
         in {
           # TODO customize directory mode
           # TODO set correct mode/user/group to the all created directories in the path (not only the last)
@@ -217,6 +228,7 @@ in {
             };
 
             requiredBy = secret.dependent;
+            partOf     = secret.dependent;
             before     = secret.dependent;
           }
       );
@@ -251,6 +263,7 @@ in {
           Unit = {
             Description = "Sss ${name} user secret";
             Before      = secret.dependent;
+            PartOf      = secret.dependent;
           };
           Service = {
             ExecStartPre    = makeJobScript "${serviceName}-pre-start" serviceScripts.preStart;

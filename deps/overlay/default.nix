@@ -5,4 +5,7 @@ rec {
 
   firefox-addons = super.callPackage ./firefox-addons.nix { };
   bclmctl        = super.callPackage ./bclmctl.nix { };
+  mynixos = {
+    builders = super.callPackage ./builders.nix { };
+  };
 }

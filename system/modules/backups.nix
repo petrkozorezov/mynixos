@@ -114,10 +114,9 @@ in {
     resticBackups = mapAttrs' resticBackup cfg.snapshots;
     sssSecrets = map snapSecretsDeps (attrValues cfg.snapshots);
   in mkIf cfg.enable {
-    assertions = [ {
-      assertion = config.sss.enable;
-      message   = "backups uses SSS secrets system, please enable and setup it";
-    } ];
+    assertions = [
+      { assertion = config.sss.enable; message = "backups uses SSS secrets system, please enable and setup it"; }
+    ];
 
     services.restic.backups = resticBackups;
     sss.secrets = mkMerge (sssSecrets ++ [{

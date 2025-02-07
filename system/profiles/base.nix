@@ -9,6 +9,8 @@ in {
   system.configurationRevision = version;
   system.nixos.label           = version;
 
+  security.pki.certificateFiles = [ (config.mynixos.secrets.filesPath + "/ca.crt") ];
+
   services.openssh = {
     enable   = true;
     hostKeys = [];

@@ -50,10 +50,11 @@ in {
   };
 
   config = mkIf cfg.enable {
-    assertions = [ {
-      assertion = config.mynixos.backups.enable;
-      message   = "backups uses backups system, please enable and setup it";
-    } ];
+    assertions = [
+      { assertion = config.sss.enable; message = "SSS secrets system is not enabled, please enable and setup it"; }
+      # TODO check int.address != ext.address
+      # TODO check int.domain != ext.domain
+    ];
 
     networking.firewall = {
       allowedUDPPorts = [ 53 ];

@@ -37,6 +37,10 @@ in {
     };
 
   config = mkIf cfg.enable {
+    assertions = [
+      { assertion = config.sss.enable; message = "SSS secrets system is not enabled, please enable and setup it"; }
+    ];
+
     sss.secrets =
       lib.mapAttrs'
         (

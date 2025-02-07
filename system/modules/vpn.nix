@@ -99,10 +99,7 @@ with types;
     in mkMerge [
       (mkIf cfg.enable {
         assertions = [
-          {
-            assertion = config.sss.enable;
-            message   = "vpn uses SSS secrets system, please enable and setup it";
-          }
+          { assertion = config.sss.enable; message = "SSS secrets system is not enabled, please enable and setup it"; }
         ];
 
         sss = {
