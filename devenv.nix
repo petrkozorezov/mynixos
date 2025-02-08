@@ -14,7 +14,6 @@ in {
     # TODO move to packages build deps
     ripgrep
     curl
-    nur.repos.rycee.mozilla-addons-to-nix
     devenv
   ];
 

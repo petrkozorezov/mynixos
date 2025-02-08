@@ -15,10 +15,6 @@ show-repo-path:
 	@echo $(REPO_PATH)
 
 # TODO build as package
-update-ff-addons:
-	cd deps/overlay && mozilla-addons-to-nix firefox-addons.json generated-firefox-addons.nix
-
-# TODO build as package
 update-ff-userjs:
 	cd home/profiles/petrkozorezov/desktop/browser && ./userjs-nix.sh > generated-userjs.nix
 
@@ -28,7 +24,7 @@ update-deps:
 update-flake:
 	nix flake update
 
-update: update-ff-userjs update-ff-addons update-deps
+update: update-ff-userjs update-deps
 	$(MAKE) update-flake
 
 # make build:nixos:mbp13
