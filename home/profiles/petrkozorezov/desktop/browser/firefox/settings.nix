@@ -21,6 +21,7 @@
   "services.sync.engine.passwords"                      = false; # do not sync passwords
   "browser.sessionstore.resume_session_once"            = true ; # ?
   "toolkit.legacyUserProfileCustomizations.stylesheets" = true ; # ?
+  "extensions.autoDisableScopes"                        = 0    ; # prevent extension install notification
 
   # security
   # prevent av/malware injection

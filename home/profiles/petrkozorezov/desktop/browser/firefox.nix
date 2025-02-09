@@ -1,7 +1,5 @@
-# -MOZ_LOG=all:3 # info
 args@{ pkgs, lib, config, deps, ... }: let
-  acceptedExtensions = import ./firefox/extensions.nix;
-  extensions = map (name: pkgs.firefox-addons.${name}) (lib.attrNames acceptedExtensions);
+  extensions = (import ./firefox/extensions.nix) args;
   baseSettings = import ./firefox/settings.nix;
   arkenfoxUserJsSettings =
     deps.inputs.arkenfox-userjs.lib //
@@ -13,14 +11,6 @@ args@{ pkgs, lib, config, deps, ... }: let
   '';
   search = (import ./firefox/search.nix) args;
 in {
-  # TODO upstream in a common way
-  assertions = lib.mapAttrsToList (name: permissions: let
-      unaccepted = lib.subtractLists permissions pkgs.firefox-addons.${name}.meta.permissions;
-    in {
-      assertion = unaccepted == [];
-      message = "Extension ${name} has unaccepted permissions: ${builtins.toJSON unaccepted}";
-    }) acceptedExtensions;
-
   programs.firefox = {
     enable = true;
     package = with pkgs; (firefox-wayland.override {
@@ -43,11 +33,11 @@ in {
       clean = {
         id = 1;
         settings = baseSettings;
-        inherit userChrome extensions search;
+        inherit userChrome search;
       };
       work = {
         id = 2;
-        settings = baseSettings;
+        settings = arkenfoxUserJsSettings;
         inherit userChrome extensions search;
       };
     };
