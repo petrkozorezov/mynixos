@@ -1,5 +1,20 @@
 {
   "nodes": {
+    "arkenfox-userjs": {
+      "locked": {
+        "lastModified": 1739098195,
+        "narHash": "sha256-O2oT0p9rbOOVmjpxoXFkRlwhiZAgeRsrxOhNLSA31pU=",
+        "owner": "petrkozorezov",
+        "repo": "arkenfox-userjs-nix",
+        "rev": "9b0339bc0b20f52b72619c651df5dc550b43e805",
+        "type": "github"
+      },
+      "original": {
+        "owner": "petrkozorezov",
+        "repo": "arkenfox-userjs-nix",
+        "type": "github"
+      }
+    },
     "cachix": {
       "inputs": {
         "devenv": "devenv_2",
@@ -97,6 +112,7 @@
     },
     "deps": {
       "inputs": {
+        "arkenfox-userjs": "arkenfox-userjs",
         "deploy-rs": "deploy-rs",
         "devenv": "devenv",
         "dns": "dns",
@@ -108,7 +124,7 @@
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-ri7z70CPVz5+MaBlITMH72v7EDFytbDWdaEFPuP5nxE=",
+        "narHash": "sha256-3qP4vl8BpuRdhOu95H2wmQJnCexwUTUrAJrs0UudjBw=",
         "path": "./deps",
         "type": "path"
       },
@@ -248,11 +264,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1739039391,
-        "narHash": "sha256-MSMa+w0fn/h6Op8wx4KXyt+Ehfc01/mVp+nIdsv2I2s=",
+        "lastModified": 1739065824,
+        "narHash": "sha256-q0E0di4UBd5NMgfxr2q5+chgc2HLUAxIep4M9d57kQ4=",
         "owner": "petrkozorezov",
         "repo": "firefox-addons-nix",
-        "rev": "f83a617f780a8dfc76298ccd7e5206eb022a8899",
+        "rev": "197f0e765eb4ef6f8f0f8796d35042991974062a",
         "type": "github"
       },
       "original": {

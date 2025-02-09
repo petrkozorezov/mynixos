@@ -1,5 +1,5 @@
 # -MOZ_LOG=all:3 # info
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, deps, ... }: {
   programs.firefox = {
     enable = true;
     package = with pkgs; (firefox-wayland.override {
@@ -100,8 +100,7 @@
         "dom.ipc.keepProcessesAlive.privilegedabout" = 0;
       };
       arkenfoxUserJsSettings =
-        # SEE https://github.com/arkenfox/user.js
-        import ./generated-userjs.nix //
+        deps.inputs.arkenfox-userjs.lib //
           (baseSettings // {
             "media.peerconnection.enabled" = false; # disable vpn detection through webrtc
           });

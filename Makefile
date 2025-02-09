@@ -14,17 +14,13 @@ clean:
 show-repo-path:
 	@echo $(REPO_PATH)
 
-# TODO build as package
-update-ff-userjs:
-	cd home/profiles/petrkozorezov/desktop/browser && ./userjs-nix.sh > generated-userjs.nix
-
 update-deps:
 	cd deps/ && nix flake update
 
 update-flake:
 	nix flake update
 
-update: update-ff-userjs update-deps
+update: update-deps
 	$(MAKE) update-flake
 
 # make build:nixos:mbp13
