@@ -23,10 +23,10 @@ update-flake:
 update: update-deps
 	$(MAKE) update-flake
 
-# make build:nixos:mbp13
-build\:nixos\:%:
-	# or `build:deploy.nodes.$*.profiles.nixos.path`
-	$(MAKE) build:configs.$*.profiles.nixos.config.system.build.toplevel
+# make build:system:mbp13
+build\:system\:%:
+	# or `build:deploy.nodes.$*.profiles.system.path`
+	$(MAKE) build:configs.$*.profiles.system.config.system.build.toplevel
 
 # make build:hm:mbp13.profiles.petrkozorezov
 build\:hm\:%:
@@ -40,7 +40,7 @@ build\:hm\:%:
 build\:%:
 	$(NIX_BUILD) ".#$*"
 
-# make deploy:asrock-x300.nixos
+# make deploy:asrock-x300.system
 # make deploy:asrock-x300.petrkozorezov
 deploy\:%:
 	deploy -s ".#$*"

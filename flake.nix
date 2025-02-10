@@ -20,27 +20,27 @@
           mbp13 = {
             system = "x86_64-linux";
             profiles = {
-              nixos = nixosPaths [ "machines/mbp13.nix" "users/petrkozorezov.nix" ];
+              system = nixosPaths [ "machines/mbp13.nix" "users/petrkozorezov.nix" ];
               petrkozorezov = hmPaths [ "petrkozorezov" ];
             };
           };
           asrock-x300 = {
             system = "x86_64-linux";
             profiles = {
-              nixos = nixosPaths [ "machines/asrock-x300.nix" "users/petrkozorezov.nix" ];
+              system = nixosPaths [ "machines/asrock-x300.nix" "users/petrkozorezov.nix" ];
               petrkozorezov = hmPaths [ "petrkozorezov" ];
             };
           };
           router = {
             system = "x86_64-linux";
             profiles = {
-              nixos = nixosPaths [ "machines/router.nix" ];
+              system = nixosPaths [ "machines/router.nix" ];
             };
           };
           srv1 = {
             system = "aarch64-linux";
             profiles = {
-              nixos = nixosPaths [ "machines/srv1.nix" ];
+              system = nixosPaths [ "machines/srv1.nix" ];
             };
           };
         };
@@ -52,7 +52,7 @@
             profiles =
               builtins.mapAttrs (
                 profileName:
-                  if profileName == "nixos" then
+                  if profileName == "system" then
                     nixosMapF host.system hostname
                   else
                     hmMapF host.system profileName
@@ -107,7 +107,7 @@
       #
       # configurations
       # `{ ${hostname} = { system = ${system}; profiles = { ${profile} = ${configuration}; }; }; }`
-      # λ nix build .#configs.$*.profiles.nixos.config.system.build.toplevel
+      # λ nix build .#configs.$*.profiles.system.config.system.build.toplevel
       #
       configs =
         builtins.mapAttrs (mapHostProfiles nixosConfig hmConfig) hosts;
@@ -135,8 +135,8 @@
           (
             hostname: host:
               let
-                nixosProfile = host.profiles.nixos;
-                hmProfiles   = removeAttrs host.profiles [ "nixos" ];
+                nixosProfile = host.profiles.system;
+                hmProfiles   = removeAttrs host.profiles [ "system" ];
                 hmModules    = builtins.attrValues (builtins.mapAttrs (hmInitModule host.system) hmProfiles);
               in
                 nixosConfig hostname (nixosProfile ++ [ home-manager.nixosModules.home-manager ] ++ hmModules)
@@ -145,7 +145,7 @@
 
       #
       # deploy-rs specs
-      # λ deploy ".#configs.${hostname}.nixos.config.system.build.toplevel"
+      # λ deploy ".#configs.${hostname}.system.config.system.build.toplevel"
       #
       deploy = let
         activateNixos =
