@@ -18,6 +18,7 @@ update-deps:
 	cd deps/ && nix flake update
 
 update-flake:
+	cd deps/ && nix flake info > /dev/null
 	nix flake update
 
 update: update-deps

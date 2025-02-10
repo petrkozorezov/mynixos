@@ -13,6 +13,9 @@
            flake-utils.url = "github:numtide/flake-utils"              ;
                    dns.url = "github:kirelagin/dns.nix"                ; # TODO nix-community/dns.nix
     nix-index-database.url = "github:Mic92/nix-index-database"         ;
+      firefox-csshacks.url = "github:MrOtherGuy/firefox-csshacks"      ;
+
+      firefox-csshacks.flake = false;
 
           home-manager.inputs.nixpkgs.follows = "nixpkgs";
         firefox-addons.inputs.nixpkgs.follows = "nixpkgs";
@@ -20,6 +23,7 @@
              deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
                    dns.inputs.nixpkgs.follows = "nixpkgs";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
+
   };
 
   outputs = { self, nixpkgs, flake-utils, ... } @ inputs:
@@ -43,13 +47,21 @@
             inputs.deploy-rs.overlays.default
             # this ~HACK~ code from deploy-rs docs to prevent deploy-rs building (it's annoying for aarch64)
             # (but it can lead to inconsistency)
-            (self: super: {
+            (prev: super: {
               deploy-rs = {
                 deploy-rs = (import nixpkgs { inherit system config; }).deploy-rs;
                 lib = super.deploy-rs.lib;
               };
             })
-            (import ./overlay)
+            (prev: super: let
+              callPackage = name: super.callPackage (./overlay + ("/" + name))  { deps = self; };
+            in {
+              # just to ensure overlay works
+              test = super.hello;
+              bclmctl = callPackage "bclmctl.nix";
+              firefox-addons-custom.tronlink = callPackage "tronlink.nix";
+              mynixos.builders = callPackage "builders.nix";
+            })
           ];
           nixpkgsOpts = { inherit system config overlays; };
           pkgs = import nixpkgs nixpkgsOpts;

@@ -117,6 +117,7 @@
         "devenv": "devenv",
         "dns": "dns",
         "firefox-addons": "firefox-addons",
+        "firefox-csshacks": "firefox-csshacks",
         "flake-utils": "flake-utils_5",
         "home-manager": "home-manager",
         "nix-index-database": "nix-index-database",
@@ -124,7 +125,7 @@
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-Hfr68im3ZeIPkqANqgcOsgpXCKaO8X/SynI+oswnaE8=",
+        "narHash": "sha256-V1e9Z4ZAjzyIB3De6vAIaB8nyWrJ1dg+2GOpU+nonkc=",
         "path": "./deps",
         "type": "path"
       },
@@ -264,16 +265,32 @@
         ]
       },
       "locked": {
-        "lastModified": 1739129464,
-        "narHash": "sha256-XYRHMzndYRNZpwe/IlbnqMhf1rTkDL6CKgaklaGbZeo=",
+        "lastModified": 1739205999,
+        "narHash": "sha256-A8eRJLJEPLhjIHm680iVE5VOwKdyFFb0ft5+cwojkUs=",
         "owner": "petrkozorezov",
         "repo": "firefox-addons-nix",
-        "rev": "3be406ee3c00b26b06dfa6d64f3cefbddbef0a52",
+        "rev": "9224c08467f10e2fb4efe2c6041cd4ca4df25224",
         "type": "github"
       },
       "original": {
         "owner": "petrkozorezov",
         "repo": "firefox-addons-nix",
+        "type": "github"
+      }
+    },
+    "firefox-csshacks": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1739030457,
+        "narHash": "sha256-MDqlQ7V8KR/1xHhbPPX+z4qsixlSx9IFTzzczIdFJY8=",
+        "owner": "MrOtherGuy",
+        "repo": "firefox-csshacks",
+        "rev": "625aad8dbc4574e7363a43005366433d65c56546",
+        "type": "github"
+      },
+      "original": {
+        "owner": "MrOtherGuy",
+        "repo": "firefox-csshacks",
         "type": "github"
       }
     },
