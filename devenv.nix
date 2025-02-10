@@ -11,9 +11,6 @@ in {
     terranix
     (terraform.withPlugins (tp: [ tp.hcloud ]))
 
-    # TODO move to packages build deps
-    ripgrep
-    curl
     devenv
   ];
 
