@@ -20,8 +20,9 @@
   ob_file  = "\$${sock}.${ob}";
   wallpaper =
     builtins.fetchurl {
-      url    = "https://wallpaperaccess.com/full/117782.png";
-      sha256 = "0icwx5wib95yapb7i9vgy89wv9idcc2fbb69cgx57zadsfbdy4r3";
+      name   = "wallpaper";
+      url    = "https://unsplash.com/photos/Y3PD_9c2xms/download?ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNzM5MzAxNDE2fA&force=true";
+      sha256 = "1knl379zjs06zb22xwxh7ax1rfq4wf9pn4yis5jdrililn7hks73";
     };
     # http://getwallpapers.com/wallpaper/full/c/6/c/52323.jpg
     # http://getwallpapers.com/wallpaper/full/c/7/4/271955.jpg
@@ -171,7 +172,7 @@ in {
             "mako"
             "blueman-applet"
             "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
-            "udiskie --no-automount --tray"
+            "udiskie --tray"
 
             "firefox -P personal"
             "firefox -P clean"

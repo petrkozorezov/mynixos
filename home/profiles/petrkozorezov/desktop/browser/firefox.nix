@@ -12,17 +12,18 @@ in {
       baseProfile = {
         userChrome = importFF "userChrome.css.nix";
         search     = importFF "search.nix";
+        settings   = settings.basic;
+        extensions = extensions.basic;
+      };
+    in {
+      personal = baseProfile // {
+        id = 0;
+        isDefault  = true;
         settings   = settings.private;
         extensions = extensions.all;
       };
-    in {
-      personal = baseProfile // { id = 0; isDefault = true; };
-      clean = baseProfile // {
-        id = 1;
-        settings = settings.basic;
-        extensions = extensions.basic;
-      };
-      work = baseProfile // { id = 2; };
+      clean = baseProfile // { id = 1; };
+      work  = baseProfile // { id = 2; };
     };
   };
 }
