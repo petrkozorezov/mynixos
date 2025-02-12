@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   programs.alacritty = {
     enable = true;
     settings =
@@ -59,6 +58,52 @@
         cursor.style.shape = "beam";
       };
   };
+
+  programs.foot = {
+    enable = true;
+    # man foot.ini
+    settings = {
+      main = {
+        term = "xterm-256color";
+        # font = "JetBrains Mono:size=10";
+        dpi-aware = "yes";
+      };
+      mouse = {
+        hide-when-typing = "yes";
+      };
+      scrollback = {
+        lines=100000;
+      };
+      colors = {
+        alpha      = 0.95;
+        background = "272822";
+        foreground = "f8f8f2";
+        regular0   = "272822";
+        regular1   = "f92672";
+        regular2   = "a6e22e";
+        regular3   = "f4bf75";
+        regular4   = "66d9ef";
+        regular5   = "ae81ff";
+        regular6   = "a1efe4";
+        regular7   = "f8f8f2";
+        bright0    = "75715e";
+        bright1    = "f92672";
+        bright2    = "a6e22e";
+        bright3    = "f4bf75";
+        bright4    = "66d9ef";
+        bright5    = "ae81ff";
+        bright6    = "a1efe4";
+        bright7    = "f9f8f5";
+      };
+      cursor.style = "beam";
+      bell.visual = "yes";
+      text-bindings = {
+        "\x07" = "Escape";
+        # TODO Ctrl+G
+      };
+    };
+  };
+
   home.packages = with pkgs; [ jetbrains-mono ];
-  home.sessionVariables.TERMINAL = "alacritty";
+  home.sessionVariables.TERMINAL = "foot";
 }

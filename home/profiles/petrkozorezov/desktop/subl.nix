@@ -182,6 +182,13 @@ in
     shellcheck
     temurin-jre-bin
   ];
+
+  xdg.mimeApps.defaultApplications = {
+    "text/plain"                = "sublime_text.desktop";
+    "text/tab-separated-values" = "sublime_text.desktop";
+    "application/text"          = "sublime_text.desktop";
+    "application/octet-stream"  = "sublime_text.desktop";
+  };
 }
 
 ## TODO сделать отдельный модуль для саблайма с установкой пакетов вместо Package Control

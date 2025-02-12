@@ -15,7 +15,6 @@
     ./syncthing.nix
     ./terminal.nix
     ./waybar.nix
-    ./xdg.nix
     ./zathura.nix
   ];
 }

@@ -6,5 +6,6 @@
     ./security.nix
     ./shell
     ./ssh.nix
+    ./yazi.nix
   ];
 }

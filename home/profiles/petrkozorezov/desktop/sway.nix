@@ -5,7 +5,7 @@
 # fuzzel --layer=overlay --terminal='alacritty -e'
 { config, lib, pkgs, ... }: let
   mod      = "Mod4";
-  terminal = "alacritty";
+  terminal = config.home.sessionVariables.TERMINAL;
   w_term_0 = "00";
   w_term_1 = "01";
   w_term_2 = "02";
@@ -281,7 +281,7 @@ in {
       set $lock_cmd           swaylock -f -i ${wallpaper}
       set $send_lock_signal   kill -USR1 `pidof swayidle`
       set $send_unlock_signal kill `pidof swaylock`
-      set $screen_saver_start alacritty --class=screen_saver -e ${pkgs.unimatrix}/bin/unimatrix -s 98 -t ${toString(timeouts.monOff - timeouts.screensaver)} -i
+      set $screen_saver_start ${terminal} --class=screen_saver -e ${pkgs.unimatrix}/bin/unimatrix -s 98 -t ${toString(timeouts.monOff - timeouts.screensaver)} -i
       set $screen_saver_stop  kill `pidof unimatrix`
 
       for_window [app_id="screen_saver"] fullscreen global;
@@ -309,41 +309,6 @@ in {
       # TODO move to nix
       for_window [shell="xwayland"] title_format "%title [XWayland]"
     '';
-  };
-
-  gtk = {
-    enable         = true;
-    font.name      = "Hack 10";
-    iconTheme.name = "hicolor"; # TODO use smth better
-    # TODO https://github.com/mitch-kyle/monokai-gtk
-    theme = {
-      package = pkgs.gnome-themes-extra;
-      name    = "Adwaita-dark";
-    };
-    gtk2.extraConfig = ''
-      gtk-cursor-theme-size = 16
-      gtk-cursor-theme-name = "${cursorsTheme}"
-      gtk-color-scheme = "base_color: #404552"
-      gtk-color-scheme = "text_color: #ffffff"
-      gtk-color-scheme = "bg_color: #383c4a"
-      gtk-color-scheme = "fg_color: #ffffff"
-      gtk-color-scheme = "tooltip_bg_color: #4B5162"
-      gtk-color-scheme = "tooltip_fg_color: #ffffff"
-      gtk-color-scheme = "selected_bg_color: #5294e2"
-      gtk-color-scheme = "selected_fg_color: #ffffff"
-      gtk-color-scheme = "insensitive_bg_color: #3e4350"
-      gtk-color-scheme = "insensitive_fg_color: #7c818c"
-      gtk-color-scheme = "notebook_bg: #404552"
-      gtk-color-scheme = "dark_sidebar_bg: #353945"
-      gtk-color-scheme = "link_color: #5294e2"
-      gtk-color-scheme = "menu_bg: #2e2f29"
-    '';
-    gtk3 = {
-      extraConfig = {
-        gtk-cursor-theme-size = 16;
-        gtk-cursor-theme-name = "${cursorsTheme}";
-      };
-    };
   };
 
   services.kanshi = {
