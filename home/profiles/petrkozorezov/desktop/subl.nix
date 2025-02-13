@@ -11,8 +11,8 @@ let
     theme                             = "Afterglow.sublime-theme";
     sidebar_size_13                   = true;
     color_scheme                      = "Packages/Theme - Afterglow/Afterglow-monokai.tmTheme";
-    font_face                         = "JetBrains Mono";
-    font_size                         = 10;
+    font_face                         = config.stylix.fonts.monospace.name;
+    font_size                         = config.stylix.fonts.sizes.terminal;
     overlay_scroll_bars               = "enabled";
     auto_complete                     = true;
     auto_match_enabled                = false;
@@ -108,6 +108,7 @@ let
       "Direnv"      # применение direvn окружения при в проекте
       "ApplySyntax" # возможность кастомно настраивать включение синтаксиса
       "UnicodeMath" # ввод unicode'ых символов через \
+      "PackageResourceViewer"
     ];
     auto_upgrade_ignore = [
       # не убирать, иначе будут конфликты при деплое
@@ -145,6 +146,24 @@ let
       "unresolved-proc-macro"
     ];
   };
+  colorHelper = {
+    color_rules = [
+      {
+        name = "Nix";
+        syntax_files = [ "Nix/nix" ];
+        base_scopes = [ "source.nix" ];
+        color_class = "css-level-4";
+        scanning = [ "string.quoted.double.nix" ];
+      }
+      {
+        name = "YAML";
+        syntax_files = [ "YAML/YAML" ];
+        base_scopes = [ "source.yaml" ];
+        color_class = "css-level-4";
+        scanning = [ "meta.string.yaml" "string.quoted.double.nix" ];
+      }
+    ];
+  };
 in
 {
   xdg = {
@@ -161,6 +180,8 @@ in
         builtins.toJSON lspTypescript;
       "${userPath}/LSP-rust-analyzer.sublime-settings".text =
         builtins.toJSON rustAnalyzer;
+      "${userPath}/color_helper.sublime-settings".text =
+        builtins.toJSON colorHelper;
       "${packagesPath}/Lean.sublime-syntax".source = ./subl/lean.sublime-syntax;
 
       # TODO pass by config

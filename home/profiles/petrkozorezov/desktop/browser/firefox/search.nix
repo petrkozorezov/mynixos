@@ -79,6 +79,13 @@
       domain = "noogle.dev";
       path   = "q?term={searchTerms}";
     };
+    # Homemanager
+    "HomeManager" = engine {
+      alias   = ".hmo";
+      domain  = "home-manager-options.extranix.com";
+      path    = "?query={searchTerms}&release=master";
+      favicon = "images/favicon.png";
+    };
 
     "HexDocs" = engine {
       alias  = ".hd";

@@ -27,6 +27,11 @@ in {
     };
   };
 
+  stylix.targets.firefox = {
+    profileNames = [ "personal" ];
+    # firefoxGnomeTheme.enable = true;
+  };
+
   xdg.mimeApps.defaultApplications = {
     "x-scheme-handler/http"         = "firefox.desktop";
     "x-scheme-handler/https"        = "firefox.desktop";

@@ -1,8 +1,6 @@
 # TODO test
 { pkgs, lib, ... }: {
   openssl = rec {
-    # keys must be ED25519 to be determined
-    # /CN=example.com
     makeCertSignRequest = { key, domain }: let
       domainCnf = ''
         [ req ]

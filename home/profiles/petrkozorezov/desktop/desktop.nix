@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ config, pkgs, deps, ... }: {
   xdg = {
     # https://wiki.archlinux.org/title/Default%20applicationsq
     userDirs = {
@@ -23,7 +23,9 @@
         # desktop files in
         #  - /run/current-system/sw/share/applications/
         #  - ~/.nix-profile/share/applications/
-        "x-scheme-handler/tg" = "org.telegram.desktop.desktop";
+        "x-scheme-handler/tg"           = "org.telegram.desktop.desktop";
+        "application/x-xdg-protocol-tg" = "org.telegram.desktop.desktop";
+
         # "x-scheme-handler/mailto"       = "chromium-browser.desktop"; # TODO thunderbird
         "image/png"       = "imv.desktop";
         "image/jpeg"      = "imv.desktop";
@@ -99,66 +101,16 @@
 
     xdg-utils
     mimeo
+
+    networkmanager-vpnc
+    networkmanager-l2tp
+    networkmanagerapplet
+    pavucontrol
   ];
 
-
-
-
-
-
-
-  gtk = {
-    enable = true;
-    font = {
-      name = "Hack 10";
-      package = pkgs.hack-font;
-    };
-
-    # themes
-    # arc?
-    iconTheme = {
-      name = "Arc";
-      package = pkgs.arc-icon-theme;
-      # la-capitaine-icon-theme
-    };
-    # TODO https://github.com/mitch-kyle/monokai-gtk
-    theme = {
-      package = pkgs.adw-gtk3;
-      name    = "adw-gtk3";
-    };
-    cursorTheme = {
-      name    = "capitaine-cursors-white";
-      package = pkgs.capitaine-cursors;
-      size    = 16;
-    };
-
-    gtk2.extraConfig = ''
-      gtk-application-prefer-dark-theme=1
-      '';
-    # ''
-    #   gtk-cursor-theme-size = 16
-    #   gtk-cursor-theme-name = "${capitaine-cursors-white}"
-    #   gtk-color-scheme = "base_color: #404552"
-    #   gtk-color-scheme = "text_color: #ffffff"
-    #   gtk-color-scheme = "bg_color: #383c4a"
-    #   gtk-color-scheme = "fg_color: #ffffff"
-    #   gtk-color-scheme = "tooltip_bg_color: #4B5162"
-    #   gtk-color-scheme = "tooltip_fg_color: #ffffff"
-    #   gtk-color-scheme = "selected_bg_color: #5294e2"
-    #   gtk-color-scheme = "selected_fg_color: #ffffff"
-    #   gtk-color-scheme = "insensitive_bg_color: #3e4350"
-    #   gtk-color-scheme = "insensitive_fg_color: #7c818c"
-    #   gtk-color-scheme = "notebook_bg: #404552"
-    #   gtk-color-scheme = "dark_sidebar_bg: #353945"
-    #   gtk-color-scheme = "link_color: #5294e2"
-    #   gtk-color-scheme = "menu_bg: #2e2f29"
-    # '';
-    gtk3.extraConfig = {
-      gtk-application-prefer-dark-theme = 1;
-      # gtk-cursor-theme-size = 16;
-      # gtk-cursor-theme-name = "${capitaine-cursors-white}";
-    };
+  home.sessionVariables = {
+    SDL_VIDEODRIVER = "wayland";
+    ENABLE_VULKAN   = "true";
+    NIXOS_OZONE_WL  = "1";
   };
-
-  # home.sessionVariables.GTK_THEME = "palenight";
 }

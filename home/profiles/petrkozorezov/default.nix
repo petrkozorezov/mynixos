@@ -1,6 +1,7 @@
 { pkgs, lib, ... }: {
   imports = [
     ../sss.nix
+    ./stylix.nix
     ./desktop
     ./terminal
   ];

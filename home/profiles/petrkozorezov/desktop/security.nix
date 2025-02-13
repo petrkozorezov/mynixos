@@ -5,8 +5,7 @@
       wl-clipboard
     ];
 
-  # TODO pinentry-rofi
-  services.gpg-agent.pinentryPackage = pkgs.pinentry-gtk2;
+  services.gpg-agent.pinentryPackage = pkgs.pinentry-qt;
 
   programs.zsh.initExtra =
     # TODO pass init

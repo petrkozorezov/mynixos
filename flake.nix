@@ -77,11 +77,17 @@
                 networking.hostName = hostname;
                 _module.args = configExtraAgrs;
               } ] ++
-              (commonModules system) ++ [ ./system/modules ] ++
+              (commonModules system) ++ [
+                inputs.stylix.nixosModules.stylix
+                ./system/modules
+              ] ++
               modules;
           };
 
-      commonHMModules = system: (commonModules system) ++ [ ./home/modules ];
+      commonHMModules = system: (commonModules system) ++ [
+        inputs.stylix.homeManagerModules.stylix
+        ./home/modules
+      ];
       hmConfig =
         system: username: modules:
           home-manager.lib.homeManagerConfiguration {

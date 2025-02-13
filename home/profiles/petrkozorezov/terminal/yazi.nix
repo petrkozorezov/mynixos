@@ -1,14 +1,11 @@
 { pkgs, ... }: {
   programs.yazi = {
     enable = true;
-    settings = {
-
-    };
+    settings = {};
   };
   # recomended packages
   # https://yazi-rs.github.io/docs/installation
   home.packages = with pkgs; [
-    nerdfonts
     ffmpeg
     _7zz
     jq

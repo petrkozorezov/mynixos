@@ -4,8 +4,12 @@
   description = "My Nix Packages";
   # TODO remove copy/paste (https://github.com/NixOS/nix/issues/3966)
   inputs = {
-               nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11"        ;
-          home-manager.url = "github:rycee/home-manager/release-24.11" ;
+               # nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11"        ;
+               nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable"     ;
+          # home-manager.url = "github:rycee/home-manager/release-24.11" ;
+          home-manager.url = "github:rycee/home-manager"               ;
+                # stylix.url = "github:danth/stylix/release-24.11"       ;
+                stylix.url = "github:danth/stylix"                     ;
         firefox-addons.url = "github:petrkozorezov/firefox-addons-nix" ;
        arkenfox-userjs.url = "github:petrkozorezov/arkenfox-userjs-nix";
                 devenv.url = "github:cachix/devenv/v1.3.1"             ;
@@ -14,16 +18,20 @@
                    dns.url = "github:kirelagin/dns.nix"                ; # TODO nix-community/dns.nix
     nix-index-database.url = "github:Mic92/nix-index-database"         ;
       firefox-csshacks.url = "github:MrOtherGuy/firefox-csshacks"      ;
+            tt-schemes.url = "github:tinted-theming/schemes";
 
       firefox-csshacks.flake = false;
+            tt-schemes.flake = false;
 
           home-manager.inputs.nixpkgs.follows = "nixpkgs";
+                stylix.inputs.nixpkgs.follows = "nixpkgs";
         firefox-addons.inputs.nixpkgs.follows = "nixpkgs";
                 devenv.inputs.nixpkgs.follows = "nixpkgs";
              deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
                    dns.inputs.nixpkgs.follows = "nixpkgs";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
 
+                stylix.inputs.home-manager.follows = "home-manager";
   };
 
   outputs = { self, nixpkgs, flake-utils, ... } @ inputs:

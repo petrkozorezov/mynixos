@@ -10,14 +10,12 @@
   };
   services.udisks2.enable = true;
 
-  # TODO to home profile
+  # TODO use stylix
   fonts = {
-    packages = with pkgs; [
-      hack-font
-    ];
+    packages = with pkgs; [ pkgs.nerd-fonts.jetbrains-mono ];
     fontconfig = {
       enable = true;
-      defaultFonts.monospace = [ "Hack" ];
+      defaultFonts.monospace = [ "JetBrainsMono Nerd Font" ];
     };
   };
 

@@ -1,16 +1,13 @@
-{ pkgs, ... }:
-let
-  pipewirePulseEnable = true;
-in {
-  hardware.pulseaudio = {
-    enable       = !pipewirePulseEnable;
+{ config, pkgs, ... }: {
+  services.pulseaudio = {
+    enable       = !config.services.pipewire.enable;
     support32Bit = true;
     package      = pkgs.pulseaudioFull;
     extraModules = [ pkgs.pulseaudio-modules-bt ];
   };
 
   services.pipewire = {
-    enable = pipewirePulseEnable;
+    enable = true;
     jack.enable = true;
     alsa   = {
       enable       = true;

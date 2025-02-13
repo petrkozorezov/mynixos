@@ -2,7 +2,6 @@
   basic = {
     # general
     "browser.startup.page"      = 3     ; # restore session
-    "font.name.serif.x-western" = "Hack"; # set my own main font
     "app.normandy.first_run"    = false ; # disable first run info (?)
     "browser.tabs.warnOnClose"  = false ; # warn on close tabs
 

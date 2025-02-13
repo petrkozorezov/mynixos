@@ -18,35 +18,9 @@
   sock     = "SWAYSOCK";
   ob       = "wob";
   ob_file  = "\$${sock}.${ob}";
-  wallpaper =
-    builtins.fetchurl {
-      name   = "wallpaper";
-      url    = "https://unsplash.com/photos/Y3PD_9c2xms/download?ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNzM5MzAxNDE2fA&force=true";
-      sha256 = "1knl379zjs06zb22xwxh7ax1rfq4wf9pn4yis5jdrililn7hks73";
-    };
-    # http://getwallpapers.com/wallpaper/full/c/6/c/52323.jpg
-    # http://getwallpapers.com/wallpaper/full/c/7/4/271955.jpg
-    # https://wallup.net/wp-content/uploads/2016/01/260716-orange-flowers-abstract.jpg
-    # https://www.pixel4k.com/wp-content/uploads/2019/07/orange-render-abstract_1563221459.jpg
-    # https://wallpaperaccess.com/full/117782.png
-    # https://images.unsplash.com/photo-1511097646266-61a6d20ed830?q=85&w=2640
-    # https://unsplash.com/photos/parorama-photography-of-mountain-under-cloudy-sky-Ni4NgA64TFQ
-  cursorsTheme    = "capitaine-cursors-white";
-  gsettings       = "${pkgs.glib}/bin/gsettings";
-  gnomeSchema     = "org.gnome.desktop.interface";
-  importGsettings = pkgs.writeShellScript "import_gsettings.sh" ''
-    ${gsettings} set ${gnomeSchema} gtk-theme ${config.gtk.theme.name}
-    ${gsettings} set ${gnomeSchema} icon-theme ${config.gtk.iconTheme.name}
-    ${gsettings} set ${gnomeSchema} cursor-theme ${config.gtk.gtk3.extraConfig.gtk-cursor-theme-name}
-  '';
+  wallpaper = config.stylix.image;
 in {
   home.packages = with pkgs; [
-    networkmanager-vpnc
-    networkmanager-l2tp
-    networkmanagerapplet
-    pavucontrol
-
-    qt5.qtwayland
     grim
     slurp                # screenshoter
     notify-desktop       # notifications
@@ -58,37 +32,16 @@ in {
     wev                  # W events debugging tool
     swaylock
     swayidle
-    xwayland
-    wallutils # TODO use it
+    # wallutils # TODO use it
     xorg.xhost
     udiskie
-    dconf
-
-    capitaine-cursors
-    hicolor-icon-theme
-
-    hack-font
   ];
-
-  home.sessionVariables = {
-    QT_QPA_PLATFORMTHEME = "qt5ct";
-    XDG_CURRENT_DESKTOP  = "sway";
-    SDL_VIDEODRIVER      = "wayland";
-    # needs qt5.qtwayland in systemPackages
-    QT_QPA_PLATFORM      = "wayland";
-    QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
-  };
 
   wayland.windowManager.sway = {
     enable = true;
-    # xwayland = false;
     wrapperFeatures.gtk = true;
     config = rec {
       modifier = mod;
-      fonts = {
-        names = [ "Hack" ];
-        size  = 10.0;
-      };
       gaps = {
         inner        = 1;
         outer        = 1;
@@ -166,7 +119,6 @@ in {
       startup =
         lib.lists.forEach
           [
-            "${importGsettings}"
             "mkfifo ${ob_file} && tail -f ${ob_file} | ${ob}"
             "nm-applet --indicator"
             "mako"
@@ -194,6 +146,8 @@ in {
           "${w_msg}"   = [ { app_id = "org.telegram.desktop"; } { class = "Slack"; } { class = "discord"; } ];
           "${w_calls}" = [ { class  = "Chromium-browser"; } ];
         };
+
+      window.border = 0;
 
       bars = [ { command = "waybar"; } ];
 
@@ -240,32 +194,12 @@ in {
         };
       };
 
-      output = {
-        "*" = {
-          bg = "${wallpaper} fill";
-        };
-      };
-
       seat = {
         "*" = {
           fallback      = "true";
           hide_cursor   = "5000";
-          xcursor_theme = cursorsTheme;
         };
       };
-
-      colors.focused = let
-        # red = "#801a00";
-        gray  = "#666666";
-        white = "#ffffff";
-      in {
-        background  = gray;
-        border      = gray;
-        childBorder = gray;
-        indicator   = gray;
-        text        = white;
-      };
-
     };
     extraConfig = let
       timeouts = {
@@ -316,6 +250,7 @@ in {
     settings = [ {
       profile = {
         name = "default";
+        # TODO put it to better place
         outputs = [ {
           status   = "enable";
           criteria = "*"; # DP-5
@@ -324,7 +259,4 @@ in {
       };
     } ];
   };
-
-  home.sessionVariables.ENABLE_VULKAN  = "true";
-  home.sessionVariables.NIXOS_OZONE_WL = "1";
 }
