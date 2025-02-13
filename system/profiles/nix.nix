@@ -15,7 +15,7 @@
     }
   ];
   nix = {
-    package      = pkgs.nixVersions.latest;
+    # package      = pkgs.nixVersions.latest;
     extraOptions = "experimental-features = nix-command flakes";
 
     gc = {
