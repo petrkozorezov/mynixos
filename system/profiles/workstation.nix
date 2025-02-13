@@ -21,6 +21,9 @@
     };
   };
 
+  # for gtk configuration
+  programs.dconf.enable = true;
+
   # wireshark
   programs.wireshark = {
     enable  = true;
