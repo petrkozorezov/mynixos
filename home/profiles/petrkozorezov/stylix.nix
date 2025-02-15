@@ -5,7 +5,7 @@
 # https://gitlab.com/EmilienMottet/base16-telegram-desktop
 
 # потестить qt можно через qt5ct/qt6ct
-{ config, pkgs, deps, ... }: {
+{ config, pkgs, deps, lib, ... }: {
   stylix = {
     enable = true;
 
@@ -18,6 +18,7 @@
     # https://images.unsplash.com/photo-1511097646266-61a6d20ed830?q=85&w=2640
     # https://unsplash.com/photos/parorama-photography-of-mountain-under-cloudy-sky-Ni4NgA64TFQ
     # https://unsplash.com/photos/brown-house-near-shoreline-and-mountains-at-daytime-wX-NB8xFD3w
+    # https://unsplash.com/photos/IuSemNxGS88/download?ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNzM5NDcwNjEwfA
     # image = builtins.fetchurl {
     #   name   = "wallpaper";
     #   url    = "https://unsplash.com/photos/wX-NB8xFD3w/download?ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNzM5MzkyMjU5fA&force=true";
@@ -78,4 +79,24 @@
       };
     };
   };
+
+  # qt fonts
+  # TODO upstream
+  xdg.configFile = let
+    cfg = config.stylix;
+    qt5fontConf = ''
+      [Fonts]
+      fixed="${cfg.fonts.monospace.name},${toString cfg.fonts.sizes.applications},-1,5,50,0,0,0,0,0,Condensed"
+      general="${cfg.fonts.sansSerif.name},${toString cfg.fonts.sizes.applications},-1,5,50,0,0,0,0,0,Condensed"
+      '';
+    qt6fontConf = ''
+      [Fonts]
+      fixed="${cfg.fonts.monospace.name},${toString cfg.fonts.sizes.applications},-1,5,200,0,0,0,0,0,0,0,0,0,0,1,ExtraLight"
+      general="${cfg.fonts.sansSerif.name},${toString cfg.fonts.sizes.applications},-1,5,200,0,0,0,0,0,0,0,0,0,0,1,ExtraLight"
+      '';
+  in
+    (lib.mkIf (cfg.enable && cfg.targets.qt.enable && config.qt.platformTheme.name == "qtct") {
+      "qt5ct/qt5ct.conf".text = qt5fontConf;
+      "qt6ct/qt6ct.conf".text = qt6fontConf;
+    });
 }
