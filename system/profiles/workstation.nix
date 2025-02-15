@@ -4,9 +4,15 @@
 
   # I don't know why, so maybe later...
   # boot.plymouth.enable = true;
-  services.greetd = {
+  services.greetd = let
+    startSway = pkgs.writeScript "start-sway" ''
+      USER_NAME=$(whoami)
+      USER_SHELL=$(getent passwd "$USER_NAME" | cut -d: -f7)
+      exec "$USER_SHELL" -c 'exec sway'
+      '';
+  in {
     enable = true;
-    settings.default_session.command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --remember --cmd sway";
+    settings.default_session.command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --remember --cmd ${startSway}";
   };
   services.udisks2.enable = true;
 
