@@ -18,6 +18,7 @@
       ];
       commonHMModules = username: commonModules ++ [
         inputs.stylix.homeManagerModules.stylix
+        ./secrets/home
         ./home/modules
         {
           home = {
