@@ -95,7 +95,7 @@ in {
     enableAllFirmware             = true;
     cpu.intel.updateMicrocode     = true;
     enableRedistributableFirmware = true;
-    opengl.extraPackages          = with pkgs; [
+    graphics.extraPackages        = with pkgs; [
       vaapiIntel
       libvdpau-va-gl
       intel-media-driver
@@ -103,7 +103,7 @@ in {
   };
 
   environment.variables = {
-    VDPAU_DRIVER = lib.mkIf config.hardware.opengl.enable (lib.mkDefault "va_gl");
+    VDPAU_DRIVER = lib.mkIf config.hardware.graphics.enable (lib.mkDefault "va_gl");
   };
 
   # facetimehd

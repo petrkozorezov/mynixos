@@ -1,18 +1,10 @@
-.PHONY = clean show-repo-path update build\:% build\:deploy installer image shell
-REPO_PATH = `pwd`/$(dir $(lastword $(MAKEFILE_LIST)))
-DIRS=/etc/nixos ~/.config/nixpkgs # FIXME better name
-NIX_BUILD=nix build ${NIX_FLAGS} -v -L # --show-trace
-NIX_EVAL=nix eval ${NIX_FLAGS} -v
-
-
-$(DIRS):
-	ln -sf $(REPO_PATH) $@
+NIX_BUILD?=nix build $(NIX_FLAGS) -v -L # --show-trace
+NIX_EVAL?=nix eval $(NIX_FLAGS) -v
+HOSTNAME?=$(shell hostname)
+USERNAME?=$(shell whoami)
 
 clean:
 	rm -rf result
-
-show-repo-path:
-	@echo $(REPO_PATH)
 
 update-deps:
 	cd deps/ && nix flake update
@@ -21,55 +13,67 @@ update-flake:
 	cd deps/ && nix flake info > /dev/null
 	nix flake update
 
-update: update-deps
+update:
+	$(MAKE) update-deps
 	$(MAKE) update-flake
 
-# make build:system:mbp13
-build\:system\:%:
-	# or `build:deploy.nodes.$*.profiles.system.path`
-	$(MAKE) build:configs.$*.profiles.system.config.system.build.toplevel
+# make nixos-rebuild:switch
+# make nixos-rebuild:build
+# make nixos-rebuild:build-vm
+# make nixos-rebuild:build-vm HOSTNAME=mbp13
+nixos-rebuild\:%:
+	nixos-rebuild --flake .#$(HOSTNAME) $*
 
-# make build:hm:mbp13.profiles.petrkozorezov
-build\:hm\:%:
-	$(MAKE) build:configs.$*.activationPackage
+# make home-manager:build
+# TODO test
+home-manager\:%:
+	home-manager --flake .#$(HOSTNAME).$(USERNAME) $*
 
-# BROKEN
-# make build:image:installer
-# build\:image\:%:
-# 	$(MAKE) build:configs.$*.config.system.build.isoImage
+QEMU_OPTS?=-m 8192 -smp 4 -device virtio-gpu-pci -display sdl,gl=on -device virtio-balloon-pci
+run-vm: nixos-rebuild\:build-vm
+	./result/bin/run-$(HOSTNAME)-vm $(QEMU_OPTS)
 
-build\:%:
-	$(NIX_BUILD) ".#$*"
-
-# make deploy:asrock-x300.system
-# make deploy:asrock-x300.petrkozorezov
+PROFILE?=system
+DEPLOY_FLAGS?=-s
+DEPLOY?=deploy $(DEPLOY_FLAGS)
+# make deploy
+# make deploy HOSTNAME=asrock-x300
+# make deploy HOSTNAME=asrock-x300 PROFILE=petrkozorezov
 deploy\:%:
-	deploy -s ".#$*"
+	$(DEPLOY) -s ".#$(HOSTNAME).$(PROFILE)"
 
-shell:
-	nix develop --impure
+TEST?=all
+# make -s lib-tests TEST=all | jq '.[][].status'
+# make -s lib-tests TEST=firewall | jq .command
+# make -s lib-tests TEST=firewall.command
+lib-tests:
+	# TODO fail!!!
+	$(NIX_EVAL) --json ".#lib.tests.$(TEST)" | jq .
 
-config.tf.json: cloud/*.nix
-	terranix cloud/default.nix | jq . > $@
-
-# TODO tf-init/plan/apply/destroy
-
-# make -s lib-tests:all | jq '.[][].status'
-# make -s lib-tests:firewall | jq .command
-# make -s lib-tests:firewall.command
-lib-tests\:%:
-	${NIX_EVAL} --json .#lib.tests.$* | jq .
-
-# make intgr-tests:all
-# make intgr-tests:system.sss
+# make intgr-tests
+# make intgr-tests TEST=system.sss
 # mb with "NIX_FLAGS='--rebuild'" (does not work with all target)
-intgr-tests\:%:
-	$(NIX_BUILD) ".#tests.$*"
+intgr-tests:
+	$(NIX_BUILD) ".#tests.$(TEST)"
 
 # BROKEN
-# intgr-tests-interactive\:%:
-# 	$(NIX_BUILD) ".#tests.$*.driverInteractive" && ./result/bin/nixos-test-driver --interactive
+# intgr-tests-interactive:
+# 	$(NIX_BUILD) ".#tests.$(TEST).driverInteractive" && ./result/bin/nixos-test-driver --interactive
 
-tests-all:
-	$(MAKE) lib-tests:all
-	$(MAKE) intgr-tests:all
+HOSTS=asrock-x300 mbp13 srv1 # router
+ci-all-hosts\:%:
+	@for HOST in $(HOSTS); do \
+		$(MAKE) "$*" HOSTNAME="$$HOST" || exit 1; \
+	done
+
+# TODO ci:
+# - for all hosts
+#   - nixos-rebuild build-image
+#   - load vm
+# - for all users
+#   - home-manager bulid
+ci:
+	$(MAKE) lib-tests TEST=all
+	$(MAKE) intgr-tests TEST=all
+	$(MAKE) ci-all-hosts:nixos-rebuild:build
+	$(MAKE) ci-all-hosts:nixos-rebuild:build-vm

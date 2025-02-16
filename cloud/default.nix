@@ -52,8 +52,6 @@ in {
       source  = "hetznercloud/hcloud";
       version = "= 1.48.1";
     };
-    # pin versions to prevent accidentally changes
-    required_version = "= 1.9.8";
   };
   provider.hcloud.token = config.mynixos.secrets.services.hetzner.apiToken;
   resource.hcloud_ssh_key.main_key = {

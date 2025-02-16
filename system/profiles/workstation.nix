@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, config, lib, ... }:
 {
   boot.kernel.sysctl."fs.inotify.max_user_watches" = 524288;
 
@@ -82,7 +82,7 @@
     };
   };
 
-  documentation.man.enable = true;
+  documentation.man.enable = lib.mkForce true;
   services.journald.extraConfig = "SystemMaxUse=1G";
 
   hardware.ledger.enable = true;

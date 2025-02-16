@@ -194,7 +194,7 @@
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-oR8z5RIOufpAAvfEm0X1Fj1Dy/ZwvWGU6R0Tz0SuWbk=",
+        "narHash": "sha256-ILyuJS7Wo2WIXFGE2ZE2xvsw0yA3uxVJlmwgYZfVVf8=",
         "path": "./deps",
         "type": "path"
       },
