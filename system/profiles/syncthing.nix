@@ -1,11 +1,9 @@
-{ config, lib, ... }: {
+{ config, lib, ... }: with lib; {
   services.syncthing = {
     enable = true;
     settings = {
       devices = config.mynixos.secrets.syncthing.devices;
-      folders = {
-        Documents = { devices = [ "galaxy-s20u" "asrock-x300" ]; path = "~/Documents"; };
-      };
+      folders = mapAttrs (name: folder: { path = "~/${name}"; } // folder) config.mynixos.secrets.syncthing.folders;
     };
     openDefaultPorts = true;
   };
