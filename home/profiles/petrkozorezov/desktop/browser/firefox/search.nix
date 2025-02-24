@@ -21,6 +21,12 @@
 
     # FIX icon
     "Google".metaData.alias = ".g";
+    "YouTube" = engine {
+      alias   = ".y";
+      domain  = "www.youtube.com";
+      path    = "results?search_query={searchTerms}";
+      favicon = "/s/desktop/e208051c/img/logos/favicon.ico";
+    };
     "Google translate to Ru" = engine {
       alias  = ".gtr";
       domain = "translate.google.com";

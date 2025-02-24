@@ -1,5 +1,4 @@
-{ config, pkgs, deps, ... }:
-{
+{ config, pkgs, deps, ... }: {
   programs = {
     zsh = {
       enable = true;
@@ -72,5 +71,5 @@
     skim.enableZshIntegration     = true;
   };
 
-  home.packages = [ pkgs.perl  ]; # zsh skim doesn't work without it
+  home.packages = [ pkgs.perl ]; # zsh skim doesn't work without it
 }

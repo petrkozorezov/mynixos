@@ -125,5 +125,10 @@ in {
       permissions      = [ "activeTab" "*://*.youtube.com/*" "storage" "*://returnyoutubedislikeapi.com/*" ];
       promotedCategory = "recommended";
     }))
+    (web-clipper-obsidian.allow (baseAllowance // {
+      permissions      = [ "activeTab" "clipboardWrite" "contextMenus" "storage" "scripting" "http://*/*" "https://*/*" ];
+      hostPermissions  = [ "<all_urls>" "http://*/*" "https://*/*" ];
+      promotedCategory = "notable";
+    }))
   ];
 }

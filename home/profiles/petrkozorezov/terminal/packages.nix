@@ -1,11 +1,19 @@
 { pkgs, ... }: {
-  home.packages =
-  with pkgs; [
+  home.packages = with pkgs; [
     bandwhich
     btop
     radeontop #gputop
 
     # utils
+    du-dust # du
+    duf     # df
+    procs   # ps
+    fd      # find
+    ripgrep # grep
+    tokei   # cloc
+    bat     # cat
+    jaq     # jq
+    rsync
     jq
     bc
     file
@@ -19,9 +27,9 @@
     # rlwrap
     # asciinema
     # ruplacer
-    pandoc
     qrencode
     srisum # hash sum in sri format
+    inetutils
 
     # hardware
     pciutils
@@ -36,5 +44,16 @@
     lm_sensors
 
     sshfs
+
+    # dev
+    gtypist
+    pandoc
+
+    cachix
+    devenv
+    gnumake
+    rsync
+
+    act # git actions local runner
   ];
 }

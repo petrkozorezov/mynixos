@@ -4,9 +4,8 @@
     ./games
     ./desktop.nix
     ./discord.nix
-    ./dropbox.nix
-    ./fonts.nix
     ./mako.nix
+    ./obsidian.nix
     ./rofi.nix
     ./security.nix
     ./sound.nix

@@ -72,7 +72,7 @@ in {
           "exec light -s ${device} ${action} && light -G | cut -d'.' -f1 > ${ob_file}";
         take_screenshot =
           msg: geometry_cmd:
-            "exec grim -t jpeg -g \"`${geometry_cmd}`\" \"$HOME/Dropbox/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).jpg\" && notify-desktop '${msg} screenshot taken'";
+            "exec grim -t jpeg -g \"`${geometry_cmd}`\" \"$HOME/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).jpg\" && notify-desktop '${msg} screenshot taken'";
       in
         workspaces               "${mod}" ""                      //
         workspaces         "Shift+${mod}" "move"                  //

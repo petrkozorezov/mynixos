@@ -15,8 +15,10 @@
       ];
       commonNixosModules = system: commonModules ++ [
         deps.module.${system} # nixpkgs: system, config, etc...
+        home-manager.nixosModules.home-manager
       ];
       commonHMModules = username: commonModules ++ [
+        inputs.nix-index-database.hmModules.nix-index
         inputs.stylix.homeManagerModules.stylix
         ./secrets/home
         ./home/modules
@@ -34,9 +36,11 @@
           relPaths   = basePath: map (path: ./. + ("/" + basePath + ("/" + path)));
           hmPaths    = relPaths "home/profiles";
           nixosPaths = relPaths "system/profiles";
-          hmModule   = username: {
+          hmModule   = username: stateVersion: { # TODO attrs username:modules
             home-manager = {
-              users.${username}   = { imports = hmPaths [ username ]; };
+              users.${username}   = { imports = (hmPaths [ username ]) ++ [{
+                home.stateVersion = stateVersion;
+              }]; };
               sharedModules       = commonHMModules username;
               extraSpecialArgs    = configExtraAgrs;
               backupFileExtension = ".bak";
@@ -49,13 +53,13 @@
             system = "x86_64-linux";
             profiles.system =
               (nixosPaths [ "machines/mbp13.nix" "users/petrkozorezov.nix" ]) ++
-              [ home-manager.nixosModules.home-manager (hmModule "petrkozorezov") ];
+              [ (hmModule "petrkozorezov" "20.09") ];
           };
           asrock-x300 = {
             system = "x86_64-linux";
             profiles.system =
               (nixosPaths [ "machines/asrock-x300.nix" "users/petrkozorezov.nix" ]) ++
-              [ home-manager.nixosModules.home-manager (hmModule "petrkozorezov") ];
+              [ (hmModule "petrkozorezov" "20.09") ];
           };
           router = {
             system = "x86_64-linux";

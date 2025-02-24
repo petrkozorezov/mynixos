@@ -1,11 +1,17 @@
 {
   imports = [
-    ./development.nix
+    ./bat.nix
+    ./direnv.nix
     ./git.nix
     ./htop.nix
+    ./nushell.nix
+    ./packages.nix
     ./security.nix
-    ./shell
+    ./skim.nix
     ./ssh.nix
+    ./starship.nix
     ./yazi.nix
+    ./zoxide.nix
+    ./zsh.nix
   ];
 }

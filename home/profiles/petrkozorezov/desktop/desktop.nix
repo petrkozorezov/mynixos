@@ -66,6 +66,18 @@
   home.packages = with pkgs; [
     # privacy
     veracrypt
+
+    # old version for TrueCript disk format support
+    # (veracrypt.overrideAttrs (_: prev: rec {
+    #   pname = "veracrypt";
+    #   version = "1.25.9";
+    #   dontPatch = true;
+    #   src = fetchurl {
+    #     url = "https://launchpad.net/${pname}/trunk/${lib.toLower version}/+download/VeraCrypt_${version}_Source.tar.bz2";
+    #     sha256 = "sha256-drbhgYS8IaQdKUn/Y9ch1JBUpxbO/zpL13tcNRC3lK8=";
+    #   };
+    # }))
+
     # opensnitch
     # opensnitch-ui
 
@@ -106,11 +118,20 @@
     networkmanager-l2tp
     networkmanagerapplet
     pavucontrol
+
+    # photos
+    rawtherapee
+    digikam
+
+    # filemanager
+    # TODO services.gvfs.enable = true;
+    pcmanfm
   ];
 
   home.sessionVariables = {
     SDL_VIDEODRIVER = "wayland";
     ENABLE_VULKAN   = "true";
     NIXOS_OZONE_WL  = "1";
+    CALIBRE_USE_SYSTEM_THEME="true"; # calibre сознательно игнорирует системную цветовую схему :-\
   };
 }

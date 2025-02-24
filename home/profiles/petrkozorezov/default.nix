@@ -6,10 +6,5 @@
     ./terminal
   ];
 
-  home = {
-    packages     = with pkgs; [ test ]; # hm overlay is working
-    stateVersion = lib.mkForce "20.09";
-  };
-
-  programs.home-manager.enable = true;
+  home.packages = [ pkgs.test ]; # hm overlay is working
 }
