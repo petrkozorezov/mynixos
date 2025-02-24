@@ -8,6 +8,7 @@ with lib; {
         Local terraform state attributes
       '';
     };
+  # TODO describe structure
   config.tfattrs =
     let
       rawState = builtins.fromJSON (builtins.readFile ../../terraform.tfstate);

@@ -21,7 +21,7 @@ in {
   resource.hcloud_server_network.srv1-network = {
     server_id  = "\${hcloud_server.srv1.id}";
     network_id = "\${hcloud_network.network.id}";
-    ip         = "192.168.3.1";
+    ip         = "10.42.1.1";
     alias_ips  = [ ];
   };
 
@@ -30,12 +30,12 @@ in {
     type         = "cloud";
     network_id   = "\${hcloud_network.network.id}";
     network_zone = "eu-central";
-    ip_range     = "192.168.3.0/24";
+    ip_range     = "10.42.1.0/24";
   };
 
   resource.hcloud_network.network = {
     name     = "network";
-    ip_range = "192.168.0.0/16";
+    ip_range = "10.42.0.0/16";
   };
 
   # rdns
@@ -47,11 +47,7 @@ in {
 
   # base
   terraform = {
-    required_providers.hcloud = {
-      # FIXME use usual hashicorp/hcloud
-      source  = "hetznercloud/hcloud";
-      version = "= 1.48.1";
-    };
+    required_providers.hcloud.source = "hetznercloud/hcloud";
   };
   provider.hcloud.token = config.mynixos.secrets.services.hetzner.apiToken;
   resource.hcloud_ssh_key.main_key = {

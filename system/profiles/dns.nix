@@ -6,7 +6,7 @@
     int = {
       domain    = "internal";
       upstreams = [ "1.1.1.1" "8.8.8.8" ];
-      subnets   = [ "${config.mynixos.secrets.vpnSubnet}.0/24" ];
+      subnets   = [ config.tfattrs.hcloud_network.network.ip_range ];
     };
   };
 }

@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 let
-  net      = "192.168.2";
+  net      = "10.42.3";
   address  = "${net}.1";
   uplink   = "enp3s0";
 in {
@@ -14,7 +14,7 @@ in {
 
   system.stateVersion = "21.05";
 
-  mynixos.proxy.address = "3";
+  mynixos.proxy.address = address;
   mynixos.vpn.extIf = "enp3s0";
 
   mynixos.router = {

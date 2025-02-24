@@ -17,14 +17,7 @@ in {
         domain = mkOption {
           type = str;
           default = "${subArgs.config.subdomain}.${zoneCfg.domain}";
-        };
-        address = mkOption {
-          type = str;
-          default = zoneCfg.address;
-        };
-        port = mkOption {
-          type = port;
-          default = zoneCfg.port;
+          readOnly = true;
         };
         locations = mkOption {
           type =
@@ -35,23 +28,23 @@ in {
         };
       }; }));
     zoneType = submodule (subargs: { options = {
-        address = mkOption {
-          type = str;
-        };
-        port = mkOption {
-          type = port;
-          default = 443;
-        };
-        domain = mkOption {
-          type = str;
-        };
-        virtualHosts = mkOption {
-          type = virtualHosts subargs.config;
-          default = {};
-        };
-      }; });
+      address = mkOption {
+        type = str;
+      };
+      domain = mkOption {
+        type = str;
+      };
+      virtualHosts = mkOption {
+        type = virtualHosts subargs.config;
+        default = {};
+      };
+    }; });
   in {
     enable = mkEnableOption "";
+    port = mkOption {
+      type = port;
+      default = 443;
+    };
     int = mkOption { type = zoneType; };
     ext = mkOption { type = zoneType; };
   };
@@ -81,7 +74,7 @@ in {
             extraConfig = ''
               ssl_stapling off;
               '';
-            listen = [ { addr = vhost.address; port = vhost.port; ssl = true; } ];
+            listen = [ { addr = cfg.int.address; port = cfg.port; ssl = true; } ];
           };
         };
         extVHost = name: vhost: {
@@ -90,7 +83,7 @@ in {
             inherit (vhost) locations;
             forceSSL = true;
             enableACME = true;
-            listen = [ { addr = vhost.address; port = vhost.port; ssl = true; } ];
+            listen = [ { addr = cfg.ext.address; port = cfg.port; ssl = true; } ];
           };
         };
         vHost = vhostMapper: virtualHosts:
@@ -128,6 +121,10 @@ in {
       nginx-key = baseSecret // {
         source = secrets.filesPath + "/nginx.key";
       };
+    };
+
+    networking.firewall = {
+      allowedTCPPorts = [ cfg.port ];
     };
 
     # TODO add metrics exporter

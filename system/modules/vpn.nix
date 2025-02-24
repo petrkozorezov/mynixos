@@ -76,17 +76,18 @@ with types;
                 type        = nullOr str;
                 description = "Endpoint IP or hostname of the peer, followed by a colon, and then a port number of the peer.";
               };
-            routes =
+            allowedIPs =
               mkOption {
                 default     = [ ];
                 example     = [ "192.168.2.0/24" ];
                 type        = listOf str;
-                description = "Additional routes to add";
+                description = "See https://search.nixos.org/options?query=networking.wireguard.interfaces.<name>.peers.*.allowedIPs)";
               };
           };
         });
     };
   };
+
 
   config =
     let
@@ -120,7 +121,7 @@ with types;
                 (other:
                   {
                     publicKey  = other.pub;
-                    allowedIPs = [ (fullAddr cfg.subnet other.addr "/32") ] ++ other.routes;
+                    allowedIPs = [ (fullAddr cfg.subnet other.addr "/32") ] ++ other.allowedIPs;
                     endpoint   = mkIf (other.endpoint != null) "${other.endpoint}:${builtins.toString other.port}";
                   }
                 )
@@ -139,17 +140,17 @@ with types;
                 };
               fwCmd = name: cmd: "iptables -w ${slib.firewall.command name cmd}";
             in ''
-              # vpn: disable traffic from non vpn hosts
-              ${fwCmd "insert-rule" (rule "nixos-fw-refuse" spec) }
+              ${fwCmd "insert-rule" (rule "nixos-fw-refuse" spec) } # vpn: disable traffic from non vpn hosts
               ${fwCmd "insert-rule" (rule "nixos-fw-accept" (spec // { from = { interface = cfg.vpnIf; }; }))}
               ${fwCmd "insert-rule" (rule "nixos-fw-accept" (spec // { from = { interface = "lo"     ; }; }))}
             '';
           };
 
           forwarding = {
-            enable = true;
+            enable = true; # TODO move to profile level
             firewall = {
               allow = [
+                # route all traffic from vpn to anywere and established connection from anywere to vpn
                 { from = { interface = cfg.vpnIf; }; }
                 { to   = { interface = cfg.vpnIf; }; match = { states = [ "ESTABLISHED" "RELATED" ]; }; }
               ];

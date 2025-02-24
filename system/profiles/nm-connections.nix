@@ -41,13 +41,13 @@
           "wireguard-peer.${secrets.vpn.srv1.pub}" = {
             endpoint             = "${secrets.vpn.srv1.endpoint}:${builtins.toString secrets.vpn.srv1.port}";
             persistent-keepalive = "25";
-            allowed-ips          = "${secrets.vpnSubnet}.0/24";
+            allowed-ips          = "${config.tfattrs.hcloud_network.network.ip_range}";
           };
           # TODO remove hardcode
           ipv4 = {
             method   = "manual";
             address1 = "${secrets.vpnSubnet}.${self.addr}/32";
-            dns      = "${secrets.vpnSubnet}.${secrets.vpn.srv1.addr}";
+            dns      = "${config.tfattrs.hcloud_server_network.srv1-network.ip}";
           };
           ipv6.method = "disabled";
           proxy = {

@@ -27,9 +27,14 @@ in {
   in
     (mkIf cfg.enable (mkMerge [
       {
-        boot.kernel.sysctl = mkForce {
-          "net.ipv4.conf.all.forwarding"     = mkOverride 99 true;
-          "net.ipv4.conf.default.forwarding" = mkOverride 99 true;
+        boot.kernel.sysctl = {
+          # enable forwarding
+          # TODO forward only specific interfaces
+          "net.ipv4.conf.all.forwarding"     = true;
+          "net.ipv4.conf.default.forwarding" = true;
+          # enable remote path filter, to be more strict
+          "net.ipv4.conf.all.rp_filter"      = true;
+          "net.ipv4.conf.default.rp_filter"  = true;
         };
       }
       (mkIf cfg.firewall.enable (mkMerge [{
