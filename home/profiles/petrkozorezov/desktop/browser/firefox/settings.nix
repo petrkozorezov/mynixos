@@ -37,7 +37,7 @@
   };
 in {
   inherit basic;
-  private = deps.inputs.arkenfox-userjs.lib //
+  private = deps.inputs.arkenfox-userjs.lib.userjs //
     (basic // {
       "media.peerconnection.enabled" = false; # disable vpn detection through webrtc
     });
