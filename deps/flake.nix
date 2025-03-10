@@ -12,7 +12,7 @@
                 stylix.url = "github:danth/stylix"                     ;
         firefox-addons.url = "github:petrkozorezov/firefox-addons-nix" ;
        arkenfox-userjs.url = "github:petrkozorezov/arkenfox-userjs-nix";
-                devenv.url = "github:cachix/devenv/v1.3.1"             ;
+                devenv.url = "github:cachix/devenv/v1.4.1"             ;
              deploy-rs.url = "github:serokell/deploy-rs"               ;
            flake-utils.url = "github:numtide/flake-utils"              ;
                    dns.url = "github:kirelagin/dns.nix"                ; # TODO nix-community/dns.nix

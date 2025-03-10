@@ -13,14 +13,14 @@ in {
         userChrome = importFF "userChrome.css.nix";
         search     = importFF "search.nix";
         settings   = settings.basic;
-        extensions = extensions.basic;
+        extensions.packages = extensions.basic;
       };
     in {
       personal = baseProfile // {
         id = 0;
         isDefault  = true;
         settings   = settings.private;
-        extensions = extensions.all;
+        extensions.packages = extensions.all;
       };
       clean = baseProfile // { id = 1; };
       work  = baseProfile // { id = 2; };
