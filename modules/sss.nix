@@ -94,7 +94,7 @@ in {
             target = mkOption {
               description = "Full path of unencrypted secret.";
               type        = types.path;
-              default     = secretCfg.path + "/${config.name}";
+              default     = secretCfg.path + "/${secretCfg.name}";
             };
 
             tmp = mkOption {
@@ -188,7 +188,7 @@ in {
           # TODO customize directory mode
           # TODO set correct mode/user/group to the all created directories in the path (not only the last)
           preStart = ''
-            test -f ${source} || (echo "encrypted secret is not exist" && exit 1) &&
+            test -f ${source} || (echo "encrypted secret does not exist" && exit 1) &&
             install -d -m 0700 -o ${user} -g ${group} $(dirname ${target}) &&
             install -d -m 0700 -o ${user} -g ${group} $(dirname ${tmp   })
           '';
