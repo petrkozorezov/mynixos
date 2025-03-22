@@ -12,9 +12,11 @@
     };
 
   swapDevices =
-    [
-      { device = "/dev/disk/by-uuid/66be6355-c124-4035-928a-ce2e904893f5"; }
-    ];
+    [{
+      device = "/var/lib/swapfile";
+      size   = 16 * 1024; # mb
+      randomEncryption.enable = true;
+    }];
 
   services.fstrim.enable = true;
 }
