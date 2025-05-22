@@ -3,11 +3,12 @@
   imports =
     [
       (modulesPath + "/installer/scan/not-detected.nix")
-      ./ssd-970-pro.nix
+      ./ssd-990-pro.nix
       ./audio.nix
       ./video.nix
       ./bluetooth.nix
       ./thunderbolt-devices.nix
+      ./nvidia-gpu.nix
     ];
 
   boot = {

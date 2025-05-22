@@ -8,7 +8,7 @@
     startSway = pkgs.writeScript "start-sway" ''
       USER_NAME=$(whoami)
       USER_SHELL=$(getent passwd "$USER_NAME" | cut -d: -f7)
-      exec "$USER_SHELL" -c 'exec sway'
+      exec "$USER_SHELL" -c 'exec sway --unsupported-gpu'
       '';
   in {
     enable = true;
