@@ -32,10 +32,12 @@ in {
     # Privacy
     # Proxy manager.
     (foxyproxy-standard.allow (baseAllowance // {
-      permissions         = [ "downloads" "notifications" "proxy" "storage" "tabs" "webRequest" "webRequestBlocking" "<all_urls>" ];
+      permissions         = [ "contextMenus" "downloads" "notifications" "proxy" "storage" "tabs" "webRequest" "webRequestAuthProvider" ];
       optionalPermissions = [ "browsingData" "privacy" ];
+      hostPermissions     = [ "<all_urls>" ];
       # promotedCategory    = "recommended";
     }))
+
     # This webextension tries to extract the final url from the intermediary url and goes there straight away if successful.
     (skip-redirect.allow (baseAllowance // {
       permissions = [ "<all_urls>" "clipboardWrite" "contextMenus" "notifications" "storage" "webRequest" "webRequestBlocking" ];
@@ -73,7 +75,7 @@ in {
       # promotedCategory = "notable";
     }))
     (ether-metamask.allow (baseAllowance // {
-      permissions      = [ "storage" "unlimitedStorage" "clipboardWrite" "http://*/*" "https://*/*" "activeTab" "webRequest" "webRequestBlocking" "*://*.eth/" "notifications" "file://*/*" "*://connect.trezor.io/*/popup.html*" ];
+      permissions = [ "storage" "unlimitedStorage" "clipboardWrite" "http://*/*" "https://*/*" "ws://*/*" "wss://*/*" "activeTab" "webRequest" "webRequestBlocking" "*://*.eth/" "notifications" "file://*/*" "*://connect.trezor.io/*/popup.html*" ];
       # promotedCategory = "notable";
     }))
     # tronlink 5799d9b6-8343-4c26-9ab6-5d2ad39884ce
@@ -110,7 +112,7 @@ in {
     }))
     # spell checker
     (languagetool.allow (baseAllowance // {
-      permissions      = [ "activeTab" "storage" "contextMenus" "alarms" "http://*/*" "https://*/*" "file:///*" "*://docs.google.com/document/*" "*://docs.google.com/presentation/*" "*://languagetool.org/*" ];
+      permissions      = [ "activeTab" "storage" "contextMenus" "scripting" "alarms" "http://*/*" "https://*/*" "file:///*" "*://docs.google.com/document/*" "*://docs.google.com/presentation/*" "*://languagetool.org/*" ];
       # promotedCategory = "recommended";
     }))
     (passff.allow (baseAllowance // {

@@ -15,7 +15,7 @@
     sshKeys          = [ "1948ED036DD78C36E037A1574CE34B744329301F" ]; # keygrip
     defaultCacheTtl  = 60;
     maxCacheTtl      = 120;
-    pinentryPackage  = lib.mkDefault pkgs.pinentry-curses;
+    pinentry.package = lib.mkDefault pkgs.pinentry-curses;
   };
   # TODO
   home.file.".gnupg/scdaemon.conf".text = "disable-ccid";

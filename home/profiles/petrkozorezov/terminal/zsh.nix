@@ -3,7 +3,7 @@
     zsh = {
       enable = true;
       dotDir = ".config/zsh"; # FIXME remove hardcode
-      initExtra = # FIXME remove path manipulation
+      initContent = # FIXME remove path manipulation
         ''
           # TODO fix 'nsh hello -c hello'
           nsh() {

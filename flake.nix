@@ -19,7 +19,7 @@
       ];
       commonHMModules = username: commonModules ++ [
         inputs.nix-index-database.hmModules.nix-index
-        inputs.stylix.homeManagerModules.stylix
+        inputs.stylix.homeModules.stylix
         ./secrets/home
         ./home/modules
         {

@@ -1,18 +1,18 @@
 { pkgs, ... }: {
-  default        = "DuckDuckGo";
-  privateDefault = "DuckDuckGo";
+  default        = "ddg";
+  privateDefault = "ddg";
   force          = true;
-  order          = [ "DuckDuckGo" "Google" "Yandex" "Wikipedia (en)" ]; # TODO
+  order          = [ "ddg" "google" "Yandex" "wikipedia" ]; # TODO
   engines = let
     engine = { domain, path, alias, params ? [], favext ? "png", favicon ? "favicon.${favext}" }: {
       urls = [{ template = "https://${domain}/${path}"; inherit params; }];
+      icon = "https://${domain}/${favicon}";
       updateInterval = 30 * 24 * 60 * 60 * 1000; # every month
-      iconUpdateURL = "https://${domain}/${favicon}";
       definedAliases = [ alias ];
     };
 
   in {
-    "DuckDuckGo".metaData.alias = ".d";
+    "ddg".metaData.alias = ".d";
     "DuckDuckGo onion" = engine {
       alias  = ".ddgo";
       domain = "duckduckgogg42xjoc72x3sjasowoarfbgcmvfimaftt6twagswzczad.onion";
@@ -20,8 +20,8 @@
     };
 
     # FIX icon
-    "Google".metaData.alias = ".g";
-    "YouTube" = engine {
+    "google".metaData.alias = ".g";
+    "youtube" = engine {
       alias   = ".y";
       domain  = "www.youtube.com";
       path    = "results?search_query={searchTerms}";
@@ -54,9 +54,9 @@
       favicon = "icons/favicon.ico";
     };
 
-    "Wikipedia (en)".metaData.alias = ".w";
-    "Amazon.com".metaData.hidden    = true;
-    "Bing".metaData.hidden          = true;
+    "wikipedia".metaData.alias = ".w";
+    "amazondotcom-us".metaData.hidden    = true;
+    "bing".metaData.hidden          = true;
 
     "Nix Packages" = engine {
       alias  = ".nsp";
