@@ -58,6 +58,8 @@ in {
   };
   services.journald.extraConfig = mkDefault "SystemMaxUse=100M";
 
+  programs.nix-ld.enable = true;
+
   sss = let
     age = pkgs.rage + /bin/rage;
     # `cat /etc/ssh/ssh_host_ed25519_key`
