@@ -4,15 +4,15 @@
   description = "My Nix Packages";
   # TODO remove copy/paste (https://github.com/NixOS/nix/issues/3966)
   inputs = {
-               # nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11"        ;
-               nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable"     ;
-          # home-manager.url = "github:rycee/home-manager/release-24.11" ;
-          home-manager.url = "github:rycee/home-manager"               ;
-                # stylix.url = "github:danth/stylix/release-24.11"       ;
-                stylix.url = "github:danth/stylix"                     ;
+               # nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable"     ;
+               nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05"        ;
+          home-manager.url = "github:rycee/home-manager/release-25.05" ;
+          # home-manager.url = "github:rycee/home-manager"               ;
+                stylix.url = "github:danth/stylix/release-25.05"       ;
+                # stylix.url = "github:danth/stylix"                     ;
         firefox-addons.url = "github:petrkozorezov/firefox-addons-nix" ;
        arkenfox-userjs.url = "github:petrkozorezov/arkenfox-userjs-nix";
-                devenv.url = "github:cachix/devenv/v1.4.1"             ;
+                devenv.url = "github:cachix/devenv/v1.9"               ;
              deploy-rs.url = "github:serokell/deploy-rs"               ;
            flake-utils.url = "github:numtide/flake-utils"              ;
                    dns.url = "github:kirelagin/dns.nix"                ; # TODO nix-community/dns.nix

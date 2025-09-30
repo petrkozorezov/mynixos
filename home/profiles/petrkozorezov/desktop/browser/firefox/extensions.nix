@@ -15,7 +15,7 @@
     # UI
     # tabs as "tree"
     (tree-style-tab.allow (baseAllowance // {
-      permissions         = [ "activeTab" "contextualIdentities" "cookies" "menus" "menus.overrideContext" "notifications" "search" "sessions" "storage" "tabs" "theme" ];
+      permissions         = [ "activeTab" "contextualIdentities" "cookies" "menus" "menus.overrideContext" "notifications" "search" "sessions" "storage" "tabGroups" "tabs" "theme" ];
       optionalPermissions = [ "<all_urls>" "bookmarks" "clipboardRead" "tabHide" ];
       # promotedCategory    = "recommended";
     }))
@@ -71,11 +71,12 @@ in {
 
     # wallets
     (solflare-wallet.allow (baseAllowance // {
-      permissions      = [ "storage" "activeTab" "tabs" "alarms" "unlimitedStorage" "<all_urls>" ];
+      permissions      = [ "storage" "activeTab" "tabs" "alarms" "unlimitedStorage" "webRequest" "<all_urls>" ];
       # promotedCategory = "notable";
     }))
     (ether-metamask.allow (baseAllowance // {
-      permissions = [ "storage" "unlimitedStorage" "clipboardWrite" "http://*/*" "https://*/*" "ws://*/*" "wss://*/*" "activeTab" "webRequest" "webRequestBlocking" "*://*.eth/" "notifications" "file://*/*" "*://connect.trezor.io/*/popup.html*" ];
+      permissions = [ "storage" "unlimitedStorage" "clipboardWrite" "http://*/*" "https://*/*" "ws://*/*" "wss://*/*" "activeTab" "webRequest" "webRequestBlocking" "*://*.eth/" "notifications" "identity" "file://*/*" "*://connect.trezor.io/*/popup.html*" ];
+      optionalPermissions = [ "clipboardRead" ];
       # promotedCategory = "notable";
     }))
     # tronlink 5799d9b6-8343-4c26-9ab6-5d2ad39884ce
@@ -117,15 +118,6 @@ in {
     }))
     (passff.allow (baseAllowance // {
       permissions = [ "<all_urls>" "clipboardWrite" "contextMenus" "contextualIdentities" "nativeMessaging" "storage" "tabs" "webRequest" "webRequestBlocking" ];
-    }))
-    (deep-fake-detector.allow (baseAllowance // {
-      hostPermissions  = [ "http://*/*" "https://*/*" ];
-      permissions      = [ "unlimitedStorage" "activeTab" "storage" "contextMenus" "<all_urls>" ];
-      # promotedCategory = "line";
-    }))
-    (fakespot-fake-reviews-amazon.allow (baseAllowance // {
-      permissions      = ["identity" "unlimitedStorage" "http://*/*" "https://*/*" "activeTab" "tabs" "storage" "cookies" "*://*.fakespot.com/*" "*://*.fakespot.local/*" "*://*.amazon.com.au/*" "*://*.amazon.co.uk/*" "*://*.amazon.ca/*" "*://*.amazon.us/*" "*://*.amazon.com/*" "*://*.amazon.in/*" "*://*.amazon.de/*" "*://*.amazon.fr/*" "*://*.amazon.it/*" "*://*.amazon.es/*" "*://*.amazon.co.jp/*" "*://*.ebay.com/*" "*://*.ebay.co.uk/*" "*://*.ebay.com.au/*" "*://*.ebay.us/*" "*://*.ebay.ca/*" "*://*.walmart.com/*" "*://*.google.com/search*" "*://*.bestbuy.com/*" "*://*.sephora.com/*" "*://*.flipkart.com/*" "*://*.flipkart.in/*" "*://*.homedepot.com/*" "<all_urls>" ];
-      # promotedCategory = "line";
     }))
     (return-youtube-dislikes.allow (baseAllowance // {
       permissions      = [ "activeTab" "*://*.youtube.com/*" "storage" "*://returnyoutubedislikeapi.com/*" ];

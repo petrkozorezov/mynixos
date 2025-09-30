@@ -18,7 +18,7 @@
         home-manager.nixosModules.home-manager
       ];
       commonHMModules = username: commonModules ++ [
-        inputs.nix-index-database.hmModules.nix-index
+        inputs.nix-index-database.homeModules.nix-index
         inputs.stylix.homeModules.stylix
         ./secrets/home
         ./home/modules
