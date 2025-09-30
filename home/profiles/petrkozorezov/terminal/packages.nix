@@ -2,7 +2,7 @@
   home.packages = with pkgs; [
     bandwhich
     btop
-    radeontop #gputop
+    nvtopPackages.full amdgpu_top #gputop
 
     # utils
     du-dust # du
