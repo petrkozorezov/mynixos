@@ -84,7 +84,7 @@ in {
         "${mod}+u"               = "exec rofi -show run";
         "${mod}+Shift+u"         = "exec rofi -show drun";
         "${mod}+e"               = "exec rofi -show ssh";
-        #"${mod}+a"              = "exec rofi -show ssh"; # pass
+
         "${mod}+return"          = "exec ${terminal}";
 
         "${mod}+Shift+y"         = "reload"; # FIXME move to other key
@@ -97,6 +97,9 @@ in {
         "${mod}+j"               = "layout stacking";
 
         "${mod}+i"               = "fullscreen toggle";
+
+        "${mod}+a"               = "focus parent";
+        # bindsym $mod+d focus child
 
         "${mod}+x"               = "split h";
         "${mod}+k"               = "split v";
@@ -131,6 +134,7 @@ in {
             "firefox -P work"
             "sublime_text"
             "telegram-desktop"
+            "slack --ozone-platform=wayland"
 
             "spotify --ozone-platform=wayland"
             "easyeffects"
