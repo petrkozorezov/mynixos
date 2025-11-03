@@ -244,19 +244,4 @@ in {
       for_window [shell="xwayland"] title_format "%title [XWayland]"
     '';
   };
-
-  services.kanshi = {
-    enable   = true;
-    settings = [ {
-      profile = {
-        name = "default";
-        # TODO put it to better place
-        outputs = [ {
-          status   = "enable";
-          criteria = "*"; # DP-5
-          scale    = 2.0;
-        } ];
-      };
-    } ];
-  };
 }
