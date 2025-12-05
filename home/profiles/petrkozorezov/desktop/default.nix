@@ -4,7 +4,6 @@
     ./games
     ./desktop.nix
     ./discord.nix
-    ./kanshi.nix
     ./mako.nix
     ./obsidian.nix
     ./rofi.nix

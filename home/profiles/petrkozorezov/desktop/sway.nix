@@ -35,6 +35,7 @@ in {
     # wallutils # TODO use it
     xorg.xhost
     udiskie
+    kanshi
   ];
 
   wayland.windowManager.sway = {
@@ -122,6 +123,7 @@ in {
       startup =
         lib.lists.forEach
           [
+            "kanshi"
             "mkfifo ${ob_file} && tail -f ${ob_file} | ${ob}"
             "nm-applet --indicator"
             "mako"
@@ -248,4 +250,22 @@ in {
       for_window [shell="xwayland"] title_format "%title [XWayland]"
     '';
   };
+
+  xdg.configFile."kanshi/config".text = let
+    monitor1 = "output \"DP-3\" enable mode 2560x1600@144Hz position 0,0 scale 2.0";
+    monitor2 = "output \"DP-1\" enable mode 3440x1440@180Hz position 1280,0 scale 1.0";
+  in ''
+    profile single1 {
+      ${monitor1}
+    }
+
+    profile single2 {
+      ${monitor2}
+    }
+
+    profile dual {
+      ${monitor1}
+      ${monitor2}
+    }
+    '';
 }
