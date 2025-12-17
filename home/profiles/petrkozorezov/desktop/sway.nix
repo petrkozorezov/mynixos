@@ -135,7 +135,7 @@ in {
             "firefox -P clean"
             "firefox -P work"
             "sublime_text"
-            "telegram-desktop"
+            "Telegram"
             "slack --ozone-platform=wayland"
 
             "spotify --ozone-platform=wayland"

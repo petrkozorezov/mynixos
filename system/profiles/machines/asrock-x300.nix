@@ -6,7 +6,7 @@
     ../nm-connections.nix
     ../yubikey.nix
   ];
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_latest; # linuxPackages_6_17
 
   system.stateVersion = "21.05";
 }

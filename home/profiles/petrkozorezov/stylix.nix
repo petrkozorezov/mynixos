@@ -8,6 +8,7 @@
 { config, pkgs, deps, lib, ... }: {
   stylix = {
     enable = true;
+    targets.qt.enable = true;
 
     # possible wallpapers
     # http://getwallpapers.com/wallpaper/full/c/6/c/52323.jpg
@@ -24,6 +25,7 @@
     #   url    = "https://unsplash.com/photos/wX-NB8xFD3w/download?ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNzM5MzkyMjU5fA&force=true";
     #   sha256 = "09ybcpcw9garhkvc5r7kbna59nb1rlfgvi6mdcgwcp3wsj9jzq4f";
     # };
+    # https://unsplash.com/photos/landscape-photo-of-mountain-alps-vddccTqwal8
     image = builtins.fetchurl {
       name   = "wallpaper";
       url    = "https://unsplash.com/photos/Y3PD_9c2xms/download?ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNzM5MzAxNDE2fA&force=true";

@@ -1,6 +1,6 @@
 { config, pkgs, ... }: let
-  system = pkgs.system;
-  terraformPkg = with pkgs; (terraform.withPlugins (tp: [ tp.hcloud ]));
+  system = pkgs.stdenv.hostPlatform.system;
+  terraformPkg = with pkgs; (terraform.withPlugins (tp: [ tp.hetznercloud_hcloud ]));
 in {
   packages = with pkgs; [
     gnumake

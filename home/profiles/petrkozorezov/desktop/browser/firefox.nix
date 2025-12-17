@@ -5,7 +5,7 @@ args@{ pkgs, lib, ... }: with lib; let
 in {
   programs.firefox = {
     enable = true;
-    package = with pkgs; (firefox-wayland.override {
+    package = with pkgs; (firefox.override {
       nativeMessagingHosts = [ passff-host ];
     });
     profiles = let

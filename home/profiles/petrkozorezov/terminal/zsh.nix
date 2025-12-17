@@ -2,7 +2,7 @@
   programs = {
     zsh = {
       enable = true;
-      dotDir = ".config/zsh"; # FIXME remove hardcode
+      dotDir = "${config.xdg.configHome}/zsh"; # FIXME remove hardcode
       initContent = # FIXME remove path manipulation
         ''
           # TODO fix 'nsh hello -c hello'

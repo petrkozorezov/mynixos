@@ -2,10 +2,12 @@
 let email = "petr.kozorezov@gmail.com"; in {
   programs = {
     git = {
-      enable    = true;
-      userEmail = email;
-      userName  = "Petr Kozorezov";
-      extraConfig = {
+      enable = true;
+      settings = {
+        user = {
+          inherit email;
+          name = "Petr Kozorezov";
+        };
         push.default       = "current";
         pull.ff            = "only";
         core.quotePath     = false;
@@ -34,7 +36,7 @@ let email = "petr.kozorezov@gmail.com"; in {
     [
       glow
       git-crypt
-      gitAndTools.git-filter-repo
+      git-filter-repo
       lazygit
     ];
 }

@@ -5,7 +5,7 @@
     nvtopPackages.full amdgpu_top #gputop
 
     # utils
-    du-dust # du
+    dust    # du
     duf     # df
     procs   # ps
     fd      # find

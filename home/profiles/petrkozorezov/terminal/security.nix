@@ -22,7 +22,7 @@
 
   # add card auto-insertion before commit
   # TODO add programs.git.hooks
-  programs.git.extraConfig.core.hooksPath = "${config.xdg.configHome}/git/hooks";
+  programs.git.settings.core.hooksPath = "${config.xdg.configHome}/git/hooks";
   home.file."${config.xdg.configHome}/git/hooks/pre-commit" = {
     executable = true;
     text       = "gpg --card-status";

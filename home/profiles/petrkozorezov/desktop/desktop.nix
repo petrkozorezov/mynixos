@@ -84,8 +84,10 @@
     # mail clients
     # TODO
 
+    zed-editor
+
     # messengers
-    tdesktop
+    telegram-desktop
     slack
 
     # books
