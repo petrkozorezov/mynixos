@@ -1,20 +1,41 @@
-{ pkgs, config, lib, ... }:
-{
+{ pkgs, config, lib, ... }: let
+  # TODO move to user
+  startSteam = pkgs.writeShellScriptBin "start-steam" ''
+    export XKB_DEFAULT_LAYOUT="us,ru"
+    export XKB_DEFAULT_VARIANT=","
+    export XKB_DEFAULT_OPTIONS="grp:lctrl_lwin_rctrl_menu"
+    exec dbus-run-session -- ${pkgs.kdePackages.kwin}/bin/kwin_wayland --xwayland --exit-with-session="${config.programs.steam.package}/bin/steam $*"
+  '';
+  startSway = pkgs.writeShellScriptBin "start-sway" ''
+    export XKB_DEFAULT_LAYOUT="${config.services.xserver.xkb.layout}"
+    export XKB_DEFAULT_VARIANT="${config.services.xserver.xkb.variant}"
+    export XKB_DEFAULT_OPTIONS="${config.services.xserver.xkb.options}"
+    exec sh -c 'dbus-run-session -- ${pkgs.sway}/bin/sway --unsupported-gpu "$@" >> "$XDG_RUNTIME_DIR/sway-$(date +%s).log" 2>&1' _ "$@"
+  '';
+  startPlasmaWayland = pkgs.writeShellScriptBin "start-plasma" ''
+    exec dbus-run-session -- startplasma-wayland $*
+  '';
+in {
+
   boot.kernel.sysctl."fs.inotify.max_user_watches" = 524288;
 
   # I don't know why, so maybe later...
   # boot.plymouth.enable = true;
-  services.greetd = let
-    startSway = pkgs.writeScript "start-sway" ''
-      USER_NAME=$(whoami)
-      USER_SHELL=$(getent passwd "$USER_NAME" | cut -d: -f7)
-      exec "$USER_SHELL" -c 'exec sway --unsupported-gpu'
-      '';
-  in {
-    enable = true;
-    settings.default_session.command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --remember --cmd ${startSway}";
-  };
+
   services.udisks2.enable = true;
+
+  environment.systemPackages = [
+    startSteam
+    startSway
+    startPlasmaWayland
+  ];
+
+  services.desktopManager.plasma6.enable = true;
+  services.xserver.xkb = {
+    layout  = "us,ru";
+    variant = "dvp,mac";
+    options = "grp:lctrl_lwin_rctrl_menu";
+  };
 
   # TODO use stylix
   fonts = {

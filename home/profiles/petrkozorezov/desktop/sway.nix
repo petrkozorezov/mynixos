@@ -252,8 +252,8 @@ in {
   };
 
   xdg.configFile."kanshi/config".text = let
-    monitor1 = "output \"DP-3\" enable mode 2560x1600@144Hz position 0,0 scale 2.0";
-    monitor2 = "output \"DP-1\" enable mode 3440x1440@180Hz position 1280,0 scale 1.0";
+    monitor1 = "output \"DP-6\" enable mode 2560x1600@144Hz position 0,0 scale 2.0";
+    monitor2 = "output \"DP-1\" enable mode 3440x1440@180Hz position 1280,0 scale 1.25";
   in ''
     profile single1 {
       ${monitor1}
