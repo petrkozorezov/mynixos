@@ -50,4 +50,9 @@
   services.hardware.bolt.enable = true;
 
   services.fwupd.enable = true;
+
+  services.earlyoom = {
+    freeMemThreshold  = 1;
+    freeSwapThreshold = 1;
+  };
 }

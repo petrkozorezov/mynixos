@@ -60,6 +60,9 @@ in {
 
   programs.nix-ld.enable = true;
 
+  zramSwap.enable = true;
+  services.earlyoom.enable = true;
+
   sss = let
     age = pkgs.rage + /bin/rage;
     # `cat /etc/ssh/ssh_host_ed25519_key`
