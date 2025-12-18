@@ -15,7 +15,7 @@ in {
     enable   = true;
     hostKeys = [];
     banner   = ''
-      Hello meatbag from ${config.networking.hostName}@${version}!
+      Hello meatbag, I'm ${config.networking.hostName}@${version}!
     '';
     settings.PasswordAuthentication = false;
   };
@@ -35,13 +35,22 @@ in {
     };
   };
 
-  i18n.defaultLocale = "en_US.UTF-8";
+  time.timeZone = "Etc/UTC";
+  i18n = {
+    defaultLocale = "en_US.UTF-8";
+    extraLocaleSettings = {
+      LC_TIME        = "C.UTF-8";
+      LC_NUMERIC     = "C.UTF-8";
+      LC_MEASUREMENT = "C.UTF-8";
+      LC_MONETARY    = "C.UTF-8";
+      LC_PAPER       = "C.UTF-8";
+    };
+  };
   console = {
    font       = "iso01-12x22";
    keyMap     = "dvorak-programmer";
    earlySetup = true;
   };
-  time.timeZone = "Europe/Moscow";
   programs.vim = {
     enable = true;
     defaultEditor = true;
